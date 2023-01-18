@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import Auth from './routes/main/Auth'
 import NavBar from "./components/navbar/navbar";
+
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path="/room/:roomId/picture" element={} />
         <Route path="/live" element={} />
         <Route path="/profile/:userNo" element={} /> */}
+        {/* <Route path="/login" element={<Login /> } /> */}
+        <Route path="/oauth/kakao/callback" element={<Auth />}></Route>
         <Route path="/" element={<NavBar />} />
         {/* <Route path="*" element={< NotFound />} /> */}
       </Routes>

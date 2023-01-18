@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ const Auth = () => {
 
   console.log("안녕???????? 난 코드야", code);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const getToken = async () => {
     const payload = qs.stringify({
@@ -38,16 +38,15 @@ const Auth = () => {
       // access token 설정
       window.Kakao.Auth.setAccessToken(res.data.access_token);
       //history.replace("/profile");
-      history("/profile", { replace: true });
-      console.log("history", history);
+      navigate(-1);
     } catch (err) {
       console.log(err);
     }
   };
-
   useEffect(() => {
     getToken();
-  }, []);
+  });
+
 
   return null;
 };

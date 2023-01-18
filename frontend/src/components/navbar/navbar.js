@@ -24,7 +24,9 @@ const Navbar = () => {
     const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99";
     const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback";
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-    navigate(`../User/Login`);
+    if (typeof window !== "undefined") {
+      window.location.href = KAKAO_AUTH_URL;
+    }
   };
 
   const navigateToCreateRoom = () => {
@@ -80,6 +82,14 @@ const Navbar = () => {
           </div>
           <div className={styles.home} onClick={navigateToLive}>
             Live
+          </div>
+          <div className={styles.rectangleGroup} onClick={Login}>
+            <div className={styles.groupInner} />
+            <FontAwesomeIcon
+              icon={faCircleUser}
+              className={styles.iconUserCircle}
+            />
+            <div className={styles.profile}>Login</div>
           </div>
           <div className={styles.rectangleGroup} onClick={navigateToProfile}>
             <div className={styles.groupInner} />
