@@ -5,6 +5,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
 
+
 const Navbar = () => {
   // 페이지 이동을 위한 함수들
   const navigate = useNavigate();
@@ -12,6 +13,17 @@ const Navbar = () => {
   const navigateToLanding = () => {
     navigate("/");
   };
+  const navigateToLive = () => {
+    navigate("/live")
+  }
+  const navigateToProfile = () => {
+    const userId = 1 // 현재 접속중인 유저 id를 가져와야 한다 redux든 아니면 back과의 통신이든
+    navigate(`/profile/:${userId}`)
+  }
+
+  const navigateToCreateRoom = () => {
+    navigate('/room')
+  }
   // 검색 기능을 위한 함수
   const enterSearch = (event) => {
     event.preventDefault();
@@ -35,7 +47,7 @@ const Navbar = () => {
             <img
               className={styles.groupChild}
               alt=""
-              src="../rectangle-1@2x.png"
+              src= "../img/rectangle-1@2x.png"
             />
           </div>
           <b className={styles.raonzena}>RaonZena</b>
@@ -46,7 +58,7 @@ const Navbar = () => {
             <form onSubmit={enterSearch}>
               <input
                 className={styles.searchRooms}
-                placeholder="Search Rooms"
+                placeholder="방 이름으로 검색"
                 value={search}
                 onChange={onChangeSearch}
               ></input>
@@ -57,9 +69,9 @@ const Navbar = () => {
                 />
             </form>
           </div>
-          <div className={styles.home}>Home</div>
-          <div className={styles.home}>Live</div>
-          <div className={styles.rectangleGroup}>
+          <div className={styles.home} onClick={navigateToLanding}>Home</div>
+          <div className={styles.home} onClick={navigateToLive}>Live</div>
+          <div className={styles.rectangleGroup} onClick={navigateToProfile}>
             <div className={styles.groupInner} />
             <FontAwesomeIcon
               icon={faCircleUser}
@@ -67,7 +79,7 @@ const Navbar = () => {
             />
             <div className={styles.profile}>Profile</div>
           </div>
-          <div className={styles.rectangleContainer}>
+          <div className={styles.rectangleContainer} onClick={navigateToCreateRoom}>
             <div className={styles.rectangleDiv} />
             <div className={styles.createRoom}>Create Room</div>
           </div>
