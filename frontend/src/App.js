@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Counter from './routes/Counter'
+import NavBar from "./components/navbar/navbar";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/room/:roomId/picture" element={} />
         <Route path="/live" element={} />
         <Route path="/profile/:userNo" element={} /> */}
-        <Route path="/" element={< Counter />} />
+        <Route path="/" element={<NavBar />} />
         {/* <Route path="*" element={< NotFound />} /> */}
       </Routes>
     </Router>
