@@ -9,11 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    private int user_no;
-    private String user_id;
+public class KaKaoDto {
+
     private String user_name;
-    private int exp;
-    private int level;
     private String user_image;
+    private String user_id;
+
 }
