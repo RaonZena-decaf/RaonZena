@@ -1,5 +1,6 @@
 package com.ssafy.raonzena.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,4 +39,15 @@ public class User {
     @Column(name = "user_image", length = 500)
     private String userImage;
 
+    @Builder
+
+    public User(Integer userNo, String userId, String userName, Integer exp, Integer level, Timestamp createDate, String userImage) {
+        this.userNo = userNo;
+        this.userId = userId;
+        this.userName = userName;
+        this.exp = exp;
+        this.level = level;
+        this.createDate = createDate;
+        this.userImage = userImage;
+    }
 }
