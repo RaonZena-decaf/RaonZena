@@ -46,7 +46,7 @@ const Navbar = () => {
     event.preventDefault();
     setSearch(event.target.value);
   };
-
+  console.log(localStorage.getItem("token"))
   return (
     <div className={styles.div}>
       <div className={styles.navbar}>

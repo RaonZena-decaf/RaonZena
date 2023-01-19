@@ -1,7 +1,6 @@
 // import { useEffect } from "react";
 // import axios from "axios";
 // import qs from "qs";
-// import { useNavigate } from "react-router-dom";
 
 // const Auth = () => {
 //   const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99";
@@ -54,15 +53,18 @@
 
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 
 function KakaoLoginRedirect() {
   const params = useParams();
-
+  const navigate = useNavigate();
+  console.log(params)
   useEffect(() => {
     localStorage.clear();
-    localStorage.setItem("token", params.token);
-    window.location.replace("/");
-  });
+    localStorage.setItem("token", true);
+    navigate(-1);
+});
 
   return <></>;
 }

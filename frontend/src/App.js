@@ -17,7 +17,7 @@ function App() {
         <Route path="/live" element={} />
         <Route path="/profile/:userNo" element={} /> */}
         {/* <Route path="/login" element={<Login /> } /> */}
-        <Route path="/uri/:token" element={<Auth />}></Route>
+        <Route path="/oauth/kakao/callback" element={<Auth />}></Route>
         <Route path="/" element={<NavBar />} />
         {/* <Route path="*" element={< NotFound />} /> */}
       </Routes>
