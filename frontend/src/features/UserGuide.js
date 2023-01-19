@@ -1,5 +1,6 @@
 import "./UserGuide.css"
 import { useEffect, useRef, useState } from "react";
+import GameGuide from "./Guide/GameGuide";
 
 function UserGuide () {
   const containerCarosel = useRef()
@@ -34,13 +35,11 @@ function UserGuide () {
   }
 
 
-
-
   return (
     <div className="carousel">
       <div className="carouselcontainer" ref={containerCarosel}>
         <div className="inner">
-          <img src="./Landing/GameGuide.png" alt=""/>
+          <GameGuide/>
         </div>
         <div className="inner">
           <img src="./Landing/PhotoGuide.png" alt=""/>

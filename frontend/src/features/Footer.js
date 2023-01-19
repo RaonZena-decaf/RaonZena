@@ -3,7 +3,7 @@ import "./Footer.css"
 function Footer () {
   return (
     <div id="footer">
-      <div id="gradient">
+      <div id="footertitle">
         Play RaonZena, Enjoy your times
       </div>
       <div id="footercontent">

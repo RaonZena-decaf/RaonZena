@@ -1,6 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&display=swap");
 
+@media (max-width: 1024px) {
+  html {
+    font-size: 42.5%;
+  }
+}
 
+@media (min-width: 700px) {
+  html {
+    font-size: 42.5%;
+  }
+}
+/* 태블릿 사이즈 */
+
+@media (max-width: 700px) {
+  html {
+    font-size: 30%;
+  }
+}
+/* 모바일 사이즈 */
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 62.5%;
+  }
+}
+/* 데스크탑 사이즈 */
 
 body {
   margin: 0;

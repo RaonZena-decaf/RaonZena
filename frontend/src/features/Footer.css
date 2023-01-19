@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-#gradient {
+#footertitle {
   background: linear-gradient(90deg, #8f00ff, #ff00a8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -17,6 +17,6 @@
 
 #footercontent p {
   font-weight: 100;
-  font-size: medium;
+  font-size: 2rem;
   margin: 0;
 }

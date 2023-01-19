@@ -1,9 +1,9 @@
 .background {
   background-color: #1f2122;
   width: auto;
-  height: 340vh;
+  height:auto;
   font-weight: bold;
-  font-size: 55px;
+  font-size: 5rem;
   color:white;
   font-family: "Noto Sans";
   padding-left: 8.3%;
@@ -15,9 +15,8 @@
 .background2 {
   background-color: #353839;
   width: auto;
-  height: 100%;
-  border-radius: 20px;
-  padding: 3%;
+  height: auto;
+  border-radius: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between ;
@@ -25,16 +24,13 @@
 
 .background3 {
   background-color: #222222;
-  overflow: hidden;
   width: auto;
-  height: fit-content;
-  overflow: inherit;
-  border-radius: 20px;
-  padding: 5%;
-  padding-top: 8%;
-  padding-bottom: 8%;
+  height: auto;
+  border-radius: 2rem;
+  padding: 5rem;
   text-align: left;
   position: relative;
+  margin: 3%;
 }
 
 
@@ -46,13 +42,22 @@
 }
 
 .pinkbutton{
+  margin-top: 5rem;
   background-color: #F400B0;
-  font-size: 25px;
+  font-size: 2.5rem;
   color: white;
-  border-radius: 20px;
+  border-radius: 1rem;
   border: none;
-  height: 70px;
-  width: 250px;
+  height: 6rem;
+  width: 18rem;
+  cursor: pointer;
+}
+
+.pinkbutton:active{
+  background-color: #222222;
+  color: #F400B0;
+  border: #F400B0 solid 0.3rem;
+
 }
 
 .box1{
@@ -60,18 +65,29 @@
   margin-bottom: 5%;
 }
 
+.maintextcontainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
 .LandingImage1{
-  position: absolute;
-  top: 20%;
-  left: 68%;
   width: 30%;
   height: auto;
 }
 
+.maintext2{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .maintext2 p{
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
   font-weight: 100;
-  font-size: 25px;
+  font-size: 2.5rem;
 }
 
 .title {  
@@ -80,14 +96,14 @@
 
 .subtitle {
   margin: 0;
-  font-size: 45px;
-  margin-bottom: 30px;
+  font-size: 4.5rem;
+  margin-bottom: 2rem;
 }
 
-#service{
+#serviceintro{
   margin: 0;
-  font-size: 25px;
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 #imageconfig{
