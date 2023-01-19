@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./navbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   // 페이지 이동을 위한 함수들
   const navigate = useNavigate();
-  const isLogin = JSON.parse(localStorage.getItem("token"));
-  console.log(isLogin);
-  console.log(typeof isLogin);
+  //const isLogin = JSON.parse(localStorage.getItem("token"));
+  const [isLogin, setisLogin] = useState(false);
   const navigateToLanding = () => {
     navigate("/");
   };
@@ -29,6 +28,19 @@ const Navbar = () => {
     if (typeof window !== "undefined") {
       window.location.href = KAKAO_AUTH_URL;
     }
+  };
+
+  console.log("isLogin 값", isLogin);
+  console.log(typeof isLogin);
+
+  useEffect(() => {
+    setisLogin(JSON.parse(localStorage.getItem("token")));
+  }, [localStorage.getItem("token")]);
+
+  const Logout = () => {
+    localStorage.removeItem("token");
+    setisLogin(false);
+    navigateToLanding();
   };
 
   const navigateToCreateRoom = () => {
@@ -99,13 +111,14 @@ const Navbar = () => {
                 <div className={styles.profile}>Profile</div>
               </div> */}
               <div className={styles.rectangleGroup}>
-              <div className={styles.groupInner} />
-              <FontAwesomeIcon
+                <div className={styles.groupInner} />
+                <FontAwesomeIcon
                   icon={faCircleUser}
                   className={styles.iconUserCircle}
                 />
-                <div className={styles.profile}>Logout</div>
-
+                <div className={styles.profile} onClick={Logout}>
+                  Logout
+                </div>
               </div>
 
               <div
