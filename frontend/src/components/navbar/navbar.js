@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   // 페이지 이동을 위한 함수들
   const navigate = useNavigate();
-
+  const isLogin = JSON.parse(localStorage.getItem("token"));
+  console.log(isLogin);
+  console.log(typeof isLogin);
   const navigateToLanding = () => {
     navigate("/");
   };
@@ -46,7 +48,6 @@ const Navbar = () => {
     event.preventDefault();
     setSearch(event.target.value);
   };
-  console.log(localStorage.getItem("token"))
   return (
     <div className={styles.div}>
       <div className={styles.navbar}>
@@ -78,34 +79,53 @@ const Navbar = () => {
             </form>
           </div>
           <div className={styles.home} onClick={navigateToLanding}>
-            Home
+            홈
           </div>
           <div className={styles.home} onClick={navigateToLive}>
-            Live
+            라이브
           </div>
-          <div className={styles.rectangleGroup} onClick={Login}>
-            <div className={styles.groupInner} />
-            <FontAwesomeIcon
-              icon={faCircleUser}
-              className={styles.iconUserCircle}
-            />
-            <div className={styles.profile}>Login</div>
-          </div>
-          <div className={styles.rectangleGroup} onClick={navigateToProfile}>
-            <div className={styles.groupInner} />
-            <FontAwesomeIcon
-              icon={faCircleUser}
-              className={styles.iconUserCircle}
-            />
-            <div className={styles.profile}>Profile</div>
-          </div>
-          <div
-            className={styles.rectangleContainer}
-            onClick={navigateToCreateRoom}
-          >
-            <div className={styles.rectangleDiv} />
-            <div className={styles.createRoom}>Create Room</div>
-          </div>
+
+          {isLogin ? (
+            <div>
+              {/* <div
+                className={styles.rectangleGroup}
+                onClick={navigateToProfile}
+              >
+                <div className={styles.groupInner} />
+                <FontAwesomeIcon
+                  icon={faCircleUser}
+                  className={styles.iconUserCircle}
+                />
+                <div className={styles.profile}>Profile</div>
+              </div> */}
+              <div className={styles.rectangleGroup}>
+              <div className={styles.groupInner} />
+              <FontAwesomeIcon
+                  icon={faCircleUser}
+                  className={styles.iconUserCircle}
+                />
+                <div className={styles.profile}>Logout</div>
+
+              </div>
+
+              <div
+                className={styles.rectangleContainer}
+                onClick={navigateToCreateRoom}
+              >
+                <div className={styles.rectangleDiv} />
+                <div className={styles.createRoom}>Create Room</div>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.rectangleGroup} onClick={Login}>
+              <div className={styles.groupInner} />
+              <FontAwesomeIcon
+                icon={faCircleUser}
+                className={styles.iconUserCircle}
+              />
+              <div className={styles.profile}>Login</div>
+            </div>
+          )}
         </div>
       </div>
     </div>
