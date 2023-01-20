@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
-import Dropdown from "./dropdown"
+import Dropdown from "./dropdown";
 
 const Navbar = () => {
   // 페이지 이동을 위한 함수들
@@ -54,92 +54,52 @@ const Navbar = () => {
   return (
     <div>
       <div className={styles.navbar}>
-        <div className={styles.groupParent} onClick={navigateToLanding}>
-          <div className={styles.rectangleWrapper}>
-            <img
-              className={styles.groupChild}
-              alt=""
-              src="../img/rectangle-1@2x.png"
-            />
-          </div>
-          <b className={styles.raonzena}>RaonZena</b>
-        </div>
         <div className={styles.groupContainer}>
-          <div className={styles.rectangleParent}>
-            <div className={styles.groupItem} />
-            <form onSubmit={enterSearch}>
-              <input
-                className={styles.searchRooms}
-                placeholder="방 이름으로 검색"
-                value={search}
-                onChange={onChangeSearch}
-              ></input>
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className={styles.iconSearch}
-                onClick={enterSearch}
-              />
-            </form>
+          <div className={styles.groupParent} onClick={navigateToLanding}>
+            <img className={styles.groupChild} alt="" src="../img/logo.png" />
+            <b className={styles.raonzena}>RaonZena</b>
           </div>
-          <div className={styles.home} onClick={navigateToLanding}>
-            홈
-          </div>
-          <div className={styles.home} onClick={navigateToLive}>
-            라이브
-          </div>
+          {/* <div className={styles.rectangleParent}> */}
+          <div className={styles.flexGroup}>
+            <div>
+              <ul className={styles.nav_ul}>
+                <li className={styles.nav_ul_li} onClick={navigateToLanding}>
+                  홈
+                </li>
+                <li className={styles.nav_ul_li} onClick={navigateToLive}>
+                  라이브
+                </li>
+                <li>
+                  <form onSubmit={enterSearch}>
+                    <input
+                      className={styles.searchRooms2}
+                      placeholder="방 이름으로 검색"
+                      value={search}
+                      onChange={onChangeSearch}
+                    ></input>
+                  </form>
+                </li>
+              </ul>
+            </div>
 
-          {isLogin ? (
-            <div className={styles.groupContainer}>
-              {/* <div
-                className={styles.rectangleGroup}
-                onClick={navigateToProfile}
-              >
-                <div className={styles.groupInner} />
-                <FontAwesomeIcon
-                  icon={faCircleUser}
-                  className={styles.iconUserCircle}
-                />
-                <div className={styles.profile}>Profile</div>
-              </div> */}
-              <div className={styles.rectangleGroup}>
-                <div className={styles.groupInner} />
-                <FontAwesomeIcon
-                  icon={faCircleUser}
-                  className={styles.iconUserCircle}
-                />
-                <div
-                  className={styles.profile}
-                  onClick={() => {
-                    console.log(dropDown);
-                    setDropDown(!dropDown);
-                  }}
-                >
-                  User
+            <div className={styles.rectangleParent}>
+              {isLogin ? (
+                <div className={styles.groupContainer}>
+                  <div
+                    className={styles.rectangleContainer}
+                    onClick={navigateToCreateRoom}
+                  >
+                    <div className={styles.rectangleDiv} />
+                    <div className={styles.createRoom}>방 만들기</div>
+                  </div>
                 </div>
-                <Dropdown className={styles.dropdown} visibility={dropDown}>
-                  <div>Profile</div>
-                  <div>Logout</div>
-                </Dropdown>
-              </div>
-
-              <div
-                className={styles.rectangleContainer}
-                onClick={navigateToCreateRoom}
-              >
-                <div className={styles.rectangleDiv} />
-                <div className={styles.createRoom}>Create Room</div>
-              </div>
+              ) : (
+                <div className={styles.rectangleGroup} onClick={Login}>
+                  <img src="../img/kakao_login_medium.png" />
+                </div>
+              )}
             </div>
-          ) : (
-            <div className={styles.rectangleGroup} onClick={Login}>
-              <div className={styles.groupInner} />
-              <FontAwesomeIcon
-                icon={faCircleUser}
-                className={styles.iconUserCircle}
-              />
-              <div className={styles.profile}>Login</div>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
