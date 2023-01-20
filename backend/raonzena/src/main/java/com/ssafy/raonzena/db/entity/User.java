@@ -27,10 +27,10 @@ public class User {
     @Column(name = "user_name", nullable = false, length = 45)
     private String userName;
 
-    @Column(name = "exp", columnDefinition = "0")
+    @Column(name = "exp")
     private Integer exp;
 
-    @Column(name = "level", columnDefinition = "1")
+    @Column(name = "level")
     private Integer level;
 
     @Column(name = "create_date", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

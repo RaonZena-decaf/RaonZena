@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class KaKaoDto {
 
-    private String user_name;
-    private String user_image;
-    private String user_id;
+    private String userName;
+    private String userImage;
+    private String userId;
 
 }
