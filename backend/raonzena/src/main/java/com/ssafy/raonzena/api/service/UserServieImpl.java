@@ -2,6 +2,7 @@ package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.dto.KaKaoDto;
 import com.ssafy.raonzena.api.request.UserLoginReq;
+import com.ssafy.raonzena.api.response.UserLoginRes;
 import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
 import org.json.JSONObject;
@@ -86,7 +87,7 @@ public class UserServieImpl implements UserService{
     // 카카오 로그인
     //내 디비에 있는지 확인 -> x -> 저장
     //정보를 컨트롤러로 user 보내줘
-    public User KaKaoLogin(String authorizedCode){
+    public UserLoginRes KaKaoLogin(String authorizedCode){
 
         System.out.println("1");
         //System.out.println(authorizedCode);
@@ -102,16 +103,16 @@ public class UserServieImpl implements UserService{
 
         if(!kakaoUser){
             UserLoginReq user = new UserLoginReq();
-            user.setUser_id(userInfo.getUserId());
-            user.setUser_name(userInfo.getUserName());
-            user.setUser_image(userInfo.getUserImage());
+            user.setUserId(userInfo.getUserId());
+            user.setUserName(userInfo.getUserName());
+            user.setUserImage(userInfo.getUserImage());
 
 
             userRepository.save(user.toEntity());
         }
-        System.out.println("지연아 나와라");
-        System.out.println(userRepository.findByUserId(userInfo.getUserId()).get());
-        return userRepository.findByUserId(userInfo.getUserId()).get();
+
+        User userProfile = userRepository.findByUserId(userInfo.getUserId());
+        return new UserLoginRes(userProfile);
 
 
 
