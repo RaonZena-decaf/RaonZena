@@ -3,7 +3,7 @@
   flex-direction: column;
   overflow: hidden;
   behavior: smooth;
-}  
+}
 .carouselcontainer {
   width: 208vw;
   transition: transform 0.5s;
@@ -12,13 +12,15 @@
   justify-content: space-around;
 }
 
-.inner img {
+.carouselcontainer img {
+  cursor: pointer;
   height: 25vw;
 }
 
-.buttonlist{
+.buttonlist {
   margin: auto;
-  width: 5vw;
+  margin-top: 4rem;
+  width: 8vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -27,15 +29,11 @@
 .circlebutton {
   background-color: #cacaca;
   border-radius: 100%;
-  width: 1vw;
-  height: 1vw;
+  width: 1.5vw;
+  height: 1.5vw;
   cursor: pointer;
 }
 
-.circlebutton.active{
-  background-color: #F400B0;
-}
-
-.guideimage{
-  cursor: pointer;
+.circlebutton.active {
+  background-color: #f400b0;
 }

@@ -1,29 +1,40 @@
-import React from "react";
-import "./Landing.css"
-import Navbar from "../../features/Navbar"
-import Footer from "../../features/Footer";
-import UserGuide from "../../features/UserGuide"
+import React, { useState } from "react";
+import "./Landing.css";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import UserGuide from "../../components/landing/UserGuide";
+import ModalPortal from "../../components/Modal/Portal";
+import { Transition } from 'react-transition-group';
+import ModalFrame from "../../components/Modal/ModalFrame";
 
+function Landing() {
+  //모달 표시를 위한 함수
+  const [modalOn, setModalOn] = useState(false);
+  const openModal = () => {
+    setModalOn(true)
+  }
 
-function Landing (){
+  //모달을 닫는 함수
+  const closeModal = () => {
+    setModalOn(false)
+  }
+
   return (
     <div className="background">
-      <Navbar/>
+      <Navbar />
       <div className="background2">
         <div className="background3">
           <div className="box1">
-            <p className="gradient">
-              {`간편하게 시작하는 온라인 모임`}
-            </p>
-            <p className="title">
-              라온제나에서 즐겨보세요!
-            </p>
+            <p className="gradient">{`간편하게 시작하는 온라인 모임`}</p>
+            <p className="title">라온제나에서 즐겨보세요!</p>
             <button className="pinkbutton">시작하기</button>
           </div>
         </div>
         <div className="background3">
           <p id="serviceintro">서비스 소개</p>
-          <p className="title" id="pinkcolor">화상 채팅으로 간편하게 즐겨요</p>
+          <p className="title" id="pinkcolor">
+            화상 채팅으로 간편하게 즐겨요
+          </p>
           <p className="subtitle">게임과 사진으로 더욱 친밀하게</p>
           <div id="imageconfig">
             <div className="maintextcontainer">
@@ -37,17 +48,26 @@ function Landing (){
               <img
                 className="LandingImage1"
                 alt=""
-                src="./Landing/LandingImage1.png"/>
-            </div>  
+                src="./Landing/LandingImage1.png"
+              />
+            </div>
           </div>
         </div>
         <div className="background3">
-          <UserGuide/>
+          <UserGuide openModal={openModal}/>
         </div>
       </div>
-      <Footer/>
+      <Footer />
+
+      <ModalPortal>
+        <Transition unmountOnExit in={modalOn} timeout={500}>
+          {state => (
+            <ModalFrame show={state} closeModal={closeModal}/>
+          )}
+        </Transition>
+      </ModalPortal>
     </div>
   );
 }
 
-export default Landing 
+export default Landing;
