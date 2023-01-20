@@ -1,0 +1,37 @@
+.background {
+  background-color: #1f2122;
+  width: auto;
+  height: auto;
+  font-size: 5rem;
+  color: white;
+  font-family: "Noto Sans";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logosize {
+  width: 55rem;
+  height: 55rem;
+  margin: 5% 5% 2% 5%;
+}
+
+.fontsize {
+  font-size: 15rem;
+}
+
+.fontsize2 {
+  margin: 1rem;
+}
+
+.gradient {
+  margin: 0;
+  background: linear-gradient(90deg, #8f00ff, #ff00a8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pinkcolor {
+  color: #f400b0;
+  text-decoration-line: none;
+}

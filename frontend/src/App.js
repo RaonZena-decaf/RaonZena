@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import PageNotFound from "./routes/PageNotFound";
 import Auth from "./routes/main/Auth";
 import NavBar from "./components/navbar/navbar copy";
 
@@ -19,7 +20,7 @@ function App() {
         {/* <Route path="uri/" element={<Auth />}></Route> */}
         <Route path="oauth/kakao/callback" element={<Auth />}></Route>
         <Route path="/" element={<NavBar />} />
-        {/* <Route path="*" element={< NotFound />} /> */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
   );
