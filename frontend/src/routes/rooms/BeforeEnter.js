@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from "react";
-import style from "./create.module.css";
+import style from "./beforeenter.module.css";
 import { useNavigate } from "react-router-dom";
 import {
   FaVideo,
   FaVideoSlash,
   FaMicrophoneAltSlash,
   FaMicrophoneAlt,
+  FaUser,
 } from "react-icons/fa";
 
-function Create() {
+function BeforeEnter() {
   const navigate = useNavigate();
   const [roomname, setRoomname] = useState("");
   const [attend, setAttend] = useState(0);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
+  // 방에 접근 시 axios 통신이나 정보를 받아와서 방 정보 갱신 하는 부분
   useEffect(() => {
     setRoomname("samplename");
     setAttend(3);
   }, [roomname, attend]);
-
+  const enterOnClick = () => {
+    navigate("/room/1");
+  };
+  // 이전 페이지로 돌아가기
   const backOnClick = () => {
     navigate(-1);
   };
-
   // 마이크와 카메라 정보 갱신 부분
 
   useEffect(() => {
@@ -44,34 +48,23 @@ function Create() {
       <div className={style.innercontainer}>
         <div className={style.leftcontainer}>
           <h2 className={style.header}>
-            <span>방을 만드는 중 입니다</span>
+            <span>{roomname}</span>에 참가 준비 중 입니다
           </h2>
-
-          <form id="create" className={style.textcont}>
-            <ul className={style.bottom}>
-              <li>
-                <label className={style.tag} htmlfor="title">방 제목</label>
-                <input placeholder="방 제목을 입력하세요" id="title"></input>
-              </li>
-
-              <li>
-                <label className={style.tag}>인원 수</label>
-                <div class="radio-group">
-                <input type="radio" id="option-one" name="selector" />
-                <label className={style.human} htmlfor="option-one" >One</label>
-                <input type="radio" id="option-two" name="selector" />
-                <label className={style.human} htmlfor="option-two" >Two</label>
-                </div>
-
-              </li>
-
-              <li>
-                <label className={style.tag} htmlfor="password">비밀번호(선택)</label>
-                <input placeholder="방 비밀번호를 입력하세요" id="password" />
-              </li>
-            </ul>
-          </form>
-          <button onClick={backOnClick}>취소</button>
+          <div className={style.bottom}>
+            <div className={style.textcont}>
+              <FaUser className={style.highlight} /> 현재 {attend}/6 명이 방에
+              있습니다
+            </div>
+            <div className={style.textcont}>
+              카메라와 마이크 권한을 요청합니다. <br />
+              요청 메세지를 확인하여 주세요.
+            </div>
+            <div className={style.textcont}>
+              만약 오류가 발생하였을 경우, <br /> 홈 화면으로 이동 후 재접속
+              하시기 바랍니다
+            </div>
+          </div>
+          <button onClick={backOnClick}>나가기</button>
         </div>
 
         <div className={style.rightcontainer}>
@@ -89,8 +82,8 @@ function Create() {
               <FaVideoSlash onClick={cameraOnClick} />
             )}
           </div>
-          <button className={style.enter} type="submit" htmlform="create">
-            방 만들기
+          <button className={style.enter} onClick={enterOnClick}>
+            Enter
           </button>
         </div>
       </div>
@@ -98,4 +91,4 @@ function Create() {
   );
 }
 
-export default Create;
+export default BeforeEnter;

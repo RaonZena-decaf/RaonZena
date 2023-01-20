@@ -25,6 +25,7 @@
   letter-spacing: 0.15rem;
   margin-bottom: 6rem;
 }
+.highlight,
 .header span {
   color: #ff00b9;
 }
@@ -35,11 +36,12 @@
   text-align: center;
 }
 .bottom {
-    margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 .textcont {
   margin-top: 2rem;
   font-size: 1.5em;
+  text-align: center;
 }
 .video {
   width: 321px;
@@ -51,10 +53,11 @@
   margin: 1rem;
 }
 .accessory {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;  
-    margin-bottom:2rem;  
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 1.5rem;
+  font-size: 2rem;
 }
 
 button {
@@ -66,4 +69,75 @@ button {
   font-weight: 800;
   margin-top: 1rem;
   border: 0;
+  width: 20%;
 }
+.human {
+  background: #3e3e3e;
+  border-radius: 10px;
+  padding: 0.6rem;
+  font-size: 1rem;
+  color: #f300b0;
+  font-weight: 800;
+  margin-top: 1rem;
+  border: 0;
+  width: 20%;
+}
+.enter {
+  width: 60%;
+}
+
+.tag {
+  font-size: 14px;
+  width: 7rem;
+  float: left;
+  background: #3e3e3e;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 0.5rem;
+  color: #f300b0;
+}
+form ul li {
+  list-style: none;
+  height: 5rem;
+}
+form input {
+  border: 0;
+  font-size: 14px;
+  width: 15rem;
+  float: center;
+  background: #3e3e3e;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 0.5rem;
+  color: white;
+  text-align: center;
+}
+::placeholder {
+  text-align: center;
+  color: #cacaca;
+  font-size: 0.8rem;
+}
+
+/* https://codepen.io/skeddles/pen/PbROLK 라디오 버튼 커스텀 참고 */
+
+input[type="radio"] {
+  position: absolute;
+  visibility: hidden;
+  display: none;
+}
+.human{
+  float: center;
+  background: #3e3e3e;
+  border-radius: 20px;
+  padding: 1rem;
+  margin: 0.5rem;
+
+}
+
+/* .radio-group {
+  border: solid;
+  display: inline-block;
+  margin: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+} */

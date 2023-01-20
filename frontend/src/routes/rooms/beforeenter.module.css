@@ -25,6 +25,7 @@
   letter-spacing: 0.15rem;
   margin-bottom: 6rem;
 }
+.highlight,
 .header span {
   color: #ff00b9;
 }
@@ -35,7 +36,7 @@
   text-align: center;
 }
 .bottom {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5  rem;
 }
 .textcont {
   margin-top: 2rem;
@@ -54,7 +55,9 @@
     display: flex;
     justify-content: center;
     gap: 3rem;  
-    margin-bottom:2rem;  
+    margin:1.5rem;  
+    font-size: 2rem;
+
 }
 
 button {
@@ -66,4 +69,7 @@ button {
   font-weight: 800;
   margin-top: 1rem;
   border: 0;
+}
+.enter {
+  width: 60%;
 }
