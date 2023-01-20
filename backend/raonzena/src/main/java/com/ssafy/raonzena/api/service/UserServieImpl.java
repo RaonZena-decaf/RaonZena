@@ -77,10 +77,9 @@ public class UserServieImpl implements UserService{
         JSONObject body = new JSONObject(response.getBody());
         String user_name = body.getJSONObject("properties").getString("nickname");
         String user_image = body.getJSONObject("properties").getString("profile_image");
-        String email = body.getJSONObject("kakao_account").getString("email")+"_KAKAO";
-        //String user_id = email.substring(0,email.indexOf("@"));
+        String user_id = body.getLong("id") + "";
 
-        return new KaKaoDto(user_name,user_image,email);
+        return new KaKaoDto(user_name,user_image,user_id);
 
     }
 
@@ -88,26 +87,31 @@ public class UserServieImpl implements UserService{
     //내 디비에 있는지 확인 -> x -> 저장
     //정보를 컨트롤러로 user 보내줘
     public User KaKaoLogin(String authorizedCode){
+
+        System.out.println("1");
+        //System.out.println(authorizedCode);
         //토큰 가져오기
         String token = getKaKaoAccessToken(authorizedCode);
+
         //프로필 정보 가져오기
         KaKaoDto userInfo = getKaKaoUser(token);
+        //System.out.println(userInfo);
 
         //DB에 중복된 kakao id가 있는지 확인
-        boolean kakaoUser = userRepository.existsByUserId(userInfo.getUser_id());
+        boolean kakaoUser = userRepository.existsByUserId(userInfo.getUserId());
 
         if(!kakaoUser){
             UserLoginReq user = new UserLoginReq();
-            user.setUser_id(userInfo.getUser_id());
-            user.setUser_name(userInfo.getUser_name());
-            user.setUser_image(userInfo.getUser_image());
+            user.setUser_id(userInfo.getUserId());
+            user.setUser_name(userInfo.getUserName());
+            user.setUser_image(userInfo.getUserImage());
 
 
             userRepository.save(user.toEntity());
         }
-
-
-        return userRepository.findByUserId(userInfo.getUser_id()).get();
+        System.out.println("지연아 나와라");
+        System.out.println(userRepository.findByUserId(userInfo.getUserId()).get());
+        return userRepository.findByUserId(userInfo.getUserId()).get();
 
 
 
