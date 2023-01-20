@@ -1,8 +1,8 @@
 package com.ssafy.raonzena.api.service;
 
-import com.ssafy.raonzena.db.entity.User;
+import com.ssafy.raonzena.api.response.UserLoginRes;
 
 public interface UserService {
 
-    User KaKaoLogin(String authorizedCode);
+    UserLoginRes KaKaoLogin(String authorizedCode);
 }
