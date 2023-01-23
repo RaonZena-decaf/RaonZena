@@ -16,6 +16,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import static com.ssafy.raonzena.db.entity.QRoomInfo.roomInfo; //q타입 클래스 직접 import 해서 사용
+
 /**
  * 실행중인 게임방 모델 관련 디비 쿼리 생성을 위한 구현 정의.
  */
@@ -27,11 +29,8 @@ public class LiveRepositorySupport implements LiveRepository {
         this.query = query;
     }
 
-    QRoomInfo roomInfo = QRoomInfo.roomInfo;
-
     @Override
     public List<LiveRoomInfoRes> selectRooms(Map<String, Object> conditions){
-
         // 현재 실행중인 방 키워드와 함께 조회
         return query
                 .select(Projections.fields(LiveRoomInfoRes.class,
@@ -45,6 +44,24 @@ public class LiveRepositorySupport implements LiveRepository {
                 .from(roomInfo)
                 .where(containKeyword(conditions))
                 .fetch();
+    }
+
+    @Override
+    public boolean isAccessible(int roomNo, int sessionHeadCount) { //////////세션 정보에서 인원수 가져오면 바꿔야 할 부분///////////
+        // 현재 게임에 참여하고 있는 인원 수 조회 후 게임에 참여할 수 있는지 반환
+
+        // 설정된 게임방 최대 인원 수
+        int limitHeadCount = query
+                .select(roomInfo.headcount)
+                .from(roomInfo)
+                .where(roomInfo.roomNo.eq(roomNo))
+                .fetchOne();
+
+        // 유저가 게임에 참가할 수 있으면 true
+        if(sessionHeadCount + 1 <= limitHeadCount ) return true;
+
+        // 유저가 게임에 참가할 수 없으면 false
+        return false;
     }
 
     private BooleanExpression containKeyword(Map<String, Object> conditions){

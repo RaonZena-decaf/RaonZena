@@ -22,8 +22,15 @@ public class LiveServiceImpl implements LiveService {
     @Autowired
     LiveRepositorySupport liveRepositorySupport;
 
+    @Override
     public List<LiveRoomInfoRes> findRooms(Map<String, Object> conditions){
         // 현재 실행중인 방 조회
         return liveRepositorySupport.selectRooms(conditions);
+    }
+
+    @Override
+    public boolean isAccessible(int roomNo, int sessionHeadCount) { /////////세션정보 필요//////////
+        // 유저 게임 참가 가능 여부 조회
+        return liveRepositorySupport.isAccessible(roomNo,sessionHeadCount);
     }
 }

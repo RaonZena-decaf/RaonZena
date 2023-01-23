@@ -13,4 +13,6 @@ public interface LiveService {
 
     // 현재 실행중인 방 조회
     List<LiveRoomInfoRes> findRooms(Map<String, Object> conditions);
+    // 유저 게임 참가 가능 여부 조회
+    boolean isAccessible(int roomNo, int sessionHeadCount); /////////세션정보 필요//////////
 }
