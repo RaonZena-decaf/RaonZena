@@ -13,6 +13,8 @@ import java.util.Map;
 public interface LiveRepository {
     // 현재 실행중인 방 조회
     List<LiveRoomInfoRes> selectRooms(Map<String, Object> conditions);
+    // 팔로잉 유저들의 방 조회
+    List<LiveRoomInfoRes> selectFollowingRooms(int sessionUserNo); /////////세션정보 필요//////////
     // 유저 게임 참가 가능 여부 조회
     boolean  isAccessible(int roomNo, int sessionHeadCount); /////////세션정보 필요//////////
 }

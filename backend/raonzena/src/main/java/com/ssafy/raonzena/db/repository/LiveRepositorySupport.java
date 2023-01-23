@@ -40,9 +40,24 @@ public class LiveRepositorySupport implements LiveRepository {
                         roomInfo.headcount,
                         roomInfo.password,
                         roomInfo.createDate)
-                )
-                .from(roomInfo)
+                ).from(roomInfo)
                 .where(containKeyword(conditions))
+                .fetch();
+    }
+
+    @Override
+    public List<LiveRoomInfoRes> selectFollowingRooms(int sessionUserNo) { //////////세션 정보에서 유저넘버 가져오면 바꿔야 할 부분///////////
+        // 팔로잉 유저들이 호스트로 있는 방 조회
+        return query
+                .select(Projections.fields(LiveRoomInfoRes.class,
+                        roomInfo.roomNo,
+                        roomInfo.roomTitle,
+                        roomInfo.host,
+                        roomInfo.headcount,
+                        roomInfo.password,
+                        roomInfo.createDate)
+                ).from(roomInfo)
+                .where(roomInfo.host.userNo.eq(sessionUserNo))
                 .fetch();
     }
 
