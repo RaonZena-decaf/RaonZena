@@ -44,8 +44,7 @@ public class ProfileRepositorySupport implements ProfileRepository{
         if(!conditions.isEmpty()) {
             // keyword가 존재할 때
             String keyword = (String) conditions.get("keyword");
-            System.out.println(keyword);
-            return user.userId.eq(keyword);
+            return user.userId.like(keyword+"%");
         }
         return null;
     }
