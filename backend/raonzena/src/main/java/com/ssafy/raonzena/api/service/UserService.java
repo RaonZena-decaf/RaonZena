@@ -1,6 +1,7 @@
 package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.response.UserRes;
+import com.ssafy.raonzena.db.entity.User;
 
 public interface UserService {
 
