@@ -5,10 +5,7 @@ import com.ssafy.raonzena.api.service.LiveService;
 import com.ssafy.raonzena.db.entity.RoomInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,5 +28,22 @@ public class LiveController {
         }
 
         return ResponseEntity.ok(liveService.findRooms(conditions));
+    }
+
+    @GetMapping("followingRoom")
+    protected ResponseEntity<List<LiveRoomInfoRes>> followingRoomsList(){
+        // 팔로잉 유저들의 방 조회
+        return ResponseEntity.ok(liveService.findFollowingRooms(1)); /////////세션정보 필요//////////
+    }
+
+    @GetMapping("/{roomNo}")
+    protected ResponseEntity<?> liveRoomAccess(@PathVariable int roomNo){
+        // 게임 접속이 가능하면 ok 반환
+        if(liveService.isAccessible(roomNo,2)){ /////////세션정보 필요//////////
+            return ResponseEntity.ok().build();
+        } else {
+            // 게임 접속 불가능하면 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.ssafy.raonzena.api.request.UserLoginReq;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
+import com.ssafy.raonzena.db.repository.UserRepositorySupport;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -21,6 +22,9 @@ public class UserServieImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserRepositorySupport userRepositorySupport;
 
     //카카오 토큰 가져오기
     public String getKaKaoAccessToken(String authorizedCode){
@@ -116,6 +120,12 @@ public class UserServieImpl implements UserService{
 
 
 
+    }
+
+    @Override
+    public User selectUser(int userNo) {
+        // userNo로 유저 정보 조회
+        return userRepositorySupport.selectUser(userNo);
     }
 
 

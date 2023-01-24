@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ *	유저 프로필 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
+ */
+@Slf4j
 @Service
+@Transactional(readOnly = true)
 public class ProfileServiceImpl implements ProfileService{
     @Autowired
     ProfileRepositorySupport profileRepositorySupport;
@@ -34,4 +39,11 @@ public class ProfileServiceImpl implements ProfileService{
 
         return new UserRes(profile);
     }
+
+     @Override
+    public List<UserProfileRes> findProfiles(Map<String, Object> conditions) {
+        // 유저 프로필 조회
+        return profileRepositorySupport.selectProfiles(conditions);
+    }
+
 }
