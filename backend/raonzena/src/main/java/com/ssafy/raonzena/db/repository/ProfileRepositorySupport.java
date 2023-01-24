@@ -5,8 +5,10 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.raonzena.api.response.FollowFollowingtRes;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
+import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.db.entity.QFollow;
 import com.ssafy.raonzena.db.entity.QUser;
+import com.ssafy.raonzena.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -48,4 +50,5 @@ public class ProfileRepositorySupport {
                                 .where(follow.follower.eq(userNo))
                 )).fetch();
     }
+
 }
