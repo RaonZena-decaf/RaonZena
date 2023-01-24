@@ -1,6 +1,7 @@
 package com.ssafy.raonzena.api.controller;
 
-import com.ssafy.raonzena.api.response.UserLoginRes;
+
+import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class UserController {
 
 
     @GetMapping("/user/kakao/callback")
-    public ResponseEntity<UserLoginRes> kakaoLogin(String code){
+    public ResponseEntity<UserRes> kakaoLogin(String code){
         //authorizeCode : 카카오 서버로부터 받은 인가 코드
         return ResponseEntity.ok(userService.KaKaoLogin(code));
     }

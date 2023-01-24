@@ -2,9 +2,10 @@ package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.dto.KaKaoDto;
 import com.ssafy.raonzena.api.request.UserLoginReq;
-import com.ssafy.raonzena.api.response.UserLoginRes;
+import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
+import com.ssafy.raonzena.db.repository.UserRepositorySupport;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -21,6 +22,9 @@ public class UserServieImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserRepositorySupport userRepositorySupport;
 
     //카카오 토큰 가져오기
     public String getKaKaoAccessToken(String authorizedCode){
@@ -87,7 +91,7 @@ public class UserServieImpl implements UserService{
     // 카카오 로그인
     //내 디비에 있는지 확인 -> x -> 저장
     //정보를 컨트롤러로 user 보내줘
-    public UserLoginRes KaKaoLogin(String authorizedCode){
+    public UserRes KaKaoLogin(String authorizedCode){
 
         System.out.println("1");
         //System.out.println(authorizedCode);
@@ -112,10 +116,16 @@ public class UserServieImpl implements UserService{
         }
 
         User userProfile = userRepository.findByUserId(userInfo.getUserId());
-        return new UserLoginRes(userProfile);
+        return new UserRes(userProfile);
 
 
 
+    }
+
+    @Override
+    public User selectUser(int userNo) {
+        // userNo로 유저 정보 조회
+        return userRepositorySupport.selectUser(userNo);
     }
 
 
