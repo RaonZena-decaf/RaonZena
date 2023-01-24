@@ -8,7 +8,7 @@ import org.springframework.beans.BeanUtils;
 
 @Getter
 @NoArgsConstructor
-public class UserLoginRes {
+public class UserRes {
     private int userNo;
     private String userId;
     private String userName;
@@ -18,15 +18,15 @@ public class UserLoginRes {
 
     //entity -> dto
     @Builder
-    public UserLoginRes(User user) {
-//        this.userNo = user.getUserNo();
-//        this.userId = user.getUserId();
-//        this.userName = user.getUserName();
-//        this.exp = user.getExp();
-//        this.level = user.getLevel();
-//        this.userImage = user.getUserImage();
+    public UserRes(User user) {
+        this.userNo = user.getUserNo();
+        this.userId = user.getUserId();
+        this.userName = user.getUserName();
+        this.exp = user.getExp();
+        this.level = user.getLevel();
+        this.userImage = user.getUserImage();
 
-        //위에 코드 아래로 변경
-        BeanUtils.copyProperties(user, this);
+        //위에 코드 아래로 변경 -> null 뜸
+        //BeanUtils.copyProperties(user, this);
     }
 }

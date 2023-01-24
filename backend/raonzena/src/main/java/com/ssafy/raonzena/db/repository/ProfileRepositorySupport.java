@@ -1,6 +1,6 @@
 package com.ssafy.raonzena.db.repository;
 
-import com.querydsl.core.types.Projections;
+
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.raonzena.api.response.UserProfileRes;
@@ -15,11 +15,46 @@ import static com.ssafy.raonzena.db.entity.QUser.user;
  * 유저 프로필 모델 관련 디비 쿼리 생성을 위한 구현 정의.
  */
 @Repository
-public class ProfileRepositorySupport implements ProfileRepository{
+public class ProfileRepositorySupport { //implements ProfileRepository
 
-    private final JPAQueryFactory query;
-    public ProfileRepositorySupport(JPAQueryFactory query) {
-        this.query = query;
+    // private final JPAQueryFactory query;
+    // public ProfileRepositorySupport(JPAQueryFactory query) {
+    //     this.query = query;
+    // }
+
+    @Autowired
+    private JPAQueryFactory query;
+
+
+    QUser user = QUser.user;
+    QFollow follow = QFollow.follow;
+
+
+    //userNo를 팔로우 하는 사람들
+    public List<FollowFollowingtRes> findFollowerByUserNo (int userNo){
+        return query
+                .select(Projections.fields(FollowFollowingtRes.class,
+                        user.userNo, user.userName))
+                .from(user)
+                .where(user.userNo.in (
+                        JPAExpressions
+                                .select(follow.follower)
+                                .from(follow)
+                                .where(follow.followee.eq(userNo))
+                )).fetch();
+    }
+    //userNo가 팔로우 하는 사람들
+    public List<FollowFollowingtRes> findFolloweeByUserNo (int userNo){
+        return query
+                .select(Projections.fields(FollowFollowingtRes.class,
+                        user.userNo, user.userName))
+                .from(user)
+                .where(user.userNo.in (
+                        JPAExpressions
+                                .select(follow.followee)
+                                .from(follow)
+                                .where(follow.follower.eq(userNo))
+                )).fetch();
     }
 
     @Override
@@ -48,4 +83,5 @@ public class ProfileRepositorySupport implements ProfileRepository{
         }
         return null;
     }
+
 }

@@ -2,7 +2,7 @@ package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.dto.KaKaoDto;
 import com.ssafy.raonzena.api.request.UserLoginReq;
-import com.ssafy.raonzena.api.response.UserLoginRes;
+import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
 import com.ssafy.raonzena.db.repository.UserRepositorySupport;
@@ -91,7 +91,7 @@ public class UserServieImpl implements UserService{
     // 카카오 로그인
     //내 디비에 있는지 확인 -> x -> 저장
     //정보를 컨트롤러로 user 보내줘
-    public UserLoginRes KaKaoLogin(String authorizedCode){
+    public UserRes KaKaoLogin(String authorizedCode){
 
         System.out.println("1");
         //System.out.println(authorizedCode);
@@ -116,7 +116,7 @@ public class UserServieImpl implements UserService{
         }
 
         User userProfile = userRepository.findByUserId(userInfo.getUserId());
-        return new UserLoginRes(userProfile);
+        return new UserRes(userProfile);
 
 
 
