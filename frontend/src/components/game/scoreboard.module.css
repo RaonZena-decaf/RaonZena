@@ -1,0 +1,11 @@
+.board{
+    width: 30rem;
+    height: 13rem;
+    background-color: #353839;
+    border-radius: 10px;
+    border: 2px solid ;
+    margin: 1rem;
+    justify-content: space-around;
+    display: grid flex;
+    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+}

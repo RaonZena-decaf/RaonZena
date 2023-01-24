@@ -1,14 +1,14 @@
 import React from "react";
-
+import style from "../game/catchmind.module.css"
 
 function Catchmind() {
   
 
   return (
     <div >
-        <h3>
-            Catchmind Painting
-        </h3>
+        <div className={style.board}>
+          Game Board
+        </div>
     </div>
   );
 }
