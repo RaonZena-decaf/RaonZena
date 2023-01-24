@@ -25,8 +25,9 @@ const NoDataLivePage = () => {
           </p>
         </div>
         <div className={styles.vectorGroup}>
-          <img className={styles.groupChild} alt="" src="../rectangle-21.svg" />
-          <div className={styles.div2}>방 만들기</div>
+          <button className={styles.groupChild}>
+            <a href="">방 만들기</a>
+          </button>
         </div>
       </div>
       <div className={styles.wrapper}>
