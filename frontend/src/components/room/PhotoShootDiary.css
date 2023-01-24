@@ -1,0 +1,73 @@
+.photoshootdiaryflex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.photoshootdiaryflex2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.photoshootdiaryflex3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.photoshootdiaryselect {
+  background-color: #353839;
+  color: white;
+  width: 171px;
+  height: 56px;
+  border-radius: 10px;
+  margin: 10px;
+  text-align-last: center;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.photoshootdiaryinput {
+  background-color: #353839;
+  color: white;
+  width: 500px;
+  height: 61px;
+  border-radius: 10px;
+  margin: 10px;
+  font-size: 1.2rem;
+}
+
+.photoshootdiarytextarea {
+  background-color: #353839;
+  color: white;
+  width: 500px;
+  height: 296px;
+  border-radius: 10px;
+  margin: 10px;
+  font-size: 1.2rem;
+}
+
+.photoshootdiarybutton {
+  width: 151px;
+  height: 50px;
+  background-color: #00a739;
+  color: white;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.photoshootdiarybutton2 {
+  width: 151px;
+  height: 50px;
+  background-color: #f10000;
+  color: white;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: none;
+}
+
+::placeholder {
+  color: gray;
+  font-size: 1.3rem;
+}

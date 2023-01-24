@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PageNotFound from "./routes/PageNotFound";
 import Auth from "./routes/main/Auth";
 import NavBar from "./components/navbar/navbar";
+import PhotoShoot from "./components/room/PhotoShoot";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         {/* <Route path="/login" element={<Login /> } /> */}
         <Route path="uri/" element={<Auth />}></Route>
         <Route path="/" element={<NavBar />} />
+        <Route path="/PhotoShoot" element={<PhotoShoot />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
