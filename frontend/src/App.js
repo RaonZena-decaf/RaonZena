@@ -28,7 +28,7 @@ function App() {
 
         <Route path="/" element={<NavBar />} />
         <Route path="*" element={<PageNotFound />} />
-        {/* <Route path="/" element={<Landing />} /> */}
+        <Route path="/" element={<Landing />} />
 
       </Routes>
     </Router>
