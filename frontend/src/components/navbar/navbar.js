@@ -16,6 +16,11 @@ const Navbar = () => {
   const navigateToLive = () => {
     navigate("/live");
   };
+
+  const navigateToNoDataLive = () => {
+    navigate("/NoDataLive");
+  };
+
   const navigateToProfile = () => {
     const userId = 1; // 현재 접속중인 유저 id를 가져와야 한다 redux든 아니면 back과의 통신이든
     navigate(`/profile/:${userId}`);
@@ -95,6 +100,9 @@ const Navbar = () => {
           </div>
           <div className={styles.home} onClick={navigateToLive}>
             라이브
+          </div>
+          <div className={styles.home} onClick={navigateToNoDataLive}>
+            라이브 X
           </div>
 
           {isLogin ? (
