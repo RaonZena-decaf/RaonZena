@@ -6,7 +6,7 @@ function TreasureHuntGuideModal({ closeModal }) {
   return (
     <>
       <div className={styles.modaltitle}>
-        <span>게임 가이드 </span>
+        <span className={styles.highlight}>게임 가이드 </span>
         <br />방 안의 보물찾기
       </div>
       <button

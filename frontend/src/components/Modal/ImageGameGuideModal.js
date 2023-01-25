@@ -6,7 +6,7 @@ function ImageGameGuideModal({ closeModal }) {
   return (
     <>
       <div className={styles.modaltitle}>
-        <span>게임 가이드 </span>
+        <span className={styles.highlight}>게임 가이드 </span>
         <br />
         이미지 게임
       </div>

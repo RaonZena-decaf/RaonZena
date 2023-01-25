@@ -4,7 +4,7 @@ import style from "./PageNotFound.module.css";
 function PageNotFound() {
   return (
     <div className={style.background}>
-      <img alt="로고" src="./404Logo.png" className={style.logosize} />
+      <img alt="로고" src="./public/404Logo.png" className={style.logosize} />
       <p className={`${style.gradient} ${style.fontsize}`}>
         이런, 여기는 아무도 없네요.
       </p>
