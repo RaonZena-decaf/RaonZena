@@ -6,7 +6,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 public class UserLoginReq {
-    private int userNo;
+    private long userNo;
     private String userId;
     private String userName;
     private String userImage;
