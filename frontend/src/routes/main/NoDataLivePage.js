@@ -1,5 +1,5 @@
 import styles from "./NoDataLivePage.module.css";
-import Navbar from "../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 
 const NoDataLivePage = () => {
   return (

@@ -1,9 +1,9 @@
-import RoomTitleForm from "./RoomTitleForm";
-import RoomTitleCard from "./RoomTitleCard";
-import FollowingHostCard from "./FollowingHostCard";
-import FollowersContainer from "./FollowersContainer";
+import RoomTitleForm from "../../components/LivePage/RoomTitleForm";
+import RoomTitleCard from "../../components/LivePage/RoomTitleCard";
+import FollowingHostCard from "../../components/LivePage/FollowingHostCard";
+import FollowersContainer from "../../components/LivePage/FollowersContainer";
 import styles from "./LivePage.module.css";
-import Navbar from "../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 
 const LivePage = () => {
   return (
