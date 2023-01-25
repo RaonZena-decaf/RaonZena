@@ -1,0 +1,26 @@
+.background {
+  background-color: #1f2122;
+  width: 802px;
+  height: 401px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.fontsize {
+  font-size: 2rem;
+  color: white;
+}
+
+.logoImg {
+  margin-top: 2rem;
+  animation: rotate_image 3s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes rotate_image {
+  100% {
+    transform: rotate(720deg);
+  }
+}
