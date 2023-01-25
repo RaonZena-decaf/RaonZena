@@ -26,7 +26,7 @@ function App() {
         <Route path="uri/" element={<Auth />}></Route>
         <Route path="/" element={<NavBar />} />
         <Route path="*" element={<PageNotFound />} />
-        {/* <Route path="/" element={<Landing />} /> */}
+        <Route path="/" element={<Landing />} />
 
       </Routes>
     </Router>
