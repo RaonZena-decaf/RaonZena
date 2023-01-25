@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import style from "./beforeenter.module.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/navbar/navbar";
+import Footer from "../../components/Footer";
+
 import {
   FaVideo,
   FaVideoSlash,
@@ -45,6 +48,7 @@ function BeforeEnter() {
 
   return (
     <div className={style.background}>
+      <Navbar />
       <div className={style.container}>
         <div className={style.innercontainer}>
           <div className={style.leftcontainer}>
@@ -89,6 +93,7 @@ function BeforeEnter() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
