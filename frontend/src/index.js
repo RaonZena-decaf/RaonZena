@@ -4,9 +4,10 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
 import "./global.css"
+
 // import reportWebVitals from './reportWebVitals';
 
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(

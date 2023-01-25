@@ -8,6 +8,7 @@ import NoDataLivePage from "./components/NoDataLivePage/NoDataLivePage";
 import Landing  from './routes/main/Landing '
 
 
+
 function App() {
   return (
     <Router>
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<NavBar />} />
         <Route path="*" element={<PageNotFound />} />
         {/* <Route path="/" element={<Landing />} /> */}
+
       </Routes>
     </Router>
   );
