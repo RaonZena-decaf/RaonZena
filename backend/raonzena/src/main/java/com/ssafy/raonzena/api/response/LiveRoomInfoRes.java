@@ -15,15 +15,15 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class LiveRoomInfoRes {
 
-    private Integer roomNo;
+    private long roomNo;
 
     private String roomTitle;
 
     private User host;
 
-    private Integer headcount;
+    private int headcount;
 
-    private Integer password;
+    private int password;
 
     private Timestamp createDate;
 

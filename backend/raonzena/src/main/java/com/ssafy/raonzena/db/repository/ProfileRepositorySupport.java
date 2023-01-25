@@ -5,8 +5,11 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.raonzena.api.response.BoardRes;
 import com.ssafy.raonzena.api.response.FollowFollowingtRes;
 import com.ssafy.raonzena.api.response.UserProfileRes;
+import com.ssafy.raonzena.db.entity.Board;
+import com.ssafy.raonzena.db.entity.QBoard;
 import com.ssafy.raonzena.db.entity.QFollow;
 import com.ssafy.raonzena.db.entity.QUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +35,11 @@ public class ProfileRepositorySupport { //implements ProfileRepository
 
     QUser user = QUser.user;
     QFollow follow = QFollow.follow;
+    QBoard board = QBoard.board;
 
 
     //userNo를 팔로우 하는 사람들
-    public List<FollowFollowingtRes> findFollowerByUserNo (int userNo){
+    public List<FollowFollowingtRes> findFollowerByUserNo (long userNo){
         return query
                 .select(Projections.fields(FollowFollowingtRes.class,
                         user.userNo, user.userName))
@@ -48,7 +52,7 @@ public class ProfileRepositorySupport { //implements ProfileRepository
                 )).fetch();
     }
     //userNo가 팔로우 하는 사람들
-    public List<FollowFollowingtRes> findFolloweeByUserNo (int userNo){
+    public List<FollowFollowingtRes> findFolloweeByUserNo (long userNo){
         return query
                 .select(Projections.fields(FollowFollowingtRes.class,
                         user.userNo, user.userName))
@@ -87,5 +91,6 @@ public class ProfileRepositorySupport { //implements ProfileRepository
         }
         return null;
     }
+
 
 }
