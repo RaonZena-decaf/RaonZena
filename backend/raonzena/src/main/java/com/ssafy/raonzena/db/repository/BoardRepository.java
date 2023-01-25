@@ -8,7 +8,11 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
 
+
+    //피드리스트
     List<Board> findByUserNo(long userNo);
 
+    //피드 1개
+    Board findByBoardNo(long feedNo);
 
 }

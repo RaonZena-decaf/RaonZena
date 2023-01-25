@@ -27,7 +27,7 @@
   cursor: pointer;
   color: white;
   font-size: 5rem;
-  opacity: 0.5;
+  opacity: 0.8;
   z-index: 5;
 }
 
@@ -38,7 +38,7 @@
   cursor: pointer;
   color: white;
   font-size: 5rem;
-  opacity: 0.5;
+  opacity: 0.8;
   z-index: 5;
 }
 
@@ -137,6 +137,6 @@
 }
 
 
-span {
+.highlight {
   color: #f400b0;
 }

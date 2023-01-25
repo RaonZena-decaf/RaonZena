@@ -71,7 +71,9 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.findProfiles(conditions));
     }
 
-    @GetMapping("{userNo}/feedList") //피드리스트
+
+    //피드리스트
+    @GetMapping("{userNo}/feedList")
     public ResponseEntity<List<BoardRes>> feedList(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.feedList(userNo));
     }
@@ -81,7 +83,6 @@ public class ProfileController {
         //////////세션정보로 유저넘버 얻어오기 구현 필요/////////
         User user = userService.selectUser(1);
 
-        System.out.println("1232343");
         // 언팔로우 성공시 ok 반환
         if(profileService.unfollow(followNo, user.getUserNo())){ /////////세션정보 필요//////////
             return ResponseEntity.ok().build();
@@ -89,7 +90,24 @@ public class ProfileController {
             // 언팔로우 실패 시 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
             return ResponseEntity.internalServerError().build();
         }
+
+    //피드 디테일
+    @GetMapping("/feed/{feedNo}")
+    public ResponseEntity<BoardRes> feedDetail(@PathVariable long feedNo){
+
+        return ResponseEntity.ok(profileService.feedDetail(feedNo));
     }
 
+    //팔로워 수
+    @GetMapping("/{userNo}/followerCnt")
+    public ResponseEntity<Integer> followerCnt(@PathVariable long userNo){
+        return ResponseEntity.ok(profileService.followerCnt(userNo));
+    }
+
+    //팔로잉 수
+    @GetMapping("/{userNo}/followingCnt")
+    public ResponseEntity<Integer> followingCnt(@PathVariable long userNo){
+        return ResponseEntity.ok(profileService.followingCnt(userNo));
+    }
 
 }

@@ -29,12 +29,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProfileServiceImpl implements ProfileService {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     ProfileRepositorySupport profileRepositorySupport;
-
     @Autowired
     BoardRepository boardRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     FollowRepository followRepository;
@@ -74,6 +73,7 @@ public class ProfileServiceImpl implements ProfileService {
         return profileRepositorySupport.selectProfiles(conditions);
     }
 
+    //피드 리스트
     @Override
     public List<BoardRes> feedList(long userNo) {
         List<Board> feed = boardRepository.findByUserNo(userNo);
@@ -99,6 +99,24 @@ public class ProfileServiceImpl implements ProfileService {
     public Follow isFollowed(long follower, long followee){
         // 팔로우 여부 조회
         return followRepository.findByFollowerAndFollowee(follower,followee);
+
+    //피드 디테일
+    @Override
+    public BoardRes feedDetail(long feedNo) {
+        Board board = boardRepository.findByBoardNo(feedNo);
+        return new BoardRes(board);
+    }
+
+    //팔로워 수
+    @Override
+    public int followerCnt(long userNo) {
+
+        return follower(userNo).size();
+    }
+    //팔로잉 수
+    @Override
+    public int followingCnt(long userNo) {
+        return following(userNo).size();
     }
 
 }

@@ -40,4 +40,10 @@ public interface ProfileService {
     // 팔로우 여부 조회
     Follow isFollowed(long follower, long followee);
 
+    //피드 디테일
+    BoardRes feedDetail(long feedNo);
+
+    int followerCnt(long userNo);
+
+    int followingCnt(long userNo);
 }
