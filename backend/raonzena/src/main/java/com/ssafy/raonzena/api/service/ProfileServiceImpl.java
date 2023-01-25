@@ -27,12 +27,11 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ProfileServiceImpl implements ProfileService {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     ProfileRepositorySupport profileRepositorySupport;
-
     @Autowired
     BoardRepository boardRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<FollowFollowingtRes> follower(int userNo) { //userNo를 팔로우 한 사람
@@ -62,6 +61,12 @@ public class ProfileServiceImpl implements ProfileService {
         List<Board> feed = boardRepository.findByUserNo(userNo);
 
         return feed.stream().map(m -> new BoardRes(m.getBoardNo(), m.getBoardImage(), m.getContent(), m.getUserNo(), m.getCreateDate(), m.getFirstUser(), m.getSecondUser(), m.getThirdUser())).collect(Collectors.toList());
+    }
+
+    @Override
+    public BoardRes feedDetail(long feedNo) {
+        Board board = boardRepository.findByBoardNo(feedNo);
+        return new BoardRes(board);
     }
 
 }

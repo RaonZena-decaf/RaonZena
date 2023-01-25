@@ -30,5 +30,6 @@ public interface ProfileService {
     //피드 리스트
     List<BoardRes> feedList(int userNo);
 
-
+    //피드 디테일
+    BoardRes feedDetail(long feedNo);
 }

@@ -53,6 +53,12 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.feedList(userNo));
     }
 
+    @GetMapping("/feed/{feedNo}")
+    public ResponseEntity<BoardRes> feedDetail(@PathVariable int feedNo){
+
+        return ResponseEntity.ok(profileService.feedDetail(feedNo));
+    }
+
 
 
 }
