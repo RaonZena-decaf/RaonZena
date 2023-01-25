@@ -15,7 +15,7 @@ public class SpeekAndDraw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "speek_no", nullable = false)
-    private Integer speekNo;
+    private Long speekNo;
 
     @Column(name = "answer", nullable = false)
     private String answer;

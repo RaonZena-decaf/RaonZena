@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FollowFollowingtRes {
 
-    private int userNo;
+    private long userNo;
     private String userName;
 
 
