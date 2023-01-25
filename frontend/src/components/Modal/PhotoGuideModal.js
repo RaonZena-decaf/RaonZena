@@ -1,18 +1,22 @@
 import { FaCamera } from "react-icons/fa";
 
-import "./Modal.css";
+import styles from "./Modal.module.css";
 
-function PhotoGuideModal({ show, closeModal }) {
+function PhotoGuideModal({ closeModal }) {
   return (
     <>
-      <div className="modaltitle">
+      <div className={styles.modaltitle}>
         <span>사진 촬영</span> 가이드{" "}
       </div>
-      <button id="modalCloseBtn" className="photoGuide" onClick={closeModal}>
+      <button
+        id={styles.modalCloseBtn}
+        className={styles.photoGuide}
+        onClick={closeModal}
+      >
         ✖
       </button>
       <FaCamera />
-      <ol className="modaltxt">
+      <ol className={styles.modaltxt}>
         <li>
           게임이 종료되거나, 화면 하단의 사진 버튼을 누르면 5초 후 사진이
           촬영됩니다.
@@ -21,9 +25,7 @@ function PhotoGuideModal({ show, closeModal }) {
           사진 촬영 후, 사진의 프레임, 제목, 본문을 설정할 수 있는 창이
           출력됩니다.
         </li>
-        <li>
-          찍은 사진은 '피드에 저장' 버튼으로 프로필에 저장할 수 있습니다.
-        </li>
+        <li>찍은 사진은 '피드에 저장' 버튼으로 프로필에 저장할 수 있습니다.</li>
         <li>취소 버튼을 누르면 찍었던 사진은 사라집니다.</li>
       </ol>
     </>

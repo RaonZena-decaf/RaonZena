@@ -1,26 +1,29 @@
 import React from "react";
 import { FaGamepad } from "react-icons/fa";
 
-import "./Modal.css";
+import styles from "./Modal.module.css";
 
-function GameGuideModal({closeModal}) {
+function GameGuideModal({ closeModal }) {
   return (
     <>
-      <div className="modaltitle">
-        <span>게임 진행</span> 가이드{" "}
+      <div className={styles.modaltitle}>
+        <span>게임 진행</span> 가이드
       </div>
-      <button id="modalCloseBtn" className="gameGuide" onClick={closeModal}>
+      <button
+        id={styles.modalCloseBtn}
+        className={styles.gameGuide}
+        onClick={closeModal}
+      >
         ✖
       </button>
       <FaGamepad />
-      <ol className="modaltxt">
+      <ol className={styles.modaltxt}>
         <li>
-          방장이 화면 하단의 게임 버튼을 클릭 후, 게임의 종류를 선택하면
-          게임이 시작됩니다.
+          방장이 화면 하단의 게임 버튼을 클릭 후, 게임의 종류를 선택하면 게임이
+          시작됩니다.
         </li>
         <li>
-          게임마다 다른 규칙이 적용되므로, 게임 규칙을 미리 숙지하시길
-          바랍니다.
+          게임마다 다른 규칙이 적용되므로, 게임 규칙을 미리 숙지하시길 바랍니다.
         </li>
         <li>참가자들은 게임을 플레이하는 것으로 점수를 얻을 수 있습니다.</li>
         <li>

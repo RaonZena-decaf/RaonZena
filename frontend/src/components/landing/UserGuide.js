@@ -1,4 +1,4 @@
-import "./UserGuide.css";
+import styles from "./UserGuide.module.css";
 import { useEffect, useRef, useState } from "react";
 
 function UserGuide({ openModal }) {
@@ -35,8 +35,8 @@ function UserGuide({ openModal }) {
   };
 
   return (
-    <div className="carousel">
-      <div className="carouselcontainer" ref={containerCarosel}>
+    <div className={styles.carousel}>
+      <div className={styles.carouselcontainer} ref={containerCarosel}>
         <img
           src="./img/Landing/GameGuide.png"
           alt=""
@@ -92,19 +92,19 @@ function UserGuide({ openModal }) {
           onClick={openModal}
         />
       </div>
-      <div className="buttonlist">
+      <div className={styles.buttonlist}>
         <div
-          className="circlebutton active"
+          className={`${styles.circlebutton} ${styles.active}`}
           onClick={clickbutton1}
           ref={pageBtn1}
         ></div>
         <div
-          className="circlebutton"
+          className={styles.circlebutton}
           onClick={clickbutton2}
           ref={pageBtn2}
         ></div>
         <div
-          className="circlebutton"
+          className={styles.circlebutton}
           onClick={clickbutton3}
           ref={pageBtn3}
         ></div>
