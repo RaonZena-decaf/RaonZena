@@ -1,0 +1,61 @@
+.UpperContainer {
+  display: flex;
+  align-items: center;
+  font-weight: 100;
+  height: 10%;
+  justify-content: space-between;
+}
+
+.MiddleContainer1{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 25rem;
+}
+.MiddleContainer2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 30rem;
+}
+.MiddleContainer3{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 15rem;
+}
+
+.IconWithText{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 3.2rem;
+  cursor: pointer;
+}
+
+.UnderIcon {
+  font-size: 1.5rem;
+  margin: 0;
+  text-align: center;
+  padding-top: 1rem;
+}
+.smallText{
+  font-size: 1.4rem;
+  margin: 0;
+  text-align: center;
+}
+.ExitButton {
+  align-self: center;
+  background-color: #D70000;
+  height: fit-content;
+  padding: 0.8rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  cursor: pointer;  
+}
+
+.ExitButton:hover {
+  background-color: #bc0000;
+}
