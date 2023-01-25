@@ -18,11 +18,6 @@ const Navbar = () => {
     navigate("/live");
   };
 
-  // const navigateToNoDataLive = () => {
-  //   navigate("/NoDataLive");
-  // };
-
-
   const navigateToProfile = () => {
     const userId = 1; // 현재 접속중인 유저 id를 가져와야 한다 redux든 아니면 back과의 통신이든
     navigate(`/profile/:${userId}`);
@@ -64,16 +59,8 @@ const Navbar = () => {
             <img className={styles.groupChild} alt="" src="../img/logo.png" />
             <b className={styles.raonzena}>RaonZena</b>
           </div>
-          <div className={styles.home} onClick={navigateToLanding}>
-            홈
-          </div>
-          <div className={styles.home} onClick={navigateToLive}>
-            라이브
-          </div>
-          {/* <div className={styles.home} onClick={navigateToNoDataLive}>
-            라이브 X
-          </div> */}
-
+          {/* <div className={styles.rectangleParent}> */}
+          <div className={styles.flexGroup}>
             <div>
               <ul className={styles.nav_ul}>
                 <li className={styles.nav_ul_li} onClick={navigateToLanding}>
@@ -115,6 +102,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

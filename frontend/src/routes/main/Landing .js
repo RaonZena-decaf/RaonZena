@@ -1,6 +1,6 @@
 import React, { useState, useNavigate } from "react"
 import styles from "./Landing.module.css"
-import Navbar from "../../components/Navbar"
+import Navbar from "../../components/navbar/navbar"
 import Footer from "../../components/Footer"
 import UserGuide from "../../components/landing/UserGuide"
 import ModalPortal from "../../components/Modal/Portal"
