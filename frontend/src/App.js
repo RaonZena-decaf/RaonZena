@@ -5,6 +5,9 @@ import Auth from "./routes/main/Auth";
 import NavBar from "./components/navbar/navbar";
 import LivePage from "./components/LivePage/LivePage";
 import NoDataLivePage from "./components/NoDataLivePage/NoDataLivePage";
+import Landing  from './routes/main/Landing '
+
+
 
 function App() {
   return (
@@ -23,9 +26,12 @@ function App() {
         <Route path="uri/" element={<Auth />}></Route>
         <Route path="/" element={<NavBar />} />
         <Route path="*" element={<PageNotFound />} />
+        {/* <Route path="/" element={<Landing />} /> */}
+
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
