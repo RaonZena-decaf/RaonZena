@@ -5,6 +5,8 @@ import Auth from "./routes/main/Auth";
 import NavBar from "./components/navbar/navbar";
 import LivePage from "./components/LivePage/LivePage";
 import NoDataLivePage from "./components/NoDataLivePage/NoDataLivePage";
+import ChatingSubjectLoding from "./components/room/ChatingSubjectLoding";
+import ChatingSubject from "./components/room/ChatingSubject";
 
 function App() {
   return (
@@ -22,6 +24,11 @@ function App() {
         <Route path="/live" element={<LivePage />} />
         <Route path="uri/" element={<Auth />}></Route>
         <Route path="/" element={<NavBar />} />
+        <Route
+          path="/ChatingSubjectLoding"
+          element={<ChatingSubjectLoding />}
+        />
+        <Route path="/ChatingSubject" element={<ChatingSubject />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
