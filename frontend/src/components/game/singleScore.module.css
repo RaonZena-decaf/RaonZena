@@ -1,0 +1,24 @@
+.board{
+    border-radius: 10px;
+    border: 2px solid ;
+    display: inline-flex;
+    width: 45%;
+    height: 30%;
+}
+.icon {
+    color: linear-gradient(90deg, #9D00F1 0%, #F400B0 100%);
+    font-size: 2rem;
+}
+#progress {
+    appearance: none;
+}
+#progress::-webkit-progress-bar {
+    background:#f0f0f0;
+    border-radius:5px;
+    box-shadow: inset 3px 3px 10px #ccc;
+}
+#progress::-webkit-progress-value {
+    border-radius:10px;
+    background-color: #F300B0;
+
+}
