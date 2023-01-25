@@ -1,16 +1,16 @@
 .background {
   background-color: #1f2122;
   width: auto;
-  height:auto;
+  height: auto;
   font-weight: bold;
   font-size: 5rem;
-  color:white;
+  color: white;
   font-family: "Noto Sans";
   padding-left: 8.3%;
   padding-right: 8.3%;
   display: flex;
   flex-direction: column;
-} 
+}
 
 .background2 {
   background-color: #353839;
@@ -19,7 +19,7 @@
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between ;
+  justify-content: space-between;
 }
 
 .background3 {
@@ -29,21 +29,19 @@
   border-radius: 2rem;
   padding: 5rem;
   text-align: left;
-  position: relative;
   margin: 3%;
 }
 
-
 .gradient {
-  margin:0;
+  margin: 0;
   background: linear-gradient(90deg, #8f00ff, #ff00a8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.pinkbutton{
+.pinkbutton {
   margin-top: 5rem;
-  background-color: #F400B0;
+  background-color: #f400b0;
   font-size: 2.5rem;
   color: white;
   border-radius: 1rem;
@@ -53,14 +51,11 @@
   cursor: pointer;
 }
 
-.pinkbutton:active{
-  background-color: #222222;
-  color: #F400B0;
-  border: #F400B0 solid 0.3rem;
-
+.pinkbutton:hover {
+  background-color: #cb0091;
 }
 
-.box1{
+.box1 {
   margin-top: 5%;
   margin-bottom: 5%;
 }
@@ -71,26 +66,25 @@
   justify-content: space-between;
 }
 
-
-.LandingImage1{
+.LandingImage1 {
   width: 30%;
   height: auto;
 }
 
-.maintext2{
+.maintext2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.maintext2 p{
+.maintext2 p {
   margin-top: 0.5rem;
   margin-bottom: 0;
   font-weight: 100;
   font-size: 2.5rem;
 }
 
-.title {  
+.title {
   margin: 0;
 }
 
@@ -100,17 +94,17 @@
   margin-bottom: 2rem;
 }
 
-#serviceintro{
+#serviceintro {
   margin: 0;
   font-size: 2.5rem;
   margin-bottom: 2rem;
 }
 
-#imageconfig{
+#imageconfig {
   display: flex;
   justify-content: space-between;
 }
 
-#pinkcolor{
-  color: #F400B0;
+#pinkcolor {
+  color: #f400b0;
 }
