@@ -96,9 +96,10 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Follow isFollowed(long follower, long followee){
+    public Follow isFollowed(long follower, long followee) {
         // 팔로우 여부 조회
-        return followRepository.findByFollowerAndFollowee(follower,followee);
+        return followRepository.findByFollowerAndFollowee(follower, followee);
+    }
 
     //피드 디테일
     @Override
