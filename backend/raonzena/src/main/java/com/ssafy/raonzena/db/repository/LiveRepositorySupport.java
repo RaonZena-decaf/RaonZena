@@ -22,14 +22,14 @@ import static com.ssafy.raonzena.db.entity.QRoomInfo.roomInfo; //q타입 클래�
  * 실행중인 게임방 모델 관련 디비 쿼리 생성을 위한 구현 정의.
  */
 @Repository //스프링 빈으로 등록
-public class LiveRepositorySupport implements LiveRepository {
+public class LiveRepositorySupport  {
 
     private final JPAQueryFactory query;
     public LiveRepositorySupport(JPAQueryFactory query) {
         this.query = query;
     }
 
-    @Override
+
     public List<LiveRoomInfoRes> selectRooms(Map<String, Object> conditions){
         // 현재 실행중인 방 키워드와 함께 조회
         return query
@@ -45,8 +45,8 @@ public class LiveRepositorySupport implements LiveRepository {
                 .fetch();
     }
 
-    @Override
-    public List<LiveRoomInfoRes> selectFollowingRooms(int sessionUserNo) { //////////세션 정보에서 유저넘버 가져오면 바꿔야 할 부분///////////
+
+    public List<LiveRoomInfoRes> selectFollowingRooms(long sessionUserNo) { //////////세션 정보에서 유저넘버 가져오면 바꿔야 할 부분///////////
         // 팔로잉 유저들이 호스트로 있는 방 조회
         return query
                 .select(Projections.fields(LiveRoomInfoRes.class,
@@ -61,8 +61,8 @@ public class LiveRepositorySupport implements LiveRepository {
                 .fetch();
     }
 
-    @Override
-    public boolean isAccessible(int roomNo, int sessionHeadCount) { //////////세션 정보에서 인원수 가져오면 바꿔야 할 부분///////////
+
+    public boolean isAccessible(long roomNo, int sessionHeadCount) { //////////세션 정보에서 인원수 가져오면 바꿔야 할 부분///////////
         // 현재 게임에 참여하고 있는 인원 수 조회 후 게임에 참여할 수 있는지 반환
 
         // 설정된 게임방 최대 인원 수

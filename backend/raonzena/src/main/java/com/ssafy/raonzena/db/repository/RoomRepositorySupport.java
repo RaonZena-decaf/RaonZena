@@ -11,6 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.swing.text.html.Option;
 
+import static com.ssafy.raonzena.db.entity.QRoomInfo.roomInfo;
+
+
+
 /**
  * 게임방 모델 관련 디비 쿼리 생성을 위한 구현 정의.
  */

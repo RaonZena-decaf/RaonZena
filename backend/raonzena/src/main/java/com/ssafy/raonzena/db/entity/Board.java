@@ -26,9 +26,8 @@ public class Board {
     @Column(name = "content")
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "user_no",nullable = false)
-    private User userNo;
+    @Column(name = "user_no",nullable = false)
+    private int userNo;
 
     @Column(name = "create_date", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createDate;
