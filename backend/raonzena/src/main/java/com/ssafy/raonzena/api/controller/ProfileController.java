@@ -1,10 +1,12 @@
 package com.ssafy.raonzena.api.controller;
 
 
+import com.ssafy.raonzena.api.response.BoardRes;
 import com.ssafy.raonzena.api.response.FollowFollowingtRes;
 import com.ssafy.raonzena.api.response.UserProfileRes;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.api.service.ProfileService;
+import com.ssafy.raonzena.db.entity.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,17 +22,17 @@ public class ProfileController {
     ProfileService profileService;
 
     @GetMapping("{userNo}/follower")  //userNo를 팔로우 하는 사람들
-    public ResponseEntity<List<FollowFollowingtRes>> follower(@PathVariable int userNo){
+    public ResponseEntity<List<FollowFollowingtRes>> follower(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.follower(userNo));
     }
 
     @GetMapping("{userNo}/following") //userNo가 팔로우 하는 사람들
-    public ResponseEntity<List<FollowFollowingtRes>> following(@PathVariable int userNo){
+    public ResponseEntity<List<FollowFollowingtRes>> following(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.following(userNo));
     }
 
     @GetMapping("{userNo}")
-    public ResponseEntity<UserRes> userProfile(@PathVariable int userNo){
+    public ResponseEntity<UserRes> userProfile(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.userInfo(userNo));
     }
 
@@ -46,6 +48,30 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.findProfiles(conditions));
     }
 
+    //피드리스트
+    @GetMapping("{userNo}/feedList")
+    public ResponseEntity<List<BoardRes>> feedList(@PathVariable long userNo){
+        return ResponseEntity.ok(profileService.feedList(userNo));
+    }
+
+    //피드 디테일
+    @GetMapping("/feed/{feedNo}")
+    public ResponseEntity<BoardRes> feedDetail(@PathVariable long feedNo){
+
+        return ResponseEntity.ok(profileService.feedDetail(feedNo));
+    }
+
+    //팔로워 수
+    @GetMapping("/{userNo}/followerCnt")
+    public ResponseEntity<Integer> followerCnt(@PathVariable long userNo){
+        return ResponseEntity.ok(profileService.followerCnt(userNo));
+    }
+
+    //팔로잉 수
+    @GetMapping("/{userNo}/followingCnt")
+    public ResponseEntity<Integer> followingCnt(@PathVariable long userNo){
+        return ResponseEntity.ok(profileService.followingCnt(userNo));
+    }
 
 
 }
