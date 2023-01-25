@@ -45,9 +45,9 @@ public class ProfileServiceImpl implements ProfileService {
         Follow follow = new Follow();
         follow.setFollower(userNo);
         follow.setFollowee(followNo);
-        Follow check = followRepository.save(follow);
+        Follow check = followRepository.saveAndFlush(follow);
 
-        // 팔로우하기가 잘 됐으면t rue 실패하면 false 반환
+        // 팔로우하기가 잘 됐으면 true 실패하면 false 반환
         return check!=null ? true: false;
     }
 
@@ -79,6 +79,26 @@ public class ProfileServiceImpl implements ProfileService {
         List<Board> feed = boardRepository.findByUserNo(userNo);
 
         return feed.stream().map(m -> new BoardRes(m.getBoardNo(), m.getBoardImage(), m.getContent(), m.getUserNo(), m.getCreateDate(), m.getFirstUser(), m.getSecondUser(), m.getThirdUser())).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean unfollow(long followNo, long userNo) {
+        // 유저 언팔로우 하기
+        Follow follow = isFollowed(userNo,followNo);
+        if(follow!=null){
+            // 팔로우가 되어 있을 경우
+            followRepository.delete(follow);
+            return true;
+        } else {
+            // 팔로우가 되어 있지 않을 경우
+            return false;
+        }
+    }
+
+    @Override
+    public Follow isFollowed(long follower, long followee){
+        // 팔로우 여부 조회
+        return followRepository.findByFollowerAndFollowee(follower,followee);
     }
 
 }

@@ -29,12 +29,13 @@ public class ProfileController {
     @Autowired
     UserService userService;
 
+    // 팔로우 하기
     @PostMapping
     protected ResponseEntity<?> follow(@RequestBody FollowReq followReq){
         //////////세션정보로 유저넘버 얻어오기 구현 필요/////////
         User user = userService.selectUser(1);
 
-        // 정상 팔로우 ok 반환
+        // 팔로우 성공시 ok 반환
         if(profileService.follow(followReq.getFollowNo(), user.getUserNo())){ /////////세션정보 필요//////////
             return ResponseEntity.ok().build();
         } else {
@@ -75,6 +76,20 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.feedList(userNo));
     }
 
+    @DeleteMapping("{followNo}")
+    protected ResponseEntity<?> unfollow(@PathVariable long followNo) {
+        //////////세션정보로 유저넘버 얻어오기 구현 필요/////////
+        User user = userService.selectUser(1);
+
+        System.out.println("1232343");
+        // 언팔로우 성공시 ok 반환
+        if(profileService.unfollow(followNo, user.getUserNo())){ /////////세션정보 필요//////////
+            return ResponseEntity.ok().build();
+        } else {
+            // 언팔로우 실패 시 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
 
 }
