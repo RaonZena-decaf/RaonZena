@@ -22,17 +22,17 @@ public class ProfileController {
     ProfileService profileService;
 
     @GetMapping("{userNo}/follower")  //userNo를 팔로우 하는 사람들
-    public ResponseEntity<List<FollowFollowingtRes>> follower(@PathVariable int userNo){
+    public ResponseEntity<List<FollowFollowingtRes>> follower(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.follower(userNo));
     }
 
     @GetMapping("{userNo}/following") //userNo가 팔로우 하는 사람들
-    public ResponseEntity<List<FollowFollowingtRes>> following(@PathVariable int userNo){
+    public ResponseEntity<List<FollowFollowingtRes>> following(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.following(userNo));
     }
 
     @GetMapping("{userNo}")
-    public ResponseEntity<UserRes> userProfile(@PathVariable int userNo){
+    public ResponseEntity<UserRes> userProfile(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.userInfo(userNo));
     }
 
@@ -49,7 +49,7 @@ public class ProfileController {
     }
 
     @GetMapping("{userNo}/feedList") //피드리스트
-    public ResponseEntity<List<BoardRes>> feedList(@PathVariable int userNo){
+    public ResponseEntity<List<BoardRes>> feedList(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.feedList(userNo));
     }
 

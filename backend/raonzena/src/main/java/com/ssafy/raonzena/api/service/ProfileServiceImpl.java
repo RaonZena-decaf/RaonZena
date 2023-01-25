@@ -35,17 +35,17 @@ public class ProfileServiceImpl implements ProfileService {
     BoardRepository boardRepository;
 
     @Override
-    public List<FollowFollowingtRes> follower(int userNo) { //userNo를 팔로우 한 사람
+    public List<FollowFollowingtRes> follower(long userNo) { //userNo를 팔로우 한 사람
         return profileRepositorySupport.findFollowerByUserNo(userNo);
     }
 
     @Override
-    public List<FollowFollowingtRes> following(int userNo) { //userNo가 팔로우 한사람
+    public List<FollowFollowingtRes> following(long userNo) { //userNo가 팔로우 한사람
         return profileRepositorySupport.findFolloweeByUserNo(userNo);
     }
 
     @Override
-    public UserRes userInfo(int userNo) {
+    public UserRes userInfo(long userNo) {
         User profile = userRepository.findByUserNo(userNo);
 
         return new UserRes(profile);
@@ -58,7 +58,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public List<BoardRes> feedList(int userNo) {
+    public List<BoardRes> feedList(long userNo) {
         List<Board> feed = boardRepository.findByUserNo(userNo);
 
         return feed.stream().map(m -> new BoardRes(m.getBoardNo(), m.getBoardImage(), m.getContent(), m.getUserNo(), m.getCreateDate(), m.getFirstUser(), m.getSecondUser(), m.getThirdUser())).collect(Collectors.toList());

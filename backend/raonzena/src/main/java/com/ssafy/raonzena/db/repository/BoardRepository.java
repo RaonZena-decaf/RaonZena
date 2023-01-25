@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board,Long> {
 
-    List<Board> findByUserNo(int userNo);
+    List<Board> findByUserNo(long userNo);
 
 
 }
