@@ -6,6 +6,7 @@ import NavBar from "./components/navbar/navbar";
 import LivePage from "./components/LivePage/LivePage";
 import NoDataLivePage from "./components/NoDataLivePage/NoDataLivePage";
 
+
 function App() {
   return (
     <Router>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/NoDataLive" element={<NoDataLivePage />} />
         <Route path="/live" element={<LivePage />} />
         <Route path="uri/" element={<Auth />}></Route>
+
         <Route path="/" element={<NavBar />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
