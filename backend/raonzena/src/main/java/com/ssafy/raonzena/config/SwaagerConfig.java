@@ -21,7 +21,7 @@ public class SwaagerConfig {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.ssafy.raonzena.controller"))
+				.apis(RequestHandlerSelectors.basePackage("com.ssafy.raonzena.api.controller"))
 //				.paths(PathSelectors.ant("/api/**"))
 				.paths(PathSelectors.any())
 				.build()

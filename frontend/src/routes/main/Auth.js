@@ -46,7 +46,6 @@
 //     getToken();
 //   });
 
-
 //   return null;
 // };
 // export default Auth;
@@ -55,16 +54,15 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 
-
 function KakaoLoginRedirect() {
   const params = useParams();
   const navigate = useNavigate();
-  console.log(params)
   useEffect(() => {
     localStorage.clear();
-    localStorage.setItem("token", true);
-    navigate(-1);
-});
+    localStorage.setItem("token", params.token);
+
+    navigate("/");
+  });
 
   return <></>;
 }
