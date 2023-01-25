@@ -1,0 +1,39 @@
+.carousel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  behavior: smooth;
+}
+.carouselcontainer {
+  width: 208vw;
+  transition: transform 0.5s;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.carouselcontainer img {
+  cursor: pointer;
+  height: 25vw;
+}
+
+.buttonlist {
+  margin: auto;
+  margin-top: 4rem;
+  width: 8vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.circlebutton {
+  background-color: #cacaca;
+  border-radius: 100%;
+  width: 1.5vw;
+  height: 1.5vw;
+  cursor: pointer;
+}
+
+.circlebutton.active {
+  background-color: #f400b0;
+}
