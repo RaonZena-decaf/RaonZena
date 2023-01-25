@@ -9,7 +9,7 @@ import org.springframework.beans.BeanUtils;
 @Getter
 @NoArgsConstructor
 public class UserRes {
-    private int userNo;
+    private long userNo;
     private String userId;
     private String userName;
     private int exp;

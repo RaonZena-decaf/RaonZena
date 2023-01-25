@@ -1,10 +1,12 @@
 package com.ssafy.raonzena.api.controller;
 
 
+import com.ssafy.raonzena.api.response.BoardRes;
 import com.ssafy.raonzena.api.response.FollowFollowingtRes;
 import com.ssafy.raonzena.api.response.UserProfileRes;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.api.service.ProfileService;
+import com.ssafy.raonzena.db.entity.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +46,11 @@ public class ProfileController {
         }
 
         return ResponseEntity.ok(profileService.findProfiles(conditions));
+    }
+
+    @GetMapping("{userNo}/feedList") //피드리스트
+    public ResponseEntity<List<BoardRes>> feedList(@PathVariable int userNo){
+        return ResponseEntity.ok(profileService.feedList(userNo));
     }
 
 

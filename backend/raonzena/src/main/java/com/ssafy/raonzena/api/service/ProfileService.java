@@ -1,6 +1,7 @@
 package com.ssafy.raonzena.api.service;
 
 
+import com.ssafy.raonzena.api.response.BoardRes;
 import com.ssafy.raonzena.api.response.FollowFollowingtRes;
 import com.ssafy.raonzena.api.response.UserProfileRes;
 import com.ssafy.raonzena.api.response.UserRes;
@@ -25,6 +26,9 @@ public interface ProfileService {
 
     // 유저 프로필 조회
     List<UserProfileRes> findProfiles(Map<String, Object> conditions);
+
+    //피드 리스트
+    List<BoardRes> feedList(int userNo);
 
 
 }

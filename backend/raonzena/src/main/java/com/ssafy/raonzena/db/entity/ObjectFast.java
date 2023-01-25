@@ -15,7 +15,7 @@ public class ObjectFast {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "object_no", nullable = false)
-    private Integer objectNo;
+    private Long objectNo;
 
     @Column(name = "image", nullable = false, length = 500)
     private String image;

@@ -2,6 +2,7 @@ package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.dto.KaKaoDto;
 import com.ssafy.raonzena.api.request.UserLoginReq;
+import com.ssafy.raonzena.api.response.UserProfileRes;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
