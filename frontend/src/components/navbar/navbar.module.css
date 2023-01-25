@@ -1,22 +1,51 @@
+.groupContainer,
+.navbar {
+  background-color: #1F2122;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-xs);
+  font-size: var(--font-size-base);
+}
+
+.navbar {
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  font-size: var(--font-size-6xl);
+  margin: 0;
+  /* padding: 0;
+  display: -webkit-box; */
+  /* display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex; */
+  /* justify-content: space-between; */
+  /* list-style: none; */
+}
+
+.container {
+  display: flex;
+}
+
 .groupChild {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 65px;
-  height: 65px;
+  width: 4rem;
+  height: 4rem;
   object-fit: cover;
 }
 .rectangleWrapper {
-  position: relative;
-  width: 65px;
-  height: 65px;
+  width: 4rem;
+  height: 4rem;
   flex-shrink: 0;
 }
 .raonzena {
-  position: relative;
   background: linear-gradient(90deg, #9d00f2, #f400b0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-size: 2rem;
 }
 .groupParent {
   display: flex;
@@ -26,23 +55,15 @@
   gap: var(--gap-5xs);
 }
 .groupItem {
-  position: absolute;
-  top: 0;
-  left: 0;
   border-radius: var(--br-2xl);
   background-color: var(--color-gray-800);
-  width: 247px;
-  height: 50px;
+  width: 15rem;
+  height: 3rem;
 }
 .iconSearch {
   color: white;
-  position: absolute;
   height: 48.08%;
   width: 10.12%;
-  top: 26.92%;
-  right: 83.81%;
-  bottom: 25%;
-  left: 6.07%;
   max-width: 100%;
   overflow: hidden;
   max-height: 100%;
@@ -50,9 +71,6 @@
 .searchRooms {
   border: 0 solid black;
   outline: none;
-  position: absolute;
-  top: 11px;
-  left: 49px;
   font-weight: 500;
   color: white;
   display: inline-block;
@@ -60,43 +78,49 @@
   height: 19px;
   background-color: var(--color-gray-800);
 }
-.rectangleParent {
+
+.searchRooms2 {
+  border: 0 solid black;
+  outline: none;
+  font-weight: 500;
+  color: white;
+  display: inline-block;
+  /* width: 149px;
+  height: 19px; */
+  border-radius: var(--br-2xl);
+  position: relative;
+  width: 247px;
+  height: 50px;
+  flex-shrink: 0;
+  background-color: var(--color-gray-800);
+  text-align: center;
+}
+
+/* .rectangleParent {
   position: relative;
   width: 247px;
   height: 50px;
   flex-shrink: 0;
   color: var(--color-gray-500);
-}
+} */
 .home {
   position: relative;
   font-weight: 500;
-  color: white;
 }
 .groupInner {
-  position: absolute;
-  top: 0;
-  left: 0;
   border-radius: var(--br-2xl);
   background-color: var(--color-fuchsia-200);
   width: 150px;
   height: 50px;
 }
 .iconUserCircle {
-  position: absolute;
   height: 80%;
   width: 26.67%;
-  top: 10%;
-  right: 9.33%;
-  bottom: 10%;
-  left: 64%;
   max-width: 100%;
   overflow: hidden;
   max-height: 100%;
 }
 .profile {
-  position: absolute;
-  top: 11px;
-  left: 13px;
   font-weight: 500;
   display: inline-block;
   width: 64px;
@@ -104,64 +128,50 @@
 }
 .rectangleGroup {
   position: relative;
-  width: 150px;
-  height: 50px;
   flex-shrink: 0;
+  margin-left: 2rem;
 }
 .rectangleDiv {
-  position: absolute;
-  top: 0;
-  left: 0;
   border-radius: var(--br-2xl);
   background-color: var(--color-fuchsia-200);
   width: 159px;
   height: 50px;
 }
 .createRoom {
-  position: absolute;
-  top: 11px;
-  left: 16px;
   font-weight: 500;
   display: inline-block;
   width: 126px;
   height: 21px;
 }
 .rectangleContainer {
-  position: relative;
   width: 159px;
   height: 50px;
   flex-shrink: 0;
 }
-.groupContainer,
-.navbar {
-  background-color: var(--color-gray-900);
+
+::placeholder {
+  text-align: center;
+}
+
+.nav_ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.nav_ul_li {
+  list-style: none;
+  margin-right: 2rem;
+  font-weight: bold;
+  background: #f400b0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 30px;
+}
+.flexGroup {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: var(--gap-xs);
-  font-size: var(--font-size-base);
 }
-.navbar {
-  position: absolute;
-  top: 0;
-  left: 2px;
-  height: 150px;
-  padding: 0 var(--padding-4xl);
-  box-sizing: border-box;
-  justify-content: flex-start;
-  gap: var(--gap-6xl);
-  font-size: var(--font-size-6xl);
-}
-
-/*   
-  .div {
-    position: relative;
-    background-color: var(--color-gray-900);
-    width: 100%;
-    text-align: left;
-    font-size: var(--font-size-lg);
-    color: var(--color-white);
-    font-family: var(--font-noto-sans);
-  }
-   */

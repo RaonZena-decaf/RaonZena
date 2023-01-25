@@ -15,12 +15,12 @@ public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "follow_no", nullable = false)
-    private Integer followNo;
+    private Long followNo;
 
     @Column(name = "follower", nullable = false)
-    private Integer follower;
+    private Long follower;
 
     @Column(name = "followee", nullable = false)
-    private Integer followee;
+    private Long followee;
 
 }
