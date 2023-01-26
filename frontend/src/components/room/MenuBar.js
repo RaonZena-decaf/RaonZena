@@ -11,7 +11,7 @@ import { FaCamera } from "react-icons/fa";
 import { FaComments } from "react-icons/fa";
 import style from "./MenuBar.module.css";
 
-function MenuBar() {
+function MenuBar({toggleBar}) {
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
   // redux에서 createroom이나 enter 단계에서 설정한 기본값을 받아와야 함
@@ -82,7 +82,7 @@ function MenuBar() {
       </div>
 
       <div className={style.MiddleContainer3}>
-        <div className={style.IconWithText}>
+        <div className={style.IconWithText} onClick={toggleBar}>
           <FaComments />
           <p className={style.UnderIcon}>채팅</p>
         </div>
