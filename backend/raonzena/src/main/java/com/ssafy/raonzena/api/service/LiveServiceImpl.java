@@ -1,7 +1,6 @@
 package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
-import com.ssafy.raonzena.db.entity.RoomInfo;
 import com.ssafy.raonzena.db.repository.LiveRepositorySupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

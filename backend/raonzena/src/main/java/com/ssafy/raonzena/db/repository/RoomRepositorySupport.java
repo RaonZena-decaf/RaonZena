@@ -1,6 +1,5 @@
 package com.ssafy.raonzena.db.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.raonzena.api.request.RoomReq;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.entity.RoomInfo;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.swing.text.html.Option;
 
 import static com.ssafy.raonzena.db.entity.QRoomInfo.roomInfo;
 
@@ -35,6 +33,6 @@ public class RoomRepositorySupport implements RoomRepository{
         roomInfo.setHost(sessionUser); //////세션정보에서 가져오기/////////
         em.persist(roomInfo);
 
-        return new LiveRoomInfoRes(roomInfo.getRoomNo(), roomInfo.getRoomTitle(), roomInfo.getHost(), roomInfo.getHeadcount(), roomInfo.getPassword(),roomInfo.getCreateDate());
+        return new LiveRoomInfoRes(roomInfo.getRoomNo(), roomInfo.getRoomTitle(), roomInfo.getHost(), roomInfo.getHeadcount(), roomInfo.getPassword(),roomInfo.getCreateDtm());
     }
 }

@@ -1,6 +1,5 @@
 package com.ssafy.raonzena.api.response;
 
-import com.ssafy.raonzena.db.entity.RoomInfo;
 import com.ssafy.raonzena.db.entity.User;
 import lombok.*;
 

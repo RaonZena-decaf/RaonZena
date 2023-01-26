@@ -14,4 +14,7 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     //피드 1개
     Board findByBoardNo(long feedNo);
 
+    //피드 저장
+    Board save(Board board);
+
 }
