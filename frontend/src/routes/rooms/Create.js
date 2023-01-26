@@ -52,7 +52,7 @@ function Create() {
   };
   // 사람 수 체크하는 부분(클릭 값에 따른 스타일 변경)
   const peopleOnClick = (event) => {
-    setPeopleNum(event.target.htmlFor);
+    setPeopleNum(event.target.id);
   };
 
   // 방 만드는 axios 통신
@@ -77,7 +77,7 @@ function Create() {
             </h2>
 
             <form id="create" className={style.textcont}>
-              <ul className={style.bottom}>
+              <ul>
                 <li>
                   <label className={style.tag} htmlFor="title">
                     방 제목
@@ -87,62 +87,142 @@ function Create() {
                     id="title"
                     value={roomname}
                     onChange={nameChange}
+                    className={style.input}
                   ></input>
                 </li>
 
                 <li>
                   <label className={style.tag}>인원 수</label>
-                  <div className="radio-group">
-                    <input type="radio" id="2" name="selector" />
-                    <label
-                      className={
-                        peoplenum === "2" ? style.selected : style.notselected
-                      }
-                      onClick={peopleOnClick}
-                      htmlFor="2"
-                    >
-                      2
-                    </label>
-                    <input type="radio" id="3" name="selector" />
-                    <label
-                      className={
-                        peoplenum === "3" ? style.selected : style.notselected
-                      }
-                      onClick={peopleOnClick}
-                      htmlFor="3"
-                    >
-                      3
-                    </label>
-                    <input type="radio" id="4" name="selector" />
-                    <label
-                      className={
-                        peoplenum === "4" ? style.selected : style.notselected
-                      }
-                      onClick={peopleOnClick}
-                      htmlFor="4"
-                    >
-                      4
-                    </label>
-                    <input type="radio" id="5" name="selector" />
-                    <label
-                      className={
-                        peoplenum === "5" ? style.selected : style.notselected
-                      }
-                      onClick={peopleOnClick}
-                      htmlFor="5"
-                    >
-                      5
-                    </label>
-                    <input type="radio" id="6" name="selector" />
-                    <label
-                      className={
-                        peoplenum === "6" ? style.selected : style.notselected
-                      }
-                      onClick={peopleOnClick}
-                      htmlFor="6"
-                    >
-                      6
-                    </label>
+                  <div className={style.containerRadio}>
+                    <div className={style.radiotileGroup}>
+                      <div
+                        className={style.inputContainer}
+                        onClick={peopleOnClick}
+                      >
+                        <input
+                          id="2"
+                          className={style.radioButton}
+                          type="radio"
+                          name="radio"
+                        />
+                        <div
+                          className={
+                            peoplenum === "2"
+                              ? style.radioTile
+                              : style.radioTileNone
+                          }
+                          id="2"
+                        >
+                          <label id="2" className={style.radioTileLabel}>
+                            2
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        className={style.inputContainer}
+                        onClick={peopleOnClick}
+                      >
+                        <input
+                          id="3"
+                          className={style.radioButton}
+                          type="radio"
+                          name="radio"
+                        />
+                        <div
+                          className={
+                            peoplenum === "3"
+                              ? style.radioTile
+                              : style.radioTileNone
+                          }
+                          id="3"
+                        >
+                          <label id="3" className={style.radioTileLabel}>
+                            3
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        className={style.inputContainer}
+                        onClick={peopleOnClick}
+                      >
+                        <input
+                          id="4"
+                          className={style.radioButton}
+                          type="radio"
+                          name="radio"
+                        />
+                        <div
+                          className={
+                            peoplenum === "4"
+                              ? style.radioTile
+                              : style.radioTileNone
+                          }
+                          id="4"
+                        >
+                          <label
+                            id="4"
+                            className={style.radioTileLabel}
+                            onClick={peopleOnClick}
+                          >
+                            4
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        className={style.inputContainer}
+                        onClick={peopleOnClick}
+                      >
+                        <input
+                          id="5"
+                          className={style.radioButton}
+                          type="radio"
+                          name="radio"
+                        />
+                        <div
+                          className={
+                            peoplenum === "5"
+                              ? style.radioTile
+                              : style.radioTileNone
+                          }
+                          id="5"
+                        >
+                          <label
+                            id="5"
+                            className={style.radioTileLabel}
+                            onClick={peopleOnClick}
+                          >
+                            5
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        className={style.inputContainer}
+                        onClick={peopleOnClick}
+                      >
+                        <input
+                          id="6"
+                          className={style.radioButton}
+                          type="radio"
+                          name="radio"
+                        />
+                        <div
+                          className={
+                            peoplenum === "6"
+                              ? style.radioTile
+                              : style.radioTileNone
+                          }
+                          id="6"
+                        >
+                          <label
+                            id="6"
+                            className={style.radioTileLabel}
+                            onClick={peopleOnClick}
+                          >
+                            6
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </li>
 
@@ -155,6 +235,7 @@ function Create() {
                     id="password"
                     value={password}
                     onChange={passwordChange}
+                    className={style.input}
                   />
                 </li>
               </ul>
@@ -180,7 +261,7 @@ function Create() {
             <button
               className={style.enter}
               type="submit"
-              htmlForm="create"
+              htmlform="create"
               onClick={createOnClick}
             >
               방 만들기
