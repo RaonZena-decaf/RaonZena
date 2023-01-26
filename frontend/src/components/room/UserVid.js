@@ -3,7 +3,7 @@ import styles from "./UserVid.module.css"
 
 function UserVid() {
   return (
-    <div className={styles.MaxHeight}>
+    <div className={styles.Height}>
       영상이 나올 곳
     </div>
   );
