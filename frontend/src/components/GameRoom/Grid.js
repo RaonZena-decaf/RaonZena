@@ -2,14 +2,15 @@ import { experimentalStyled as styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
-import GameRoomItem from "./GameRoomItem";
+import GameRoomItem from "./tem";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: "#222222",
   ...theme.typography.body2,
-  padding: theme.spacing(2),
+  padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.secondary,
+  color: "#FFFFFF",
+  boxShadow: "0 0 0 0",
 }));
 
 export default function GridGameRoom() {
@@ -19,7 +20,13 @@ export default function GridGameRoom() {
     { title: "title3", users: 1, image_src: "./Room3.png" },
     { title: "title4", users: 0, image_src: "./Room4.png" },
     { title: "title5", users: 1, image_src: "./Room5.png" },
-    { title: "title6", users: 5, image_src: "./Room6.png" },
+    { title: "title6", users: 1, image_src: "./Room6.png" },
+    { title: "title7", users: 3, image_src: "./Room7.png" },
+    { title: "title8", users: 0, image_src: "./Room8.png" },
+    { title: "title9", users: 1, image_src: "./Room9.png" },
+    { title: "title10", users: 6, image_src: "./Room10.png" },
+    { title: "title11", users: 6, image_src: "./Room11.png" },
+    { title: "title12", users: 5, image_src: "./Room12.png" },
   ];
 
   return (
