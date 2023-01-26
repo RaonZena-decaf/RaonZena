@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import style from "./create.module.css";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/navbar"
-// import Footer from "../../components/footer"
+import Navbar from "../../components/navbar/navbar";
+import Footer from "../../components/Footer";
 import {
   FaVideo,
   FaVideoSlash,
@@ -10,17 +10,27 @@ import {
   FaMicrophoneAlt,
 } from "react-icons/fa";
 
+// 물어볼거
+// 비밀번호 입력 칸 비밀번호 모습으로 감춰야 할까?
+// 수정할 부분
+// 1. input 길이들 좀 더 반응형으로 2. 화상 관련 입력 값 주의 3. 마이크, 화상 가릴 경우의 axios 4. 방 만들기 시 axios 통신? 다음 이동공간 6. 사람수 버튼에서 이상한 화상 있긴 함 확인 필요
+
 function Create() {
   const navigate = useNavigate();
   const [roomname, setRoomname] = useState("");
-  const [attend, setAttend] = useState(0);
+  const [password, setPassword] = useState("");
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
-  useEffect(() => {
-    setRoomname("samplename");
-    setAttend(3);
-  }, [roomname, attend]);
+  const [peoplenum, setPeopleNum] = useState("2");
 
+  // 방 제목과 비밀번호 input 처리 하는 곳
+  const nameChange = (event) => {
+    setRoomname(event.target.value);
+  };
+  const passwordChange = (event) => {
+    setPassword(event.target.value);
+  };
+  // 뒤로가기
   const backOnClick = () => {
     navigate(-1);
   };
@@ -40,6 +50,21 @@ function Create() {
       return !prev;
     });
   };
+  // 사람 수 체크하는 부분(클릭 값에 따른 스타일 변경)
+  const peopleOnClick = (event) => {
+    setPeopleNum(event.target.htmlFor);
+  };
+
+  // 방 만드는 axios 통신
+  const createOnClick = (event) => {
+    event.preventDefault();
+    if (roomname === "") {
+      alert("Please enter a room name");
+    } else {
+      console.log(roomname, password, peoplenum);
+      // navigate()
+    }
+  };
 
   return (
     <div className={style.background}>
@@ -54,31 +79,83 @@ function Create() {
             <form id="create" className={style.textcont}>
               <ul className={style.bottom}>
                 <li>
-                  <label className={style.tag} htmlfor="title">
+                  <label className={style.tag} htmlFor="title">
                     방 제목
                   </label>
-                  <input placeholder="방 제목을 입력하세요" id="title"></input>
+                  <input
+                    placeholder="방 제목을 입력하세요"
+                    id="title"
+                    value={roomname}
+                    onChange={nameChange}
+                  ></input>
                 </li>
 
                 <li>
                   <label className={style.tag}>인원 수</label>
-                  <div class="radio-group">
-                    <input type="radio" id="option-one" name="selector" />
-                    <label className={style.human} htmlfor="option-one">
-                      One
+                  <div className="radio-group">
+                    <input type="radio" id="2" name="selector" />
+                    <label
+                      className={
+                        peoplenum === "2" ? style.selected : style.notselected
+                      }
+                      onClick={peopleOnClick}
+                      htmlFor="2"
+                    >
+                      2
                     </label>
-                    <input type="radio" id="option-two" name="selector" />
-                    <label className={style.human} htmlfor="option-two">
-                      Two
+                    <input type="radio" id="3" name="selector" />
+                    <label
+                      className={
+                        peoplenum === "3" ? style.selected : style.notselected
+                      }
+                      onClick={peopleOnClick}
+                      htmlFor="3"
+                    >
+                      3
+                    </label>
+                    <input type="radio" id="4" name="selector" />
+                    <label
+                      className={
+                        peoplenum === "4" ? style.selected : style.notselected
+                      }
+                      onClick={peopleOnClick}
+                      htmlFor="4"
+                    >
+                      4
+                    </label>
+                    <input type="radio" id="5" name="selector" />
+                    <label
+                      className={
+                        peoplenum === "5" ? style.selected : style.notselected
+                      }
+                      onClick={peopleOnClick}
+                      htmlFor="5"
+                    >
+                      5
+                    </label>
+                    <input type="radio" id="6" name="selector" />
+                    <label
+                      className={
+                        peoplenum === "6" ? style.selected : style.notselected
+                      }
+                      onClick={peopleOnClick}
+                      htmlFor="6"
+                    >
+                      6
                     </label>
                   </div>
                 </li>
 
                 <li>
-                  <label className={style.tag} htmlfor="password">
+                  <label className={style.tag} htmlFor="password">
                     비밀번호(선택)
                   </label>
-                  <input placeholder="방 비밀번호를 입력하세요" id="password" />
+                  <input
+                    placeholder="방 비밀번호를 입력하세요"
+                    id="password"
+                    value={password}
+                    onChange={passwordChange}
+                  />
                 </li>
               </ul>
             </form>
@@ -100,13 +177,18 @@ function Create() {
                 <FaVideoSlash onClick={cameraOnClick} />
               )}
             </div>
-            <button className={style.enter} type="submit" htmlform="create">
+            <button
+              className={style.enter}
+              type="submit"
+              htmlForm="create"
+              onClick={createOnClick}
+            >
               방 만들기
             </button>
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
