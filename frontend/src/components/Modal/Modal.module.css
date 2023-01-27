@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&display=swap");
 
 .modalcontainer {
-  padding-right: 1.5rem;
+  padding-right: 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,6 +52,7 @@
   padding-left: 4rem;
   font-size: 2rem;
   font-weight: 100;
+  word-break: keep-all;
 }
 
 .modaltxt li {

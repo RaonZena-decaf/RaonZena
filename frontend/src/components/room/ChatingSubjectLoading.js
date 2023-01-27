@@ -1,11 +1,11 @@
-import style from "./ChatingSubjectLoding.module.css";
+import style from "./ChatingSubjectLoading.module.css";
 
-function chat() {
+function ChatingSubjectLoading() {
   return (
     <div className={style.background}>
       <img
         alt="로딩중"
-        src="./ChatingSubjectLoding.png"
+        src="../img/Loading.png"
         className={style.logoImg}
       />
       <div className={style.fontsize}>주제를 고르고 있어요...</div>
@@ -13,4 +13,4 @@ function chat() {
   );
 }
 
-export default chat;
+export default ChatingSubjectLoading;
