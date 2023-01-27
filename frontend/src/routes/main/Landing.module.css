@@ -108,3 +108,7 @@
 #pinkcolor {
   color: #f400b0;
 }
+
+.center {
+  justify-content: center;
+}
