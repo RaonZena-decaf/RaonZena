@@ -1,7 +1,6 @@
 package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
-import com.ssafy.raonzena.db.entity.RoomInfo;
 
 import java.util.List;
 import java.util.Map;

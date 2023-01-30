@@ -4,7 +4,6 @@ import com.ssafy.raonzena.db.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 
 @Getter
 @NoArgsConstructor
@@ -24,7 +23,7 @@ public class UserRes {
         this.userName = user.getUserName();
         this.exp = user.getExp();
         this.level = user.getLevel();
-        this.userImage = user.getUserImage();
+        this.userImage = user.getUserImageUrl();
 
         //위에 코드 아래로 변경 -> null 뜸
         //BeanUtils.copyProperties(user, this);

@@ -78,7 +78,7 @@ public class ProfileServiceImpl implements ProfileService {
     public List<BoardRes> feedList(long userNo) {
         List<Board> feed = boardRepository.findByUserNo(userNo);
 
-        return feed.stream().map(m -> new BoardRes(m.getBoardNo(), m.getBoardImage(), m.getContent(), m.getUserNo(), m.getCreateDate(), m.getFirstUser(), m.getSecondUser(), m.getThirdUser())).collect(Collectors.toList());
+        return feed.stream().map(m -> new BoardRes(m.getBoardNo(), m.getBoardImageUrl(), m.getContent(), m.getUserNo(), m.getCreateDtm(), m.getFirstUser(), m.getSecondUser(), m.getThirdUser())).collect(Collectors.toList());
     }
 
     @Override
