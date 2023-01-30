@@ -1,18 +1,18 @@
 .photoshootbackground {
-  background-color: #1f2122;
-  width: 1590px;
-  height: 795px;
+  width: 80vw;
+  height: auto;
+  padding: 3rem;
+  padding-top: 2rem;
+  overflow: hidden;
 }
 
 .photoshootFont {
   font-size: 3rem;
-  color: white;
-  padding: 3rem;
+  padding-bottom: 2rem;
   font-weight: bold;
 }
 
 .photoshootflex {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
 }

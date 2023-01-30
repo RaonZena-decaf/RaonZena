@@ -1,11 +1,7 @@
-.photoshootdiaryflex {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .photoshootdiaryflex2 {
+  margin-left: auto;
   display: flex;
+  width: 45%;
   flex-direction: column;
 }
 
@@ -18,56 +14,67 @@
 .photoshootdiaryselect {
   background-color: #353839;
   color: white;
-  width: 171px;
-  height: 56px;
-  border-radius: 10px;
-  margin: 10px;
+  width: 9rem;
+  height: 3rem;
+  border-radius: 5px;
+  margin: 5px;
   text-align-last: center;
   text-align: center;
   font-size: 1.3rem;
+  margin: 0;
+
 }
 
 .photoshootdiaryinput {
   background-color: #353839;
   color: white;
-  width: 500px;
-  height: 61px;
-  border-radius: 10px;
-  margin: 10px;
+  width: auto;
+  height: 4rem;
+  border-radius: 5px;
   font-size: 1.2rem;
+  margin: 0;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: left;
 }
 
 .photoshootdiarytextarea {
   background-color: #353839;
   color: white;
-  width: 500px;
-  height: 296px;
-  border-radius: 10px;
-  margin: 10px;
+  width: auto;
+  height: 100%;
+  min-height: 15rem;
+  border-radius: 5px;
+  margin: 1rem;
   font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 2rem;
+  resize: none;
+  text-align: left;
 }
 
 .photoshootdiarybutton {
-  width: 151px;
-  height: 50px;
+  width: 8rem;
+  height: 3rem;
   background-color: #00a739;
   color: white;
   font-size: 1.1rem;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
 }
 
 .photoshootdiarybutton2 {
-  width: 151px;
-  height: 50px;
+  width: 8rem;
+  height: 3rem;
   background-color: #f10000;
   color: white;
   font-size: 1.1rem;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
 }
 
 ::placeholder {
   color: gray;
   font-size: 1.3rem;
+  text-align: left;
 }

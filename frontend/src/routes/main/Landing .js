@@ -72,7 +72,7 @@ function Landing() {
               <img
                 className={styles.LandingImage1}
                 alt=""
-                src="./img/Landing/LandingImage1.png"
+                src="./img/Landing/LandingImage1.webp"
               />
             </div>
           </div>

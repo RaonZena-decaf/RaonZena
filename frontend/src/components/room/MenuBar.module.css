@@ -3,14 +3,18 @@
   align-items: center;
   font-weight: 100;
   height: 10%;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .MiddleContainer1{
+  position: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items:center;
   width: 25rem;
+  bottom: 100;
+  left: 8.3%;
 }
 .MiddleContainer2{
   display: flex;
@@ -19,10 +23,17 @@
   width: 30rem;
 }
 .MiddleContainer3{
+  position:fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 15rem;
+  width: 16rem;
+  bottom: 100;
+  right: 8.3%;
+}
+
+.Noclick{
+  pointer-events: none;
 }
 
 .IconWithText{
@@ -31,6 +42,38 @@
   align-items: center;
   font-size: 3.2rem;
   cursor: pointer;
+}
+
+.IconWithText:hover {
+  color: #f400b0;
+  animation: changecolor 0.3s ease;
+}
+
+.IconWithText.active {
+  color: #f400b0;
+}
+
+.inactive {
+  animation : returncolor 0.25s ease
+}
+
+
+@keyframes changecolor {
+  0%{
+    color: white;
+  }
+  100%{
+    color: #f400b0;
+  }
+}
+
+@keyframes returncolor {
+  0%{
+    color: #f400b0;
+  }
+  100%{
+    color: white;
+  }
 }
 
 .UnderIcon {

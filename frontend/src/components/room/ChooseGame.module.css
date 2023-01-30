@@ -1,0 +1,35 @@
+.container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80vw;
+  padding: 3rem;
+  font-size: 6rem;
+}
+
+.gameName{
+  font-size: 2rem;
+}
+
+.IconText{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 10rem;
+  cursor: pointer; 
+}
+
+.IconText:hover{
+  color: #f400b0;
+  animation: changecolor 0.3s ease;
+}
+
+@keyframes changecolor {
+  0%{
+    color: white;
+  }
+  100%{
+    color: #f400b0;
+  }
+}
