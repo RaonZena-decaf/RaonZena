@@ -1,7 +1,8 @@
 import styles from "./PhotoShootDiary.module.css"
 
 function PhotoShootDiary({setPhotoFrame , closeMenu}) {
-  // 유저 정보에서 소지 프레임에 따라 option 렌더링이 달라져야 함
+  // redux에 저장된 유저 정보에서 레벨에 따라 option 렌더링이 달라져야 함
+
   const frameSelect = (e) => {
     setPhotoFrame(e.target.value)
   }

@@ -1,8 +1,6 @@
 package com.ssafy.raonzena.db.repository;
 
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
-import com.ssafy.raonzena.db.entity.RoomInfo;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;

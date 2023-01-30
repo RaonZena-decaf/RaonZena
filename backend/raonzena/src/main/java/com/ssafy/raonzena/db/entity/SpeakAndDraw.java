@@ -10,14 +10,14 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "speek_and_draw")
-public class SpeekAndDraw {
+@Table(name = "speak_and_draw")
+public class SpeakAndDraw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "speek_no", nullable = false)
+    @Column(name = "speak_no", nullable = false)
     private Long speekNo;
 
-    @Column(name = "answer", nullable = false)
+    @Column(name = "answer", nullable = false, length = 100)
     private String answer;
 
 }

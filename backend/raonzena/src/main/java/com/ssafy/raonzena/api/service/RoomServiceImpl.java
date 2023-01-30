@@ -3,7 +3,6 @@ package com.ssafy.raonzena.api.service;
 import com.ssafy.raonzena.api.request.RoomReq;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.entity.User;
-import com.ssafy.raonzena.db.repository.LiveRepositorySupport;
 import com.ssafy.raonzena.db.repository.RoomRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

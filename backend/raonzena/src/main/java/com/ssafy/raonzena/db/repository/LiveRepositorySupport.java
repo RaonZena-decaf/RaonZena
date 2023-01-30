@@ -5,14 +5,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.entity.QRoomInfo;
-import com.ssafy.raonzena.db.entity.RoomInfo;
-import com.ssafy.raonzena.db.entity.User;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +33,7 @@ public class LiveRepositorySupport  {
                         roomInfo.host,
                         roomInfo.headcount,
                         roomInfo.password,
-                        roomInfo.createDate)
+                        roomInfo.createDtm)
                 ).from(roomInfo)
                 .where(containKeyword(conditions))
                 .fetch();
@@ -55,7 +49,7 @@ public class LiveRepositorySupport  {
                         roomInfo.host,
                         roomInfo.headcount,
                         roomInfo.password,
-                        roomInfo.createDate)
+                        roomInfo.createDtm)
                 ).from(roomInfo)
                 .where(roomInfo.host.userNo.eq(sessionUserNo))
                 .fetch();

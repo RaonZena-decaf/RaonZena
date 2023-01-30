@@ -33,21 +33,20 @@ public class User {
     @Column(name = "level")
     private Integer level;
 
-    @Column(name = "create_date", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp createDate;
+    @Column(name = "create_dtm", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createDtm;
 
-    @Column(name = "user_image", length = 500)
-    private String userImage;
+    @Column(name = "user_image_url", length = 200)
+    private String userImageUrl;
 
     @Builder
-
-    public User(long userNo, String userId, String userName, Integer exp, Integer level, Timestamp createDate, String userImage) {
+    public User(long userNo, String userId, String userName, Integer exp, Integer level, Timestamp createDtm, String userImageUrl) {
         this.userNo = userNo;
         this.userId = userId;
         this.userName = userName;
         this.exp = exp;
         this.level = level;
-        this.createDate = createDate;
-        this.userImage = userImage;
+        this.createDtm = createDtm;
+        this.userImageUrl = userImageUrl;
     }
 }
