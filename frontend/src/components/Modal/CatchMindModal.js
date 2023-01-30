@@ -6,7 +6,7 @@ function CatchMindModal({ closeModal }) {
   return (
     <>
       <div className={styles.modaltitle}>
-        <span>게임 가이드 </span>
+        <span className={styles.highlight}>게임 가이드 </span>
         <br />
         캐치마인드
       </div>

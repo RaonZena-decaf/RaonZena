@@ -38,55 +38,55 @@ function UserGuide({ openModal }) {
     <div className={styles.carousel}>
       <div className={styles.carouselcontainer} ref={containerCarosel}>
         <img
-          src="./img/Landing/GameGuide.png"
+          src="./img/Landing/GameGuide.webp"
           alt=""
           id="0"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/PhotoGuide.png"
+          src="./img/Landing/PhotoGuide.webp"
           alt=""
           id="1"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/ChattingGuide.png"
+          src="./img/Landing/ChattingGuide.webp"
           alt=""
           id="2"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/ImageGameGuide.png"
+          src="./img/Landing/ImageGameGuide.webp"
           alt=""
           id="3"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/TresureHuntGuide.png"
+          src="./img/Landing/TresureHuntGuide.webp"
           alt=""
           id="4"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/CatchMindGuide.png"
+          src="./img/Landing/CatchMindGuide.webp"
           alt=""
           id="5"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/ShoutInSilenceGuide.png"
+          src="./img/Landing/ShoutInSilenceGuide.webp"
           alt=""
           id="6"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/PersonQuizGuide.png"
+          src="./img/Landing/PersonQuizGuide.webp"
           alt=""
           id="7"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/LotteryGuide.png"
+          src="./img/Landing/LotteryGuide.webp"
           alt=""
           id="8"
           onClick={openModal}

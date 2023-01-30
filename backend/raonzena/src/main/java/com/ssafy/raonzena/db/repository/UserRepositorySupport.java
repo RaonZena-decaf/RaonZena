@@ -12,7 +12,7 @@ public class UserRepositorySupport { //implements userRepository
     @PersistenceContext
     private EntityManager em;
 
-    public User selectUser(int userNo){
+    public User selectUser(long userNo){
         // userNo로 유저 정보 조회
         return em.find(User.class, userNo);
     }
