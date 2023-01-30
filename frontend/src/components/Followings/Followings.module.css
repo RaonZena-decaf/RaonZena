@@ -1,0 +1,24 @@
+.ProfileSize {
+  height: 5rem;
+}
+
+.FollowingList {
+  height: 40rem;
+  overflow: hidden auto;
+}
+
+.FollowingInfoFontSize {
+  font-size: 2rem;
+  float: left;
+}
+
+.FollowingsInfo {
+  display: inline-flex;
+  justify-content: space-between;
+  height: 6rem;
+  align-items: center;
+  margin: 1.5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
