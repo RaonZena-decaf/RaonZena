@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./RoomMenuFrame.module.css";
-import ChatingSubjectLoading from "./ChatingSubjectLoading.js"
-import PhotoShoot from "./PhotoShoot.js"
-import ChooseGame from "./ChooseGame.js"
+import ChatingSubjectLoading from "./ChatingSubjectLoading"
+import PhotoShoot from "./PhotoShoot"
+import ChooseGame from "./ChooseGame"
+import ExitRoom from "./ExitRoom";
 
 const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
   const animation = [
@@ -34,6 +35,8 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
   // 잡담주제 클릭시 Axios 통신을 통해 값을 받아오는 함수 필요
   //촬영 클릭 시 현재 화면 캡쳐하는 함수 필요 (mainroom 위치에서 해야할듯?)
 
+
+
   return (
     <div className={styles[animationClass]}>
       <div
@@ -47,7 +50,8 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
         >
           {menuContent === "chatSubject" && <ChatingSubjectLoading/>}
           {menuContent === "chooseGame" && <ChooseGame/>}
-          {menuContent === "takePhoto" && <PhotoShoot/> }
+          {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu}/> }
+          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu}/> }
         </div>
       </div>
     </div>

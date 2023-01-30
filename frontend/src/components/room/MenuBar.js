@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { FaMicrophoneAlt } from "react-icons/fa";
 import { FaMicrophoneAltSlash } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
@@ -43,12 +42,6 @@ function MenuBar({toggleBar}) {
     setdrop(!drop);
   };
 
-  //방에서 나간 후 라이브 페이지로 돌아가는 함수
-  const navigate = useNavigate();
-  const exitRoom = () => {
-    //이곳에 방에서 나가는 요청을 보내는 함수를 넣는다.
-    navigate("/live");
-  };
 
   //메뉴 표시를 위한 함수
   const [menuOn, setMenuOn] = useState(false)
@@ -58,12 +51,14 @@ function MenuBar({toggleBar}) {
     eventTarget.current = event.target
     setNowContent(event.target.id)
     setMenuOn(true)
-    eventTarget.current.className = `${style.IconWithText} ${style.active}`
-  }
+    if (event.target.id !== "exitRoom") {
+      eventTarget.current.className = `${style.IconWithText} ${style.active}`
+  }}
   const closeMenu = () => {
     setMenuOn(false)
-    eventTarget.current.className = `${style.IconWithText} ${style.inactive}`
-  }
+    if (eventTarget.current.id !== "exitRoom") {
+      eventTarget.current.className = `${style.IconWithText} ${style.inactive}`
+  }}
 
   return (
     <div className={style.UpperContainer}>
@@ -110,7 +105,7 @@ function MenuBar({toggleBar}) {
           <FaComments />
           <p className={style.UnderIcon}>채팅</p>
         </div>
-        <div className={style.ExitButton} onClick={exitRoom}>
+        <div className={style.ExitButton} onClick={menuOpen} id="exitRoom">
           나가기
         </div>
       </div>
