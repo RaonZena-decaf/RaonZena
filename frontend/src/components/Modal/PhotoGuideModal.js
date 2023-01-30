@@ -6,7 +6,7 @@ function PhotoGuideModal({ closeModal }) {
   return (
     <>
       <div className={styles.modaltitle}>
-        <span>사진 촬영</span> 가이드{" "}
+        <span className={styles.highlight}>사진 촬영</span> 가이드{" "}
       </div>
       <button
         id={styles.modalCloseBtn}

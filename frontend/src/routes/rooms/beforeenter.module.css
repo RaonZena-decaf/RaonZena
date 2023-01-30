@@ -1,5 +1,15 @@
 .background {
-  background-color: #1F2122;
+  background-color: #1f2122;
+  width: auto;
+  height: auto;
+  font-weight: bold;
+  font-size: 5rem;
+  color: white;
+  font-family: "Noto Sans";
+  padding-left: 8.3%;
+  padding-right: 8.3%;
+  display: flex;
+  flex-direction: column;
 }
 .container {
   position: relative;
@@ -43,7 +53,7 @@
 }
 .textcont {
   margin-top: 2rem;
-  font-size: 1.5em;
+  font-size: 3rem;
 }
 .video {
   width: 321px;
@@ -59,7 +69,7 @@
     justify-content: center;
     gap: 3rem;  
     margin:1.5rem;  
-    font-size: 2rem;
+    font-size: 3rem;
 
 }
 
@@ -69,7 +79,7 @@ button {
   padding: 0.6rem;
   font-size: 1rem;
   color: #ffffff;
-  font-weight: 800;
+  font-size: 2rem;
   margin-top: 1rem;
   border: 0;
 }
