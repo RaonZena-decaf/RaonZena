@@ -2,7 +2,7 @@ import { style } from "@mui/system";
 import React, { useState, useNavigate } from "react";
 import styles from "./Followings.module.css";
 
-export default function Item(props) {
+export default function FollowingListItem(props) {
   return (
     <div className={styles.FollowingsInfo}>
       <div>
