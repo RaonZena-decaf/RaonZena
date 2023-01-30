@@ -32,6 +32,7 @@ const Navbar = () => {
     if (typeof window !== "undefined") {
       window.location.href = KAKAO_AUTH_URL;
     }
+    
   };
 
   const navigateToCreateRoom = () => {
@@ -64,10 +65,10 @@ const Navbar = () => {
             <div>
               <ul className={styles.nav_ul}>
                 <li className={styles.nav_ul_li} onClick={navigateToLanding}>
-                  홈
+                  Home
                 </li>
                 <li className={styles.nav_ul_li} onClick={navigateToLive}>
-                  라이브
+                  Live
                 </li>
                 <li>
                   <form onSubmit={enterSearch}>
