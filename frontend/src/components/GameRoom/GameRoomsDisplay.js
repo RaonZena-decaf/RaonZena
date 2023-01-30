@@ -15,7 +15,7 @@ const CardsDisplay = ({ gameRoomList, loading }) => {
           <Item
             title={gameRoomInfo.title}
             users={gameRoomInfo.users}
-            src={gameRoomInfo.image_src}
+            image_src={gameRoomInfo.image_src}
           />
         );
       })}

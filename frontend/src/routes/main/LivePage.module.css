@@ -35,3 +35,31 @@
 #pinkcolor {
   color: #f400b0;
 }
+
+.displayFlex {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.followingsInGameList {
+  background-color: #222222;
+  width: auto;
+  height: auto;
+  border-radius: 2rem;
+  padding: 5rem;
+  text-align: left;
+  margin: 0% 1.5% 3% 3%;
+  width: 70%;
+}
+
+.followingsList {
+  background-color: #222222;
+  width: auto;
+  height: auto;
+  border-radius: 2rem;
+  padding: 5rem;
+  text-align: left;
+  margin: 0% 3% 3% 1.5%;
+  width: 30%;
+}

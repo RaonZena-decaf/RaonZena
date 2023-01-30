@@ -11,8 +11,8 @@ export default function GameRoom() {
   //const [gameRoomList, setGameRoomList] = useState([]);
 
   const gameRoomList = [
-    { title: "title1", users: 3, image_src: "./Room1.png" },
-    { title: "title2", users: 6, image_src: "./Room2.png" },
+    { title: "title152", users: 3, image_src: "./Room1.png" },
+    { title: "어서와", users: 6, image_src: "./Room2.png" },
     { title: "title3", users: 1, image_src: "./Room3.png" },
     { title: "title4", users: 0, image_src: "./Room4.png" },
     { title: "title5", users: 1, image_src: "./Room5.png" },
