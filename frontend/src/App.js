@@ -14,11 +14,10 @@ function App() {
     <Router>
       <Routes>
         {/* <Route path="/room/makeroom" element={} />
-        <Route path="/room/before" element={} />
-        <Route path="/room/:roomId/games" element={} />
-        <Route path="/room/:roomId/games/:gameId" element={} />
-        <Route path="/room/:roomId/picture" element={} />
-        <Route path="/profile/:userNo" element={} /> */}
+        <Route path="/room/before" element={} /> */}
+        <Route path="/room/:roomId" element={<MainRoom/>} />
+        {/* <Route path="/room/:roomId/games/:gameId" element={} /> */}
+        {/* <Route path="/profile/:userNo" element={} /> */}
 
         <Route path="/NoDataLive" element={<NoDataLivePage />} />
         <Route path="/live" element={<LivePage />} />
