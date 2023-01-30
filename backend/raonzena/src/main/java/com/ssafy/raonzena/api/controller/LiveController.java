@@ -2,7 +2,6 @@ package com.ssafy.raonzena.api.controller;
 
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.api.service.LiveService;
-import com.ssafy.raonzena.db.entity.RoomInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

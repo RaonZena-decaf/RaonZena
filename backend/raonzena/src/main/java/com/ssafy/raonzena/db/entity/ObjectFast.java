@@ -17,7 +17,7 @@ public class ObjectFast {
     @Column(name = "object_no", nullable = false)
     private Long objectNo;
 
-    @Column(name = "image", nullable = false, length = 500)
-    private String image;
+    @Column(name = "image_url", nullable = false, length = 200)
+    private String imageUrl;
 
 }

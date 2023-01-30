@@ -91,7 +91,6 @@ public class ProfileController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
     //피드 디테일
     @GetMapping("/feed/{feedNo}")
     public ResponseEntity<BoardRes> feedDetail(@PathVariable long feedNo){

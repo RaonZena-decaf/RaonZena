@@ -1,8 +1,6 @@
 package com.ssafy.raonzena.db.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -12,6 +10,8 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @DynamicInsert
 @Table(name = "board")
 public class Board {
@@ -20,25 +20,25 @@ public class Board {
     @Column(name = "board_no", nullable = false)
     private Long boardNo;
 
-    @Column(name = "board_image", nullable = false, length = 500)
-    private String boardImage;
+    @Column(name = "board_image_url", nullable = false, length = 200)
+    private String boardImageUrl;
 
     @Column(name = "content")
     private String content;
 
     @Column(name = "user_no",nullable = false)
-    private int userNo;
+    private long userNo;
 
-    @Column(name = "create_date", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp createDate;
+    @Column(name = "create_dtm", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createDtm;
 
     @Column(name = "first_user")
-    private Integer firstUser;
+    private long firstUser;
 
     @Column(name = "second_user")
-    private Integer secondUser;
+    private long secondUser;
 
     @Column(name = "third_user")
-    private Integer thirdUser;
+    private long thirdUser;
 
 }

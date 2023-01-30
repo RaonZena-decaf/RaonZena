@@ -17,10 +17,9 @@ public class PersonQuiz {
     @Column(name = "person_no", nullable = false)
     private Long personNO;
 
-    @Column(name = "answer", nullable = false, length = 45)
-    private String answer;
+    @Column(name = "person_answer", nullable = false, length = 45)
+    private String personAnswer;
 
-    @Column(name = "image", nullable = false, length = 500)
-    private String image;
-
+    @Column(name = "image_url", nullable = false, length = 200)
+    private String imageUrl;
 }

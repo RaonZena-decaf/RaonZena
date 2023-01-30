@@ -33,7 +33,7 @@ public class RoomInfo {
     @Column(name = "password")
     private Integer password;
 
-    @Column(name = "create_date", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp createDate;
+    @Column(name = "create_dtm", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp createDtm;
 
 }

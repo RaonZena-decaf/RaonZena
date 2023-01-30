@@ -17,8 +17,8 @@ public class ImageTheme {
     @Column(name = "theme_no", nullable = false)
     private Long themeNo;
 
-    @Column(name = "image", nullable = false, length = 500)
-    private String image;
+    @Column(name = "image_url", nullable = false, length = 200)
+    private String imageUrl;
 
     @Column(name = "level", nullable = false)
     private Integer level;

@@ -12,7 +12,7 @@ import lombok.Setter;
 public class KaKaoDto {
 
     private String userName;
-    private String userImage;
+    private String userImageUrl;
     private String userId;
 
 }
