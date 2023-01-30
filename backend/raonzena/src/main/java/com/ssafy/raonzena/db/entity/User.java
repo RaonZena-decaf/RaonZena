@@ -40,7 +40,7 @@ public class User {
     private String userImageUrl;
 
     @Builder
-    public User(long userNo, String userId, String userName, Integer exp, Integer level, Timestamp createDate, String userImageUrl) {
+    public User(long userNo, String userId, String userName, Integer exp, Integer level, Timestamp createDtm, String userImageUrl) {
         this.userNo = userNo;
         this.userId = userId;
         this.userName = userName;
