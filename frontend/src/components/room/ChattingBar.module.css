@@ -1,0 +1,62 @@
+.sidebar {
+  width: 30rem;
+  height: 100%;
+  background-color: #CACACA;
+  position : fixed;
+  top: 0;
+  right: -35rem;
+  color: black;
+  z-index: 99;
+  padding: 2rem;
+  opacity: 0.8;
+}
+
+.sidebar.active{
+  animation: sidebarOpen 0.8s ease-in-out;
+  right: 0;
+}
+
+.sidebar.inactive{
+  animation: sidebarClose 0.8s ease-in-out;
+  right: -35rem;
+}
+
+.exitbutton{
+  color: white;
+  font-weight: 100;
+  align-self: center;
+  border: solid 3px white;
+  height: fit-content;
+  width: fit-content;
+  padding: 0.8rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  position: relative;
+  margin-left: auto;
+}
+
+.exitbutton:hover {
+  background-color: white;
+  color: black;
+}
+
+@keyframes sidebarOpen{
+  0% {
+    right: -35rem;
+  }
+  100%{
+    right: 0;
+  }
+}
+
+@keyframes sidebarClose{
+  0%{
+    right: 0;
+  }
+  100%{
+    right: -35rem;
+  }
+}

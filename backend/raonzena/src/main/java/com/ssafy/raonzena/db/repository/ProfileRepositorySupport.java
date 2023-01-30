@@ -16,6 +16,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
+import static com.ssafy.raonzena.db.entity.QUser.user;
+import static com.ssafy.raonzena.db.entity.QFollow.follow;
+import static com.ssafy.raonzena.db.entity.QBoard.board;
+
+
 /**
  * 유저 프로필 모델 관련 디비 쿼리 생성을 위한 구현 정의.
  */
@@ -29,11 +34,6 @@ public class ProfileRepositorySupport { //implements ProfileRepository
 
     @Autowired
     private JPAQueryFactory query;
-
-
-    QUser user = QUser.user;
-    QFollow follow = QFollow.follow;
-    QBoard board = QBoard.board;
 
 
     //userNo를 팔로우 하는 사람들
@@ -89,6 +89,7 @@ public class ProfileRepositorySupport { //implements ProfileRepository
         }
         return null;
     }
+
 
 
 }
