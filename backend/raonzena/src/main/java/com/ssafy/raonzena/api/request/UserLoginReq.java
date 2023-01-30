@@ -9,7 +9,7 @@ public class UserLoginReq {
     private long userNo;
     private String userId;
     private String userName;
-    private String userImage;
+    private String userImageUrl;
 
 
     //dto -> entity
@@ -18,7 +18,7 @@ public class UserLoginReq {
                 .userNo(userNo)
                 .userId(userId)
                 .userName(userName)
-                .userImage(userImage)
+                .userImageUrl(userImageUrl)
                 .build();
 
     }
