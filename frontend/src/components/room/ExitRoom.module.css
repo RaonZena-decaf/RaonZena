@@ -1,0 +1,49 @@
+.background{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 30vw;
+  height: 15vw;
+  padding: 2rem;
+}
+
+.title{
+  font-size: 3rem;
+  margin: 0;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.yes{
+  text-align: center;
+  height: fit-content;
+  padding: 0.8rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 2rem;
+  border-radius: 1rem;
+  cursor: pointer;  
+  width: 4rem;
+  background-color: #8f00ff;
+
+}
+
+.no{
+  text-align: center;
+  height: fit-content;
+  padding: 0.8rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 2rem;
+  border-radius: 1rem;
+  cursor: pointer;  
+  width: auto;
+  background-color: #f400b0 ;
+}
+
