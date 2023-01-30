@@ -1,4 +1,5 @@
-import React, { useState, useNavigate } from "react"
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom";
 import styles from "./Landing.module.css"
 import Navbar from "../../components/navbar/navbar"
 import Footer from "../../components/Footer"
@@ -33,7 +34,7 @@ function Landing() {
   }
 
   //로그인 여부에 따른 라우터 변경
-  const navigate = useNavigate
+  const navigate = useNavigate()
   const loginCheck = () => {
     if (isLogin) {
       navigate('/live')
@@ -71,7 +72,7 @@ function Landing() {
               <img
                 className={styles.LandingImage1}
                 alt=""
-                src="./Landing/LandingImage1.png"
+                src="./img/Landing/LandingImage1.webp"
               />
             </div>
           </div>

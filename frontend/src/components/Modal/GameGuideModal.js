@@ -7,7 +7,7 @@ function GameGuideModal({ closeModal }) {
   return (
     <>
       <div className={styles.modaltitle}>
-        <span>게임 진행</span> 가이드
+        <span className={styles.highlight}>게임 진행</span> 가이드
       </div>
       <button
         id={styles.modalCloseBtn}

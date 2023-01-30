@@ -29,13 +29,13 @@ public class LiveServiceImpl implements LiveService {
     }
 
     @Override
-    public List<LiveRoomInfoRes> findFollowingRooms(int sessionUserNo) { /////////세션정보 필요//////////
+    public List<LiveRoomInfoRes> findFollowingRooms(long sessionUserNo) { /////////세션정보 필요//////////
         // 팔로잉 유저들의 방 조회
         return liveRepositorySupport.selectFollowingRooms(sessionUserNo);
     }
 
     @Override
-    public boolean isAccessible(int roomNo, int sessionHeadCount) { /////////세션정보 필요//////////
+    public boolean isAccessible(long roomNo, int sessionHeadCount) { /////////세션정보 필요//////////
         // 유저 게임 참가 가능 여부 조회
         return liveRepositorySupport.isAccessible(roomNo,sessionHeadCount);
     }

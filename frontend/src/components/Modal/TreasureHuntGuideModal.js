@@ -1,4 +1,4 @@
-import { FaStopwatch } from "react-icons/fa";
+import { FaSketch } from "react-icons/fa";
 
 import styles from "./Modal.module.css";
 
@@ -6,7 +6,7 @@ function TreasureHuntGuideModal({ closeModal }) {
   return (
     <>
       <div className={styles.modaltitle}>
-        <span>게임 가이드 </span>
+        <span className={styles.highlight}>게임 가이드 </span>
         <br />방 안의 보물찾기
       </div>
       <button
@@ -16,7 +16,7 @@ function TreasureHuntGuideModal({ closeModal }) {
       >
         ✖
       </button>
-      <FaStopwatch />
+      <FaSketch />
       <ol className={styles.modaltxt}>
         <li>모든 참가자에게는 가져와야 할 물건이 제시됩니다.</li>
         <li>

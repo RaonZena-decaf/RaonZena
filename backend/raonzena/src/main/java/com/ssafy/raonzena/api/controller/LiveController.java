@@ -37,7 +37,7 @@ public class LiveController {
     }
 
     @GetMapping("/{roomNo}")
-    protected ResponseEntity<?> liveRoomAccess(@PathVariable int roomNo){
+    protected ResponseEntity<?> liveRoomAccess(@PathVariable long roomNo){
         // 게임 접속이 가능하면 ok 반환
         if(liveService.isAccessible(roomNo,2)){ /////////세션정보 필요//////////
             return ResponseEntity.ok().build();

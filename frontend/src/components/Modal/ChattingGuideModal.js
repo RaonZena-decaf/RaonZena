@@ -6,7 +6,7 @@ function ChattingGuideModal({ closeModal }) {
   return (
     <>
       <div className={styles.modaltitle}>
-        <span>잡담 주제</span> 가이드
+        <span className={styles.highlight}>잡담 주제</span> 가이드
       </div>
       <button
         id={styles.modalCloseBtn}
