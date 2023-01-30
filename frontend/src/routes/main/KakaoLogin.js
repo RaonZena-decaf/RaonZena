@@ -13,7 +13,7 @@ function KakaoLogin () {
       KAKAO_CODE
     })
     axios({
-      method: "POST",
+      method: "GET",
       url: 'http://localhost:8080/api/v1/user/user/kakao/callback',
       data: sendData,
       headers: {'Content-type': 'application/json'}
@@ -22,7 +22,7 @@ function KakaoLogin () {
       alert("로그인 성공!")
       navigate("/live")
     }).catch(error=>{
-      alert("로그인에 실패하였습니다. 다시 시도해 주세요.")
+      // alert("로그인에 실패하였습니다. 다시 시도해 주세요.")
       // navigate("/")
     })
   }
