@@ -1,0 +1,100 @@
+.background {
+  width: 50vw;
+  height: 90vh;
+  font-size: 5rem;
+  background-color: #27292a;
+  color: white;
+  font-family: "Noto Sans";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  padding: 2rem;
+}
+
+.background::-webkit-scrollbar {
+  display: none;
+}
+
+.img {
+  width: 45%;
+  aspect-ratio: 1.3/1;
+}
+
+.icon {
+  color: gold;
+}
+
+.text {
+  margin: 3rem;
+  color: #ff00b9;
+}
+
+.text2 {
+  margin: 3rem;
+  color: #ff00b9;
+  font-size: 2rem;
+}
+
+.textarea {
+  margin-top: 2rem;
+  font-size: 2rem;
+  word-break: keep-all;
+  width: 70%;
+}
+.OutContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LargeContainer {
+  display: flex;
+  flex-direction: row;
+  font-size: 2rem;
+  justify-content: center;
+  height: 16vh;
+}
+
+.SmallContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  width: 15%;
+}
+
+.InnerContainer1 {
+  text-align: center;
+  font-size: 3rem;
+  color: #ffd230;
+  background-color: #3e3e3e;
+  width: 100%;
+  height: 50%;
+  border-radius: 5px 5px 0 0;
+  border: none;
+}
+.InnerContainer2 {
+  text-align: center;
+  font-size: 3rem;
+  color: #cfcfcf;
+  background-color: #3e3e3e;
+  width: 100%;
+  height: 35%;
+  border-radius: 5px 0 0 5px;
+  border: none;
+}
+.InnerContainer3 {
+  text-align: center;
+  font-size: 3rem;
+  color: #d9a262;
+  background-color: #3e3e3e;
+  width: 100%;
+  height: 25%;
+  border-radius: 0 5px 5px 0;
+  border: none;
+}
+
+.profileImg {
+  width: 50%;
+}
