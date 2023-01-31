@@ -22,3 +22,64 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
+.card {
+  max-width: 100%;
+  display: inline-block;
+  border: none;
+  margin: 2rem;
+}
+
+.RoomInfo {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.Roomimage {
+  width: 20rem;
+  align-items: center;
+}
+
+.HostInfo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.roomTitle {
+  float: left;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.UserCount {
+  float: right;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.LevelFont {
+  display: inline-block;
+  font-size: 2rem;
+}
+
+.userNameFont {
+  font-size: 2rem;
+}
+.HostFollowingsList {
+  width: 100%;
+  margin: auto;
+  display: inline-flex;
+  overflow: scroll hidden;
+}
+.HostTextInfo {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  line-height: 3rem;
+  overflow: hidden;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

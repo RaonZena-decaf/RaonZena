@@ -2,7 +2,7 @@ import { style } from "@mui/system";
 import React, { useState, useNavigate } from "react";
 import styles from "./Followings.module.css";
 
-export default function FollowingListItem(props) {
+const FollowingListItem = (props) => {
   return (
     <div className={styles.FollowingsInfo}>
       <div>
@@ -23,7 +23,8 @@ export default function FollowingListItem(props) {
           <img className={styles.OnlineSize} src="Online.svg" alt="Online" />
         )}
       </div>
-      <div className={styles.Fo}></div>
     </div>
   );
-}
+};
+
+export default React.memo(FollowingListItem);

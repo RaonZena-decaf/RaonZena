@@ -70,14 +70,13 @@ export default function GameRoom() {
     <div>
       <div className={styles.GameRoomsDisplay}>
         <GameRoomsDisplay gameRoomList={curGameRoomList} loading={loading} />
-
-        <Pagination
-          className={styles.PaginationCenter}
-          count={parseInt((gameRoomList.length - 1) / 10) + 1}
-          page={currentPage}
-          onChange={handleChange}
-        />
       </div>
+      <Pagination
+        className={styles.PaginationCenter}
+        count={parseInt((gameRoomList.length - 1) / 10) + 1}
+        page={currentPage}
+        onChange={handleChange}
+      />
     </div>
   );
 }

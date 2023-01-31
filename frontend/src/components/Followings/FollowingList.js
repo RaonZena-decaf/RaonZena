@@ -45,7 +45,7 @@ export default function FollowingList() {
 
   return (
     <div className={styles.FollowingList}>
-      {list?.map((followInfo) => {
+      {list?.map((followInfo, idx) => {
         return (
           <Item
             userNo={followInfo.userNo}
@@ -53,6 +53,7 @@ export default function FollowingList() {
             level={followInfo.level}
             userImage={followInfo.userImage}
             isOnline={followInfo.isOnline}
+            key={idx}
           />
         );
       })}
