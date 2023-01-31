@@ -1,22 +1,31 @@
+import { useEffect } from "react";
 import "./PhotoShootLayout.css";
 
 function PhotoShootLayout({photoFrame}) {
-  // 드롭다운 value값을 가져와서 FrameNum을 바꿔서 적용하기 (아마 위 컴포넌트로 변수 올려줘야 할듯.)
+  const userlist = [
+    { user_name: "김찬빈"},
+    { user_name: "윤수희"},
+    { user_name: "홍영민"},
+    { user_name: "임길현"},
+    { user_name: "최지연"},
+    { user_name: "김민소"},
+  ];
+  // 참가 유저 수에 따른 배치 변경
+  // 화면 사이즈 조절은 더 고려해볼 것.
 
   return (
     <div
       className="photoFrame"
+      id="사진촬영완료"
       style={{
-        backgroundImage: `url("../img/PhotoFrame/test${photoFrame}.jpg")`,
+        backgroundImage: `url("../img/PhotoFrame/frame${photoFrame}.jpg")`,
       }}
     >
       <div className="photoshootlayoutmaintextcontainer">
-        <div className="photoshootlayoutbox"></div>
-        <div className="photoshootlayoutbox"></div>
-        <div className="photoshootlayoutbox"></div>
-        <div className="photoshootlayoutbox"></div>
-        <div className="photoshootlayoutbox"></div>
-        <div className="photoshootlayoutbox"></div>
+        { userlist.map((user) => {
+            return (<div key={user.user_name} className="photoshootlayoutbox"></div>)
+          })
+        }
       </div>
     </div>
   );
