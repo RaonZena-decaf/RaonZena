@@ -5,10 +5,8 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.raonzena.api.response.BoardRes;
 import com.ssafy.raonzena.api.response.FollowFollowingtRes;
 import com.ssafy.raonzena.api.response.UserProfileRes;
-import com.ssafy.raonzena.db.entity.Board;
 import com.ssafy.raonzena.db.entity.QBoard;
 import com.ssafy.raonzena.db.entity.QFollow;
 import com.ssafy.raonzena.db.entity.QUser;
@@ -75,8 +73,8 @@ public class ProfileRepositorySupport { //implements ProfileRepository
                         user.userName,
                         user.exp,
                         user.level,
-                        user.createDate,
-                        user.userImage)
+                        user.createDtm,
+                        user.userImageUrl)
                 ).from(user)
                 .where(eqKeyword(conditions))
                 .fetch();

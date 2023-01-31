@@ -15,25 +15,25 @@ public class BoardRes {
 
     private long boardNo;
 
-    private String boardImage;
+    private String boardImageUrl;
 
     private String content;
-    private int userNo;
-    private Timestamp createDate;
+    private long userNo;
+    private Timestamp createDtm;
 
-    private int firstUser;
+    private long firstUser;
 
-    private int secondUser;
+    private long secondUser;
 
-    private int thirdUser;
+    private long thirdUser;
 
     @Builder
     public BoardRes(Board board) {
         this.boardNo = board.getBoardNo();
-        this.boardImage = board.getBoardImage();
+        this.boardImageUrl = board.getBoardImageUrl();
         this.content = board.getContent();
         this.userNo = board.getUserNo();
-        this.createDate = board.getCreateDate();
+        this.createDtm = board.getCreateDtm();
         this.firstUser = board.getFirstUser();
         this.secondUser = board.getSecondUser();
         this.thirdUser = board.getThirdUser();

@@ -1,8 +1,8 @@
 package com.ssafy.raonzena.api.service;
 
+
 import com.ssafy.raonzena.api.dto.KaKaoDto;
 import com.ssafy.raonzena.api.request.UserLoginReq;
-import com.ssafy.raonzena.api.response.UserProfileRes;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -110,16 +111,14 @@ public class UserServieImpl implements UserService{
             UserLoginReq user = new UserLoginReq();
             user.setUserId(userInfo.getUserId());
             user.setUserName(userInfo.getUserName());
-            user.setUserImage(userInfo.getUserImage());
-
+            user.setUserImageUrl(userInfo.getUserImageUrl());
 
             userRepository.save(user.toEntity());
         }
 
         User userProfile = userRepository.findByUserId(userInfo.getUserId());
+
         return new UserRes(userProfile);
-
-
 
     }
 

@@ -12,13 +12,14 @@ function Landing() {
   //로그인 함수
   const isLogin = JSON.parse(localStorage.getItem("token"))
   const Login = () => {
-    const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99"
-    const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback"
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
+    const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99";
+    const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback";
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     if (typeof window !== "undefined") {
       window.location.href = KAKAO_AUTH_URL;
     }
-  }
+  };
+
 
   //모달 표시를 위한 함수 및 변수
   const [modalOn, setModalOn] = useState(false)

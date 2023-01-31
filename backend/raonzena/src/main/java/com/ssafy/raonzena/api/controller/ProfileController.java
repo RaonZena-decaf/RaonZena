@@ -84,13 +84,13 @@ public class ProfileController {
         User user = userService.selectUser(1);
 
         // 언팔로우 성공시 ok 반환
-        if(profileService.unfollow(followNo, user.getUserNo())){ /////////세션정보 필요//////////
+        if (profileService.unfollow(followNo, user.getUserNo())) { /////////세션정보 필요//////////
             return ResponseEntity.ok().build();
         } else {
             // 언팔로우 실패 시 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
             return ResponseEntity.internalServerError().build();
         }
-
+    }
     //피드 디테일
     @GetMapping("/feed/{feedNo}")
     public ResponseEntity<BoardRes> feedDetail(@PathVariable long feedNo){

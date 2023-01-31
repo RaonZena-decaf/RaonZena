@@ -31,8 +31,8 @@ public class SwaagerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("SSAFY Swaager")
-				.description("swagger 연습용이다")
+				.title("Raonzena Swaager")
+				.description("Raonzena swagger")
 				.version("v2")
 				.build();
 	}
