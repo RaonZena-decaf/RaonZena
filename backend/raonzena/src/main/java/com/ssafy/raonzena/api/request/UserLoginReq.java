@@ -19,6 +19,8 @@ public class UserLoginReq {
                 .userId(userId)
                 .userName(userName)
                 .userImageUrl(userImageUrl)
+                .exp(0)
+                .level(1)
                 .build();
 
     }
