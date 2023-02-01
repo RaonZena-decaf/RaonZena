@@ -9,17 +9,29 @@ import { useState } from "react";
 
 function ProfilePage() {
   const [open, setOpen] = useState(false);
+  const [nowContent, setNowContent] = useState();
+  const [follower, setfollower] = useState();
+  const [following, setfollowing] = useState();
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const [nowContent, setNowContent] = useState({});
+  const handleClose = () => {
+    setOpen(false);
+    setTimeout(() => {
+      setNowContent();
+      setfollower();
+      setfollowing();
+    }, 300);
+  };
 
   return (
     <div className={styles.background}>
       <Navbar />
       <div className={styles.background2}>
         <div className={styles.background3}>
-          <ProfilePageInfo />
+          <ProfilePageInfo
+            handleOpen={handleOpen}
+            setfollower={setfollower}
+            setfollowing={setfollowing}
+          />
           <ProfilePagePhoto
             handleOpen={handleOpen}
             setNowContent={setNowContent}
@@ -33,6 +45,8 @@ function ProfilePage() {
             show={state}
             handleClose={handleClose}
             nowContent={nowContent}
+            follower={follower}
+            following={following}
           />
         )}
       </Transition>

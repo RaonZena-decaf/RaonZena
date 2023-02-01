@@ -1,0 +1,18 @@
+.progressbar {
+  position: relative;
+  overflow: hidden;
+  width: 40vw;
+  height: 3rem;
+  border-radius: 5px;
+  background-color: #eee;
+}
+
+.progressPercent {
+  font-size: 2rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #eee;
+  text-shadow: -1px 0 #555, 0 1px #555, 1px 0 #555, 0 -1px #555;
+}

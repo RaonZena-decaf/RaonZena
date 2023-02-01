@@ -1,0 +1,36 @@
+.background {
+  width: 50vw;
+  height: 90vh;
+  font-size: 3rem;
+  background-color: #27292a;
+  color: white;
+  font-family: "Noto Sans";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  padding: 2rem;
+}
+
+.background::-webkit-scrollbar {
+  display: none;
+}
+
+.background2 {
+  width: 25vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 3rem;
+  gap: 1rem;
+}
+
+.img {
+  width: 5vw;
+}
+
+.text {
+  margin: 3rem;
+  color: #ff00b9;
+}

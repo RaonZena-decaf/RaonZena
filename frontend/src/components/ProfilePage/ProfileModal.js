@@ -1,8 +1,10 @@
 import styles from "./ProfileModal.module.css";
 import ProfilePostDetail from "./ProfilePostDetail";
+import ProfileFollowingListDetail from "./ProfileFollowingListDetail";
+import ProfileFollowerListDetail from "./ProfileFollowerListDetail";
 import { useEffect } from "react";
 
-function ProfileModal({ show, handleClose, nowContent }) {
+function ProfileModal({ show, handleClose, nowContent, follower, following }) {
   useEffect(() => {
     document.body.style.cssText = `
       position: fixed; 
@@ -40,7 +42,9 @@ function ProfileModal({ show, handleClose, nowContent }) {
         className={`${styles.modalContainer} ${styles[slide]}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <ProfilePostDetail nowContent={nowContent} />
+        {nowContent && <ProfilePostDetail nowContent={nowContent} />}
+        {following && <ProfileFollowingListDetail following={following} />}
+        {follower && <ProfileFollowerListDetail follower={follower} />}
       </div>
     </div>
   );
