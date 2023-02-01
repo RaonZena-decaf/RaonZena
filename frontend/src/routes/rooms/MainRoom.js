@@ -124,6 +124,17 @@ function MainRoom() {
     };
   }, []);
   // 끝
+  const onbeforeunload = (event) => {
+    leaveSession();
+  };
+  useEffect(() => {
+    window.addEventListener("beforeunload", onbeforeunload);
+
+    return () => {
+      window.removeEventListener("beforeunload", onbeforeunload);
+    };
+  }, []);
+  // 세션 종료
   // 세션 종료
   const leaveSession = async function () {
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
