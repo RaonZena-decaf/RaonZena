@@ -71,7 +71,7 @@
   font-size: 3rem;
 }
 
-button {
+.button {
   background: #ff00b9;
   border-radius: 10px;
   padding: 0.6rem;
@@ -169,7 +169,7 @@ form ul li {
 }
 .inputContainer {
   position: relative;
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .radioButton {
