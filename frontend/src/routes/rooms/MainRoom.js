@@ -22,30 +22,64 @@ function MainRoom() {
   const toggleBar = () => setOpenChatting(!openChatting);
   const navigate = useNavigate();
 
-
   //메인메뉴 모달을 위한 함수
+  const deleteSubscriber = (streamManager) => {
+    const index = subscribes.indexOf(streamManager, 0);
+    if (index > -1) {
+      setSubscribes(before => {before.splice(index,1)})  
+    }
+}
+
   useEffect(() => {
     const OV = new OpenVidu();
 
-    setSession(() => {
-      // --- 2) Init a session ---
-      const mySession = OV.initSession();
+    const after = new Promise((resolve, reject) => {
+      
+      const mySession = OV.initSession()
+      setTimeout(() => {resolve(mySession)},1000 )
+
+    });
+    after.then((mySession) => {
+      // --- 2) Init a session --
+      console.log(mySession);
 
       // --- 3) Specify the actions when events take place in the session ---
       mySession.on("streamCreated", (event) => {
         const subscriber = mySession.subscribe(event.stream, undefined);
-        const beforesubscriber = subscribes.push(subscriber);
-        setSubscribes(beforesubscriber);
+        setSubscribes(oldArray => [...oldArray, subscriber]);
       });
 
       mySession.on("streamDestroyed", (event) => {
-        this.deleteSubscriber(event.stream.streamManager);
+        deleteSubscriber(event.stream.streamManager);
       });
 
       mySession.on("exception", (exception) => {
         console.warn(exception);
       });
-
+      const getToken = async () => {
+        const newtoken = await createSession(roomId);
+        return await createToken(newtoken);
+      };
+      const createSession = async function (newtoken) {
+        const response = await axios.post(
+          APPLICATION_SERVER_URL + "api/sessions",
+          { customSessionId: newtoken },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        return response.data; // The sessionId
+      };
+      const createToken = async function (newtoken) {
+        const response = await axios.post(
+          APPLICATION_SERVER_URL + "api/sessions/" + newtoken + "/connections",
+          {},
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        return response.data;
+      };
       // --- 4) Connect to the session with a valid user token ---
       getToken().then((token) => {
         mySession
@@ -94,36 +128,15 @@ function MainRoom() {
               error.message
             );
           });
-      });
-      return mySession;
+        });
+        setSession(mySession)
+    })
+    .catch((error) => {
+      console.log(error)
     });
-
-    const getToken = async () => {
-      const newtoken = await createSession(roomId);
-      return await createToken(newtoken);
-    };
-    const createSession = async function (newtoken) {
-      const response = await axios.post(
-        APPLICATION_SERVER_URL + "api/sessions",
-        { customSessionId: newtoken },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      return response.data; // The sessionId
-    };
-    const createToken = async function (newtoken) {
-      const response = await axios.post(
-        APPLICATION_SERVER_URL + "api/sessions/" + newtoken + "/connections",
-        {},
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      return response.data; // The token
-    };
   }, []);
   // 끝
+
   const onbeforeunload = (event) => {
     leaveSession();
   };
@@ -135,7 +148,6 @@ function MainRoom() {
     };
   }, []);
   // 세션 종료
-  // 세션 종료
   const leaveSession = async function () {
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
     if (session) {
@@ -143,11 +155,11 @@ function MainRoom() {
     }
 
     // Empty all properties...
-     setSession(undefined);
-     setSubscribes([]);
-     setroomId("None");
+    setSession(undefined);
+    setSubscribes([]);
+    setroomId("None");
     setUserName("User");
-    navigate("/live")
+    navigate("/live");
   };
 
   return (
@@ -164,7 +176,9 @@ function MainRoom() {
               value="Leave session"
             />
           </div>
-          <UserVideoComponent streamManager={publisher} />
+        </div>
+      ) : null}
+
 
           {subscribes.map((sub, i) => (
             <div
@@ -175,8 +189,7 @@ function MainRoom() {
               <UserVideoComponent streamManager={sub} />
             </div>
           ))}
-        </div>
-      ) : null}
+
       <MenuBar toggleBar={toggleBar} />
       <ChattingBar openChatting={openChatting} toggleBar={toggleBar} />
     </div>
