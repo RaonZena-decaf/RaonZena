@@ -1,26 +1,18 @@
-# nginx 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용.
-FROM nginx
+# 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용.
+FROM node:18
 
 # root 에 app 폴더를 생성
-RUN mkdir /app
+RUN mkdir -p /app
 
 # work dir 고정
 WORKDIR /app
 
-# work dir 에 build 폴더 생성 /app/build
-RUN mkdir ./build
+ENV PATH /app/node_modules/.bin:$PATH
 
-# host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
-ADD ./build ./build
+COPY package*.json ./
 
-# nginx 의 default.conf 를 삭제
-RUN rm /etc/nginx/conf.d/default.conf
+RUN npm install
+COPY . .
 
-# host pc 의 nginx.conf 를 아래 경로에 복사
-COPY ./nginx.conf /etc/nginx/conf.d
-
-# 80 포트 오픈
-EXPOSE 80
-
-# container 실행 시 자동으로 실행할 command. nginx 시작함
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+ENTRYPOINT ["npm", "start"]
