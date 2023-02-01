@@ -240,7 +240,7 @@ function Create() {
                 </li>
               </ul>
             </form>
-            <button onClick={backOnClick}>취소</button>
+            <button className={style.button} onClick={backOnClick}>취소</button>
           </div>
 
           <div className={style.rightcontainer}>

@@ -19,11 +19,11 @@ function KakaoLogin () {
       headers: {'Content-type': 'application/json'}
     }).then((res)=>{
       //redux에 저장
-      alert("로그인 성공!")
+
       navigate("/live")
     }).catch(error=>{
-      // alert("로그인에 실패하였습니다. 다시 시도해 주세요.")
-      // navigate("/")
+      alert("로그인에 실패하였습니다. 다시 시도해 주세요.")
+      navigate("/")
     })
   }
 

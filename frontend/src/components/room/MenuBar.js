@@ -11,14 +11,13 @@ import { FaComments } from "react-icons/fa";
 import style from "./MenuBar.module.css";
 import MenuPortal from "./Portal"
 import RoomMenuFrame from "./RoomMenuFrame"
+import EntryDropUp from "./EntryDropUp"
 import { Transition } from 'react-transition-group'
 
 
 
 function MenuBar({toggleBar}) {
   // 방 유저 정보를 axios 정보로 받아와서 리스트로 저장 => 참가자 드롭업 하부 컴포넌트로 삽입
-
-
 
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(true);
@@ -36,7 +35,7 @@ function MenuBar({toggleBar}) {
     console.log("videotoggled");
   };
 
-  // dropup을 위한 state
+  // 참가자dropup을 위한 state
   const [drop, setdrop] = useState(false);
   const droptoggle = () => {
     setdrop(!drop);
@@ -59,6 +58,8 @@ function MenuBar({toggleBar}) {
     if (eventTarget.current.id !== "exitRoom") {
       eventTarget.current.className = `${style.IconWithText} ${style.inactive}`
   }}
+  
+
 
   return (
     <div className={style.UpperContainer}>
@@ -84,6 +85,12 @@ function MenuBar({toggleBar}) {
           <p className={style.UnderIcon}>참가자</p>
         </div>
       </div>
+
+      <Transition unmountOnExit in={drop} timeout={500}>
+        {state => (
+          <EntryDropUp show={state} setdrop={setdrop}/>
+        )}
+      </Transition>
 
       <div className={style.MiddleContainer2}>
         <div className={style.IconWithText} onClick={menuOpen} id="chatSubject">

@@ -13,8 +13,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/room/makeroom" element={} />
-        <Route path="/room/before" element={} /> */}
+        <Route path="/room/makeroom" element={<Create/>} />
+        {/* <Route path="/room/before" element={} /> */}
         {/* <Route path="/room/:roomId/games/:gameId" element={} /> */}
         {/* <Route path="/profile/:userNo" element={} /> */}
         <Route path="/Create" element={<Create />} />

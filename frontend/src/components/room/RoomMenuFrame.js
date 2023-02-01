@@ -4,6 +4,7 @@ import ChatingSubjectLoading from "./ChatingSubjectLoading"
 import PhotoShoot from "./PhotoShoot"
 import ChooseGame from "./ChooseGame"
 import ExitRoom from "./ExitRoom";
+import axios from "axios";
 
 const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
   const animation = [
@@ -24,8 +25,25 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
 
   const [menuContent, setMenuContent] = useState(null);
 
+  //잡담주제 호출을 위한 함수
+  const [chattingSubject, setChattingSubject] = useState("예시 잡담 주제") 
+
+  const getSubject = async() => {
+    await axios({
+      method:"GET",
+      url:"http://localhost:8080/api/v1/games/topicList"
+    }).then((res) => {
+      setChattingSubject(res.data)
+    }).catch(error=>{
+      setChattingSubject("오류가 발생했습니다. 다시 진행해 주세요.")
+    })
+  }
+
   useEffect(() => {
     setMenuContent(nowContent);
+    if (nowContent === "chatsubject") {
+      getSubject()
+    }
     
   }, [nowContent]);
 
@@ -48,7 +66,7 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
           className={`${styles[slideAnimationClass]} ${styles.menucontainer} ${styles[menuContent]}`}
           onClick={(e) => e.stopPropagation()}
         >
-          {menuContent === "chatSubject" && <ChatingSubjectLoading/>}
+          {menuContent === "chatSubject" && <ChatingSubjectLoading chattingSubject={chattingSubject}/>}
           {menuContent === "chooseGame" && <ChooseGame/>}
           {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu}/> }
           {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu}/> }

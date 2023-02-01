@@ -1,21 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 import animationData from "./unlock.json"
 
 const UnLockAnimation = () => {
-  const container = document.querySelector("#unLockAnimation")
+  const unlockContainer = useRef()
 
   useEffect(() => {
     lottie.loadAnimation({
-      container: container,
-      renderer: "svg",
-      loop: true,
+      container: unlockContainer.current,
+      renderer: 'svg',
+      loop: false,
       autoplay: true,
       animationData: animationData
     })
   })
   return (
-    <div id="unLockAnimation" style={{width:"30rem", height:"30rem"}}></div>
+      <div ref={unlockContainer} style={{width:"15rem", height:"15rem"}}></div>
   )
 }
 
