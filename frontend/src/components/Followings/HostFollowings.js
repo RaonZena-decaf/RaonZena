@@ -74,7 +74,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
       host: {
         userNo: 1,
         userId: "1234567",
-        userName: "악성코드윤수히",
+        userName: "악성코드윤수히123213213",
         exp: 30,
         level: 11,
         createDate: 1674178030000,
@@ -84,7 +84,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     },
     {
       roomNo: 4,
-      roomTitle: "고민상1담해드려요22",
+      roomTitle: "고124민상1담해드려요124122",
       headcount: 4,
       password: "0000",
       createDate: "2023-02-25T17:33:11.6965021",

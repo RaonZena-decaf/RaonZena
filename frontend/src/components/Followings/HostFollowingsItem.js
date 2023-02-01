@@ -32,7 +32,7 @@ export default function FollowingsInGameListItem(props) {
         />
       </div>
       <div className={styles.RoomInfo}>
-        <div className={styles.roomTitle}>
+        <div className={styles.RoomTitle}>
           <p>{props.roomTitle}</p>
         </div>
         <div className={styles.UserCount}>

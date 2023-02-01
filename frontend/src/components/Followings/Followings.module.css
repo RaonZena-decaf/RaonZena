@@ -34,6 +34,9 @@
   display: inline-flex;
   justify-content: space-between;
   width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 
 .Roomimage {
@@ -46,10 +49,16 @@
   align-items: center;
 }
 
-.roomTitle {
+.RoomTitle {
   float: left;
   font-size: 2rem;
   color: #ffffff;
+  overflow: hidden;
+  line-height: 3rem;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .UserCount {
