@@ -36,7 +36,8 @@ function EntryDropUp({ show, setdrop }) {
     // axios 통신을 통해 팔로우 추가
     await axios({
       method: "get",
-      url: `http://localhost:8080/api/v1/profile/${user_no}`
+      url: `http://localhost:8080/api/v1/profile/${user_no}`,
+      headers : {"Content-Type": `application/json`,}
     }).then((res) => {
       let followed = userlist.findIndex(function(data) {return data.user_no === user_no})
       userlist[followed].following = true

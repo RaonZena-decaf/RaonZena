@@ -18,6 +18,10 @@
   color: white;
   font-size: 5rem;
   font-family: "Noto Sans";
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 }
 
 .rightArrow {

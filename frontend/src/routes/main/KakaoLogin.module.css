@@ -3,10 +3,12 @@
   color: white;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .title {
-  font-size: 5rem;
+  font-size: 4rem;
+  margin-top: 6rem;
 }

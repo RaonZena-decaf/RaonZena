@@ -1,6 +1,6 @@
 import styles from "./PhotoShootDiary.module.css";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import axios from "axios";
 
@@ -22,8 +22,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
   };
 
   //이미지 url을 저장하는 State
-  const [img, setImg] = useState("");
-  const [dtm, setDtm] = useState("");
+  const img = useRef("");
 
   //imgur에 이미지를 호스팅하는 통신
   const uploadImgur = (url) => {
@@ -42,7 +41,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
         }
       )
       .then((res) => {
-        setImg(res.data.data.link);
+        img.current = res.data.data.link;
       })
       .catch((e) => {
         console.log(e);
@@ -56,14 +55,13 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
     let url = "";
     await html2canvas(document.getElementById("사진촬영완료")).then(
       async (canvas) => {
-        url = await canvas.toDataURL("image/jpg").split(",")[1];
+        url = await canvas.toDataURL("image/jpg",'capture')
+        // url = await canvas.toDataURL("image/webp").split(",")[1];
       }
     );
+    console.log(url)
 
     await uploadImgur(url);
-
-    let today = new Date()
-    setDtm(today.toLocaleString())
   };
 
   //피드에 저장하는 axios 통신
@@ -72,16 +70,24 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
   const save = () => {
     let question = window.confirm("사진을 저장하겠습니까?");
     if (question === true) {
+      let today = new Date()
       // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
       copyDOM()
+      console.log(today)
+      console.log({
+        "board_image_url": img.current,
+        "title": input.title,
+        "content": input.content,
+        "create_dtm" : today.toLocaleString() 
+      })
       axios({
         url:`http://localhost:8080/api/v1/games/feed/${user_no}`,
         method:"POST",
-        data:{
-          "board_image_url": img,
+        data : {
+          "board_image_url": img.current,
           "title": input.title,
           "content": input.content,
-          "create_dtm" : dtm,
+          "create_dtm" : today.toLocaleString() 
         },
         headers: {
           "Content-Type": `application/json`,
