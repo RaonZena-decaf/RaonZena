@@ -1,8 +1,13 @@
-FROM java:11
-VOLUME /tmp
+FROM openjdk:11-jdk as builder
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+RUN chmod +x ./gradlew
+RUN ./gradlew bootJar
+
+COPY --from=builder build/libs/*.jar app.jar
+
 EXPOSE 8081
-ARG JAR_FILE=raonzena-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
-ENV TZ=Asia/Seoul
-RUN apt-get install -y tzdata
