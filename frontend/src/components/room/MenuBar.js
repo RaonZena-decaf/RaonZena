@@ -113,7 +113,7 @@ function MenuBar({toggleBar}) {
       <MenuPortal>
         <Transition unmountOnExit in={menuOn} timeout={500}>
           {state => (
-            <RoomMenuFrame show={state} closeMenu={closeMenu} nowContent={nowContent}/>
+            <RoomMenuFrame show={state} closeMenu={closeMenu} nowContent={nowContent} />
           )}
         </Transition>
       </MenuPortal>
