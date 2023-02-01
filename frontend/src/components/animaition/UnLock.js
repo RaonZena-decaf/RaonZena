@@ -13,7 +13,7 @@ const UnLockAnimation = () => {
       autoplay: true,
       animationData: animationData
     })
-  }, [])
+  })
   return (
       <div ref={unlockContainer} style={{width:"15rem", height:"15rem"}}></div>
   )

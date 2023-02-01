@@ -13,7 +13,7 @@ function KakaoLogin () {
       KAKAO_CODE
     })
     axios({
-      method: "POST",
+      method: "GET",
       url: 'http://localhost:8080/api/v1/user/user/kakao/callback',
       data: sendData,
       headers: {'Content-type': 'application/json'}

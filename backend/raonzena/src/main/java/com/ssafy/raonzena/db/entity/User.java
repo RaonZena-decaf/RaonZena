@@ -33,14 +33,14 @@ public class User {
     @Column(name = "level")
     private Integer level;
 
-    @Column(name = "create_dtm", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "create_dtm", updatable = false)
     private Timestamp createDtm;
 
     @Column(name = "user_image_url", length = 200)
     private String userImageUrl;
 
     @Builder
-    public User(long userNo, String userId, String userName, Integer exp, Integer level, Timestamp createDate, String userImage) {
+    public User(long userNo, String userId, String userName, Integer exp, Integer level, Timestamp createDtm, String userImageUrl) {
         this.userNo = userNo;
         this.userId = userId;
         this.userName = userName;
@@ -48,5 +48,18 @@ public class User {
         this.level = level;
         this.createDtm = createDtm;
         this.userImageUrl = userImageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userNo=" + userNo +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", exp=" + exp +
+                ", level=" + level +
+                ", createDtm=" + createDtm +
+                ", userImageUrl='" + userImageUrl + '\'' +
+                '}';
     }
 }
