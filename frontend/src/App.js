@@ -7,13 +7,14 @@ import NoDataLivePage from "./routes/main/NoDataLivePage";
 import Landing from "./routes/main/Landing ";
 import MainRoom from "./routes/rooms/MainRoom"
 import KakaoLogin from "./routes/main/KakaoLogin"
+import Create from "./routes/rooms/Create";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/room/makeroom" element={} />
-        <Route path="/room/before" element={} /> */}
+        <Route path="/room/makeroom" element={<Create/>} />
+        {/* <Route path="/room/before" element={} /> */}
         {/* <Route path="/room/:roomId/games/:gameId" element={} /> */}
         {/* <Route path="/profile/:userNo" element={} /> */}
         <Route path="/NoDataLive" element={<NoDataLivePage />} />

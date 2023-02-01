@@ -1,13 +1,10 @@
 .background {
   background-color: #1f2122;
-  width: auto;
-  height: auto;
   font-weight: bold;
   font-size: 5rem;
   color: white;
   font-family: "Noto Sans";
-  padding-left: 8.3%;
-  padding-right: 8.3%;
+  padding: 10rem 8.3% 0 8.3%;
   display: flex;
   flex-direction: column;
   word-break: keep-all;
@@ -15,8 +12,6 @@
 
 .background2 {
   background-color: #353839;
-  width: auto;
-  height: auto;
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
@@ -76,13 +71,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.maintext2 p {
   margin-top: 0.5rem;
   margin-bottom: 0;
   font-weight: 100;
   font-size: 2.5rem;
+  width: 70%;
+  line-height: 200%;
 }
 
 .title {
@@ -104,6 +98,7 @@
 #imageconfig {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 #pinkcolor {
