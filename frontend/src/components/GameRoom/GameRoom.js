@@ -6,9 +6,30 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import GameRoomsDisplay from "./GameRoomsDisplay";
 import { Pagination } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { createTheme } from "@mui/material/styles";
+import blue from "@mui/material/colors/blue";
+
+// const theme = createTheme({
+//   palette: {
+//     primary: blue,
+//   },
+// });
+
+// const Pagination = styled(Paper)(({ theme }) => ({
+//   // backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#222222",
+//   backgroundColor: "#222222",
+//   boxShadow: "none",
+//   ...theme.typography.body2,
+//   padding: theme.spacing(2),
+//   textAlign: "center",
+//   color: theme.palette.text.secondary,
+// }));
 
 export default function GameRoom() {
   //const [gameRoomList, setGameRoomList] = useState([]);
+
+  const navigate = useNavigate();
 
   const gameRoomList = [
     { title: "title152", users: 3, image_src: "./Room1.png" },
@@ -56,6 +77,11 @@ export default function GameRoom() {
     setCurGameRoomList(newGameRoomLIst);
   }, [currentPage]);
 
+  // useEffect(() => {
+
+  // , [newGameRoomLIst]
+  // });
+
   // Change page
   const paginate = function (pageNumber) {
     setCurrentPage(pageNumber);
@@ -66,17 +92,51 @@ export default function GameRoom() {
     setCurrentPage(value);
   };
 
-  return (
-    <div>
-      <div className={styles.GameRoomsDisplay}>
-        <GameRoomsDisplay gameRoomList={curGameRoomList} loading={loading} />
+  const navigateToCreateRoom = () => {
+    navigate("/Create");
+  };
+
+  if (curGameRoomList.length > 0) {
+    return (
+      <div>
+        <div className={styles.GameRoomsDisplay}>
+          <GameRoomsDisplay gameRoomList={curGameRoomList} loading={loading} />
+        </div>
+        <Pagination
+          className={styles.PaginationWhite}
+          count={parseInt((gameRoomList.length - 1) / 10) + 1}
+          page={currentPage}
+          onChange={handleChange}
+          color="secondary"
+          size="large"
+        />
       </div>
-      <Pagination
-        className={styles.PaginationCenter}
-        count={parseInt((gameRoomList.length - 1) / 10) + 1}
-        page={currentPage}
-        onChange={handleChange}
-      />
-    </div>
-  );
+    );
+  }
+
+  // 열려있는 게임방이 없는 경우
+  else {
+    return (
+      <div>
+        <div className={styles.NoGameRoomsImg}>
+          <img src="./talk.svg" alt="" />
+        </div>
+        <div className={styles.marginTopBot}>
+          <p className={styles.NoGameRoomsText}>열려 있는 방이 없습니다 </p>
+          <p className={styles.NoGameRoomsText}>
+            방을 만들고 친구들을 불러보세요!
+          </p>
+        </div>
+
+        <div className={styles.marginAuto}>
+          <button
+            className={styles.CreateGameButton}
+            onClick={navigateToCreateRoom}
+          >
+            방 만들기
+          </button>
+        </div>
+      </div>
+    );
+  }
 }

@@ -106,25 +106,40 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     return <h2>Loading...</h2>;
   }
 
-  return (
-    <div className={styles.HostFollowingsList}>
-      {List?.map((gameRoomInfo, idx) => {
-        return (
-          <Item
-            key={idx}
-            userName={gameRoomInfo.host.userName}
-            userImage={gameRoomInfo.host.userImage}
-            level={gameRoomInfo.host.level}
-            roomTitle={gameRoomInfo.roomTitle}
-            headcount={gameRoomInfo.headcount}
-            password={gameRoomInfo.password}
-            currentCount={gameRoomInfo.currentCount}
-            roomImage={gameRoomInfo.roomImage}
-          />
-        );
-      })}
-    </div>
-  );
+  if (List.length > 0) {
+    return (
+      <div className={styles.HostFollowingsList}>
+        {List?.map((gameRoomInfo, idx) => {
+          return (
+            <Item
+              key={idx}
+              userName={gameRoomInfo.host.userName}
+              userImage={gameRoomInfo.host.userImage}
+              level={gameRoomInfo.host.level}
+              roomTitle={gameRoomInfo.roomTitle}
+              headcount={gameRoomInfo.headcount}
+              password={gameRoomInfo.password}
+              currentCount={gameRoomInfo.currentCount}
+              roomImage={gameRoomInfo.roomImage}
+            />
+          );
+        })}
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <div className={styles.nothingImg1}>
+          <img className={styles.nothingImg2} src="./nothing.svg" alt="" />
+        </div>
+        <div className={styles.marginTopBot}>
+          <p className={styles.NoGameRoomsText}>
+            지금 놀고 있는 친구가 없습니다.
+          </p>
+        </div>
+      </div>
+    );
+  }
 };
 
 export default HostFollowings;

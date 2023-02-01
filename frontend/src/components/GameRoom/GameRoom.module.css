@@ -23,9 +23,14 @@
   margin: 2rem;
 }
 
-.PaginationCenter {
+.PaginationWhite {
   margin: auto;
   display: table;
+}
+
+.PaginationWhite ul li button {
+  color: white !important;
+  font-size: 2rem;
 }
 
 .imageSize {
@@ -103,4 +108,45 @@ a {
   color: #189cfc;
   text-decoration: none;
   font-weight: bold;
+}
+
+.NoGameRoomsText {
+  margin: auto;
+  display: table;
+  font-size: 3rem;
+}
+
+.NoGameRoomsImg {
+  margin: auto;
+  display: table;
+}
+
+.ButtonCenter {
+  margin: auto;
+  display: table;
+}
+
+.CreateGameButton {
+  /* height: 2rem; */
+  margin-top: 4rem;
+  text-align: center;
+  display: inline-block;
+  transition-duration: 0.2s;
+  cursor: pointer;
+  color: white;
+  background-color: #f300b0;
+  font-size: 2.5rem;
+  border: none;
+  border-radius: 1rem;
+  height: 6rem;
+  width: 18rem;
+}
+
+.marginAuto {
+  margin: auto;
+  display: table;
+}
+
+.marginTopBot {
+  margin: 2rem 0rem 2rem 0rem;
 }

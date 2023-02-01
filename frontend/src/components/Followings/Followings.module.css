@@ -92,3 +92,23 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
+.marginTopBot {
+  margin: auto 0rem auto 0rem;
+}
+
+.NoGameRoomsText {
+  margin: auto;
+  display: table;
+  font-size: 3rem;
+}
+
+.nothingImg1 {
+  margin: auto;
+  display: table;
+  align-items: center;
+}
+
+.nothingImg2 {
+  margin: 7rem 0 7rem 0;
+}
