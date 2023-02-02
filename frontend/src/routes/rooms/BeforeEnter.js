@@ -26,7 +26,7 @@ function BeforeEnter(props) {
   };
   // 마이크와 카메라 정보 갱신 부분
   const joinSession = () => {
-    navigate('room/1')
+    navigate('/room/1')
   }
   useEffect(() => {
     // 어디서 화상 상태와 이와 관련된 default값을 가져오는가?

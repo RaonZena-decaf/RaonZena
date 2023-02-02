@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import styles from "./ChattingBar.module.css";
-import ChattingForm from "./ChattingForm"
+import ChattingForm from "./ChattingForm";
 
-function ChattingBar({ openChatting, toggleBar }) {
+function ChattingBar({ openChatting, toggleBar, openvidu }) {
   const [closeBar, setCloseBar] = useState(false);
   const closing = () => {
-    setCloseBar(true)
-    setTimeout(function(){
-      setCloseBar(false)
-    },1000)
-    
-  }
-
+    setCloseBar(true);
+    setTimeout(function () {
+      setCloseBar(false);
+    }, 1000);
+  };
   return (
     <div
       className={
@@ -22,15 +20,16 @@ function ChattingBar({ openChatting, toggleBar }) {
           : `${styles.sidebar}`
       }
     >
-      <ChattingForm/>
+      <ChattingForm openvidu={openvidu} />
       <div
         className={styles.exitbutton}
         onClick={() => {
-          closing()
-          toggleBar()
-          }}>
-            X
-        </div>
+          closing();
+          toggleBar();
+        }}
+      >
+        X
+      </div>
     </div>
   );
 }
