@@ -32,7 +32,7 @@ public class LiveController {
     private UserService userService;
 
     //openvidu_url
-    @Value("https://i8a507.p.ssafy.io:8443")  //https://i8a507.p.ssafy.io:8443
+    @Value("https://i8a507.p.ssafy.io:3478")  //https://i8a507.p.ssafy.io:3478
     private String OPENVIDU_URL;
 
     //시크릿 키
