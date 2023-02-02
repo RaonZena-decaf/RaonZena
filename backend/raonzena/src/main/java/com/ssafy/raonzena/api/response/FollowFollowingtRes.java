@@ -11,6 +11,8 @@ public class FollowFollowingtRes {
 
     private long userNo;
     private String userName;
+    private String userImageUrl;
+    private int level;
 
 
 }
