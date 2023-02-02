@@ -6,7 +6,7 @@ import ChooseGame from "./ChooseGame"
 import ExitRoom from "./ExitRoom";
 import { useDispatch } from "react-redux";
 import { ovActions } from "../../app/openvidu";
-
+import axios from "axios";
 const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
   const dispatch = useDispatch()
   const leaveSession = dispatch(ovActions.leaveSession())
