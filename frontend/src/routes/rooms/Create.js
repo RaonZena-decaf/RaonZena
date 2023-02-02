@@ -9,6 +9,8 @@ import {
   FaMicrophoneAltSlash,
   FaMicrophoneAlt,
 } from "react-icons/fa";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 // 물어볼거
 // 비밀번호 입력 칸 비밀번호 모습으로 감춰야 할까?
@@ -22,6 +24,7 @@ function Create() {
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [peoplenum, setPeopleNum] = useState("2");
+  const [disabled, setDisabled] = useState(true)
 
   // 방 제목과 비밀번호 input 처리 하는 곳
   const nameChange = (event) => {
@@ -37,9 +40,6 @@ function Create() {
 
   // 마이크와 카메라 정보 갱신 부분
 
-  useEffect(() => {
-    // 어디서 화상 상태와 이와 관련된 default값을 가져오는가?
-  });
   const micOnClick = () => {
     setMic((prev) => {
       return !prev;
@@ -51,18 +51,39 @@ function Create() {
     });
   };
   // 사람 수 체크하는 부분(클릭 값에 따른 스타일 변경)
-  const peopleOnClick = (event) => {
-    setPeopleNum(event.target.id);
+  const peopleOnChange = (event) => {
+    setPeopleNum(event.target.value);
   };
-
+  const disableOnClick = (event) => {
+    setDisabled(prev => !prev)
+  }
+  const user = useSelector((store) => store.userData);
+  
   // 방 만드는 axios 통신
   const createOnClick = (event) => {
     event.preventDefault();
     if (roomname === "") {
       alert("Please enter a room name");
     } else {
+      const data = {
+        roomTitle: roomname,
+        headcount: peoplenum,
+        password: password,
+        host: user.userId,
+      };
+      axios({
+        method: "post",
+        url: "http://localhost:8080/api/v1/user/user/kakao/callback",
+        data: data,
+        headers: { "Content-type": "application/json" },
+      })
+        .then((res) => {
+          navigate(`/room/${res.data.roomNo}`);
+        })
+        .catch((error) => {
+          alert("지금은 바쁩니다 다시 시도해 주세요");
+        });
       console.log(roomname, password, peoplenum);
-      // navigate()
     }
   };
 
@@ -94,154 +115,34 @@ function Create() {
 
                   <li>
                     <label className={style.tag}>인원 수</label>
-                    <div className={style.containerRadio}>
-                      <div className={style.radiotileGroup}>
-                        <div
-                          className={style.inputContainer}
-                          onClick={peopleOnClick}
-                        >
-                          <input
-                            id="2"
-                            className={style.radioButton}
-                            type="radio"
-                            name="radio"
-                          />
-                          <div
-                            className={
-                              peoplenum === "2"
-                                ? style.radioTile
-                                : style.radioTileNone
-                            }
-                            id="2"
-                          >
-                            <label id="2" className={style.radioTileLabel}>
-                              2
-                            </label>
-                          </div>
-                        </div>
-                        <div
-                          className={style.inputContainer}
-                          onClick={peopleOnClick}
-                        >
-                          <input
-                            id="3"
-                            className={style.radioButton}
-                            type="radio"
-                            name="radio"
-                          />
-                          <div
-                            className={
-                              peoplenum === "3"
-                                ? style.radioTile
-                                : style.radioTileNone
-                            }
-                            id="3"
-                          >
-                            <label id="3" className={style.radioTileLabel}>
-                              3
-                            </label>
-                          </div>
-                        </div>
-                        <div
-                          className={style.inputContainer}
-                          onClick={peopleOnClick}
-                        >
-                          <input
-                            id="4"
-                            className={style.radioButton}
-                            type="radio"
-                            name="radio"
-                          />
-                          <div
-                            className={
-                              peoplenum === "4"
-                                ? style.radioTile
-                                : style.radioTileNone
-                            }
-                            id="4"
-                          >
-                            <label
-                              id="4"
-                              className={style.radioTileLabel}
-                              onClick={peopleOnClick}
-                            >
-                              4
-                            </label>
-                          </div>
-                        </div>
-                        <div
-                          className={style.inputContainer}
-                          onClick={peopleOnClick}
-                        >
-                          <input
-                            id="5"
-                            className={style.radioButton}
-                            type="radio"
-                            name="radio"
-                          />
-                          <div
-                            className={
-                              peoplenum === "5"
-                                ? style.radioTile
-                                : style.radioTileNone
-                            }
-                            id="5"
-                          >
-                            <label
-                              id="5"
-                              className={style.radioTileLabel}
-                              onClick={peopleOnClick}
-                            >
-                              5
-                            </label>
-                          </div>
-                        </div>
-                        <div
-                          className={style.inputContainer}
-                          onClick={peopleOnClick}
-                        >
-                          <input
-                            id="6"
-                            className={style.radioButton}
-                            type="radio"
-                            name="radio"
-                          />
-                          <div
-                            className={
-                              peoplenum === "6"
-                                ? style.radioTile
-                                : style.radioTileNone
-                            }
-                            id="6"
-                          >
-                            <label
-                              id="6"
-                              className={style.radioTileLabel}
-                              onClick={peopleOnClick}
-                            >
-                              6
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                      <select name="peoplenum" onChange={peopleOnChange}>
+                        <option value="2">2명</option>
+                        <option value="3">3명</option>
+                        <option value="4">4명</option>
+                        <option value="5">5명</option>
+                        <option value="6">6명</option>
+                      </select>
                   </li>
 
                   <li>
                     <label className={style.tag} htmlFor="password">
-                      비밀번호(선택)
+                      비밀번호
                     </label>
+                    <label><input type="checkbox" name="color" value={disabled} onClick={disableOnClick}/></label>
                     <input
                       placeholder="방 비밀번호를 입력하세요"
                       id="password"
                       value={password}
                       onChange={passwordChange}
                       className={style.input}
+                      disabled={disabled}
                     />
                   </li>
                 </ul>
               </form>
-              <button className={style.button} onClick={backOnClick}>취소</button>
+              <button className={style.button} onClick={backOnClick}>
+                취소
+              </button>
             </div>
 
             <div className={style.rightcontainer}>

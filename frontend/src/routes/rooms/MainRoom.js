@@ -63,6 +63,7 @@ function MainRoom() {
 
         mySession.on("exception", (exception) => {
           console.warn(exception);
+          deleteSubscriber(exception.stream.streamManager);
         });
         const getToken = async () => {
           const newtoken = await createSession(roomId);
@@ -144,7 +145,7 @@ function MainRoom() {
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, []);
   // 끝
 
   const onbeforeunload = (event) => {
@@ -180,6 +181,9 @@ function MainRoom() {
       {session !== undefined ? (
         <div>
           <div className={styles.GameRoomsDisplay}>
+            {/* <div className={styles.card}>
+              <UserVideoComponent streamManager={publisher} />
+            </div> */}
             {subscribes.map((sub, i) => (
               <div key={i} className={styles.card}>
                 <UserVideoComponent streamManager={sub} />
