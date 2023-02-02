@@ -11,4 +11,6 @@ public interface RoomService {
 
     // 게임방 생성
     LiveRoomInfoRes addRoom(RoomReq roomReq, User sessionUser);
+
+
 }
