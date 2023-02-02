@@ -1,15 +1,14 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styles from "./navbar.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
-import { useNavigate } from "react-router-dom";
-import Dropdown from "./dropdown";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   // 페이지 이동을 위한 함수들
   const navigate = useNavigate();
   const isLogin = JSON.parse(localStorage.getItem("token"));
+  // const isLogin = true;
 
   const navigateToLanding = () => {
     navigate("/");
@@ -18,12 +17,12 @@ const Navbar = () => {
     navigate("/live");
   };
 
-  const navigateToProfile = () => {
-    const userId = 1; // 현재 접속중인 유저 id를 가져와야 한다 redux든 아니면 back과의 통신이든
-    navigate(`/profile/:${userId}`);
-  };
+  //유저정보 가져오기
+  const user = useSelector((store) => store.userData);
 
-  const [dropDown, setDropDown] = React.useState(false);
+  const navigateToProfile = () => {
+    navigate(`/profile/${user.user_id}`);
+  };
 
   const Login = () => {
     const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99";
@@ -32,76 +31,87 @@ const Navbar = () => {
     if (typeof window !== "undefined") {
       window.location.href = KAKAO_AUTH_URL;
     }
-    
   };
 
   const navigateToCreateRoom = () => {
-    navigate("/room");
+    navigate("/room/makeroom");
   };
   // 검색 기능을 위한 함수
   const enterSearch = (event) => {
     event.preventDefault();
     if (search) {
+      // 입력값을 들고 live로 이동
       console.log(search);
-      // navigate("/landing/")
+      navigate("/live", {state:search})
       return;
     }
   };
+
   const [search, setSearch] = useState("");
   const onChangeSearch = (event) => {
     event.preventDefault();
     setSearch(event.target.value);
+    console.log(event.target.value);
   };
-  return (
-    <div>
-      <div className={styles.navbar}>
-        <div className={styles.groupContainer}>
-          <div className={styles.groupParent} onClick={navigateToLanding}>
-            <img className={styles.groupChild} alt="" src="../img/logo.png" />
-            <b className={styles.raonzena}>RaonZena</b>
-          </div>
-          {/* <div className={styles.rectangleParent}> */}
-          <div className={styles.flexGroup}>
-            <div>
-              <ul className={styles.nav_ul}>
-                <li className={styles.nav_ul_li} onClick={navigateToLanding}>
-                  Home
-                </li>
-                <li className={styles.nav_ul_li} onClick={navigateToLive}>
-                  Live
-                </li>
-                <li>
-                  <form onSubmit={enterSearch}>
-                    <input
-                      className={styles.searchRooms2}
-                      placeholder="방 이름으로 검색"
-                      value={search}
-                      onChange={onChangeSearch}
-                    ></input>
-                  </form>
-                </li>
-              </ul>
-            </div>
 
-            <div className={styles.rectangleParent}>
-              {isLogin ? (
-                <div className={styles.groupContainer}>
-                  <div
-                    className={styles.rectangleContainer}
-                    onClick={navigateToCreateRoom}
-                  >
-                    <div className={styles.rectangleDiv} />
-                    <div className={styles.createRoom}>방 만들기</div>
-                  </div>
-                </div>
-              ) : (
-                <div className={styles.rectangleGroup} onClick={Login}>
-                  <img src="../img/kakao_login_medium.png" />
-                </div>
-              )}
-            </div>
-          </div>
+  // 현재 라우터 위치에 따른 색 변경 함수
+  let nowContent = useLocation();
+
+  const activerouter = [nowContent.pathname === "/" ? "active" : null];
+
+  const activerouter2 = [nowContent.pathname === "/live" ? "active" : null];
+
+  return (
+    <div className={styles.navbar}>
+      <div className={styles.Logo} onClick={navigateToLanding}>
+        <img className={styles.LogoImg} alt="" src="../img/logo.png" />
+        <p className={styles.LogoTitle}>RaonZena</p>
+      </div>
+      <div className={styles.rightSide}>
+        <div
+          className={`${styles.router} ${styles[activerouter]}`}
+          onClick={navigateToLanding}
+        >
+          Home
         </div>
+        <div
+          className={`${styles.router} ${styles[activerouter2]}`}
+          onClick={navigateToLive}
+        >
+          Live
+        </div>
+        <div>
+          <form onSubmit={enterSearch} className={styles.searchforms}>
+            <input
+              className={styles.searchRooms}
+              placeholder="방 이름으로 검색"
+              value={search}
+              onChange={onChangeSearch}
+            ></input>
+            <button type="submit" className={styles.searchBtn}>
+              <FaSearch className={styles.lens} />
+            </button>
+          </form>
+        </div>
+
+        {isLogin ? (
+          <>
+            <div className={styles.profilebox} onClick={navigateToProfile}>
+              <div>{user.user_name}</div>
+              <img src={user.user_image_url} alt="profileimg" className={styles.profileimg} />
+            </div>
+            <div className={styles.createRoom} onClick={navigateToCreateRoom}>
+              방 만들기
+            </div>
+          </>
+        ) : (
+          <img
+            className={styles.Login}
+            onClick={Login}
+            src="../img/kakao_login_medium.png"
+            alt="kakaologin"
+          />
+        )}
       </div>
     </div>
   );

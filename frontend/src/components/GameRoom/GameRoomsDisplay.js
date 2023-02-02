@@ -3,19 +3,20 @@ import GameRoom from "./GameRoom";
 import Item from "./Item";
 import styles from "./GameRoom.module.css";
 
-const CardsDisplay = ({ gameRoomList, loading }) => {
+const GameRoomsDisplay = ({ gameRoomList, loading }) => {
   if (loading) {
     return <h2>Loading...</h2>;
   }
 
   return (
     <div>
-      {gameRoomList?.map((gameRoomInfo) => {
+      {gameRoomList?.map((gameRoomInfo, idx) => {
         return (
           <Item
             title={gameRoomInfo.title}
             users={gameRoomInfo.users}
             image_src={gameRoomInfo.image_src}
+            key={idx}
           />
         );
       })}
@@ -23,4 +24,4 @@ const CardsDisplay = ({ gameRoomList, loading }) => {
   );
 };
 
-export default CardsDisplay;
+export default GameRoomsDisplay;
