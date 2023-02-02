@@ -41,7 +41,6 @@ const Navbar = () => {
     event.preventDefault();
     if (search) {
       // 입력값을 들고 live로 이동
-      console.log(search);
       navigate("/live", {state:search})
       return;
     }
@@ -51,7 +50,6 @@ const Navbar = () => {
   const onChangeSearch = (event) => {
     event.preventDefault();
     setSearch(event.target.value);
-    console.log(event.target.value);
   };
 
   // 현재 라우터 위치에 따른 색 변경 함수

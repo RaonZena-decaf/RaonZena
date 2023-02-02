@@ -8,16 +8,19 @@ import Landing from "./routes/main/Landing ";
 import MainRoom from "./routes/rooms/MainRoom";
 import KakaoLogin from "./routes/main/KakaoLogin";
 import Create from "./routes/rooms/Create";
+import ProfilePage from "./routes/main/ProfilePage";
+import ScrollToTop from "./components/ScrollToTop";
+
 
 function App() {
   return (
     <Router>
+      <ScrollToTop/>
       <Routes>
         <Route path="/room/makeroom" element={<Create/>} />
         {/* <Route path="/room/before" element={} /> */}
         {/* <Route path="/room/:roomId/games/:gameId" element={} /> */}
-        {/* <Route path="/profile/:userNo" element={} /> */}
-        <Route path="/Create" element={<Create />} />
+        <Route path="/profile/:userNo" element={<ProfilePage />} />
         <Route path="/NoDataLive" element={<NoDataLivePage />} />
         <Route path="/live" element={<LivePage />} />
         <Route path="/uri" element={<Auth />} />

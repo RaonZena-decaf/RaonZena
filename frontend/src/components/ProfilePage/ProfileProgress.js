@@ -1,19 +1,18 @@
-import { ProfileUserInfo } from "./ProfileUserInfo";
 import styles from "./ProfileProgress.module.css";
 
-function ProfileProgress() {
+function ProfileProgress({exp}) {
   return (
     <div className={styles.progressbar}>
       <div
         style={{
           height: "100%",
-          width: `${ProfileUserInfo.exp}%`,
+          width: `${exp}%`,
           backgroundColor: "#a66cff",
           transition: "width 0.5s",
         }}
       >
         <span className={styles.progressPercent}>
-          {`${ProfileUserInfo.exp}%`}
+          {`${exp}%`}
         </span>
       </div>
     </div>

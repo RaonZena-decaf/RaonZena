@@ -5,6 +5,7 @@ import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "../../components/camera/UserVideoComponent";
 import { useNavigate } from "react-router-dom";
+import Entering from "../../components/room/MainLoading";
 
 import axios from "axios";
 import { Navigate } from "react-router-dom";
