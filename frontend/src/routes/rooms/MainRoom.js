@@ -5,21 +5,22 @@ import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "../../components/camera/UserVideoComponent";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { ovActions } from "../../app/openvidu";
+import Loading from "../../components/room/ChatingSubjectLoading";
 const APPLICATION_SERVER_URL = "http://localhost:5000/";
 
 function MainRoom() {
-
-  const [session, setSession] = useState({"on": () => {return false}});
+  const dispatch = useDispatch();
+  const [session, setSession] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
   const [userName, setUserName] = useState("User3");
   const [roomId, setroomId] = useState("Roomc");
   const [attend, setAttend] = useState(0);
   const [publisher, setPublisher] = useState(undefined);
+  const [openvidu, setOpenvidu] = useState(undefined);
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
@@ -40,6 +41,7 @@ function MainRoom() {
 
     const after = new Promise((resolve, reject) => {
       const mySession = OV.initSession();
+
       setTimeout(() => {
         resolve(mySession);
       }, 1000);
@@ -48,7 +50,7 @@ function MainRoom() {
       .then((mySession) => {
         // --- 2) Init a session --
         console.log(mySession);
-
+        setSession(mySession);
         // --- 3) Specify the actions when events take place in the session ---
         mySession.on("streamCreated", (event) => {
           const subscriber = mySession.subscribe(event.stream, undefined);
@@ -138,8 +140,6 @@ function MainRoom() {
               );
             });
         });
-        setSession(mySession);
-
       })
       .catch((error) => {
         console.log(error);
@@ -171,31 +171,32 @@ function MainRoom() {
     setUserName("User");
     navigate("/live");
   };
-  const openvidu = {session, publisher, userName }
+  useEffect(() => {
+    setOpenvidu({ session, publisher, userName });
+  }, [session, publisher, userName]);
+  console.log(openvidu);
   return (
     <div className={styles.background}>
       {session !== undefined ? (
-        <div id="session">
-          <div>
-            <input
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="Leave session"
-            />
+        <div>
+          <div className={styles.GameRoomsDisplay}>
+            {subscribes.map((sub, i) => (
+              <div key={i} className={styles.card}>
+                <UserVideoComponent streamManager={sub} />
+              </div>
+            ))}
           </div>
-        </div>
-      ) : null}
-      <div className={styles.GameRoomsDisplay}>
-        {subscribes.map((sub, i) => (
-          <div key={i} className={styles.card}>
-            <UserVideoComponent streamManager={sub}/>
-          </div>
-        ))}
-      </div>
 
-      <MenuBar toggleBar={toggleBar} exitaction={leaveSession}/>
-      <ChattingBar openChatting={openChatting} toggleBar={toggleBar} openvidu={openvidu}/>
+          <MenuBar toggleBar={toggleBar} exitaction={leaveSession} />
+          <ChattingBar
+            openChatting={openChatting}
+            toggleBar={toggleBar}
+            openvidu={openvidu}
+          />
+        </div>
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 }

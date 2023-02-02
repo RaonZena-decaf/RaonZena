@@ -17,6 +17,9 @@ const ovSlice = createSlice({
     currentVideoDevice: undefined,
   },
   reducers: {
+    setSession: (state, {payload} ) => {
+      state.session = payload
+    },
     createOpenvidu: (state, { payload }) => {
       if (!state.OV) {
         state.myUserName = payload.nickname;
@@ -63,11 +66,6 @@ const ovSlice = createSlice({
       state.currentVideoDevice = undefined;
 
       //   return payload
-    },
-    setSession: (state, action) => {
-      {
-        state.session = action
-      }
     },
   },
 });

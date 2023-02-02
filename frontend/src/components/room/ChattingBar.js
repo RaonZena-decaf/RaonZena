@@ -10,7 +10,6 @@ function ChattingBar({ openChatting, toggleBar, openvidu }) {
       setCloseBar(false);
     }, 1000);
   };
-
   return (
     <div
       className={
