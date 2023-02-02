@@ -75,20 +75,28 @@ function ProfilePageInfo({ handleOpen, setfollower, setfollowing }) {
               handleOpen();
               setfollowing(ProfileFollowingList);
             }}
-            className={styles.profileid4}
+            className={`${styles.profileid4} ${styles.photocard}`}
           >{`팔로잉 ${ProfileFollowingList.length}`}</span>
           <span
             onClick={() => {
               handleOpen();
               setfollower(ProfileFollowerList);
             }}
-            className={styles.profileid4}
+            className={`${styles.profileid4} ${styles.photocard}`}
           >{`팔로워 ${ProfileFollowerList.length}`}</span>
         </div>
       </div>
       <div className={styles.background6}>
-        <button className={styles.follow}>팔로우 중</button>
-        <button className={styles.follow2}>팔로우 하기</button>
+        <button
+          onClick={toggleDone}
+          className={`${styles.follow} ${styles.photocard} ${
+            follow ? styles.follow : styles.follow2
+          }`}
+        >
+          {follow ? "팔로우 중" : "팔로우 하기"}
+        </button>
+        {/* <button className={styles.follow}>팔로우 중</button>
+        <button className={styles.follow2}>팔로우 하기</button> */}
       </div>
       <div className={styles.background2}>
         <button type="button" className={styles.search}>

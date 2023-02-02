@@ -4,9 +4,12 @@ import ChatingSubjectLoading from "./ChatingSubjectLoading"
 import PhotoShoot from "./PhotoShoot"
 import ChooseGame from "./ChooseGame"
 import ExitRoom from "./ExitRoom";
+import { useDispatch } from "react-redux";
+import { ovActions } from "../../app/openvidu";
 import axios from "axios";
-
 const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
+  const dispatch = useDispatch()
+  const leaveSession = dispatch(ovActions.leaveSession())
   const animation = [
     show === "entering"
       ? "MenuOpen"
@@ -69,7 +72,7 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
           {menuContent === "chatSubject" && <ChatingSubjectLoading chattingSubject={chattingSubject}/>}
           {menuContent === "chooseGame" && <ChooseGame/>}
           {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu}/> }
-          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu}/> }
+          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu} onClick={leaveSession} /> }
         </div>
       </div>
     </div>

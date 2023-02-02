@@ -3,11 +3,12 @@ import styles from "./ExitRoom.module.css"
 
 
 
-function ExitRoom ({closeMenu}) {
+function ExitRoom ({closeMenu, exitaction}) {
   //방에서 나간 후 라이브 페이지로 돌아가는 함수
   const navigate = useNavigate();
   const exitRoom = () => {
     //이곳에 방에서 나가는 요청을 보내는 함수를 넣는다.
+    exitaction()
     navigate("/live");
   };
 

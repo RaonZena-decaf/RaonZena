@@ -1,6 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userData from './userData';
+import openvidu from './openvidu'
 
 export const store = configureStore({
-  reducer: {userData}
+  reducer: {
+    openvidu,
+    userData
+  }
 });
