@@ -6,7 +6,7 @@ import axios from "axios";
 
 function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
   // redux에 저장된 유저 정보에서 레벨에 따라 option 렌더링이 달라져야 함
-  const userlevel = useSelector((store) => store.level);
+  const userlevel = useSelector((store) => store.userData.level);
   const frameSelect = (e) => {
     setPhotoFrame(e.target.value);
   };

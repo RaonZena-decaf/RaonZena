@@ -1,7 +1,5 @@
 import { experimentalStyled as styled } from "@mui/material/styles";
 import styles from "./GameRoom.module.css";
-
-//import "./styles.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import GameRoomsDisplay from "./GameRoomsDisplay";
@@ -10,27 +8,39 @@ import { useNavigate } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
 import blue from "@mui/material/colors/blue";
 
-// const theme = createTheme({
-//   palette: {
-//     primary: blue,
-//   },
-// });
 
-// const Pagination = styled(Paper)(({ theme }) => ({
-//   // backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#222222",
-//   backgroundColor: "#222222",
-//   boxShadow: "none",
-//   ...theme.typography.body2,
-//   padding: theme.spacing(2),
-//   textAlign: "center",
-//   color: theme.palette.text.secondary,
-// }));
-
-export default function GameRoom() {
-  //const [gameRoomList, setGameRoomList] = useState([]);
-
+export default function GameRoom({searchWord}) {
+  
   const navigate = useNavigate();
 
+  // axios로 게임 방 리스트를 받아오는 함수.
+  // const [gameRoomList, setGameRoomList] = useState()
+  // const getList = (Search) =>{
+  //   if (Search === null ){
+  //     axios({
+  //       method:"get",
+  //       url : "http://localhost:8080/api/v1/live"})
+  //       .then((res) => {
+  //       setGameRoomList(res.content)
+  //     }).catch(error =>
+  //       console.log(error))
+  //   } else {
+  //     axios({
+  //       method:"get",
+  //       url : `http://localhost:8080/api/v1/live?keyword="${Search}"`})
+  //       .then((res)=> {
+  //         setGameRoomList(res.content)
+  //       }).catch(error =>
+  //       console.log(error))
+  //   }
+  // }
+
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [cardsPerPage] = useState(10);
+  const [curGameRoomList, setCurGameRoomList] = useState([]);
+  
+  // 임시 데이터
   const gameRoomList = [
     { title: "title152", users: 3, image_src: "./Room1.png" },
     { title: "어서와", users: 6, image_src: "./Room2.png" },
@@ -46,26 +56,10 @@ export default function GameRoom() {
     { title: "title12", users: 5, image_src: "./Room12.png" },
   ];
 
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [cardsPerPage] = useState(10);
-  const [curGameRoomList, setCurGameRoomList] = useState([]);
-
-  // useEffect(() => {
-  //   const getMovieDetails = async () => {
-  //     setLoading(true);
-  //     const dataFromServer = await axios.get(
-  //       `https://api.themoviedb.org/3/movie/popular?api_key=e11085cff59023d052e3a69484d6cd19&page=${currentPage}`
-  //     );
-  //     const responeFromServer = dataFromServer.data.results;
-  //     setGameRoomList(responeFromServer);
-  //     setLoading(false);
-  //   };
-
-  //   getMovieDetails();
-  // }, [currentPage]);
-
   useEffect(() => {
+    // 방들 리스트를 로딩
+    // getList(searchWord)
+
     // Get currCards
     const indexOfLastCard = currentPage * cardsPerPage;
     const indexOfFirstCard = indexOfLastCard - cardsPerPage;
@@ -77,24 +71,19 @@ export default function GameRoom() {
     setCurGameRoomList(newGameRoomLIst);
   }, [currentPage]);
 
-  // useEffect(() => {
-
-  // , [newGameRoomLIst]
-  // });
-
   // Change page
   const paginate = function (pageNumber) {
     setCurrentPage(pageNumber);
   };
-  //console.log(cardsPerPage, gameRoomList.length, paginate);
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
   };
 
   const navigateToCreateRoom = () => {
-    navigate("/Create");
+    navigate("/room/makeroom");
   };
+
 
   if (curGameRoomList.length > 0) {
     return (

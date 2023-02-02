@@ -67,210 +67,212 @@ function Create() {
   };
 
   return (
-    <div className={style.background}>
+    <>
       <Navbar />
-      <div className={style.container}>
-        <div className={style.innercontainer}>
-          <div className={style.leftcontainer}>
-            <h2 className={style.header}>
-              <span>방을 만드는 중 입니다</span>
-            </h2>
+      <div className={style.background}>
+        <div className={style.container}>
+          <div className={style.innercontainer}>
+            <div className={style.leftcontainer}>
+              <h2 className={style.header}>
+                <span>방을 만드는 중 입니다</span>
+              </h2>
 
-            <form id="create" className={style.textcont}>
-              <ul>
-                <li>
-                  <label className={style.tag} htmlFor="title">
-                    방 제목
-                  </label>
-                  <input
-                    placeholder="방 제목을 입력하세요"
-                    id="title"
-                    value={roomname}
-                    onChange={nameChange}
-                    className={style.input}
-                  ></input>
-                </li>
+              <form id="create" className={style.textcont}>
+                <ul>
+                  <li>
+                    <label className={style.tag} htmlFor="title">
+                      방 제목
+                    </label>
+                    <input
+                      placeholder="방 제목을 입력하세요"
+                      id="title"
+                      value={roomname}
+                      onChange={nameChange}
+                      className={style.input}
+                    ></input>
+                  </li>
 
-                <li>
-                  <label className={style.tag}>인원 수</label>
-                  <div className={style.containerRadio}>
-                    <div className={style.radiotileGroup}>
-                      <div
-                        className={style.inputContainer}
-                        onClick={peopleOnClick}
-                      >
-                        <input
-                          id="2"
-                          className={style.radioButton}
-                          type="radio"
-                          name="radio"
-                        />
+                  <li>
+                    <label className={style.tag}>인원 수</label>
+                    <div className={style.containerRadio}>
+                      <div className={style.radiotileGroup}>
                         <div
-                          className={
-                            peoplenum === "2"
-                              ? style.radioTile
-                              : style.radioTileNone
-                          }
-                          id="2"
+                          className={style.inputContainer}
+                          onClick={peopleOnClick}
                         >
-                          <label id="2" className={style.radioTileLabel}>
-                            2
-                          </label>
+                          <input
+                            id="2"
+                            className={style.radioButton}
+                            type="radio"
+                            name="radio"
+                          />
+                          <div
+                            className={
+                              peoplenum === "2"
+                                ? style.radioTile
+                                : style.radioTileNone
+                            }
+                            id="2"
+                          >
+                            <label id="2" className={style.radioTileLabel}>
+                              2
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        className={style.inputContainer}
-                        onClick={peopleOnClick}
-                      >
-                        <input
-                          id="3"
-                          className={style.radioButton}
-                          type="radio"
-                          name="radio"
-                        />
                         <div
-                          className={
-                            peoplenum === "3"
-                              ? style.radioTile
-                              : style.radioTileNone
-                          }
-                          id="3"
+                          className={style.inputContainer}
+                          onClick={peopleOnClick}
                         >
-                          <label id="3" className={style.radioTileLabel}>
-                            3
-                          </label>
+                          <input
+                            id="3"
+                            className={style.radioButton}
+                            type="radio"
+                            name="radio"
+                          />
+                          <div
+                            className={
+                              peoplenum === "3"
+                                ? style.radioTile
+                                : style.radioTileNone
+                            }
+                            id="3"
+                          >
+                            <label id="3" className={style.radioTileLabel}>
+                              3
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        className={style.inputContainer}
-                        onClick={peopleOnClick}
-                      >
-                        <input
-                          id="4"
-                          className={style.radioButton}
-                          type="radio"
-                          name="radio"
-                        />
                         <div
-                          className={
-                            peoplenum === "4"
-                              ? style.radioTile
-                              : style.radioTileNone
-                          }
-                          id="4"
+                          className={style.inputContainer}
+                          onClick={peopleOnClick}
                         >
-                          <label
+                          <input
                             id="4"
-                            className={style.radioTileLabel}
-                            onClick={peopleOnClick}
+                            className={style.radioButton}
+                            type="radio"
+                            name="radio"
+                          />
+                          <div
+                            className={
+                              peoplenum === "4"
+                                ? style.radioTile
+                                : style.radioTileNone
+                            }
+                            id="4"
                           >
-                            4
-                          </label>
+                            <label
+                              id="4"
+                              className={style.radioTileLabel}
+                              onClick={peopleOnClick}
+                            >
+                              4
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        className={style.inputContainer}
-                        onClick={peopleOnClick}
-                      >
-                        <input
-                          id="5"
-                          className={style.radioButton}
-                          type="radio"
-                          name="radio"
-                        />
                         <div
-                          className={
-                            peoplenum === "5"
-                              ? style.radioTile
-                              : style.radioTileNone
-                          }
-                          id="5"
+                          className={style.inputContainer}
+                          onClick={peopleOnClick}
                         >
-                          <label
+                          <input
                             id="5"
-                            className={style.radioTileLabel}
-                            onClick={peopleOnClick}
+                            className={style.radioButton}
+                            type="radio"
+                            name="radio"
+                          />
+                          <div
+                            className={
+                              peoplenum === "5"
+                                ? style.radioTile
+                                : style.radioTileNone
+                            }
+                            id="5"
                           >
-                            5
-                          </label>
+                            <label
+                              id="5"
+                              className={style.radioTileLabel}
+                              onClick={peopleOnClick}
+                            >
+                              5
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        className={style.inputContainer}
-                        onClick={peopleOnClick}
-                      >
-                        <input
-                          id="6"
-                          className={style.radioButton}
-                          type="radio"
-                          name="radio"
-                        />
                         <div
-                          className={
-                            peoplenum === "6"
-                              ? style.radioTile
-                              : style.radioTileNone
-                          }
-                          id="6"
+                          className={style.inputContainer}
+                          onClick={peopleOnClick}
                         >
-                          <label
+                          <input
                             id="6"
-                            className={style.radioTileLabel}
-                            onClick={peopleOnClick}
+                            className={style.radioButton}
+                            type="radio"
+                            name="radio"
+                          />
+                          <div
+                            className={
+                              peoplenum === "6"
+                                ? style.radioTile
+                                : style.radioTileNone
+                            }
+                            id="6"
                           >
-                            6
-                          </label>
+                            <label
+                              id="6"
+                              className={style.radioTileLabel}
+                              onClick={peopleOnClick}
+                            >
+                              6
+                            </label>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </li>
+                  </li>
 
-                <li>
-                  <label className={style.tag} htmlFor="password">
-                    비밀번호(선택)
-                  </label>
-                  <input
-                    placeholder="방 비밀번호를 입력하세요"
-                    id="password"
-                    value={password}
-                    onChange={passwordChange}
-                    className={style.input}
-                  />
-                </li>
-              </ul>
-            </form>
-            <button className={style.button} onClick={backOnClick}>취소</button>
-          </div>
-
-          <div className={style.rightcontainer}>
-            <div className={style.video}>화상</div>
-            <div className={style.accessory}>
-              {mic ? (
-                <FaMicrophoneAlt onClick={micOnClick} />
-              ) : (
-                <FaMicrophoneAltSlash onClick={micOnClick} />
-              )}
-
-              {camera ? (
-                <FaVideo onClick={cameraOnClick} />
-              ) : (
-                <FaVideoSlash onClick={cameraOnClick} />
-              )}
+                  <li>
+                    <label className={style.tag} htmlFor="password">
+                      비밀번호(선택)
+                    </label>
+                    <input
+                      placeholder="방 비밀번호를 입력하세요"
+                      id="password"
+                      value={password}
+                      onChange={passwordChange}
+                      className={style.input}
+                    />
+                  </li>
+                </ul>
+              </form>
+              <button className={style.button} onClick={backOnClick}>취소</button>
             </div>
-            <button
-              className={style.enter}
-              type="submit"
-              htmlform="create"
-              onClick={createOnClick}
-            >
-              방 만들기
-            </button>
+
+            <div className={style.rightcontainer}>
+              <div className={style.video}>화상</div>
+              <div className={style.accessory}>
+                {mic ? (
+                  <FaMicrophoneAlt onClick={micOnClick} />
+                ) : (
+                  <FaMicrophoneAltSlash onClick={micOnClick} />
+                )}
+
+                {camera ? (
+                  <FaVideo onClick={cameraOnClick} />
+                ) : (
+                  <FaVideoSlash onClick={cameraOnClick} />
+                )}
+              </div>
+              <button
+                className={style.enter}
+                type="submit"
+                htmlform="create"
+                onClick={createOnClick}
+              >
+                방 만들기
+              </button>
+            </div>
           </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
 

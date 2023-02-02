@@ -1,0 +1,15 @@
+.container {
+  background-color: #1f2122;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.title {
+  font-size: 4rem;
+  margin-top: 6rem;
+}
