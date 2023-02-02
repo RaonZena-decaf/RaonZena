@@ -9,6 +9,10 @@ import axios from "axios";
 
 function ProfilePageInfo({ handleOpen, setfollower, setfollowing }) {
   // 해당 페이지의 유저 프로필을 불러오는 axios 통신
+  const [follow, setFollow] = useState(false);
+  function toggleDone() {
+    setFollow((prev) => !prev);
+  }
   const [userInfo, setUserInfo] = useState({
     user_no:"",
     user_id:"",

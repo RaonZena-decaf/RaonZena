@@ -144,7 +144,7 @@ function MainRoom() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  });
   // 끝
 
   const onbeforeunload = (event) => {
