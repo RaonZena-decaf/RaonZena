@@ -4,8 +4,14 @@ import { ProfileUserInfo } from "./ProfileUserInfo";
 import { photoList } from "./ProfilePost";
 import { ProfileFollowerList } from "./ProfileFollowerList";
 import { ProfileFollowingList } from "./ProfileFollowingList";
+import { useState } from "react";
 
 function ProfilePageInfo({ handleOpen, setfollower, setfollowing }) {
+  const [follow, setFollow] = useState(false);
+  function toggleDone() {
+    setFollow((prev) => !prev);
+  }
+
   return (
     <div className={styles.background}>
       <div className={styles.background2}>
@@ -33,14 +39,14 @@ function ProfilePageInfo({ handleOpen, setfollower, setfollowing }) {
               handleOpen();
               setfollowing(ProfileFollowingList);
             }}
-            className={styles.profileid4}
+            className={`${styles.profileid4} ${styles.photocard}`}
           >{`팔로잉 ${ProfileFollowingList.length}`}</span>
           <span
             onClick={() => {
               handleOpen();
               setfollower(ProfileFollowerList);
             }}
-            className={styles.profileid4}
+            className={`${styles.profileid4} ${styles.photocard}`}
           >{`팔로워 ${ProfileFollowerList.length}`}</span>
         </div>
         {/* <p
@@ -49,8 +55,16 @@ function ProfilePageInfo({ handleOpen, setfollower, setfollowing }) {
         {/* <p className={styles.profileid4}>기록 8 팔로잉 13 팔로우 9</p> */}
       </div>
       <div className={styles.background6}>
-        <button className={styles.follow}>팔로우 중</button>
-        <button className={styles.follow2}>팔로우 하기</button>
+        <button
+          onClick={toggleDone}
+          className={`${styles.follow} ${styles.photocard} ${
+            follow ? styles.follow : styles.follow2
+          }`}
+        >
+          {follow ? "팔로우 중" : "팔로우 하기"}
+        </button>
+        {/* <button className={styles.follow}>팔로우 중</button>
+        <button className={styles.follow2}>팔로우 하기</button> */}
       </div>
       <div className={styles.background2}>
         <button type="button" className={styles.search}>

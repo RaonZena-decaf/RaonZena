@@ -65,18 +65,17 @@
 .follow {
   background-color: #ff00b9;
   color: white;
-  border-radius: 2rem;
+  border-radius: 5px;
   width: 10rem;
   height: 5rem;
   font-size: 1.5rem;
-  border: 0;
 }
 
 .follow2 {
   background-color: #1f2122;
   color: #ff00b9;
   border-color: #ff00b9;
-  border-radius: 2rem;
+  border-radius: 5px;
   width: 10rem;
   height: 5rem;
   font-size: 1.5rem;
@@ -85,4 +84,8 @@
 .search {
   background-color: #1f2122;
   border: 0;
+}
+
+.photocard:hover {
+  cursor: pointer;
 }
