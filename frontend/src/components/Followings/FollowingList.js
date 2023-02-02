@@ -3,45 +3,25 @@ import axios from "axios";
 import { Pagination } from "@mui/material";
 import Item from "./FollowingListItem";
 import styles from "./Followings.module.css";
+import { useSelector } from "react-redux";
 
 export default function FollowingList() {
-  const list = [
-    // {
-    //   userNo: 1,
-    //   userName: "귀염둥이영민쮸",
-    //   level: 1,
-    //   userImage: "./NoImageProfile.svg",
-    //   isOnline: true,
-    // },
-    // {
-    //   userNo: 2,
-    //   userName: "김우빈보단김찬빈",
-    //   level: 11,
-    //   userImage: "./NoImageProfile.svg",
-    //   isOnline: true,
-    // },
-    // {
-    //   userNo: 3,
-    //   userName: "우유빛깔임길연",
-    //   level: 66,
-    //   userImage: "./NoImageProfile.svg",
-    //   isOnline: false,
-    // },
-    // {
-    //   userNo: 4,
-    //   userName: "입덧사탕최지현",
-    //   level: 10,
-    //   userImage: "./NoImageProfile.svg",
-    //   isOnline: false,
-    // },
-    // {
-    //   userNo: 5,
-    //   userName: "악성코드윤수히",
-    //   level: 40,
-    //   userImage: "./NoImageProfile.svg",
-    //   isOnline: true,
-    // },
-  ];
+  const [list, setlist] = useState([]);
+  const baseUrl = useSelector((store)=>store.baseUrl)
+  const nowUserNo = useSelector((store)=>store.userData.user_no)
+  const getlist = () => {
+    axios({
+      method:"get",
+      url :`${baseUrl}profile/follower`,
+      data : {user_no : nowUserNo}
+    }).then((res)=>{
+      setlist(res.data.content)
+    }).catch(error =>
+      console.log(error))
+  }
+  useEffect(()=>{
+    getlist()
+  },[])
 
   if (list.length > 0) {
     return (
@@ -49,10 +29,10 @@ export default function FollowingList() {
         {list?.map((followInfo, idx) => {
           return (
             <Item
-              userNo={followInfo.userNo}
-              userName={followInfo.userName}
+              userNo={followInfo.user_no}
+              userName={followInfo.user_name}
               level={followInfo.level}
-              userImage={followInfo.userImage}
+              userImage={followInfo.user_image_url}
               isOnline={followInfo.isOnline}
               key={idx}
             />

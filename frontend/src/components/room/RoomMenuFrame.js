@@ -4,12 +4,11 @@ import ChatingSubjectLoading from "./ChatingSubjectLoading"
 import PhotoShoot from "./PhotoShoot"
 import ChooseGame from "./ChooseGame"
 import ExitRoom from "./ExitRoom";
-import { useDispatch } from "react-redux";
-import { ovActions } from "../../app/openvidu";
+import { useSelector } from "react-redux";
 import axios from "axios";
-const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
-  const dispatch = useDispatch()
-  const leaveSession = dispatch(ovActions.leaveSession())
+
+
+const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction }) => {
   const animation = [
     show === "entering"
       ? "MenuOpen"
@@ -30,11 +29,12 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
 
   //잡담주제 호출을 위한 함수
   const [chattingSubject, setChattingSubject] = useState("예시 잡담 주제") 
+  const baseUrl = useSelector((store)=>store.baseUrl)
 
   const getSubject = async() => {
     await axios({
       method:"GET",
-      url:"http://localhost:8080/api/v1/games/topicList"
+      url:`${baseUrl}games/topicList`
     }).then((res) => {
       setChattingSubject(res.data)
     }).catch(error=>{
@@ -72,7 +72,7 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent }) => {
           {menuContent === "chatSubject" && <ChatingSubjectLoading chattingSubject={chattingSubject}/>}
           {menuContent === "chooseGame" && <ChooseGame/>}
           {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu}/> }
-          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu} onClick={leaveSession} /> }
+          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu} onClick={exitaction} /> }
         </div>
       </div>
     </div>

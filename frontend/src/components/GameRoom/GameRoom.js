@@ -7,10 +7,11 @@ import { Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
 import blue from "@mui/material/colors/blue";
-
+import { useSelector } from "react-redux";
 
 export default function GameRoom({searchWord}) {
-  
+
+  const baseUrl = useSelector((store)=> store.baseUrl)
   const navigate = useNavigate();
 
   // axios로 게임 방 리스트를 받아오는 함수.
@@ -19,17 +20,17 @@ export default function GameRoom({searchWord}) {
   //   if (Search === null ){
   //     axios({
   //       method:"get",
-  //       url : "http://localhost:8080/api/v1/live"})
+  //       url : `${baseUrl}live`})
   //       .then((res) => {
-  //       setGameRoomList(res.content)
+  //       setGameRoomList(res.data.content)
   //     }).catch(error =>
   //       console.log(error))
   //   } else {
   //     axios({
   //       method:"get",
-  //       url : `http://localhost:8080/api/v1/live?keyword="${Search}"`})
+  //       url : `${baseUrl}live?keyword="${Search}"`})
   //       .then((res)=> {
-  //         setGameRoomList(res.content)
+  //         setGameRoomList(res.data.content)
   //       }).catch(error =>
   //       console.log(error))
   //   }
