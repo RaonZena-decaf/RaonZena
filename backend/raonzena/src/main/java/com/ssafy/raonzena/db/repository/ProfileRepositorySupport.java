@@ -40,7 +40,7 @@ public class ProfileRepositorySupport { //implements ProfileRepository
     public List<FollowFollowingtRes> findFollowerByUserNo (long userNo){
         return query
                 .select(Projections.fields(FollowFollowingtRes.class,
-                        user.userNo, user.userName))
+                        user.userNo, user.userName, user.userImageUrl, user.level))
                 .from(user)
                 .where(user.userNo.in (
                         JPAExpressions
@@ -53,7 +53,7 @@ public class ProfileRepositorySupport { //implements ProfileRepository
     public List<FollowFollowingtRes> findFolloweeByUserNo (long userNo){
         return query
                 .select(Projections.fields(FollowFollowingtRes.class,
-                        user.userNo, user.userName))
+                        user.userNo, user.userName, user.userImageUrl, user.level))
                 .from(user)
                 .where(user.userNo.in (
                         JPAExpressions

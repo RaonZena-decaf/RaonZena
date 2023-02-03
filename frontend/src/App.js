@@ -10,24 +10,23 @@ import KakaoLogin from "./routes/main/KakaoLogin";
 import Create from "./routes/rooms/Create";
 import ProfilePage from "./routes/main/ProfilePage";
 import ScrollToTop from "./components/ScrollToTop";
-
+import BeforeRoom from "./routes/rooms/BeforeEnter";
 
 function App() {
   return (
     <Router>
       <ScrollToTop/>
       <Routes>
-        <Route path="/room/makeroom" element={<Create/>} />
-        {/* <Route path="/room/before" element={} /> */}
-        {/* <Route path="/room/:roomId/games/:gameId" element={} /> */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/makeroom" element={<Create />} />
+        <Route path="/beforeroom/:id" element={<BeforeRoom />} />
         <Route path="/profile/:userNo" element={<ProfilePage />} />
         <Route path="/NoDataLive" element={<NoDataLivePage />} />
         <Route path="/live" element={<LivePage />} />
         <Route path="/uri" element={<Auth />} />
-        <Route path="/" element={<Landing />} />
         <Route path="/room/:roomId" element={<MainRoom />} />
         <Route path="/oauth/kakao/callback" element={<KakaoLogin />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </Router>
   );

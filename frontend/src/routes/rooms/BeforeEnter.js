@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import style from "./beforeenter.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/navbar/navbar";
 import VideoContainer from "../../components/camera/NoneVideo";
+import { useSelector } from "react-redux";
 import {
   FaVideo,
   FaVideoSlash,
@@ -12,11 +13,11 @@ import {
   FaUser,
 } from "react-icons/fa";
 
-import axios from "axios";
-
 function BeforeEnter(props) {
-  const [userName, setUserName] = useState("User");
-  const [roomId, setroomId] = useState("RoomB");
+  const { state } = useLocation();
+  const user = useSelector((store) => store.userData);
+  const [userName, setUserName] = useState(user.userId);
+  const [roomId, setroomId] = useState(state);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const navigate = useNavigate();
@@ -26,11 +27,13 @@ function BeforeEnter(props) {
   };
   // 마이크와 카메라 정보 갱신 부분
   const joinSession = () => {
-    navigate('/room/1')
-  }
+    navigate(`/room/${roomId}`);
+  };
   useEffect(() => {
-    // 어디서 화상 상태와 이와 관련된 default값을 가져오는가?
-  });
+    if (roomId === undefined && userName === undefined) {
+      navigate("/live");
+    }
+  }, []);
   const micOnClick = () => {
     setMic((prev) => {
       return !prev;
@@ -82,7 +85,9 @@ function BeforeEnter(props) {
                 <FaVideoSlash onClick={cameraOnClick} />
               )}
             </div>
-            <button className={style.enter} onClick={joinSession}>Enter</button>
+            <button className={style.enter} onClick={joinSession}>
+              Enter
+            </button>
           </div>
         </div>
       </div>

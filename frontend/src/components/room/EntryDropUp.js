@@ -1,6 +1,7 @@
 import styles from "./EntryDropUp.module.css";
 import { FaUserPlus } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 function EntryDropUp({ show, setdrop }) {
@@ -32,12 +33,14 @@ function EntryDropUp({ show, setdrop }) {
     { user_name: "최지연", user_no:127,following: false },
   ];
 
+  const baseUrl = useSelector((store)=> store.baseUrl)
+  const user = useSelector((store)=>store.userData.user_no)
   async function addFollowing(user_no) {
     // axios 통신을 통해 팔로우 추가
     await axios({
-      method: "get",
-      url: `http://localhost:8080/api/v1/profile/${user_no}`,
-      headers : {"Content-Type": `application/json`,}
+      method: "POST",
+      url: `${baseUrl}profile/${user}`,
+      data: {followee: user_no},
     }).then((res) => {
       let followed = userlist.findIndex(function(data) {return data.user_no === user_no})
       userlist[followed].following = true
