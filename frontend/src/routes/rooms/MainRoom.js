@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
-import { Navigate } from "react-router-dom";
-import Loading from "../../components/room/ChatingSubjectLoading";
-const APPLICATION_SERVER_URL = "http://localhost:5000/";
+import Loading from "../../components/room/MainLoading";
+const APPLICATION_SERVER_URL = "http://localhost:8080";
 
 function MainRoom() {
   const dispatch = useDispatch();
@@ -66,31 +65,38 @@ function MainRoom() {
         });
         const getToken = async () => {
           const newtoken = await createSession(roomId);
-          return await createToken(newtoken);
+          return newtoken;
+          // return await createToken(newtoken);
         };
         const createSession = async function (newtoken) {
-          const response = await axios.post(
-            APPLICATION_SERVER_URL + "api/sessions",
-            { customSessionId: newtoken },
-            {
-              headers: { "Content-Type": "application/json" },
-            }
-          );
-          return response.data; // The sessionId
+          await axios({
+            method: "POST",
+            url: APPLICATION_SERVER_URL + "/api/v1/live/room",
+            data: {
+              roomTitle: "치킨먹고싶은사람들만",
+              headcount: 6,
+              password: 1234,
+            },
+          })
+            .then((res) => {
+              console.log(res);
+              return res.data;
+            })
+            .catch((err) => console.log(err.response));
         };
-        const createToken = async function (newtoken) {
-          const response = await axios.post(
-            APPLICATION_SERVER_URL +
-              "api/sessions/" +
-              newtoken +
-              "/connections",
-            {},
-            {
-              headers: { "Content-Type": "application/json" },
-            }
-          );
-          return response.data;
-        };
+        // const createToken = async function (newtoken) {
+        //   const response = await axios.post(
+        //     APPLICATION_SERVER_URL +
+        //       "api/v1/room" +
+        //       newtoken +
+        //       "/connections",
+        //     {},
+        //     {
+        //       headers: { "Content-Type": "application/json" },
+        //     }
+        //   );
+        //   return response.data;
+        // };
         // --- 4) Connect to the session with a valid user token ---
         getToken().then((token) => {
           mySession
