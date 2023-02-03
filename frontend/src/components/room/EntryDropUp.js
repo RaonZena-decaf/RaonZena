@@ -41,7 +41,6 @@ function EntryDropUp({ show, setdrop }) {
       method: "POST",
       url: `${baseUrl}profile/${user}`,
       data: {followee: user_no},
-      headers : {"Content-Type": `application/json`,}
     }).then((res) => {
       let followed = userlist.findIndex(function(data) {return data.user_no === user_no})
       userlist[followed].following = true

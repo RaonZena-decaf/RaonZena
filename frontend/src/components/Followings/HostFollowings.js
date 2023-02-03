@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Pagination } from "@mui/material";
 import Item from "./HostFollowingsItem";
 import styles from "./Followings.module.css";
 import { useSelector } from "react-redux";
 
 const HostFollowings = ({ HostFollowingsList, loading }) => {
-  const [List, setList] = useState([]);
+  const [list, setList] = useState([]);
   const baseUrl = useSelector((store)=>store.baseUrl)
   const nowUserNo = useSelector((store)=>store.userData.user_no)
 
   const getlist = () => {
     axios({
       method:"get",
-      url :`${baseUrl}live/followingRoom`,
+      url :`${baseUrl}live/following`,
       data : {user_no : nowUserNo}
     }).then((res)=>{
       setList(res.data.content)
@@ -28,10 +27,10 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     return <h2>Loading...</h2>;
   }
 
-  if (List.length > 0) {
+  if (list.length > 0) {
     return (
       <div className={styles.HostFollowingsList}>
-        {List?.map((gameRoomInfo, idx) => {
+        {list?.map((gameRoomInfo, idx) => {
           return (
             <Item
               key={idx}

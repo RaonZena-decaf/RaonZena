@@ -15,52 +15,39 @@ export default function GameRoom({searchWord}) {
   const navigate = useNavigate();
 
   // axios로 게임 방 리스트를 받아오는 함수.
-  // const [gameRoomList, setGameRoomList] = useState()
-  // const getList = (Search) =>{
-  //   if (Search === null ){
-  //     axios({
-  //       method:"get",
-  //       url : `${baseUrl}live`})
-  //       .then((res) => {
-  //       setGameRoomList(res.data.content)
-  //     }).catch(error =>
-  //       console.log(error))
-  //   } else {
-  //     axios({
-  //       method:"get",
-  //       url : `${baseUrl}live?keyword="${Search}"`})
-  //       .then((res)=> {
-  //         setGameRoomList(res.data.content)
-  //       }).catch(error =>
-  //       console.log(error))
-  //   }
-  // }
+  const [gameRoomList, setGameRoomList] = useState([])
+  const getList = (Search) =>{
+    if (Search === null ){
+      axios({
+        method:"get",
+        url : `${baseUrl}live`})
+        .then((res) => {  
+        setGameRoomList(res.data)
+      }).catch(error =>
+        console.log(error))
+    } else {
+      axios({
+        method:"get",
+        url : `${baseUrl}live?keyword="${Search}"`,
+        params : {keyword : Search},
+        }).then((res)=> {
+          console.log(res)
+          setGameRoomList(res.data)
+        }).catch(error =>
+        console.log(error))
+    }
+  }
 
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(10);
   const [curGameRoomList, setCurGameRoomList] = useState([]);
-  
-  // 임시 데이터
-  const gameRoomList = [
-    { title: "title152", users: 3, image_src: "./Room1.png" },
-    { title: "어서와", users: 6, image_src: "./Room2.png" },
-    { title: "title3", users: 1, image_src: "./Room3.png" },
-    { title: "title4", users: 0, image_src: "./Room4.png" },
-    { title: "title5", users: 1, image_src: "./Room5.png" },
-    { title: "title6", users: 1, image_src: "./Room6.png" },
-    { title: "title7", users: 3, image_src: "./Room7.png" },
-    { title: "title8", users: 0, image_src: "./Room8.png" },
-    { title: "title9", users: 1, image_src: "./Room9.png" },
-    { title: "title10", users: 6, image_src: "./Room10.png" },
-    { title: "title11", users: 6, image_src: "./Room11.png" },
-    { title: "title12", users: 5, image_src: "./Room12.png" },
-  ];
 
   useEffect(() => {
     // 방들 리스트를 로딩
-    // getList(searchWord)
-
+    console.log(searchWord)
+    getList(searchWord)
+    console.log(gameRoomList)
     // Get currCards
     const indexOfLastCard = currentPage * cardsPerPage;
     const indexOfFirstCard = indexOfLastCard - cardsPerPage;
@@ -70,7 +57,7 @@ export default function GameRoom({searchWord}) {
       indexOfLastCard
     );
     setCurGameRoomList(newGameRoomLIst);
-  }, [currentPage]);
+  }, [currentPage, searchWord]);
 
   // Change page
   const paginate = function (pageNumber) {

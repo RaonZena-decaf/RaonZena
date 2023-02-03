@@ -91,9 +91,6 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
           "content": input.content,
           "create_dtm" : today.toLocaleString() 
         },
-        headers: {
-          "Content-Type": `application/json`,
-        },
       }).then((res) => {
         alert("사진이 저장되었습니다.");
       }).catch(error => {
