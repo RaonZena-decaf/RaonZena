@@ -37,9 +37,11 @@ const Navbar = () => {
     navigate(`/profile/${user.user_id}`);
   };
 
+  //로그인함수
+  const redirectUrl = useSelector((store) => store.redirectUrl)
   const Login = () => {
     const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99";
-    const REDIRECT_URI = "https://i8a507.p.ssafy.io/oauth/kakao/callback";
+    const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     if (typeof window !== "undefined") {
       window.location.href = KAKAO_AUTH_URL;
