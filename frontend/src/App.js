@@ -26,7 +26,7 @@ function App() {
         <Route path="/uri" element={<Auth />} />
         <Route path="/room/:roomId" element={<MainRoom />} />
         <Route path="/oauth/kakao/callback" element={<KakaoLogin />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </Router>
   );

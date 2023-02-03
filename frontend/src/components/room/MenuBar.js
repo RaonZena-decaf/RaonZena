@@ -16,7 +16,7 @@ import { Transition } from 'react-transition-group'
 
 
 
-function MenuBar({toggleBar}) {
+function MenuBar({toggleBar, exitaction}) {
   // 방 유저 정보를 axios 정보로 받아와서 리스트로 저장 => 참가자 드롭업 하부 컴포넌트로 삽입
 
   const [videoEnabled, setVideoEnabled] = useState(true);
@@ -120,7 +120,7 @@ function MenuBar({toggleBar}) {
       <MenuPortal>
         <Transition unmountOnExit in={menuOn} timeout={500}>
           {state => (
-            <RoomMenuFrame show={state} closeMenu={closeMenu} nowContent={nowContent} />
+            <RoomMenuFrame show={state} closeMenu={closeMenu} nowContent={nowContent} exitaction={exitaction} />
           )}
         </Transition>
       </MenuPortal>

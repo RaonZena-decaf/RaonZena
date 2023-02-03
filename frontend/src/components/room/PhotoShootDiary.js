@@ -7,6 +7,8 @@ import axios from "axios";
 function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
   // redux에 저장된 유저 정보에서 레벨에 따라 option 렌더링이 달라져야 함
   const userlevel = useSelector((store) => store.userData.level);
+  const baseUrl = useSelector((store)=> store.baseUrl)
+
   const frameSelect = (e) => {
     setPhotoFrame(e.target.value);
   };
@@ -81,16 +83,13 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
         "create_dtm" : today.toLocaleString() 
       })
       axios({
-        url:`http://localhost:8080/api/v1/games/feed/${user_no}`,
+        url:`${baseUrl}games/feed/${user_no}`,
         method:"POST",
         data : {
           "board_image_url": img.current,
           "title": input.title,
           "content": input.content,
           "create_dtm" : today.toLocaleString() 
-        },
-        headers: {
-          "Content-Type": `application/json`,
         },
       }).then((res) => {
         alert("사진이 저장되었습니다.");
