@@ -12,26 +12,29 @@ function KakaoLogin() {
   const baseUrl = useSelector((store) => store.baseUrl);
   const location = useLocation();
   const KAKAO_CODE = location.search.split("=")[1];
+  const sendData = JSON.stringify({code : KAKAO_CODE})
 
   const getToken = () => {
+
     axios({
       method: "POST",
       url: `${baseUrl}user/kakao/callback`,
-      data: { code: KAKAO_CODE },
+      data:  sendData,
+      headers: {'Content-type': 'application/json'}
     })
       .then((res) => {
         setTimeout(() => {
           //redux 유저정보에 저장
           dispatch(modifyUserData(res.data));
           navigate("/live");
-        }, 1000);
+        }, 1500);
       })
       .catch((error) => {
         console.log(error)
         setTimeout(() => {
           alert("로그인에 실패하였습니다. 다시 시도해 주세요.");
           navigate("/");
-        }, 1000);
+        }, 1500);
       });
   };
 

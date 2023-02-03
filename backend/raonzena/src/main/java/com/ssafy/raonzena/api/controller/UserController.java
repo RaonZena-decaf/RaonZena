@@ -16,9 +16,11 @@ public class UserController {
 
 
     @PostMapping("/kakao/callback")
-    public ResponseEntity<UserRes> kakaoLogin(String code){
+    public ResponseEntity<UserRes> kakaoLogin(@RequestBody  String code){
+        System.out.println("------------------");
+        System.out.println(code);
         //authorizeCode : 카카오 서버로부터 받은 인가 코드
-        return ResponseEntity.ok(userService.KaKaoLogin(code));
+        return ResponseEntity.ok(userService.KaKaoLogin(code.substring(0, code.length() - 1)));
     }
 
 
