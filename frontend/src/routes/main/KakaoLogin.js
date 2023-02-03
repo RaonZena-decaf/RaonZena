@@ -12,14 +12,13 @@ function KakaoLogin() {
   const baseUrl = useSelector((store) => store.baseUrl);
   const location = useLocation();
   const KAKAO_CODE = location.search.split("=")[1];
-  const sendData = JSON.stringify({code : KAKAO_CODE})
 
   const getToken = () => {
 
     axios({
       method: "POST",
       url: `${baseUrl}user/kakao/callback`,
-      data:  sendData,
+      data:  KAKAO_CODE,
       headers: {'Content-type': 'application/json'}
     })
       .then((res) => {
