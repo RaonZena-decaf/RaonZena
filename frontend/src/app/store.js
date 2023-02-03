@@ -1,10 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import userData from './userData';
-import openvidu from './openvidu'
+import baseUrl from './baseUrl'
+import redirectUrl from './redirectUrl';
+
 
 export const store = configureStore({
-  reducer: {
-    openvidu,
-    userData
-  }
+  reducer: combineReducers({
+    userData,
+    baseUrl,
+    redirectUrl,
+  })
 });

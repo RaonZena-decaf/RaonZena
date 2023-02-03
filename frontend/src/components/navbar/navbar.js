@@ -1,15 +1,30 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./navbar.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { initUserData } from "../../app/userData";
 
 const Navbar = () => {
-  // 페이지 이동을 위한 함수들
-  const navigate = useNavigate();
-  const isLogin = JSON.parse(localStorage.getItem("token"));
-  // const isLogin = true;
+  //유저정보 가져오기
+  const user = useSelector((store) => store.userData);
 
+  const navigate = useNavigate();
+  const loginConfigure = () => {
+    if (user.user_no === "") {
+      return false
+    } else {
+      return true
+    }
+  }
+  const isLogin = loginConfigure()
+
+  const dispatch = useDispatch()
+  const logout = () => {
+    dispatch(initUserData())
+  }
+  
+  // 페이지 이동을 위한 함수들
   const navigateToLanding = () => {
     navigate("/");
   };
@@ -17,16 +32,16 @@ const Navbar = () => {
     navigate("/live");
   };
 
-  //유저정보 가져오기
-  const user = useSelector((store) => store.userData);
 
   const navigateToProfile = () => {
     navigate(`/profile/${user.user_id}`);
   };
 
+  //로그인함수
+  const redirectUrl = useSelector((store) => store.redirectUrl)
   const Login = () => {
     const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99";
-    const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback";
+    const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     if (typeof window !== "undefined") {
       window.location.href = KAKAO_AUTH_URL;
@@ -100,6 +115,9 @@ const Navbar = () => {
             </div>
             <div className={styles.createRoom} onClick={navigateToCreateRoom}>
               방 만들기
+            </div>
+            <div className={styles.createRoom} onClick={logout}>
+              로그아웃
             </div>
           </>
         ) : (
