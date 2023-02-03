@@ -24,13 +24,14 @@ function KakaoLogin() {
           //redux 유저정보에 저장
           dispatch(modifyUserData(res.data));
           navigate("/live");
-        }, 2000);
+        }, 1000);
       })
       .catch((error) => {
+        console.log(error)
         setTimeout(() => {
           alert("로그인에 실패하였습니다. 다시 시도해 주세요.");
           navigate("/");
-        }, 2000);
+        }, 1000);
       });
   };
 
