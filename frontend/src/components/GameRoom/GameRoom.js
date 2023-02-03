@@ -9,34 +9,42 @@ import { createTheme } from "@mui/material/styles";
 import blue from "@mui/material/colors/blue";
 import { useSelector } from "react-redux";
 
-export default function GameRoom({searchWord}) {
-
-  const baseUrl = useSelector((store)=> store.baseUrl)
+export default function GameRoom({ searchWord }) {
+  const user = useSelector((store) => store.userData);
+  const baseUrl = useSelector((store) => store.baseUrl);
   const navigate = useNavigate();
-
+  const loginConfigure = () => {
+    if (user.user_no === "") {
+      return false;
+    } else {
+      return true;
+    }
+  };
   // axios로 게임 방 리스트를 받아오는 함수.
-  const [gameRoomList, setGameRoomList] = useState([])
-  const getList = (Search) =>{
-    if (Search === null ){
+  const [gameRoomList, setGameRoomList] = useState([]);
+  const getList = (Search) => {
+    if (Search === null) {
       axios({
-        method:"get",
-        url : `${baseUrl}live`})
-        .then((res) => {  
-        setGameRoomList(res.data)
-      }).catch(error =>
-        console.log(error))
+        method: "get",
+        url: `${baseUrl}live`,
+      })
+        .then((res) => {
+          setGameRoomList(res.data);
+        })
+        .catch((error) => console.log(error));
     } else {
       axios({
-        method:"get",
-        url : `${baseUrl}live?keyword="${Search}"`,
-        params : {keyword : Search},
-        }).then((res)=> {
-          console.log(res)
-          setGameRoomList(res.data)
-        }).catch(error =>
-        console.log(error))
+        method: "get",
+        url: `${baseUrl}live?keyword="${Search}"`,
+        params: { keyword: Search },
+      })
+        .then((res) => {
+          console.log(res);
+          setGameRoomList(res.data);
+        })
+        .catch((error) => console.log(error));
     }
-  }
+  };
 
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,9 +53,9 @@ export default function GameRoom({searchWord}) {
 
   useEffect(() => {
     // 방들 리스트를 로딩
-    console.log(searchWord)
-    getList(searchWord)
-    console.log(gameRoomList)
+    console.log(searchWord);
+    getList(searchWord);
+    console.log(gameRoomList);
     // Get currCards
     const indexOfLastCard = currentPage * cardsPerPage;
     const indexOfFirstCard = indexOfLastCard - cardsPerPage;
@@ -69,9 +77,12 @@ export default function GameRoom({searchWord}) {
   };
 
   const navigateToCreateRoom = () => {
-    navigate("/room/makeroom");
+    if (loginConfigure) {
+      navigate("/live");
+    } else {
+      alert("Please Login");
+    }
   };
-
 
   if (curGameRoomList.length > 0) {
     return (
