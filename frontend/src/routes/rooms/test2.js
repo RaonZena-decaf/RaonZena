@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-export default function App() {
+export default function App(props) {
   const [minutes, setMinutes] = useState(2);
   const [seconds, setSeconds] = useState(0);
+  const [milliseconds, setMilliseconds] = useState(0)
 
   useEffect(() => {
     const countdown = setInterval(() => {
