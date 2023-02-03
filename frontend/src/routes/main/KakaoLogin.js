@@ -16,7 +16,7 @@ function KakaoLogin() {
   const getToken = () => {
     axios({
       method: "POST",
-      url: `${baseUrl}user/user/kakao/callback`,
+      url: `${baseUrl}user/kakao/callback`,
       data: { code: KAKAO_CODE },
     })
       .then((res) => {
