@@ -9,11 +9,5 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class UserRepositorySupport { //implements userRepository
 
-    @PersistenceContext
-    private EntityManager em;
 
-    public User selectUser(long userNo){
-        // userNo로 유저 정보 조회
-        return em.find(User.class, userNo);
-    }
 }

@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
-import { Navigate } from "react-router-dom";
-import Loading from "../../components/room/ChatingSubjectLoading";
-const APPLICATION_SERVER_URL = "http://localhost:5000/";
+import Loading from "../../components/room/MainLoading";
+const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
+const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
 function MainRoom() {
   const dispatch = useDispatch();
@@ -49,8 +49,8 @@ function MainRoom() {
     after
       .then((mySession) => {
         // --- 2) Init a session --
-        console.log(mySession);
         setSession(mySession);
+        console.log("session", mySession);
         // --- 3) Specify the actions when events take place in the session ---
         mySession.on("streamCreated", (event) => {
           const subscriber = mySession.subscribe(event.stream, undefined);
@@ -65,32 +65,67 @@ function MainRoom() {
           console.warn(exception);
           deleteSubscriber(exception.stream.streamManager);
         });
-        const getToken = async () => {
-          const newtoken = await createSession(roomId);
-          return await createToken(newtoken);
-        };
-        const createSession = async function (newtoken) {
-          const response = await axios.post(
-            APPLICATION_SERVER_URL + "api/sessions",
-            { customSessionId: newtoken },
-            {
-              headers: { "Content-Type": "application/json" },
-            }
+
+        const getToken = () => {
+          return createSession(roomId).then((sessionId) =>
+            createToken(sessionId)
           );
-          return response.data; // The sessionId
         };
-        const createToken = async function (newtoken) {
-          const response = await axios.post(
-            APPLICATION_SERVER_URL +
-              "api/sessions/" +
-              newtoken +
-              "/connections",
-            {},
-            {
-              headers: { "Content-Type": "application/json" },
-            }
-          );
-          return response.data;
+
+        const createSession = (roomId) => {
+          return new Promise((resolve, reject) => {
+            let data = JSON.stringify({ customSessionId: roomId });
+            axios
+              .post(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions`, data, {
+                headers: {
+                  Authorization: `Basic ${btoa(
+                    `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+                  )}`,
+                  "Content-Type": "application/json",
+                },
+              })
+              .then((response) => {
+                resolve(response.data.id);
+              })
+              .catch((response) => {
+                let error = { ...response };
+                if (error?.response?.status === 409) {
+                  resolve(roomId);
+                } else if (
+                  window.confirm(
+                    `No connection to OpenVidu Server. This may be a certificate error at "${OPENVIDU_SERVER_URL}"\n\nClick OK to navigate and accept it. ` +
+                      `If no certificate warning is shown, then check that your OpenVidu Server is up and running at "${OPENVIDU_SERVER_URL}"`
+                  )
+                ) {
+                  window.location.assign(
+                    `${OPENVIDU_SERVER_URL}/accept-certificate`
+                  );
+                }
+              });
+          });
+        };
+
+        const createToken = (sessionId) => {
+          return new Promise((resolve, reject) => {
+            let data = {};
+            axios
+              .post(
+                `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
+                data,
+                {
+                  headers: {
+                    Authorization: `Basic ${btoa(
+                      `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+                    )}`,
+                    "Content-Type": "application/json",
+                  },
+                }
+              )
+              .then((response) => {
+                resolve(response.data.token);
+              })
+              .catch((error) => reject(error));
+          });
         };
         // --- 4) Connect to the session with a valid user token ---
         getToken().then((token) => {
@@ -175,7 +210,6 @@ function MainRoom() {
   useEffect(() => {
     setOpenvidu({ session, publisher, userName });
   }, [session, publisher, userName]);
-  console.log(openvidu);
   return (
     <div className={styles.background}>
       {session !== undefined ? (
