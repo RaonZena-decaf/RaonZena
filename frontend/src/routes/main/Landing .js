@@ -24,7 +24,6 @@ function Landing() {
   const isLogin = loginConfigure()  
 
   const redirectUrl = useSelector((store) => store.redirectUrl)
-  console.log(redirectUrl)
   const Login = () => {
     const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99";
     const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
