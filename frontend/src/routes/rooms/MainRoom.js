@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
 import Loading from "../../components/room/MainLoading";
-const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io/";
+const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
 function MainRoom() {
@@ -121,6 +121,7 @@ function MainRoom() {
                 }
               )
               .then((response) => {
+                console.log('createdtoken', response.data.token)
                 resolve(response.data.token);
               })
               .catch((error) => reject(error));
@@ -128,9 +129,11 @@ function MainRoom() {
         };
         // --- 4) Connect to the session with a valid user token ---
         getToken().then((token) => {
+          console.log('token', token)
           mySession
             .connect(token, { clientData: userName })
-            .then(async () => {
+            .then(
+              async () => {
               // --- 5) Get your own camera stream ---
               const publisher = await OV.initPublisherAsync(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
