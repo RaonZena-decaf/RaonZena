@@ -17,7 +17,7 @@ public class UserController {
     UserService userService;
 
 
-    @GetMapping("/user/kakao/callback")
+    @GetMapping("/kakao/callback")
     public ResponseEntity<UserRes> kakaoLogin(String code){
         //authorizeCode : 카카오 서버로부터 받은 인가 코드
         return ResponseEntity.ok(userService.KaKaoLogin(code));
