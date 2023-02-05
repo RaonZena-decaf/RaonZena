@@ -6,9 +6,8 @@ function ChattingForm(props) {
   const chattingLog = useRef();
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState("");
-  console.log(messageList, "error");
   useEffect(() => {
-    if (openvidu.publisher) {
+    if (openvidu.session) {
       openvidu.session.on("signal:chat", (event) => {
         const data = JSON.parse(event.data);
         setMessageList((prev) => [
@@ -22,10 +21,9 @@ function ChattingForm(props) {
         scrollToBottom();
       });
     }
-  }, [messageList]);
+  }, []);
 
   function handleChange(event) {
-    // console.log(chat.message)
     setMessage(event.target.value);
   }
 
@@ -33,7 +31,6 @@ function ChattingForm(props) {
     event.preventDefault();
     if (message !== "") {
       sendMessage();
-      setMessage("");
     }
   }
 

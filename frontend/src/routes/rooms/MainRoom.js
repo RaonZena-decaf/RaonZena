@@ -17,7 +17,7 @@ function MainRoom(props) {
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
-  const [userName, setUserName] = useState("User3");
+  const [userName, setUserName] = useState(`User ${getRandomInt(1,100)}`);
   const [roomId, setroomId] = useState("Roomc");
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
@@ -31,14 +31,14 @@ function MainRoom(props) {
 
   //메인메뉴 모달을 위한 함수
   const deleteSubscriber = (streamManager) => {
-    const index = subscribes.indexOf(streamManager, 0);
-    if (index > -1) {
-      setSubscribes((before) => {
-        before.splice(index, 1);
-      });
+    setSubscribes(prev => prev.filter(stream => stream.streamManager !== streamManager))
     }
-  };
-
+// 임시 사용자 이름 랜덤으로 부여
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+}
   const toggleDevice =  async () => {
     console.log('Toggle device')
     // try {
@@ -88,12 +88,13 @@ function MainRoom(props) {
         });
 
         mySession.on("streamDestroyed", (event) => {
+          console.log('manager', event.stream.streamManager)
           deleteSubscriber(event.stream.streamManager);
         });
 
         mySession.on("exception", (exception) => {
           console.warn(exception);
-          deleteSubscriber(exception.stream.streamManager);
+          // 어떤 이유인지 왜 비디오가 없는 유저에 대해서 예외처리가 되질 않습니다. 추가적인 확인 이후에 해야함
         });
         mySession.on("signal:gameChange", (event) => {})
 
@@ -163,7 +164,6 @@ function MainRoom(props) {
         };
         // --- 4) Connect to the session with a valid user token ---
         getToken().then((token) => {
-          console.log('token', token)
           mySession
             .connect(token, { clientData: userName })
             .then(
