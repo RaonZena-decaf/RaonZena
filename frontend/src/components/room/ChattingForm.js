@@ -1,14 +1,15 @@
 import { useRef, useEffect, useState } from "react";
 import styles from "./ChattingForm.module.css";
 
-function ChattingForm(openvidu) {
+function ChattingForm(props) {
+  const openvidu = props.openvidu
   const chattingLog = useRef();
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState("");
   console.log(messageList, "error");
   useEffect(() => {
-    if (openvidu.openvidu.publisher) {
-      openvidu.openvidu.session.on("signal:chat", (event) => {
+    if (openvidu.publisher) {
+      openvidu.session.on("signal:chat", (event) => {
         const data = JSON.parse(event.data);
         setMessageList((prev) => [
           ...prev,
@@ -21,7 +22,7 @@ function ChattingForm(openvidu) {
         scrollToBottom();
       });
     }
-  }, [messageList, openvidu]);
+  }, [messageList]);
 
   function handleChange(event) {
     // console.log(chat.message)
@@ -42,7 +43,7 @@ function ChattingForm(openvidu) {
         message: message,
         nickname: openvidu.userName,
       };
-      openvidu.openvidu.session.signal({
+      openvidu.session.signal({
         data: JSON.stringify(data),
         type: "chat",
       });
@@ -60,7 +61,7 @@ function ChattingForm(openvidu) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.chattingbox}>
+      <div className={styles.chattingbox} ref={chattingLog}>
         {messageList.map(({connectionId, nickname, message}, idx) => {
           return (
             <div key={idx}>

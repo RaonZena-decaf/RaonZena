@@ -12,19 +12,22 @@ import Loading from "../../components/room/MainLoading";
 const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
-function MainRoom() {
+function MainRoom(props) {
   const dispatch = useDispatch();
   const [session, setSession] = useState(undefined);
+  const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
   const [userName, setUserName] = useState("User3");
   const [roomId, setroomId] = useState("Roomc");
-  const [attend, setAttend] = useState(0);
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
+  const [videoList, setVideoList] = useState(undefined);
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
   const navigate = useNavigate();
+  // 화면 랜더링 관련 함수
+  const [gamename, setGameName] = useState("default");
 
   //메인메뉴 모달을 위한 함수
   const deleteSubscriber = (streamManager) => {
@@ -36,15 +39,41 @@ function MainRoom() {
     }
   };
 
+  const toggleDevice =  async () => {
+    console.log('Toggle device')
+    // try {
+    //   let devices = await OV.getDevices()
+    //   let videoDevices = devices.filter(device => device.kind === 'videoinput')
+
+    //   let newPublisher = openvidu.OV.initPublisher(undefined, {
+    //     audioSource: undefined, // The source of audio. If undefined default microphone
+    //     videoSource: videoDevices[0].deviceId, // The source of video. If undefined default webcam
+    //     publishAudio: mic, // Whether you want to start publishing with your audio unmuted or not
+    //     publishVideo: video, // Whether you want to start publishing with your video enabled or not
+    //     resolution: '640x480', // The resolution of your video
+    //     frameRate: 30, // The frame rate of your video
+    //     insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
+    //     mirror: false, // Whether to mirror your local video
+    //   })
+
+    //   await openvidu.session.unpublish(openvidu.mainStreamManager)
+
+    //   await openvidu.session.publish(newPublisher)
+    //   setPublisher(newPublisher)
+
+    // } catch (error) {
+    //   console.log(error)
+    // }
+  }
   useEffect(() => {
     const OV = new OpenVidu();
-
+    setOV(OV)
     const after = new Promise((resolve, reject) => {
       const mySession = OV.initSession();
 
       setTimeout(() => {
         resolve(mySession);
-      }, 1000);
+      }, 1000); 
     });
     after
       .then((mySession) => {
@@ -52,6 +81,7 @@ function MainRoom() {
         setSession(mySession);
         console.log("session", mySession);
         // --- 3) Specify the actions when events take place in the session ---
+        // MainRoom 에서 발생해야 하는 signal들 정리
         mySession.on("streamCreated", (event) => {
           const subscriber = mySession.subscribe(event.stream, undefined);
           setSubscribes((oldArray) => [...oldArray, subscriber]);
@@ -65,7 +95,10 @@ function MainRoom() {
           console.warn(exception);
           deleteSubscriber(exception.stream.streamManager);
         });
+        mySession.on("signal:gameChange", (event) => {})
 
+
+        // 토큰 발행 및 소켓 접속
         const getToken = () => {
           return createSession(roomId).then((sessionId) =>
             createToken(sessionId)
@@ -151,17 +184,17 @@ function MainRoom() {
               mySession.publish(publisher);
 
               // Obtain the current video device in use
-              const devices = await OV.getDevices();
-              const videoDevices = devices.filter(
-                (device) => device.kind === "videoinput"
-              );
-              const currentVideoDeviceId = publisher.stream
-                .getMediaStream()
-                .getVideoTracks()[0]
-                .getSettings().deviceId;
-              const currentVideoDevice = videoDevices.find(
-                (device) => device.deviceId === currentVideoDeviceId
-              );
+              // const devices = await OV.getDevices();
+              // const videoDevices = devices.filter(
+              //   (device) => device.kind === "videoinput"
+              // );
+              // const currentVideoDeviceId = publisher.stream
+              //   .getMediaStream()
+              //   .getVideoTracks()[0]
+              //   .getSettings().deviceId;
+              // const currentVideoDevice = videoDevices.find(
+              //   (device) => device.deviceId === currentVideoDeviceId
+              // );
 
               // Set the main video in the page to display our webcam and store our Publisher
               setPublisher(publisher);
@@ -185,7 +218,6 @@ function MainRoom() {
       });
   }, []);
   // 끝
-
   const onbeforeunload = (event) => {
     leaveSession();
   };
@@ -211,16 +243,29 @@ function MainRoom() {
     navigate("/live");
   };
   useEffect(() => {
-    setOpenvidu({ session, publisher, userName });
-  }, [session, publisher, userName]);
+    console.log(publisher)
+    setVideoList({...subscribes, publisher})
+    setOpenvidu({ session, videoList, userName });
+  }, [session, publisher, userName, subscribes]);
+  // 신호에 따른 화면 렌더링 변화
+  const ChangeGame = (gamename) => {
+    const data = {
+      gamename: gamename,
+    }
+    setGameName(gamename);
+    openvidu.session.signal({
+      data: JSON.stringify(data),
+      type: "chat",
+    });
+  }
   return (
     <div className={styles.background}>
       {session !== undefined ? (
         <div>
           <div className={styles.GameRoomsDisplay}>
-            {/* <div className={styles.card}>
+            <div className={styles.card}>
               <UserVideoComponent streamManager={publisher} />
-            </div> */}
+            </div>
             {subscribes.map((sub, i) => (
               <div key={i} className={styles.card}>
                 <UserVideoComponent streamManager={sub} />
@@ -228,7 +273,7 @@ function MainRoom() {
             ))}
           </div>
 
-          <MenuBar toggleBar={toggleBar} exitaction={leaveSession} />
+          <MenuBar toggleBar={toggleBar} exitaction={leaveSession} camera={props.camera} mic={props.mic} toggleDevice={toggleDevice} ChangeGame={ChangeGame} />
           <ChattingBar
             openChatting={openChatting}
             toggleBar={toggleBar}

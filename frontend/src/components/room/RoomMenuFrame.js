@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 
-const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction }) => {
+const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction, ChangeGame}) => {
   const animation = [
     show === "entering"
       ? "MenuOpen"
@@ -70,9 +70,9 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction }) => {
           onClick={(e) => e.stopPropagation()}
         >
           {menuContent === "chatSubject" && <ChatingSubjectLoading chattingSubject={chattingSubject}/>}
-          {menuContent === "chooseGame" && <ChooseGame/>}
+          {menuContent === "chooseGame" && <ChooseGame ChangeGame={ChangeGame} />}
           {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu}/> }
-          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu} onClick={exitaction} /> }
+          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu} onClick={exitaction()} /> }
         </div>
       </div>
     </div>
