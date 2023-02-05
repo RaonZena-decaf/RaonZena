@@ -10,12 +10,13 @@ import GuideModalFrame from "../../components/Modal/GuideModalFrame";
 import VideoChat from "../../components/animaition/VideoChat.js";
 import { useSelector } from "react-redux";
 
+
 function Landing() {
   //로그인 함수
   const user = useSelector((store) => store.userData);
 
   const loginConfigure = () => {
-    if (user.user_no === "") {
+    if (user.userNo === "") {
       return false
     } else {
       return true
@@ -25,7 +26,7 @@ function Landing() {
 
   const redirectUrl = useSelector((store) => store.redirectUrl)
   const Login = () => {
-    const REST_API_KEY = "507ec57801bf562750f3dea88a7c2b99";
+    const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
     const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     if (typeof window !== "undefined") {

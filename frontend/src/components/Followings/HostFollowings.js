@@ -3,6 +3,8 @@ import axios from "axios";
 import Item from "./HostFollowingsItem";
 import styles from "./Followings.module.css";
 import { useSelector } from "react-redux";
+import { FaUserTimes } from "react-icons/fa";
+
 
 const HostFollowings = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
@@ -50,9 +52,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   } else {
     return (
       <div>
-        <div className={styles.nothingImg1}>
-          <img className={styles.nothingImg2} src="./nothing.svg" alt="" />
-        </div>
+        <FaUserTimes className={styles.NoGameRoomsImg}/>
         <div className={styles.marginTopBot}>
           <p className={styles.NoGameRoomsText}>
             지금 놀고 있는 친구가 없습니다.

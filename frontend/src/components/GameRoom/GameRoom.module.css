@@ -113,12 +113,15 @@ a {
 .NoGameRoomsText {
   margin: auto;
   display: table;
-  font-size: 3rem;
+  font-weight: 100;
+  font-size: 2.5rem;
 }
 
 .NoGameRoomsImg {
   margin: auto;
   display: table;
+  font-size: 10rem; 
+  padding: 3rem;
 }
 
 .ButtonCenter {
@@ -127,19 +130,18 @@ a {
 }
 
 .CreateGameButton {
-  /* height: 2rem; */
-  margin-top: 4rem;
   text-align: center;
-  display: inline-block;
-  transition-duration: 0.2s;
   cursor: pointer;
   color: white;
+  padding: 1rem 2rem 1rem 2rem;
   background-color: #f300b0;
-  font-size: 2.5rem;
-  border: none;
+  font-size: 2rem;
   border-radius: 1rem;
-  height: 6rem;
-  width: 18rem;
+  border: none;
+}
+
+.CreateGameButton:hover{
+  background-color: #cb0091;
 }
 
 .marginAuto {

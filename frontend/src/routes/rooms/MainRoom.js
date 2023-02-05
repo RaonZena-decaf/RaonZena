@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import Loading from "../../components/room/ChatingSubjectLoading";
+import MainLoading from "../../components/room/MainLoading";
 const APPLICATION_SERVER_URL = "http://localhost:5000/";
 
 function MainRoom() {
@@ -151,6 +151,7 @@ function MainRoom() {
   const onbeforeunload = (event) => {
     leaveSession();
   };
+
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
 
@@ -158,6 +159,7 @@ function MainRoom() {
       window.removeEventListener("beforeunload", onbeforeunload);
     };
   }, []);
+
   // 세션 종료
   const leaveSession = async function () {
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
@@ -172,10 +174,15 @@ function MainRoom() {
     setUserName("User");
     navigate("/live");
   };
+
   useEffect(() => {
     setOpenvidu({ session, publisher, userName });
   }, [session, publisher, userName]);
+
+  
   console.log(openvidu);
+
+
   return (
     <div className={styles.background}>
       {session !== undefined ? (
@@ -199,7 +206,7 @@ function MainRoom() {
           />
         </div>
       ) : (
-        <Loading />
+        <MainLoading />
       )}
     </div>
   );

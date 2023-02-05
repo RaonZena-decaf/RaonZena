@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import style from "./create.module.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar";
@@ -24,7 +24,7 @@ function Create() {
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [peoplenum, setPeopleNum] = useState("2");
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(true);
 
   // 방 제목과 비밀번호 input 처리 하는 곳
   const nameChange = (event) => {
@@ -55,10 +55,18 @@ function Create() {
     setPeopleNum(event.target.value);
   };
   const disableOnClick = (event) => {
-    setDisabled(prev => !prev)
-  }
-  const user = useSelector((store) => store.userData);
+    setDisabled((prev) => !prev);
+  };
+  const passwordRef = useRef()
   
+  const labelFocus = () => {
+    if (disabled === true) {
+      passwordRef.current.focus()
+    }
+  }
+
+  const user = useSelector((store) => store.userData);
+
   // 방 만드는 axios 통신
   const createOnClick = (event) => {
     event.preventDefault();
@@ -95,11 +103,10 @@ function Create() {
           <div className={style.innercontainer}>
             <div className={style.leftcontainer}>
               <h2 className={style.header}>
-                <span>방을 만드는 중 입니다</span>
+                <span>방 생성 중</span>
               </h2>
-
               <form id="create" className={style.textcont}>
-                <ul>
+                <ul className={style.ulTag}>
                   <li>
                     <label className={style.tag} htmlFor="title">
                       방 제목
@@ -113,22 +120,20 @@ function Create() {
                     ></input>
                   </li>
 
-                  <li>
-                    <label className={style.tag}>인원 수</label>
-                      <select name="peoplenum" onChange={peopleOnChange}>
-                        <option value="2">2명</option>
-                        <option value="3">3명</option>
-                        <option value="4">4명</option>
-                        <option value="5">5명</option>
-                        <option value="6">6명</option>
-                      </select>
-                  </li>
-
-                  <li>
+                  <li onClick={labelFocus}>
                     <label className={style.tag} htmlFor="password">
                       비밀번호
+                      <input
+                        id="checkbox"
+                        className={style.checkbox}
+                        type="checkbox"
+                        name="color"
+                        value={disabled}
+                        onClick={disableOnClick}
+                        ref={passwordRef}
+                      />
+                      <label htmlFor="checkbox" className={style.label}/>
                     </label>
-                    <label><input type="checkbox" name="color" value={disabled} onClick={disableOnClick}/></label>
                     <input
                       placeholder="방 비밀번호를 입력하세요"
                       id="password"
@@ -137,6 +142,17 @@ function Create() {
                       className={style.input}
                       disabled={disabled}
                     />
+                  </li>
+
+                  <li>
+                    <label className={style.tag}>인원 수</label>
+                    <select className={style.dropdown} name="peoplenum" onChange={peopleOnChange}>
+                      <option value="2">2명</option>
+                      <option value="3">3명</option>
+                      <option value="4">4명</option>
+                      <option value="5">5명</option>
+                      <option value="6">6명</option>
+                    </select>
                   </li>
                 </ul>
               </form>
@@ -149,15 +165,27 @@ function Create() {
               <div className={style.video}>화상</div>
               <div className={style.accessory}>
                 {mic ? (
-                  <FaMicrophoneAlt onClick={micOnClick} />
+                  <FaMicrophoneAlt
+                    onClick={micOnClick}
+                    className={style.togglekey}
+                  />
                 ) : (
-                  <FaMicrophoneAltSlash onClick={micOnClick} />
+                  <FaMicrophoneAltSlash
+                    onClick={micOnClick}
+                    className={style.togglekey}
+                  />
                 )}
 
                 {camera ? (
-                  <FaVideo onClick={cameraOnClick} />
+                  <FaVideo
+                    onClick={cameraOnClick}
+                    className={style.togglekey}
+                  />
                 ) : (
-                  <FaVideoSlash onClick={cameraOnClick} />
+                  <FaVideoSlash
+                    onClick={cameraOnClick}
+                    className={style.togglekey}
+                  />
                 )}
               </div>
               <button
@@ -166,7 +194,7 @@ function Create() {
                 htmlform="create"
                 onClick={createOnClick}
               >
-                방 만들기
+                생성
               </button>
             </div>
           </div>
