@@ -63,7 +63,7 @@ function MenuBar({toggleBar, exitaction}) {
 
   return (
     <div className={style.UpperContainer}>
-      <div className={style.MiddleContainer1}>
+      {/* <div className={style.MiddleContainer1}> */}
         <div className={style.IconWithText} onClick={toggleAudio}>
           {audioEnabled ? <FaMicrophoneAlt /> : <FaMicrophoneAltSlash />}
           {audioEnabled ? (
@@ -84,7 +84,7 @@ function MenuBar({toggleBar, exitaction}) {
           <FaUserAlt />
           <p className={style.UnderIcon}>참가자</p>
         </div>
-      </div>
+      {/* </div> */}
 
       <Transition unmountOnExit in={drop} timeout={500}>
         {state => (
@@ -92,7 +92,7 @@ function MenuBar({toggleBar, exitaction}) {
         )}
       </Transition>
 
-      <div className={style.MiddleContainer2}>
+      {/* <div className={style.MiddleContainer2}> */}
         <div className={style.IconWithText} onClick={menuOpen} id="chatSubject">
           <FaMugHot className={style.Noclick}/>
           <p className={`${style.UnderIcon} ${style.Noclick}`}>잡담주제</p>
@@ -105,9 +105,9 @@ function MenuBar({toggleBar, exitaction}) {
           <FaCamera className={style.Noclick}/>
           <p className={`${style.UnderIcon} ${style.Noclick}`}>사진촬영</p>
         </div>
-      </div>
+      {/* </div> */}
 
-      <div className={style.MiddleContainer3}>
+      {/* <div className={style.MiddleContainer3}> */}
         <div className={style.IconWithText} onClick={toggleBar}>
           <FaComments />
           <p className={style.UnderIcon}>채팅</p>
@@ -115,7 +115,7 @@ function MenuBar({toggleBar, exitaction}) {
         <div className={style.ExitButton} onClick={menuOpen} id="exitRoom">
           나가기
         </div>
-      </div>
+      {/* </div> */}
 
       <MenuPortal>
         <Transition unmountOnExit in={menuOn} timeout={500}>

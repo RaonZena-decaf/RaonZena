@@ -4,7 +4,6 @@ import styles from "./ChattingForm.module.css";
 function ChattingForm(openvidu) {
   const chattingLog = useRef();
   const [messageList, setMessageList] = useState([]);
-  const [message, setMessage] = useState("");
   console.log(messageList, "error");
   useEffect(() => {
     if (openvidu.openvidu.publisher) {
@@ -22,33 +21,6 @@ function ChattingForm(openvidu) {
       });
     }
   }, [messageList, openvidu]);
-
-  function handleChange(event) {
-    // console.log(chat.message)
-    setMessage(event.target.value);
-  }
-
-  function chatsend(event) {
-    event.preventDefault();
-    if (message !== "") {
-      sendMessage();
-      setMessage("");
-    }
-  }
-
-  function sendMessage() {
-    if (message) {
-      const data = {
-        message: message,
-        nickname: openvidu.userName,
-      };
-      openvidu.openvidu.session.signal({
-        data: JSON.stringify(data),
-        type: "chat",
-      });
-    }
-    setMessage("");
-  }
 
   function scrollToBottom() {
     setTimeout(() => {
@@ -69,17 +41,6 @@ function ChattingForm(openvidu) {
           )
         })}
       </div>
-      <form>
-        <input
-          type={message}
-          name={message}
-          value={message || ""}
-          onChange={handleChange}
-        />
-        <button type="submit" onClick={chatsend}>
-          전송
-        </button>
-      </form>
     </div>
   );
 }

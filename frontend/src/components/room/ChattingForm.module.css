@@ -1,8 +1,11 @@
 .container{
-  height: 90%;
+  height: 92.5vh;
   overflow: scroll;
-
 }
+.container::-webkit-scrollbar {
+  display: none;
+}
+
 .chattingbox{
-  height: 100rem;
+  /* height: 100%; */
 }

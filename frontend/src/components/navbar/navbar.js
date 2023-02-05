@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const loginConfigure = () => {
-    if (user.user_no === "") {
+    if (user.userNo === "") {
       return false
     } else {
       return true
@@ -19,7 +19,9 @@ const Navbar = () => {
   }
   const isLogin = loginConfigure()
 
+  
   const dispatch = useDispatch()
+
   const logout = () => {
     dispatch(initUserData())
   }
@@ -49,17 +51,15 @@ const Navbar = () => {
   };
 
   const navigateToCreateRoom = () => {
-    navigate("/room/makeroom");
+    navigate("/makeroom");
   };
   // 검색 기능을 위한 함수
   const enterSearch = (event) => {
     event.preventDefault();
-    if (search) {
       // 입력값을 들고 live로 이동
-      navigate("/live", {state:search})
-      return;
-    }
+    navigate("/live", {state:search})
   };
+
 
   const [search, setSearch] = useState("");
   const onChangeSearch = (event) => {
@@ -110,8 +110,8 @@ const Navbar = () => {
         {isLogin ? (
           <>
             <div className={styles.profilebox} onClick={navigateToProfile}>
-              <div>{user.user_name}</div>
-              <img src={user.user_image_url} alt="profileimg" className={styles.profileimg} />
+              <div>{user.userName}</div>
+              <img src={user.userImage} alt="profileimg" className={styles.profileimg} />
             </div>
             <div className={styles.createRoom} onClick={navigateToCreateRoom}>
               방 만들기

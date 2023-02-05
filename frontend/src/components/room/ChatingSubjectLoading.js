@@ -3,7 +3,7 @@ import { FaCircleNotch } from "react-icons/fa";
 import ChatingSubject from "./ChatingSubject";
 import { useEffect, useState } from "react";
 
-function ChatingSubjectLoading({chattingSubject}) {
+function ChatingSubjectLoading({chattingSubject, getSubject}) {
   const [hidden, sethidden] = useState(true)
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function ChatingSubjectLoading({chattingSubject}) {
       <FaCircleNotch className={style.logoImg}/>
       <div className={style.fontsize}>주제를 고르고 있어요...</div>
     </div>}
-    {hidden === false && <ChatingSubject chattingSubject={chattingSubject} sethidden={sethidden}/>}
+    {hidden === false && <ChatingSubject chattingSubject={chattingSubject} sethidden={sethidden} getSubject={getSubject}/>}
     </>
   );
 }

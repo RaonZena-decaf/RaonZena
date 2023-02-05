@@ -189,6 +189,7 @@ function MainRoom() {
   const onbeforeunload = (event) => {
     leaveSession();
   };
+
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
 
@@ -196,6 +197,7 @@ function MainRoom() {
       window.removeEventListener("beforeunload", onbeforeunload);
     };
   }, []);
+
   // 세션 종료
   const leaveSession = async function () {
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
@@ -210,6 +212,7 @@ function MainRoom() {
     setUserName("User");
     navigate("/live");
   };
+
   useEffect(() => {
     setOpenvidu({ session, publisher, userName });
   }, [session, publisher, userName]);
@@ -236,7 +239,7 @@ function MainRoom() {
           />
         </div>
       ) : (
-        <Loading />
+        <MainLoading />
       )}
     </div>
   );
