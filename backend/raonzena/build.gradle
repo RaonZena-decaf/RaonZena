@@ -45,6 +45,12 @@ dependencies {
 	// querydsl
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.querydsl:querydsl-apt'
+
+	// Openvidu 의존성  2.18.0 으로 해도됨
+	implementation group: 'io.openvidu', name: 'openvidu-java-client', version: '2.25.0'
+
+	//s3 의존성
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {

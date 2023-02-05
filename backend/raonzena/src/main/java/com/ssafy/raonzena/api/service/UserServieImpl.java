@@ -125,8 +125,8 @@ public class UserServieImpl implements UserService{
 
     @Override
     public User selectUser(long userNo) {
-        // userNo로 유저 정보 조회
-        return userRepositorySupport.selectUser(userNo);
+
+        return userRepository.findByUserNo(userNo);
     }
 
 

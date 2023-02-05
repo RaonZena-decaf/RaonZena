@@ -2,7 +2,9 @@ package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.request.RoomReq;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
+import com.ssafy.raonzena.db.entity.RoomInfo;
 import com.ssafy.raonzena.db.entity.User;
+import com.ssafy.raonzena.db.repository.RoomRepository;
 import com.ssafy.raonzena.db.repository.RoomRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,14 @@ public class RoomServiceImpl implements RoomService{
     @Autowired
     RoomRepositorySupport roomRepositorySupport;
 
+    @Autowired
+    RoomRepository roomRepository;
+
     @Override
     public LiveRoomInfoRes addRoom(RoomReq roomReq, User sessionUser) {
+
         // 게임방 생성
         return roomRepositorySupport.insertRoom(roomReq,sessionUser);
     }
+
 }
