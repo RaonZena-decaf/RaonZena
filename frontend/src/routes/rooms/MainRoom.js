@@ -13,7 +13,6 @@ const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
 function MainRoom(props) {
-  console.log('props', props);
   const dispatch = useDispatch();
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
@@ -60,8 +59,6 @@ function MainRoom(props) {
     after
       .then((mySession) => {
         // --- 2) Init a session --
-        setSession(mySession);
-        console.log("session", mySession);
         // --- 3) Specify the actions when events take place in the session ---
         // MainRoom 에서 발생해야 하는 signal들 정리
         mySession.on("streamCreated", (event) => {
@@ -150,6 +147,7 @@ function MainRoom(props) {
             .connect(token, { clientData: userName })
             .then(async () => {
               // --- 5) Get your own camera stream ---
+              setSession(mySession);
               const publisher = await OV.initPublisherAsync(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
