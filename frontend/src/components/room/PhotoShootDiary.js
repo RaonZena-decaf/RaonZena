@@ -26,30 +26,6 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
   //이미지 url을 저장하는 State
   const img = useRef("");
 
-  //imgur에 이미지를 호스팅하는 통신
-  const uploadImgur = (url) => {
-    const apiBase = "https://api.imgur.com/3/image";
-    axios
-      .post(
-        apiBase,
-        {
-          image: url,
-          type: "base64",
-        },
-        {
-          headers: {
-            Authorization: "Client-ID b57014f88dac659",
-          },
-        }
-      )
-      .then((res) => {
-        img.current = res.data.data.link;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   // 사진 영역을 촬영하는 함수
   const copyDOM = async () => {
     window.scrollTo(0, 0);
@@ -57,44 +33,42 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
     let url = "";
     await html2canvas(document.getElementById("사진촬영완료")).then(
       async (canvas) => {
-        url = await canvas.toDataURL("image/jpg",'capture')
-        // url = await canvas.toDataURL("image/webp").split(",")[1];
+        url = await canvas.toDataURL("image/webp",1).split(",")[1]
       }
     );
-    console.log(url)
-
-    await uploadImgur(url);
+    img.current = url
   };
 
   //피드에 저장하는 axios 통신
-  const user_no = useSelector((store) => store.user_no);
+  const userNo = useSelector((store) => store.userData.userNo);
 
-  const save = () => {
+  async function save() {
     let question = window.confirm("사진을 저장하겠습니까?");
     if (question === true) {
       let today = new Date()
+      const formData = new FormData()
       // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
-      copyDOM()
-      console.log(today)
-      console.log({
-        "board_image_url": img.current,
-        "title": input.title,
-        "content": input.content,
-        "create_dtm" : today.toLocaleString() 
-      })
+      await copyDOM()
+      formData.append("board_image_url", img.current)
+      formData.append("title", input.title)
+      formData.append("content", input.content)
+      formData.append("create_dtm", today.toLocaleString())
+      console.log(formData)
+
+      for (let value of formData.values()) {
+        console.log(value)
+      }
+
       axios({
-        url:`${baseUrl}games/feed/${user_no}`,
+        url:`${baseUrl}games/feed/${userNo}`,
         method:"POST",
-        data : {
-          "board_image_url": img.current,
-          "title": input.title,
-          "content": input.content,
-          "create_dtm" : today.toLocaleString() 
-        },
+        data : formData,
+        headers: {"Content-Type": "multipart/form-data"}
       }).then((res) => {
         alert("사진이 저장되었습니다.");
       }).catch(error => {
         alert("저장에 실패하였습니다. 다시 시도해 주세요.")
+        console.log(error)
       })
     } else {
       alert("취소하였습니다.");
