@@ -8,7 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
-import Loading from "../../components/room/MainLoading";
+import MainLoading from "../../components/room/MainLoading";
+import Catchmind from "../../components/game/catchmind";
+
+
 const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
 

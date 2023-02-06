@@ -8,7 +8,7 @@ export const initUserData = () => ({type:INIT_USERDATA});
 
 // 초기값 제작
 const initialState = {
-  userNo:"",
+  userNo:"2",
   userId:"",
   userName:"",
   exp: 0,
