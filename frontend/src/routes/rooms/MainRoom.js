@@ -101,8 +101,8 @@ function MainRoom(props) {
           // 어떤 이유인지 왜 비디오가 없는 유저에 대해서 예외처리가 되질 않습니다. 추가적인 확인 이후에 해야함
         });
         mySession.on("signal:gameChange", (event) => {
-          console.log(event.data)
-          setGameName(event.data.gamename)
+          console.log(event.data);
+          setGameName(event.data.gamename);
         });
 
         // 토큰 발행 및 소켓 접속
@@ -267,7 +267,6 @@ function MainRoom(props) {
     });
   };
 
-
   return (
     <div className={styles.background}>
       {session !== undefined ? (
@@ -298,7 +297,7 @@ function MainRoom(props) {
           />
         </div>
       ) : (
-        <MainLoading />
+        <Loading />
       )}
     </div>
   );
