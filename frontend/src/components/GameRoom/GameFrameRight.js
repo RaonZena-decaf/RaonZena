@@ -22,7 +22,7 @@ function GameFrameRight({ startHandler, start, setResult }) {
     <div className={styles.background}>
       <div className={styles.container}>
         {peopleList.map((people, idx) => {
-          return <SampleVideo />;
+          return <SampleVideo key={idx} />;
         })}
       </div>
       <div className={styles.submit}>

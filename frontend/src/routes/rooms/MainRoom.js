@@ -1,5 +1,5 @@
 import styles from "./MainRoom.module.css";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import MenuBar from "../../components/room/MenuBar";
 import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
@@ -9,8 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
 import Loading from "../../components/room/MainLoading";
-import Catchmind from "../../components/game/catchmind";
-
+import GameFrame from "../../components/GameRoom/GameFrame";
 
 const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
@@ -34,7 +33,7 @@ function MainRoom(props) {
 
   //메인메뉴 모달을 위한 함수
   const deleteSubscriber = (streamManager) => {
-    console.log(streamManager)
+    console.log(streamManager);
     setSubscribes((prev) =>
       prev.filter((stream) => stream.streamManager !== streamManager)
     );
@@ -77,8 +76,9 @@ function MainRoom(props) {
           console.warn(exception);
         });
         mySession.on("signal:gameChange", (event) => {
-          console.log(event.data);
-          setGameName(event.data.gamename);
+          const data = JSON.parse(event.data);
+          console.log(data)
+          setGameName(data.gamename);
         });
 
         // 토큰 발행 및 소켓 접속
@@ -234,33 +234,32 @@ function MainRoom(props) {
   }, [session, publisher, userName, subscribes]);
   // 신호에 따른 화면 렌더링 변화
   const ChangeGame = (event) => {
-    console.log(event.target)
     const data = {
       gamename: event.target.id,
     };
-    setGameName(gamename);
     openvidu.session.signal({
       data: JSON.stringify(data),
       type: "gameChange",
     });
   };
-
+  console.log("default",gamename)
   return (
     <div className={styles.background}>
-      {session !== undefined? (
+      {session !== undefined ? (
         <div>
-          { gamename==="default" && 
-          <div className={styles.GameRoomsDisplay}>
-            <div className={styles.card}>
-              <UserVideoComponent streamManager={publisher} />
-            </div>
-            {subscribes.map((sub, i) => (
-              <div key={i} className={styles.card}>
-                <UserVideoComponent streamManager={sub} />
+          {gamename === "default" && (
+            <div className={styles.GameRoomsDisplay}>
+              <div className={styles.card}>
+                <UserVideoComponent streamManager={publisher} />
               </div>
-            ))}
-          </div> }
-
+              {subscribes.map((sub, i) => (
+                <div key={i} className={styles.card}>
+                  <UserVideoComponent streamManager={sub} />
+                </div>
+              ))}
+            </div>
+          )}
+          {gamename !== "default" && <GameFrame gamename={gamename} />}
           <MenuBar
             toggleBar={toggleBar}
             exitaction={leaveSession}

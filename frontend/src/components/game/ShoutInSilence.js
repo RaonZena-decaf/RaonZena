@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ShoutInSilenceAnswerList } from "./ShoutInSilenceAnswerList";
 import Camera from "../camera/camera1";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
@@ -13,7 +12,7 @@ export default function ShoutInSilence({ start }) {
   const [step, setStep] = useState(0);
   const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
-
+  const ShoutInSilenceAnswerList = []
   // answer 관련 처리
   const answerOnchange = (e) => {
     setAnswer(e.target.value);
