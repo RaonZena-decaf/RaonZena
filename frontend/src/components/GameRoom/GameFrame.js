@@ -9,12 +9,17 @@ function GameFrame() {
   const startHandler = () => {
     setStart(true);
   };
+  const [result, setResult] = useState("");
   return (
     <div className={styles.container}>
       <h1 className={styles.font}>인물퀴즈</h1>
       <div className={styles.container2}>
-        <GameFrameLeft start={start} />
-        <GameFrameRight start={start} startHandler={startHandler} />
+        <GameFrameLeft start={start} result={result} setResult={setResult} />
+        <GameFrameRight
+          start={start}
+          startHandler={startHandler}
+          setResult={setResult}
+        />
       </div>
       <MenuBar />
     </div>
