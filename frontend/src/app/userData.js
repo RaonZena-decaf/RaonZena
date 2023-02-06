@@ -8,13 +8,13 @@ export const initUserData = () => ({type:INIT_USERDATA});
 
 // 초기값 제작
 const initialState = {
-  user_no:"",
-  user_id:"",
-  user_name:"",
+  userNo:"",
+  userId:"",
+  userName:"",
   exp: 0,
   level: 0,
-  create_dtm: "",
-  user_image_url: "",
+  createDate: "",
+  userImage: "",
 }
 
 /* 리듀서 선언 */

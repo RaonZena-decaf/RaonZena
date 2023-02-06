@@ -8,6 +8,13 @@
   display: flex;
   flex-direction: column;
 }
+
+@media (max-width: 1200px){
+  .background {
+    height: 95vh;
+  }
+}
+
 .container {
   position: relative;
   align-items: center;
@@ -18,18 +25,21 @@
 }
 .innercontainer {
   background: #222222;
-  border-radius: 20px;
+  border-radius: 2rem;
   margin: 3%;
-  padding: 3rem;
+  padding: 6rem;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 .header {
-  position: relative;
-  margin: 2rem;
+  margin: 0;
   font-size: 5rem;
-  letter-spacing: 0.15rem;
+}
+
+.ulTag{
+  margin: 0;
+  padding: 0;
 }
 .highlight,
 .header span {
@@ -37,21 +47,25 @@
 }
 .leftcontainer {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
 }
 .rightcontainer {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.bottom {
-  margin-bottom: 1.5rem;
-}
+
 .textcont {
-  margin-top: 2rem;
   font-size: 1.5em;
   text-align: center;
 }
 .video {
-  width: 321px;
-  height: 321px;
+  width: 30rem;
+  height: 30rem;
   background-color: tomato;
   flex: none;
   order: 0;
@@ -60,22 +74,22 @@
 }
 .accessory {
   display: flex;
-  justify-content: center;
-  gap: 3rem;
+  justify-content: space-evenly;
   margin: 1.5rem;
-  font-size: 3rem;
+  font-size: 4rem;
+}
+
+.togglekey{
+  cursor: pointer;
 }
 
 .button {
   background: #ff00b9;
-  border-radius: 10px;
-  padding: 0.6rem;
-  font-size: 1rem;
-  color: #ffffff;
-  font-size: 2rem;
-  margin-top: 1rem;
-  border: 0;
-  width: 20%;
+  border-radius: 1rem;
+  padding: 1rem 2rem 1rem 2rem;
+  cursor: pointer;
+  font-size: 2rem;  
+  align-self: flex-start;
 }
 
 .notselected {
@@ -84,7 +98,7 @@
   width: 3rem;
   line-height: 3rem;
   background: #3e3e3e;
-  border-radius: 20px;
+  border-radius: 2rem;
   font-size: 2rem;
   color: #f300b0;
   font-weight: 800;
@@ -98,7 +112,7 @@
   width: 3rem;
   line-height: 3rem;
   background: #3e3e3e;
-  border-radius: 20px;
+  border-radius: 2rem;
   font-size: 2rem;
   color: #f300b0;
   font-weight: 800;
@@ -110,32 +124,65 @@
   background-clip: content-box, border-box;
 }
 .enter {
-  width: 60%;
+  border-radius: 1rem;
+  padding: 1rem 2rem 1rem 2rem;
+  cursor: pointer;
+  align-self: flex-end;
 }
+.checkbox{
+  position: absolute;
+  right: 3%;
+  bottom: 30%;
+}
+.label::before{
+  right: 5%;
+  bottom: 35%;
+  display: inline-block;
+  content: "";
+  width: 13px;
+  height: 13px;
+  background-color: white;
+  margin-left: 1rem;
+  position: absolute;
 
+}
+.checkbox:checked+label::before{
+  background-color: #f400b0;
+  outline: 0.1rem solid white;
+  outline-offset: -0.1rem;
+}
 .tag {
-  font-size: 1.9rem;
-  width: 10rem;
+  position: relative;
+  font-size: 2rem;
+  width: 12rem;
   background: #3e3e3e;
-  border-radius: 20px;
+  border-radius: 1rem;
   padding: 1.2rem;
   margin: 0.5rem;
   color: #f300b0;
-  clear: both;
-  float: left;
+  margin-right: 1.5rem;
+}
+.dropdown{
+  font-size: 2rem;
+  width: 11rem;
+  background: #3e3e3e;
+  border-radius: 0.5rem;
+  padding: 1.2rem;
+  margin: 0.5rem;
+  color: white;
   margin-right: 1.5rem;
 }
 form ul li {
-  list-style: none;
   display: flex;
 }
+
 .input {
   border: 0;
   font-size: 14px;
   width: 25rem;
   float: center;
   background: #3e3e3e;
-  border-radius: 20px;
+  border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
   color: white;
@@ -143,9 +190,10 @@ form ul li {
   float: left;
 }
 ::placeholder {
-  text-align: center;
+  text-align: start;
   color: #cacaca;
-  font-size: 0.8rem;
+  font-size: 1.5rem;
+  padding-left: 5%;
 }
 
 /* https://codepen.io/caseycallow/pen/yaGQMo 라디오 버튼 커스텀 참고 */
@@ -187,7 +235,7 @@ form ul li {
   align-items: center;
   justify-content: center;
   background: #3e3e3e;
-  border-radius: 10px;
+  border-radius: 1rem;
   font-size: 2rem;
   color: #f300b0;
   border: 3px solid transparent;
@@ -206,7 +254,7 @@ form ul li {
   align-items: center;
   justify-content: center;
   background: #3e3e3e;
-  border-radius: 10px;
+  border-radius: 1rem;
   font-size: 2rem;
   color: #f300b0;
   cursor: pointer;

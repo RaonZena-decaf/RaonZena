@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 
-const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction }) => {
+const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction, ChangeGame}) => {
   const animation = [
     show === "entering"
       ? "MenuOpen"
@@ -31,8 +31,8 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction }) => {
   const [chattingSubject, setChattingSubject] = useState("예시 잡담 주제") 
   const baseUrl = useSelector((store)=>store.baseUrl)
 
-  const getSubject = async() => {
-    await axios({
+  const getSubject = () => {
+    axios({
       method:"GET",
       url:`${baseUrl}games/topicList`
     }).then((res) => {
@@ -44,7 +44,7 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction }) => {
 
   useEffect(() => {
     setMenuContent(nowContent);
-    if (nowContent === "chatsubject") {
+    if (nowContent === "chatSubject") {
       getSubject()
     }
     
@@ -69,10 +69,10 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction }) => {
           className={`${styles[slideAnimationClass]} ${styles.menucontainer} ${styles[menuContent]}`}
           onClick={(e) => e.stopPropagation()}
         >
-          {menuContent === "chatSubject" && <ChatingSubjectLoading chattingSubject={chattingSubject}/>}
-          {menuContent === "chooseGame" && <ChooseGame/>}
+          {menuContent === "chooseGame" && <ChooseGame ChangeGame={ChangeGame} />}
+          {menuContent === "chatSubject" && <ChatingSubjectLoading chattingSubject={chattingSubject} getSubject={getSubject}/>}
           {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu}/> }
-          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu} onClick={exitaction} /> }
+          {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu} onClick={exitaction()} /> }
         </div>
       </div>
     </div>

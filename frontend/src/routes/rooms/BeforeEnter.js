@@ -67,7 +67,7 @@ function BeforeEnter(props) {
                 하시기 바랍니다
               </div>
             </div>
-            <button onClick={backOnClick}>나가기</button>
+            <button className={style.button} onClick={backOnClick}>나가기</button>
           </div>
 
           <div className={style.rightcontainer}>

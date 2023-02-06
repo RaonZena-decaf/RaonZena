@@ -94,21 +94,28 @@
 }
 
 .marginTopBot {
-  margin: auto 0rem auto 0rem;
+  padding: 3rem;
 }
 
 .NoGameRoomsText {
   margin: auto;
   display: table;
-  font-size: 3rem;
+  font-size: 2.5rem;
+  font-weight: 100;
+  word-break: keep-all;
+  text-align: center;
 }
 
-.nothingImg1 {
+.NoGameRoomsImg {
   margin: auto;
   display: table;
-  align-items: center;
+  font-size: 10rem;
+  padding-top: 3rem;
 }
 
-.nothingImg2 {
-  margin: 7rem 0 7rem 0;
+.followingContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
 }
