@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.response.GameAnswer;
 import com.ssafy.raonzena.api.response.GameAnswerAndImageRes;
+import com.ssafy.raonzena.api.response.ImageThemeRes;
 import com.ssafy.raonzena.db.entity.*;
 import com.ssafy.raonzena.db.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -40,6 +43,12 @@ public class GameServiceImpl implements GameService{
 
     @Autowired
     GamePersonQuizRepository gamePersonQuizRepository;
+
+    @Autowired
+    GameThemeRepositorySupport gameThemeRepositorySupport;
+
+    @Autowired
+    UserService userService;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -127,5 +136,11 @@ public class GameServiceImpl implements GameService{
         PersonQuiz data = gamePersonQuizRepository.findByPersonNO(randomNo);
         GameAnswerAndImageRes answer = new GameAnswerAndImageRes(data.getPersonAnswer(), data.getImageUrl());
         return answer;
+    }
+
+    @Override
+    public List<ImageThemeRes> getFrame(long userNo) {
+        int level = userService.level(userNo);
+        return gameThemeRepositorySupport.getThemes(level);
     }
 }
