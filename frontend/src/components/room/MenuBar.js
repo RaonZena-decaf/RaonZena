@@ -52,6 +52,9 @@ function MenuBar({
     if (event.target.id !== "exitRoom") {
       eventTarget.current.className = `${style.IconWithText} ${style.active}`;
     }
+    if (event.target.id === "chatSubject") {
+      ChangeGame(event)
+    }
   };
   const closeMenu = () => {
     setMenuOn(false);
