@@ -1,0 +1,93 @@
+.RoomInfo {
+  display: -webkit-inline-box;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.RoomTitle {
+  float: left;
+  font-size: 2rem;
+  color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  /* margin: auto; */
+  line-height: 3rem;
+  overflow: hidden;
+  white-space: normal;
+  display: -webkit-inline-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.UserCount {
+  float: left;
+  font-size: 2rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.card {
+  max-width: 100%;
+  display: inline-block;
+  border: none;
+  margin: 2rem;
+}
+
+.PaginationWhite {
+  margin: auto;
+  display: table;
+}
+
+.PaginationWhite ul li button {
+  color: white !important;
+  font-size: 2rem;
+}
+
+.imageSize {
+  height: 23rem;
+}
+
+.GameRoomsDisplay {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 300px 300px;
+  column-gap: 2rem;
+  align-items: center;
+  justify-items: stretch;
+  margin-bottom: 10rem;
+
+  /*
+  display: inline-flex;
+  justify-content: center;
+  flex-wrap: wrap; 
+  justify-content: center;
+  flex-wrap: wrap; */
+}
+
+/* .RoomImage {
+  width: 50%;
+  height: 50%;
+  object-fit: cover;
+} */
+
+.BackGround {
+  color: #1f2122;
+}
+
+.displayCard {
+  text-align: center;
+}
+
+.NoGameRoomsText {
+  margin: auto;
+  display: table;
+  font-weight: 100;
+  font-size: 2.5rem;
+}
+
+.NoGameRoomsImg {
+  margin: auto;
+  display: table;
+  font-size: 10rem;
+  padding: 3rem;
+}

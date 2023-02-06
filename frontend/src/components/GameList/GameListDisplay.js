@@ -1,21 +1,21 @@
 import React from "react";
-import Item from "./Item";
-import styles from "./GameRoom.module.css";
+import Item from "./GameListItem";
+import styles from "./GameList.module.css";
 
 const GameRoomsDisplay = ({ gameRoomList, loading }) => {
-
   if (loading) {
     return <h2>Loading...</h2>;
   }
 
   return (
-    <div>
-      {gameRoomList?.map((gameRoomInfo, idx) => {
+    <div className={styles.GameRoomsDisplay}>
+      {gameRoomList.map((gameRoomInfo, idx) => {
         return (
           <Item
-            title={gameRoomInfo.room_title}
+            title={gameRoomInfo.roomTitle}
             users={gameRoomInfo.headcount}
-            image_src={gameRoomInfo.image_src}
+            image_src={gameRoomInfo.host.image_src}
+            headcount={gameRoomInfo.headcount}
             key={idx}
           />
         );

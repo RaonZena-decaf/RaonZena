@@ -1,6 +1,6 @@
 import styles from "./LivePage.module.css";
 import Navbar from "../../components/navbar/navbar";
-import GameRooms from "../../components/GameRoom/GameRoom";
+import GameList from "../../components/GameList/GameList";
 import FollowingList from "../../components/Followings/FollowingList";
 import HostFollowings from "../../components/Followings/HostFollowings";
 import Footer from "../../components/Footer";
@@ -28,7 +28,7 @@ const LivePage = () => {
                   <span className={styles.searchWord}>{state}</span>
                 </>
               )}
-              <GameRooms className={styles.center} searchWord={state}/>
+              <GameList className={styles.center} searchWord={state} />
             </div>
           </div>
           <div className={styles.displayFlex}>
@@ -37,14 +37,14 @@ const LivePage = () => {
                 {`Followings' `}
                 <b id={styles.pinkcolor}> Rooms</b>
               </div>
-              <HostFollowings/>
+              <HostFollowings />
             </div>
             <div className={styles.followingsList}>
               <div>
                 {`Your`}
                 <b id={styles.pinkcolor}> Followings</b>
               </div>
-              <FollowingList/>
+              <FollowingList />
             </div>
           </div>
         </div>
