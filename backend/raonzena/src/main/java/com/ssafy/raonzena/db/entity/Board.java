@@ -23,8 +23,11 @@ public class Board {
     @Column(name = "board_image_url", nullable = false, length = 200)
     private String boardImageUrl;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name="title", nullable = false)
+    private String title;
 
     @Column(name = "user_no",nullable = false)
     private long userNo;

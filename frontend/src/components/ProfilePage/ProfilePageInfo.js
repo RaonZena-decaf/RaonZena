@@ -5,15 +5,17 @@ import { ProfileFollowerList } from "./ProfileFollowerList";
 import { ProfileFollowingList } from "./ProfileFollowingList";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 function ProfilePageInfo({ handleOpen, setfollower, setfollowing }) {
+  const baseUrl = useSelector((store)=> store.baseUrl)
   const [follow, setFollow] = useState(false);
+
+  // 해당 페이지의 유저 프로필을 불러오는 axios 통신
   function toggleDone() {
     setFollow((prev) => !prev);
   }
-
-  // 해당 페이지의 유저 프로필을 불러오는 axios 통신
   const [userInfo, setUserInfo] = useState({
     user_no: "",
     user_id: "",
@@ -28,10 +30,10 @@ function ProfilePageInfo({ handleOpen, setfollower, setfollowing }) {
     const user_no = location.pathname.split("profile/")[1];
     axios({
       method: "get",
-      url: `profile/${user_no}`,
+      url: `${baseUrl}profile/${user_no}`,
     })
       .then((res) => {
-        setUserInfo(res);
+        setUserInfo(res.data);
       })
       .catch((error) => console.log(error));
   };

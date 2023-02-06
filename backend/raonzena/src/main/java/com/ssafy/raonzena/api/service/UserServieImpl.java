@@ -38,7 +38,8 @@ public class UserServieImpl implements UserService{
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "c271efde78c62f250965bf71db6657fb");//kakao rest-api 키
-        params.add("redirect_uri", "http://localhost:8080/user/kakao/callback");  //redirect-url 나중에 서버 주소 받음 바꾸기
+        params.add("redirect_uri", "https://i8a507.p.ssafy.io/oauth");  //redirect-url 나중에 서버 주소 받음 바꾸기 //  https://i8a507.p.ssafy.io/oauth   http://localhost:3000/oauth/kakao/callback
+        // /kakao/callback
         params.add("code", authorizedCode);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -95,14 +96,14 @@ public class UserServieImpl implements UserService{
     //정보를 컨트롤러로 user 보내줘
     public UserRes KaKaoLogin(String authorizedCode){
 
-        System.out.println("1");
+        System.out.println("token");
         //System.out.println(authorizedCode);
         //토큰 가져오기
         String token = getKaKaoAccessToken(authorizedCode);
-
+        System.out.println(token);
         //프로필 정보 가져오기
         KaKaoDto userInfo = getKaKaoUser(token);
-        //System.out.println(userInfo);
+        System.out.println("유저 정보 불러옴");
 
         //DB에 중복된 kakao id가 있는지 확인
         boolean kakaoUser = userRepository.existsByUserId(userInfo.getUserId());
@@ -124,8 +125,8 @@ public class UserServieImpl implements UserService{
 
     @Override
     public User selectUser(long userNo) {
-        // userNo로 유저 정보 조회
-        return userRepositorySupport.selectUser(userNo);
+
+        return userRepository.findByUserNo(userNo);
     }
 
 

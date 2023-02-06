@@ -33,18 +33,18 @@ const LivePage = () => {
           </div>
           <div className={styles.displayFlex}>
             <div className={styles.HostfollowingsList}>
-              {`Followings' `}
-              <b id={styles.pinkcolor}> Rooms</b>
               <div>
-                <HostFollowings/>
+                {`Followings' `}
+                <b id={styles.pinkcolor}> Rooms</b>
               </div>
+              <HostFollowings/>
             </div>
             <div className={styles.followingsList}>
-              <div className={styles.No}>
+              <div>
                 {`Your`}
                 <b id={styles.pinkcolor}> Followings</b>
-                <FollowingList/>
               </div>
+              <FollowingList/>
             </div>
           </div>
         </div>

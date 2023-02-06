@@ -1,7 +1,8 @@
 import style from "./ChatingSubject.module.css";
 
-function ChatingSubject({chattingSubject,sethidden}) {
+function ChatingSubject({chattingSubject,sethidden,getSubject}) {
   const reload = () => {
+    getSubject()
     sethidden(true)
   }
 

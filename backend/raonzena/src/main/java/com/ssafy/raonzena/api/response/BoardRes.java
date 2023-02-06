@@ -18,6 +18,8 @@ public class BoardRes {
     private String boardImageUrl;
 
     private String content;
+
+    private String title;
     private long userNo;
     private Timestamp createDtm;
 

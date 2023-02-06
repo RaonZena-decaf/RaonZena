@@ -1,5 +1,5 @@
 # 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용.
-FROM node:18
+FROM node:alpine
 
 # root 에 app 폴더를 생성
 RUN mkdir -p /app
@@ -11,8 +11,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --force
 COPY . .
 
 EXPOSE 3000
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["npm", "run", "start"]
