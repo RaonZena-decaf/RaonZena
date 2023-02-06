@@ -25,7 +25,6 @@ function MenuBar({
   // 방 유저 정보를 axios 정보로 받아와서 리스트로 저장 => 참가자 드롭업 하부 컴포넌트로 삽입
   const [videoEnabled, setVideoEnabled] = useState(camera);
   const [audioEnabled, setAudioEnabled] = useState(mic);
-  console.log("base", videoEnabled, audioEnabled);
   // redux에서 createroom이나 enter 단계에서 설정한 기본값을 받아와야 함
   // 음성 및 영상 토글을 위한 함수
   const toggleAudio = () => {

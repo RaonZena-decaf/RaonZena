@@ -32,6 +32,7 @@ function MainRoom(props) {
 
   //메인메뉴 모달을 위한 함수
   const deleteSubscriber = (streamManager) => {
+    console.log(streamManager)
     setSubscribes((prev) =>
       prev.filter((stream) => stream.streamManager !== streamManager)
     );
@@ -43,27 +44,8 @@ function MainRoom(props) {
     return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
   }
   const toggleDevice = async (mic, video) => {
-    console.log("Toggle device");
-    try {
-
-      let newPublisher = OV.initPublisher(undefined, {
-        audioSource: undefined, // The source of audio. If undefined default microphone
-        publishAudio: mic, // Whether you want to start publishing with your audio unmuted or not
-        publishVideo: video, // Whether you want to start publishing with your video enabled or not
-        resolution: '640x480', // The resolution of your video
-        frameRate: 30, // The frame rate of your video
-        insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-        mirror: false, // Whether to mirror your local video
-      })
-
-      await openvidu.session.unpublish(publisher)
-
-      await openvidu.session.publish(newPublisher)
-      setPublisher(newPublisher)
-
-    } catch (error) {
-      console.log(error)
-    }
+    publisher.publishAudio(mic);
+    publisher.publishVideo(video);
   };
   useEffect(() => {
     const OV = new OpenVidu();
@@ -85,17 +67,14 @@ function MainRoom(props) {
         mySession.on("streamCreated", (event) => {
           const subscriber = mySession.subscribe(event.stream, undefined);
           setSubscribes((oldArray) => [...oldArray, subscriber]);
-          console.log("new enterance", subscribes);
         });
 
         mySession.on("streamDestroyed", (event) => {
-          console.log("manager", event.stream.streamManager);
           deleteSubscriber(event.stream.streamManager);
         });
 
         mySession.on("exception", (exception) => {
           console.warn(exception);
-          // 어떤 이유인지 왜 비디오가 없는 유저에 대해서 예외처리가 되질 않습니다. 추가적인 확인 이후에 해야함
         });
         mySession.on("signal:gameChange", (event) => {
           console.log(event.data)
@@ -267,8 +246,9 @@ function MainRoom(props) {
 
   return (
     <div className={styles.background}>
-      {session !== undefined ? (
+      {session !== undefined? (
         <div>
+          { gamename==="default" && 
           <div className={styles.GameRoomsDisplay}>
             <div className={styles.card}>
               <UserVideoComponent streamManager={publisher} />
@@ -278,7 +258,7 @@ function MainRoom(props) {
                 <UserVideoComponent streamManager={sub} />
               </div>
             ))}
-          </div>
+          </div> }
 
           <MenuBar
             toggleBar={toggleBar}
