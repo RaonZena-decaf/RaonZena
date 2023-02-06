@@ -2,8 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import style from "../game/catchmind.module.css";
 
 function Catchmind() {
-  const canvasRef = useRef(null);
   const paletteRef = useRef(null);
+  const canvasRef = useRef(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -12,15 +13,15 @@ function Catchmind() {
     canvas.style.margin = "20px";
     canvas.style.border = "3px double";
     canvas.style.cursor = "pointer";
-    const height = canvas.height
-    const width = canvas.width
+    const height = canvas.height;
+    const width = canvas.width;
     let painting = false;
-    
+
     function stopPainting(event) {
       painting = false;
     }
 
-    function startPainting() {
+    function startPainting(event) {
       painting = true;
     }
 
@@ -44,6 +45,15 @@ function Catchmind() {
       canvas.addEventListener("mouseleave", stopPainting);
     }
 
+    document.querySelector(".clear").onclick = () => {
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+    };
+
+    document.querySelector(".fill").onclick = () => {
+      ctx.fillStyle = lineColor;
+      ctx.fillRect(0, 0, width, height);
+    };
     const buttons = [
       "red",
       "orange",
@@ -61,7 +71,6 @@ function Catchmind() {
 
     buttons.forEach((content) => {
       let button = document.querySelector(`.${content}`);
-
       button.style.cursor = "pointer";
 
       if (content === "clear" || content === "fill") {
@@ -87,22 +96,12 @@ function Catchmind() {
         lineColor = content;
       };
     });
-
-    document.querySelector(".clear").onclick = () => {
-      ctx.fillStyle = "white"
-      ctx.fillRect(0, 0, width, height);
-    };
-
-    document.querySelector(".fill").onclick = () => {
-      ctx.fillStyle = lineColor;
-      ctx.fillRect(0, 0, width, height);
-    };
-    ctx.fillStyle = "white"
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, width, height);
   }, []);
 
   return (
-    <div >
+    <div>
       <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
         <span className="red">red</span>

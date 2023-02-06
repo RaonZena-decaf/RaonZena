@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaMicrophoneAlt } from "react-icons/fa";
 import { FaMicrophoneAltSlash } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa";
@@ -16,24 +16,24 @@ import { Transition } from 'react-transition-group'
 
 
 
-function MenuBar({toggleBar, exitaction}) {
+function MenuBar({toggleBar, exitaction, camera, mic, toggleDevice, ChangeGame}) {
   // 방 유저 정보를 axios 정보로 받아와서 리스트로 저장 => 참가자 드롭업 하부 컴포넌트로 삽입
-
-  const [videoEnabled, setVideoEnabled] = useState(true);
-  const [audioEnabled, setAudioEnabled] = useState(true);
+  const [videoEnabled, setVideoEnabled] = useState(camera);
+  const [audioEnabled, setAudioEnabled] = useState(mic);
   // redux에서 createroom이나 enter 단계에서 설정한 기본값을 받아와야 함
-
   // 음성 및 영상 토글을 위한 함수
   const toggleAudio = () => {
-    setAudioEnabled(!audioEnabled);
-    // publisher.publishAudio(audioEnabled)
+    setAudioEnabled(prev => !prev);
     console.log("audiotoggled");
   };
   const toggleVideo = () => {
-    setVideoEnabled(!videoEnabled);
-    // publisher.publishVideo(videoEnabled)
+    setVideoEnabled(prev => !prev);
+    toggleDevice(videoEnabled, audioEnabled)
     console.log("videotoggled");
   };
+  useEffect(() => {
+    toggleDevice()
+  },[])
 
   // 참가자dropup을 위한 state
   const [drop, setdrop] = useState(false);
@@ -58,8 +58,7 @@ function MenuBar({toggleBar, exitaction}) {
     if (eventTarget.current.id !== "exitRoom") {
       eventTarget.current.className = `${style.IconWithText} ${style.inactive}`
   }}
-  
-
+  // 클릭에 따른 세션 랜더링 변화 값 전송을 어디서 해야 할건가?
 
   return (
     <div className={style.UpperContainer}>
@@ -97,7 +96,7 @@ function MenuBar({toggleBar, exitaction}) {
           <FaMugHot className={style.Noclick}/>
           <p className={`${style.UnderIcon} ${style.Noclick}`}>잡담주제</p>
         </div>
-        <div className={style.IconWithText} onClick={menuOpen} id="chooseGame">
+        <div className={style.IconWithText} onClick={menuOpen} id="chooseGame" >
           <FaGamepad className={style.Noclick}/>
           <p className={`${style.UnderIcon} ${style.Noclick}`}>게임</p>
         </div>
@@ -120,7 +119,7 @@ function MenuBar({toggleBar, exitaction}) {
       <MenuPortal>
         <Transition unmountOnExit in={menuOn} timeout={500}>
           {state => (
-            <RoomMenuFrame show={state} closeMenu={closeMenu} nowContent={nowContent} exitaction={exitaction} />
+            <RoomMenuFrame show={state} closeMenu={closeMenu} nowContent={nowContent} exitaction={exitaction} ChangeGame={ChangeGame}/>
           )}
         </Transition>
       </MenuPortal>
