@@ -1,14 +1,15 @@
 .sidebar {
+  position: relative;
   width: 30rem;
   height: 100%;
-  background-color: #CACACA;
+  background-color: #1f2122;
   position : fixed;
   top: 0;
   right: -35rem;
   color: black;
   z-index: 99;
   padding: 2rem;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .sidebar.active{
@@ -21,26 +22,58 @@
   right: -35rem;
 }
 
+.form{
+  display: flex;
+  height: fit-content;
+}
+
+.input{
+  position: relative;
+  border: none;
+  font-size: 1.5rem;
+  width: 70%;
+  background: #3e3e3e;
+  border-radius: 1rem;
+  padding: 1rem;
+  color: white;
+  margin-right: 1.5rem;
+}
+
+.button{
+  all: unset;
+  background: #ff00b9;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+  border: 0;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  word-break: keep-all;
+}
+
+.button:hover{
+  cursor: pointer;
+  background-color: #cb0091;
+}
+
 .exitbutton{
   color: white;
   font-weight: 100;
   align-self: center;
-  border: solid 3px white;
-  height: fit-content;
-  width: fit-content;
+  background-color: #f400b0;
   padding: 0.8rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   font-size: 1.5rem;
   border-radius: 1rem;
   cursor: pointer;
-  position: relative;
-  margin-left: auto;
+  position: absolute;
+  left: -5rem;
+  bottom: 5rem;
 }
 
 .exitbutton:hover {
-  background-color: white;
-  color: black;
+  background-color: #cb0091;
+  color: white;
 }
 
 @keyframes sidebarOpen{

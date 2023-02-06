@@ -11,6 +11,12 @@
   flex-direction: column;
 }
 
+@media (max-width: 700px) {
+  .background {
+    height: 95vh;
+  }
+}
+
 .background2 {
   background-color: #353839;
   width: auto;
@@ -19,7 +25,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 5rem;
+  padding: 3%;
 }
 
 .background3 {
@@ -29,7 +35,7 @@
   border-radius: 2rem;
   padding: 5rem;
   text-align: left;
-  margin-bottom: 5rem;
+  margin-bottom: 3%;
 }
 
 #pinkcolor {
@@ -39,34 +45,29 @@
 .displayFlex {
   display: flex;
   flex-direction: row;
-  /* width: 100%; */
-  border-radius: 2rem;
-  /* padding: 2rem; */
-  justify-content: space-between;
-  /* margin: 2rem; */
 }
 
 .HostfollowingsList {
   background-color: #222222;
-  width: auto;
-  height: auto;
   border-radius: 2rem;
   padding: 5rem;
   text-align: left;
   width: 55%;
+  margin-right: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .followingsList {
   background-color: #222222;
-  width: auto;
-  height: auto;
   border-radius: 2rem;
   padding: 5rem;
   text-align: left;
-  width: 23%;
+  width: 30%;;
 }
 
-.searchWord{
+.searchWord {
   font-size: 3rem;
   margin-left: 3rem;
 }

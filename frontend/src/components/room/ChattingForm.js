@@ -67,17 +67,6 @@ function ChattingForm(props) {
           )
         })}
       </div>
-      <form>
-        <input
-          type={message}
-          name={message}
-          value={message || ""}
-          onChange={handleChange}
-        />
-        <button type="submit" onClick={chatsend}>
-          전송
-        </button>
-      </form>
     </div>
   );
 }

@@ -30,6 +30,10 @@
 body {
   margin: 0;
   line-height: normal;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
 }
 :root {
   /* fonts */

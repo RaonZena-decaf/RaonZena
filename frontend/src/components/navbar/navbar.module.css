@@ -47,7 +47,7 @@
   border-radius: 5px;
   border: none;
   background-color: #353839;
-  height: 3rem;
+  height: 3.5rem;
   width: 10vw;
   display: block;
   overflow: hidden;
@@ -55,14 +55,14 @@
 }
 
 .searchRooms::placeholder{
-  font-size: 1rem;
+  font-size: 1.4rem;
   text-align: start;
 }
 
 .searchBtn{
   all: unset;
   position: relative;
-  transform: translateX(-150%) translateY(5%);
+  transform: translateX(-150%);
   background-color: none;
 }
 
@@ -79,8 +79,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2%;
-  font-size: 1.5rem;
+  gap: 5%;
+  font-size: 2rem;
   background-color: #f400b0;
   padding: 1rem;
   border-radius: 5px;
@@ -95,6 +95,7 @@
 .profileimg{
   border-radius: 50%;
   width: 3rem;
+  aspect-ratio: 1/1;
 }
 
 .createRoom {
@@ -131,7 +132,7 @@
 .router {
   font-weight: bold;
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .router:hover {

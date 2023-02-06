@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Pagination } from "@mui/material";
 import Item from "./FollowingListItem";
 import styles from "./Followings.module.css";
 import { useSelector } from "react-redux";
+import { FaUsersSlash } from "react-icons/fa";
+
 
 export default function FollowingList() {
   const [list, setlist] = useState([]);
@@ -43,9 +44,7 @@ export default function FollowingList() {
   } else {
     return (
       <div>
-        <div className={styles.nothingImg1}>
-          <img className={styles.nothingImg2} src="./nofollowings.svg" alt="" />
-        </div>
+        <FaUsersSlash className={styles.NoGameRoomsImg}/>
         <div className={styles.marginTopBot}>
           <p className={styles.NoGameRoomsText}>등록한 친구가 없습니다.</p>
         </div>

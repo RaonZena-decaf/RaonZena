@@ -31,8 +31,8 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction, ChangeGame}) =
   const [chattingSubject, setChattingSubject] = useState("예시 잡담 주제") 
   const baseUrl = useSelector((store)=>store.baseUrl)
 
-  const getSubject = async() => {
-    await axios({
+  const getSubject = () => {
+    axios({
       method:"GET",
       url:`${baseUrl}games/topicList`
     }).then((res) => {
@@ -44,7 +44,7 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction, ChangeGame}) =
 
   useEffect(() => {
     setMenuContent(nowContent);
-    if (nowContent === "chatsubject") {
+    if (nowContent === "chatSubject") {
       getSubject()
     }
     
@@ -69,8 +69,8 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction, ChangeGame}) =
           className={`${styles[slideAnimationClass]} ${styles.menucontainer} ${styles[menuContent]}`}
           onClick={(e) => e.stopPropagation()}
         >
-          {menuContent === "chatSubject" && <ChatingSubjectLoading chattingSubject={chattingSubject}/>}
           {menuContent === "chooseGame" && <ChooseGame ChangeGame={ChangeGame} />}
+          {menuContent === "chatSubject" && <ChatingSubjectLoading chattingSubject={chattingSubject} getSubject={getSubject}/>}
           {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu}/> }
           {menuContent === "exitRoom" && <ExitRoom closeMenu={closeMenu} onClick={exitaction()} /> }
         </div>
