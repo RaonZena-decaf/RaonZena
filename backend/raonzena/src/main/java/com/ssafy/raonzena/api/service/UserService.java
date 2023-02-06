@@ -10,4 +10,7 @@ public interface UserService {
     // userNo로 유저 정보 조회
     User selectUser(long userNo);
 
+    //user level
+    int level(long userNo);
+
 }

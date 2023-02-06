@@ -1,11 +1,16 @@
 package com.ssafy.raonzena.api.controller;
 
 
+
 import com.ssafy.raonzena.api.request.BoardReq;
+import com.ssafy.raonzena.api.response.ImageThemeRes;
 import com.ssafy.raonzena.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RequestMapping("/api/v1/games")
 @RestController
@@ -14,9 +19,10 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    @PostMapping("/feed/{userNo}")
-    public ResponseEntity<?> saveFeed(@PathVariable long userNo, @RequestBody BoardReq boardReq){
-        gameService.saveFeed(boardReq);
+    @PostMapping("/feed")
+    public ResponseEntity<?> saveFeed(@RequestPart(value = "file",required = false) MultipartFile multipartFile, @RequestPart(value="boardReq") BoardReq boardReq){
+        System.out.println("check");
+        gameService.saveFeed(multipartFile,boardReq);
         return ResponseEntity.ok("Success");
     }
 
@@ -33,6 +39,16 @@ public class GameController {
         }
 
         return ResponseEntity.ok(gameService.answer(gameType));
+    }
+
+    //테마 보여주기
+    @GetMapping("/feed/frame")
+    public ResponseEntity<List<ImageThemeRes>> getFrame(){
+        //임시로 userNo 넣어둠
+        long userNo = 1;
+
+        return ResponseEntity.ok(gameService.getFrame(userNo));
+
     }
 
 
