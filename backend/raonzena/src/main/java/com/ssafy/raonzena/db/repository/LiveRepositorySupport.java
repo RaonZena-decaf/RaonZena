@@ -2,15 +2,20 @@ package com.ssafy.raonzena.db.repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.entity.QRoomInfo;
+import com.ssafy.raonzena.db.entity.RoomInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
 import static com.ssafy.raonzena.db.entity.QRoomInfo.roomInfo; //q타입 클래스 직접 import 해서 사용
+import static com.ssafy.raonzena.db.entity.QFollow.follow; //q타입 클래스 직접 import 해서 사용
+import static com.ssafy.raonzena.db.entity.QUser.user;
 
 /**
  * 실행중인 게임방 모델 관련 디비 쿼리 생성을 위한 구현 정의.
@@ -44,17 +49,18 @@ public class LiveRepositorySupport  {
         // 팔로잉 유저들이 호스트로 있는 방 조회
         return query
                 .select(Projections.fields(LiveRoomInfoRes.class,
-                        roomInfo.roomNo,
-                        roomInfo.roomTitle,
-                        roomInfo.host,
-                        roomInfo.headcount,
-                        roomInfo.password,
-                        roomInfo.createDtm)
+                                roomInfo.roomNo,
+                                roomInfo.roomTitle,
+                                roomInfo.host,
+                                roomInfo.headcount,
+                                roomInfo.password,
+                                roomInfo.createDtm)
                 ).from(roomInfo)
-                .where(roomInfo.host.userNo.eq(sessionUserNo))
-                .fetch();
+                 .join(follow)
+                 .on(roomInfo.host.userNo.eq(follow.followee))
+                 .where(follow.follower.eq(sessionUserNo))
+                 .fetch();
     }
-
 
     public boolean isAccessible(long roomNo, int sessionHeadCount) { //////////세션 정보에서 인원수 가져오면 바꿔야 할 부분///////////
         // 현재 게임에 참여하고 있는 인원 수 조회 후 게임에 참여할 수 있는지 반환
