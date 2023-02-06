@@ -9,8 +9,12 @@
 
 .gameName{
   font-size: 2rem;
+  pointer-events: none;
 }
+.NoClick {
+  pointer-events: none;
 
+}
 .IconText{
   display: flex;
   flex-direction: column;
