@@ -15,7 +15,7 @@ import BeforeRoom from "./routes/rooms/BeforeEnter";
 function App() {
   return (
     <Router>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/makeroom" element={<Create />} />
