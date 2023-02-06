@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
-import MainLoading from "../../components/room/MainLoading";
+import Loading from "../../components/room/MainLoading";
 import Catchmind from "../../components/game/catchmind";
 
 
