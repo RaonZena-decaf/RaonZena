@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./GameFrameRight.module.css";
 import SampleVideo from "../camera/SampleVideo";
 
-function GameFrameRight({ startHandler, start }) {
+function GameFrameRight({ startHandler, start, setResult }) {
   const peopleList = [1, 2, 3, 4, 5, 6];
   const [answer, setAnswer] = useState("");
   const answerOnchange = (e) => {
@@ -12,7 +12,8 @@ function GameFrameRight({ startHandler, start }) {
   const answerOnclick = (e) => {
     e.preventDefault();
     if (answer !== "") {
-      console.log(answer);
+      // console.log(answer);
+      setResult(answer);
     }
     setAnswer("");
   };

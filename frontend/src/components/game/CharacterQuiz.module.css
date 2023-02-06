@@ -13,3 +13,9 @@
   height: 100%;
   aspect-ratio: unset;
 }
+
+.result {
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+}

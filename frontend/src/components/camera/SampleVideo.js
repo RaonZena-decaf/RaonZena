@@ -34,7 +34,7 @@ function SampleVideo() {
   return (
     <div className={style.webcamCapture}>
       <video ref={videoRef}></video>
-      <span className={style.username}>유저명</span>
+      <span className={style.username}>임길현</span>
     </div>
   );
 }
