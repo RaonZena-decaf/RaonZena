@@ -1,5 +1,5 @@
 import styles from "./MainRoom.module.css";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import MenuBar from "../../components/room/MenuBar";
 import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
@@ -9,11 +9,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
 import Loading from "../../components/room/MainLoading";
-import Catchmind from "../../components/game/catchmind";
 const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
 function MainRoom(props) {
+  console.log('props', props);
   const dispatch = useDispatch();
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
@@ -42,31 +42,28 @@ function MainRoom(props) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
   }
-  const toggleDevice = async () => {
+  const toggleDevice = async (mic, video) => {
     console.log("Toggle device");
-    // try {
-    //   let devices = await OV.getDevices()
-    //   let videoDevices = devices.filter(device => device.kind === 'videoinput')
+    try {
 
-    //   let newPublisher = openvidu.OV.initPublisher(undefined, {
-    //     audioSource: undefined, // The source of audio. If undefined default microphone
-    //     videoSource: videoDevices[0].deviceId, // The source of video. If undefined default webcam
-    //     publishAudio: mic, // Whether you want to start publishing with your audio unmuted or not
-    //     publishVideo: video, // Whether you want to start publishing with your video enabled or not
-    //     resolution: '640x480', // The resolution of your video
-    //     frameRate: 30, // The frame rate of your video
-    //     insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-    //     mirror: false, // Whether to mirror your local video
-    //   })
+      let newPublisher = OV.initPublisher(undefined, {
+        audioSource: undefined, // The source of audio. If undefined default microphone
+        publishAudio: mic, // Whether you want to start publishing with your audio unmuted or not
+        publishVideo: video, // Whether you want to start publishing with your video enabled or not
+        resolution: '640x480', // The resolution of your video
+        frameRate: 30, // The frame rate of your video
+        insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
+        mirror: false, // Whether to mirror your local video
+      })
 
-    //   await openvidu.session.unpublish(openvidu.mainStreamManager)
+      await openvidu.session.unpublish(publisher)
 
-    //   await openvidu.session.publish(newPublisher)
-    //   setPublisher(newPublisher)
+      await openvidu.session.publish(newPublisher)
+      setPublisher(newPublisher)
 
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    } catch (error) {
+      console.log(error)
+    }
   };
   useEffect(() => {
     const OV = new OpenVidu();
@@ -298,7 +295,7 @@ function MainRoom(props) {
           />
         </div>
       ) : (
-        <MainLoading />
+        <Loading />
       )}
     </div>
   );
