@@ -45,19 +45,18 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
   async function save() {
     let question = window.confirm("사진을 저장하겠습니까?");
     if (question === true) {
-      let today = new Date()
       const formData = new FormData()
       // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
       await copyDOM()
       formData.append("board_image_url", img.current)
-      formData.append("title", input.title)
-      formData.append("content", input.content)
-      formData.append("create_dtm", today.toLocaleString())
-      console.log(formData)
-
-      for (let value of formData.values()) {
-        console.log(value)
+      const data = {
+        "title" : input.title,
+        "content" : input.content,
+        "firstUser" : 0,
+        "secondUser" : 0,
+        "thirdUser" : 0,
       }
+      formData.append("data", new Blob([JSON.stringify(data)]))
 
       axios({
         url:`${baseUrl}games/feed/${userNo}`,
