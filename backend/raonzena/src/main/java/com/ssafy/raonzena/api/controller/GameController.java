@@ -1,11 +1,13 @@
 package com.ssafy.raonzena.api.controller;
 
 
+
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/api/v1/games")
 @RestController
@@ -14,9 +16,10 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    @PostMapping("/feed/{userNo}")
-    public ResponseEntity<?> saveFeed(@PathVariable long userNo, @RequestBody BoardReq boardReq){
-        gameService.saveFeed(boardReq);
+    @PostMapping("/feed")
+    public ResponseEntity<?> saveFeed(@RequestPart(value = "file",required = false) MultipartFile multipartFile, @RequestPart(value="boardReq") BoardReq boardReq){
+        System.out.println("check");
+        gameService.saveFeed(multipartFile,boardReq);
         return ResponseEntity.ok("Success");
     }
 
