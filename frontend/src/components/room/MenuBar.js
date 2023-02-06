@@ -28,18 +28,13 @@ function MenuBar({
   // redux에서 createroom이나 enter 단계에서 설정한 기본값을 받아와야 함
   // 음성 및 영상 토글을 위한 함수
   const toggleAudio = () => {
-    setAudioEnabled((prev) => !prev);
-    console.log("audiotoggled");
+    toggleDevice(!audioEnabled, videoEnabled)
+    setAudioEnabled((prev) => !prev)
   };
   const toggleVideo = () => {
-    setVideoEnabled((prev) => !prev);
-    toggleDevice(videoEnabled, audioEnabled);
-    console.log("videotoggled");
+    toggleDevice(audioEnabled, !videoEnabled )
+    setVideoEnabled((prev) => !prev)
   };
-  useEffect(() => {
-    // toggleDevice()
-  }, []);
-
   // 참가자dropup을 위한 state
   const [drop, setdrop] = useState(false);
   const droptoggle = () => {
@@ -64,7 +59,6 @@ function MenuBar({
       eventTarget.current.className = `${style.IconWithText} ${style.inactive}`;
     }
   };
-  // 클릭에 따른 세션 랜더링 변화 값 전송을 어디서 해야 할건가?
 
   return (
     <div className={style.UpperContainer}>

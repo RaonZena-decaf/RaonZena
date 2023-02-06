@@ -129,5 +129,11 @@ public class UserServieImpl implements UserService{
         return userRepository.findByUserNo(userNo);
     }
 
+    @Override
+    public int level(long userNo) {
+        User user = userRepository.findByUserNo(userNo);
+        return user.getLevel();
+    }
+
 
 }

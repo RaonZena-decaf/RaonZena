@@ -4,7 +4,10 @@ package com.ssafy.raonzena.api.service;
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.response.GameAnswer;
 import com.ssafy.raonzena.api.response.GameAnswerAndImageRes;
+import com.ssafy.raonzena.api.response.ImageThemeRes;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface GameService {
 
@@ -15,4 +18,7 @@ public interface GameService {
 
     //게임데이터 - 정답 + 이미지
     GameAnswerAndImageRes answerAndImage(int gameType);
+
+    //테마 불러오기
+    List<ImageThemeRes> getFrame(long userNo);
 }

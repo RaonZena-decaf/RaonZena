@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./ChattingBar.module.css";
 import ChattingForm from "./ChattingForm";
 
@@ -13,9 +13,23 @@ function ChattingBar({ openChatting, toggleBar, openvidu }) {
 
   //채팅용 함수들
   const [message, setMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
+  useEffect(() => {
+    if (openvidu.session !== undefined) {
+      openvidu.session.on("signal:chat", (event) => {
+        const data = JSON.parse(event.data);
+        setMessageList((prev) => [
+          ...prev,
+          {
+            nickname: data.nickname,
+            message: data.message,
+          },
+        ]);
+      });
+    }
+  }, [openvidu.session]);
 
   function handleChange(event) {
-    // console.log(chat.message)
     setMessage(event.target.value);
   }
 
@@ -25,7 +39,7 @@ function ChattingBar({ openChatting, toggleBar, openvidu }) {
         message: message,
         nickname: openvidu.userName,
       };
-      openvidu.openvidu.session.signal({
+      openvidu.session.signal({
         data: JSON.stringify(data),
         type: "chat",
       });
@@ -60,7 +74,7 @@ function ChattingBar({ openChatting, toggleBar, openvidu }) {
           : `${styles.sidebar}`
       }
     >
-      <ChattingForm openvidu={openvidu} />
+      <ChattingForm messageList={messageList} />
       <form className={styles.form}>
         <input
           type={message}

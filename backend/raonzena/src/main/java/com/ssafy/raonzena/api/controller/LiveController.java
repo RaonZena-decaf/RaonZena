@@ -83,7 +83,7 @@ public class LiveController {
     @GetMapping("followingRoom")
     protected ResponseEntity<List<LiveRoomInfoRes>> followingRoomsList(){
         // 팔로잉 유저들의 방 조회
-        return ResponseEntity.ok(liveService.findFollowingRooms(1)); /////////세션정보 필요//////////
+        return ResponseEntity.ok(liveService.findFollowingRooms(6)); /////////세션정보 필요//////////
     }
 
     @GetMapping("/{roomNo}")
