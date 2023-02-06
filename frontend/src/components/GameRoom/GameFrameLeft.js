@@ -3,7 +3,7 @@ import styles from "./GameFrameLeft.module.css";
 import CharacterQuiz from "../game/CharacterQuiz";
 import GameFrameProgress from "./GameFrameProgress";
 
-function GameFrameLeft({ start }) {
+function GameFrameLeft({ start, result }) {
   const [peopleList, setPeopleList] = useState([
     { user: "임길현", points: 90, img: "../profile/profileimg.png" },
     { user: "김찬빈", points: 80, img: "../profile/profileimg.png" },
@@ -27,7 +27,7 @@ function GameFrameLeft({ start }) {
     <div>
       <div>
         <div className={styles.container}>
-          <CharacterQuiz start={start} />
+          <CharacterQuiz start={start} result={result} />
         </div>
         <div className={styles.progressframe}>
           <div>
