@@ -4,7 +4,6 @@ import GameFrameLeft from "./GameFrameLeft";
 import GameFrameRight from "./GameFrameRight";
 
 function GameFrame({gamename}) {
-  console.log("GameFrame", gamename)
   const [start, setStart] = useState(false);
   const startHandler = () => {
     setStart(true);

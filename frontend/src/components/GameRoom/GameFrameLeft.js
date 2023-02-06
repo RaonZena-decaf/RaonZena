@@ -24,8 +24,6 @@ function GameFrameLeft({ start, result, gamename }) {
   peopleList.sort(function (a, b) {
     return b.points - a.points;
   });
-  const gamename2 = gamename
-  console.log("wrong", gamename)
   return (
     <div>
       <div>

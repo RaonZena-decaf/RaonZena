@@ -29,7 +29,7 @@ function MainRoom(props) {
   const toggleBar = () => setOpenChatting(!openChatting);
   const navigate = useNavigate();
   // 화면 랜더링 관련 함수
-  const [gamename, setGameName] = useState("default");
+  const [gamename, setGameName] = useState("chatSubject");
 
   //메인메뉴 모달을 위한 함수
   const deleteSubscriber = (streamManager) => {
@@ -77,7 +77,6 @@ function MainRoom(props) {
         });
         mySession.on("signal:gameChange", (event) => {
           const data = JSON.parse(event.data);
-          console.log(data)
           setGameName(data.gamename);
         });
 
@@ -242,12 +241,11 @@ function MainRoom(props) {
       type: "gameChange",
     });
   };
-  console.log("default",gamename)
   return (
     <div className={styles.background}>
       {session !== undefined ? (
         <div>
-          {gamename === "default" && (
+          {gamename === "chatSubject" && (
             <div className={styles.GameRoomsDisplay}>
               <div className={styles.card}>
                 <UserVideoComponent streamManager={publisher} />
@@ -259,7 +257,7 @@ function MainRoom(props) {
               ))}
             </div>
           )}
-          {gamename !== "default" && <GameFrame gamename={gamename} />}
+          {gamename !== "chatSubject" && <GameFrame gamename={gamename} />}
           <MenuBar
             toggleBar={toggleBar}
             exitaction={leaveSession}
