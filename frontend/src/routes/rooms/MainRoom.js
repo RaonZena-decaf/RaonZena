@@ -233,9 +233,10 @@ function MainRoom(props) {
     setOpenvidu({ session, videoList, userName });
   }, [session, publisher, userName, subscribes]);
   // 신호에 따른 화면 렌더링 변화
-  const ChangeGame = (gamename) => {
+  const ChangeGame = (event) => {
+    console.log(event.target)
     const data = {
-      gamename: gamename,
+      gamename: event.target.id,
     };
     setGameName(gamename);
     openvidu.session.signal({
