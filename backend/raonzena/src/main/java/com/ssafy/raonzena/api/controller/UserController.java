@@ -26,13 +26,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping()
-    public ResponseEntity<?> redisTest(HttpSession session) {
-        System.out.println(1234);
-        session.setAttribute("userNo", 123456);
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/kakao/callback")
     public ResponseEntity<UserRes> kakaoLogin(@RequestBody String code, HttpSession session){
         System.out.println("------------------");
@@ -45,12 +38,6 @@ public class UserController {
 
         // 세션 저장 (세션 ID, 사용자 정보)
         session.setAttribute("userNo", userRes.getUserNo());
-
-//        // 쿠키 전달 (세션 ID)
-//        response.addCookie(new Cookie("AUTH", session.getId()){{
-//            setMaxAge(3600); // 자동 로그인 1시간 유지
-//            setPath("/"); // 아래 경로에서 쿠키값 유지
-//        }});
 
         return ResponseEntity.ok(userRes);
     }
