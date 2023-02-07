@@ -1,6 +1,6 @@
 import styles from "./PhotoShootDiary.module.css";
 import { useSelector } from "react-redux";
-import { useState, useRef } from "react";
+import { useState} from "react";
 import html2canvas from "html2canvas";
 import axios from "axios";
 
@@ -23,46 +23,50 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
     setInput({ ...input, [event.target.name]: event.target.value });
   };
 
-  //이미지 url을 저장하는 State
-  const img = useRef("");
-
-  // 사진 영역을 촬영하는 함수
-  const copyDOM = async () => {
-    window.scrollTo(0, 0);
-
-    let url = "";
-    await html2canvas(document.getElementById("사진촬영완료")).then(
-      async (canvas) => {
-        url = await canvas.toDataURL("image/webp",1).split(",")[1]
-      }
-    );
-    img.current = url
-  };
 
   //피드에 저장하는 axios 통신
-  const userNo = useSelector((store) => store.userData.userNo);
-
+  //const userNo = useSelector((store) => store.userData.userNo);
+  const userNo =1;
   async function save() {
     let question = window.confirm("사진을 저장하겠습니까?");
     if (question === true) {
       const formData = new FormData()
       // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
-      await copyDOM()
-      formData.append("board_image_url", img.current)
+
+      // 사진 영역을 촬영하는 함수
+      window.scrollTo(0, 0);
+
+      await html2canvas(document.getElementById("사진촬영완료")).then(
+        async (canvas) => {
+          const day = new Date()
+          const dataUrl = canvas.toDataURL("image/png").split(",")[1]
+          let array = []
+          for (let i = 0; i<dataUrl.length; i++) {
+            array.push(dataUrl.charCodeAt(i))
+          }
+          const blob = new Blob([new Uint8Array(array)], {type: 'multipart/form-data'})
+          const file = new File([blob], `${day}`,{type: 'multipart/form-data'})
+          formData.append("file", file)
+        }
+      );
+    
       const data = {
+        "boardImageUrl": "",
         "title" : input.title,
         "content" : input.content,
         "firstUser" : 0,
         "secondUser" : 0,
         "thirdUser" : 0,
+        "userNo" : userNo
       }
-      formData.append("data", new Blob([JSON.stringify(data)]))
+      formData.append("boardReq", new Blob([JSON.stringify(data)], {type:"application/json"}))
+
 
       for (let value of formData.values())
       { console.log(value)}
 
       axios({
-        url:`${baseUrl}games/feed/${userNo}`,
+        url:`${baseUrl}games/feed`,
         method:"POST",
         data : formData,
         headers: {"Content-Type": "multipart/form-data"}
