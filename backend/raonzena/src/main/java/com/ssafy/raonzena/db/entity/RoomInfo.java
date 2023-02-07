@@ -36,4 +36,7 @@ public class RoomInfo {
     @Column(name = "create_dtm", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createDtm;
 
+    @Column(name = "image_name")
+    private String imageName;
+
 }

@@ -53,7 +53,7 @@ public class LiveController {
     @PostMapping("/room")
     protected ResponseEntity<?> roomAdd(@RequestBody RoomReq roomReq){
         //////////세션정보로 유저넘버 얻어오기 구현 필요/////////
-        User user = userService.selectUser(2);
+        User user = userService.selectUser(1);
 
         //1.room 정보 db에 저장
         LiveRoomInfoRes liveRoomInfoRes = roomService.addRoom(roomReq, user);
