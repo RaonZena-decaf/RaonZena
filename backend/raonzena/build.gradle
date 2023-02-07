@@ -51,6 +51,15 @@ dependencies {
 
 	//s3 의존성
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.session:spring-session-data-redis'
+//	implementation 'org.springframework.data:spring-data-redis'
+//	implementation 'org.springframework.session:spring-session-data-redis'
+//	compile 'org.springframework.boot:spring-boot-starter-web'
+//	compile 'org.springframework.session:spring-session-data-redis'
+//	compile 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
