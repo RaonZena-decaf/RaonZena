@@ -5,7 +5,6 @@ function ProfileFollowerListDetail({handleClose, follower}) {
   const navigate = useNavigate()
   const moveToProfile = (userNo) => {
     handleClose()
-    console.log(userNo)
     navigate(`/profile/${userNo}`)
   }
 

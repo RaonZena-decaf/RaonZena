@@ -4,6 +4,7 @@ import styles from "./navbar.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { initUserData } from "../../app/userData";
+import { initMyFollowingList } from "../../app/myFollowingList";
 
 const Navbar = () => {
   //유저정보 가져오기
@@ -24,6 +25,7 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch(initUserData())
+    dispatch(initMyFollowingList([]))
   }
   
   // 페이지 이동을 위한 함수들

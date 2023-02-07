@@ -84,8 +84,9 @@
 }
 
 .search {
-  background-color: #1f2122;
-  border: 0;
+  color: #ff00b9;
+  font-size: 3rem;
+
 }
 
 .photocard:hover {

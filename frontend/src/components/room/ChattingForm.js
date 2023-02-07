@@ -61,7 +61,7 @@ function ChattingForm(props) {
       <div className={styles.chattingbox} ref={chattingLog}>
         {messageList.map(({connectionId, nickname, message}, idx) => {
           return (
-            <div key={idx}>
+            <div key={idx} className={styles.text}>
               {nickname} : {message}
             </div>
           )

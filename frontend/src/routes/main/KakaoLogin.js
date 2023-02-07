@@ -13,8 +13,8 @@ function KakaoLogin() {
   const location = useLocation();
   const KAKAO_CODE = location.search.split("=")[1];
 
-  const getToken = () => {
-    axios({
+  async function getToken() {
+    await axios({
       method: "POST",
       url: `${baseUrl}user/kakao/callback`,
       data:  KAKAO_CODE,

@@ -9,3 +9,9 @@
 .chattingbox{
   /* height: 100%; */
 }
+
+.text{
+  color: white;
+  font-size: 2rem;
+  word-break: keep-all;
+}

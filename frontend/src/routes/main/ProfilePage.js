@@ -10,6 +10,8 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useLayoutEffect } from "react";
+import NoFeed from "../../components/ProfilePage/NoFeed";
+
 
 function ProfilePage() {
   const [open, setOpen] = useState(false);
@@ -55,7 +57,7 @@ function ProfilePage() {
 
     await axios({
       method: "get",
-      url: `${baseUrl}profile/${user_no}/feedlist`
+      url: `${baseUrl}profile/${user_no}/feedList`
     })
     .then((res) =>{
       setFeedList(res.data)
@@ -81,11 +83,16 @@ function ProfilePage() {
               followingList={followingList}
               feedList={feedList}
             />
+            {feedList.length === 0 ? 
+            <NoFeed/>
+            :
             <ProfilePagePhoto
               handleOpen={handleOpen}
               setNowContent={setNowContent}
               feedList={feedList}
             />
+            }
+            
           </div>
         </div>
         <Footer />
