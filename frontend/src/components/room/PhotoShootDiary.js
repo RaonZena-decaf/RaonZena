@@ -58,6 +58,9 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
       }
       formData.append("data", new Blob([JSON.stringify(data)]))
 
+      for (let value of formData.values())
+      { console.log(value)}
+
       axios({
         url:`${baseUrl}games/feed/${userNo}`,
         method:"POST",

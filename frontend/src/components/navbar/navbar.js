@@ -36,7 +36,7 @@ const Navbar = () => {
 
 
   const navigateToProfile = () => {
-    navigate(`/profile/${user.user_id}`);
+    navigate(`/profile/${user.userNo}`);
   };
 
   //로그인함수

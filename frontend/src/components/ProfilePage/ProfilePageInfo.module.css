@@ -8,14 +8,15 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .background3 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .background4 {
@@ -45,6 +46,7 @@
 
 .profileid {
   font-size: 2rem;
+  text-align: center;
 }
 
 .profileid2 {
