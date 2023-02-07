@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./GameFrameLeft.module.css";
 import CharacterQuiz from "../game/CharacterQuiz";
 import GameFrameProgress from "./GameFrameProgress";
-import Catchmind from "../game/catchmind"
-import ShoutInSilence from "../game/ShoutInSilence"
+import Catchmind from "../game/catchmind";
+import ShoutInSilence from "../game/ShoutInSilence";
 
 function GameFrameLeft({ start, result, gamename }) {
   const [peopleList, setPeopleList] = useState([
@@ -28,12 +28,24 @@ function GameFrameLeft({ start, result, gamename }) {
     <div>
       <div>
         <div className={styles.container}>
-          {gamename==="imagegame" && <CharacterQuiz start={start} result={result} /> }
-          {gamename==="seeking" && <CharacterQuiz start={start} result={result} /> }
-          {gamename==="catchmind" && <Catchmind start={start} result={result} /> }
-          {gamename==="talkingsilence" && <ShoutInSilence start={start} result={result} /> }
-          {gamename==="peoplequiz" && <CharacterQuiz start={start} result={result} /> }
-          {gamename==="joker" && <CharacterQuiz start={start} result={result} /> }
+          {gamename === "imagegame" && (
+            <CharacterQuiz start={start} result={result} />
+          )}
+          {gamename === "seeking" && (
+            <CharacterQuiz start={start} result={result} />
+          )}
+          {gamename === "catchmind" && (
+            <Catchmind start={start} result={result} />
+          )}
+          {gamename === "talkingsilence" && (
+            <ShoutInSilence start={start} result={result} />
+          )}
+          {gamename === "peoplequiz" && (
+            <CharacterQuiz start={start} result={result} />
+          )}
+          {gamename === "joker" && (
+            <CharacterQuiz start={start} result={result} />
+          )}
         </div>
         <div className={styles.progressframe}>
           <div>
