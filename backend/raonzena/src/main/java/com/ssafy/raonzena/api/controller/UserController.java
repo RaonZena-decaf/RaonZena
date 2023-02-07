@@ -42,4 +42,12 @@ public class UserController {
         return ResponseEntity.ok(userRes);
     }
 
+
+
+    @GetMapping("/logout")
+    public void logout(HttpSession session){
+        // 세션에 해당 세션키에 대한 데이터 삭제
+        session.removeAttribute("userNo");
+    }
+
 }
