@@ -38,6 +38,7 @@ public class UserServieImpl implements UserService{
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "c271efde78c62f250965bf71db6657fb");//kakao rest-api 키
+//        params.add("redirect_uri", "http://localhost:3000/oauth/kakao/callback");
         params.add("redirect_uri", "https://i8a507.p.ssafy.io/oauth");  //redirect-url 나중에 서버 주소 받음 바꾸기 //  https://i8a507.p.ssafy.io/oauth   http://localhost:3000/oauth/kakao/callback
         // /kakao/callback
         params.add("code", authorizedCode);

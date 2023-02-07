@@ -4,29 +4,28 @@ import Item from "./FollowingListItem";
 import styles from "./Followings.module.css";
 import { useSelector } from "react-redux";
 import { FaUsersSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function FollowingList() {
   const [list, setlist] = useState([]);
   const baseUrl = useSelector((store) => store.baseUrl);
   const nowUserNo = useSelector((store) => store.userData.userNo);
   const user = useSelector((store) => store.userData);
-
+  const [followUserNo, setFollowUserNo] = useState(1);
   const getlist = () => {
     axios({
       method: "get",
       url: `${baseUrl}profile/${nowUserNo}/following`,
-      data: { user_no: nowUserNo },
+      data: { userNo: nowUserNo },
     })
       .then((res) => {
         setlist(res.data);
-        console.log("res.data = ", res.data);
       })
       .catch((error) => console.log("following List 에러: ", error, user));
   };
 
   useEffect(() => {
     getlist();
-    console.log("getList 결과", list);
   }, []);
 
   if (list.length > 0) {
@@ -35,10 +34,10 @@ export default function FollowingList() {
         {list?.map((followInfo, idx) => {
           return (
             <Item
-              userNo={followInfo.user_no}
-              userName={followInfo.user_name}
+              userNo={followInfo.userNo}
+              userName={followInfo.userName}
               level={followInfo.level}
-              userImage={followInfo.user_image_url}
+              userImage={followInfo.userImageUrl}
               isOnline={followInfo.isOnline}
               key={idx}
             />

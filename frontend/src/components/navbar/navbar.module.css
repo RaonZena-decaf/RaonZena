@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   position: fixed;
-  width:83.4%;
+  width: 83.4%;
   padding: 2rem 8.3% 2rem 8.3%;
   background-color: #1f2122;
   color: white;
@@ -19,7 +19,7 @@
   gap: 2rem;
 }
 
-.Logo:hover{
+.Logo:hover {
   cursor: pointer;
 }
 
@@ -34,9 +34,10 @@
   -webkit-text-fill-color: transparent;
   font-size: 3rem;
   font-weight: bold;
+  margin: 0;
 }
 
-.searchforms{
+.searchforms {
   display: flex;
   flex-direction: row;
 }
@@ -54,28 +55,28 @@
   text-overflow: ellipsis;
 }
 
-.searchRooms::placeholder{
+.searchRooms::placeholder {
   font-size: 1.4rem;
   text-align: start;
 }
 
-.searchBtn{
+.searchBtn {
   all: unset;
   position: relative;
   transform: translateX(-150%);
   background-color: none;
 }
 
-.lens{
+.lens {
   font-size: 1.5rem;
 }
 
-.lens:hover{
+.lens:hover {
   cursor: pointer;
   color: #f400b0;
 }
 
-.profilebox{
+.profilebox {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -87,12 +88,12 @@
   word-break: keep-all;
 }
 
-.profilebox:hover{
+.profilebox:hover {
   cursor: pointer;
   background-color: #cb0091;
 }
 
-.profileimg{
+.profileimg {
   border-radius: 50%;
   width: 3rem;
   aspect-ratio: 1/1;
@@ -105,10 +106,9 @@
   border-radius: 5px;
   text-align: center;
   align-items: center;
-  font-size: 1.5rem ;
+  font-size: 1.5rem;
   height: 3rem;
   word-break: keep-all;
-
 }
 
 .createRoom:hover {
@@ -116,16 +116,16 @@
   background-color: #cb0091;
 }
 
-.Login{
+.Login {
   width: 8rem;
 }
 
-.Login:hover{
+.Login:hover {
   cursor: pointer;
   opacity: 0.8;
 }
 
-.active{
+.active {
   color: #f400b0;
 }
 

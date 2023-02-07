@@ -1,5 +1,5 @@
 import styles from "./MainRoom.module.css";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import MenuBar from "../../components/room/MenuBar";
 import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
-import MainLoading from "../../components/room/MainLoading";
-import Catchmind from "../../components/game/catchmind";
-
+import Loading from "../../components/room/MainLoading";
+import GameFrame from "../../components/GameRoom/GameFrame";
 
 const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
@@ -30,14 +29,12 @@ function MainRoom(props) {
   const toggleBar = () => setOpenChatting(!openChatting);
   const navigate = useNavigate();
   // 화면 랜더링 관련 함수
-  const [gamename, setGameName] = useState("default");
+  const [gamename, setGameName] = useState("chatSubject");
 
   //메인메뉴 모달을 위한 함수
-  const deleteSubscriber = (streamManager) => {
-    console.log(streamManager)
+  const deleteSubscriber = (deletestream) => {
     setSubscribes((prev) =>
-      prev.filter((stream) => stream.streamManager !== streamManager)
-    );
+      prev.filter((stream) => stream.stream !== deletestream))
   };
   // 임시 사용자 이름 랜덤으로 부여
   function getRandomInt(min, max) {
@@ -70,15 +67,16 @@ function MainRoom(props) {
         });
 
         mySession.on("streamDestroyed", (event) => {
-          deleteSubscriber(event.stream.streamManager);
+          deleteSubscriber(event.stream);
         });
 
         mySession.on("exception", (exception) => {
+          deleteSubscriber(exception.origin.stream)
           console.warn(exception);
         });
         mySession.on("signal:gameChange", (event) => {
-          console.log(event.data);
-          setGameName(event.data.gamename);
+          const data = JSON.parse(event.data);
+          setGameName(data.gamename);
         });
 
         // 토큰 발행 및 소켓 접속
@@ -138,7 +136,6 @@ function MainRoom(props) {
                 }
               )
               .then((response) => {
-                console.log("createdtoken", response.data.token);
                 resolve(response.data.token);
               })
               .catch((error) => reject(error));
@@ -228,38 +225,37 @@ function MainRoom(props) {
   };
 
   useEffect(() => {
-    console.log(publisher);
+    console.log(subscribes)
     setVideoList({ ...subscribes, publisher });
-    setOpenvidu({ session, videoList, userName });
+    setOpenvidu({ session, videoList, userName, publisher });
   }, [session, publisher, userName, subscribes]);
   // 신호에 따른 화면 렌더링 변화
-  const ChangeGame = (gamename) => {
+  const ChangeGame = (event) => {
     const data = {
-      gamename: gamename,
+      gamename: event.target.id,
     };
-    setGameName(gamename);
     openvidu.session.signal({
       data: JSON.stringify(data),
       type: "gameChange",
     });
   };
-
   return (
     <div className={styles.background}>
-      {session !== undefined? (
+      {publisher !== undefined ? (
         <div>
-          { gamename==="default" && 
-          <div className={styles.GameRoomsDisplay}>
-            <div className={styles.card}>
-              <UserVideoComponent streamManager={publisher} />
-            </div>
-            {subscribes.map((sub, i) => (
-              <div key={i} className={styles.card}>
-                <UserVideoComponent streamManager={sub} />
+          {gamename === "chatSubject" && (
+            <div className={styles.GameRoomsDisplay}>
+              <div className={styles.card}>
+                <UserVideoComponent streamManager={publisher} />
               </div>
-            ))}
-          </div> }
-
+              {subscribes.map((sub, i) => (
+                <div key={i} className={styles.card}>
+                  <UserVideoComponent streamManager={sub} />
+                </div>
+              ))}
+            </div>
+          )}
+          {gamename !== "chatSubject" && <GameFrame gamename={gamename} openvidu={openvidu} />}
           <MenuBar
             toggleBar={toggleBar}
             exitaction={leaveSession}

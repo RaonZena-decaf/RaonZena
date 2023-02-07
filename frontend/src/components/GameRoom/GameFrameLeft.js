@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./GameFrameLeft.module.css";
 import CharacterQuiz from "../game/CharacterQuiz";
 import GameFrameProgress from "./GameFrameProgress";
+import Catchmind from "../game/catchmind";
+import ShoutInSilence from "../game/ShoutInSilence";
 
-function GameFrameLeft({ start }) {
+function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
   const [peopleList, setPeopleList] = useState([
     { user: "임길현", points: 90, img: "../profile/profileimg.png" },
     { user: "김찬빈", points: 80, img: "../profile/profileimg.png" },
@@ -22,12 +24,33 @@ function GameFrameLeft({ start }) {
   peopleList.sort(function (a, b) {
     return b.points - a.points;
   });
-
   return (
     <div>
       <div>
         <div className={styles.container}>
-          <CharacterQuiz start={start} />
+          {gamename === "imagegame" && (
+            <CharacterQuiz start={start} result={result} />
+          )}
+          {gamename === "seeking" && (
+            <CharacterQuiz start={start} result={result} />
+          )}
+          {gamename === "catchmind" && (
+            <Catchmind start={start} result={result} />
+          )}
+          {gamename === "talkingsilence" && (
+            <ShoutInSilence start={start} result={result} />
+          )}
+          {gamename === "peoplequiz" && (
+            <CharacterQuiz
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+            />
+          )}
+          {gamename === "joker" && (
+            <CharacterQuiz start={start} result={result} />
+          )}
         </div>
         <div className={styles.progressframe}>
           <div>

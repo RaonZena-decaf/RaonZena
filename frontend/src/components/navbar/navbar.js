@@ -13,18 +13,18 @@ const Navbar = () => {
   const navigate = useNavigate();
   const loginConfigure = () => {
     if (user.userNo === "") {
-      return false
+      return false;
     } else {
-      return true
+      return true;
     }
-  }
-  const isLogin = loginConfigure()
+  };
+  const isLogin = loginConfigure();
 
-  
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const logout = () => {
     dispatch(initUserData())
+    navigateToLanding();
     dispatch(initMyFollowingList([]))
   }
   
@@ -36,13 +36,12 @@ const Navbar = () => {
     navigate("/live");
   };
 
-
   const navigateToProfile = () => {
     navigate(`/profile/${user.userNo}`);
   };
 
   //로그인함수
-  const redirectUrl = useSelector((store) => store.redirectUrl)
+  const redirectUrl = useSelector((store) => store.redirectUrl);
   const Login = () => {
     const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
     const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
@@ -58,10 +57,9 @@ const Navbar = () => {
   // 검색 기능을 위한 함수
   const enterSearch = (event) => {
     event.preventDefault();
-      // 입력값을 들고 live로 이동
-    navigate("/live", {state:search})
+    // 입력값을 들고 live로 이동
+    navigate("/live", { state: search });
   };
-
 
   const [search, setSearch] = useState("");
   const onChangeSearch = (event) => {
@@ -113,7 +111,11 @@ const Navbar = () => {
           <>
             <div className={styles.profilebox} onClick={navigateToProfile}>
               <div>{user.userName}</div>
-              <img src={user.userImage} alt="profileimg" className={styles.profileimg} />
+              <img
+                src={user.userImage}
+                alt="profileimg"
+                className={styles.profileimg}
+              />
             </div>
             <div className={styles.createRoom} onClick={navigateToCreateRoom}>
               방 만들기

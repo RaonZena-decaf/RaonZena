@@ -5,25 +5,27 @@ import styles from "./Followings.module.css";
 import { useSelector } from "react-redux";
 import { FaUserTimes } from "react-icons/fa";
 
-
 const HostFollowings = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
-  const baseUrl = useSelector((store)=>store.baseUrl)
-  const nowUserNo = useSelector((store)=>store.userData.user_no)
+  const baseUrl = useSelector((store) => store.baseUrl);
+  const nowUserNo = useSelector((store) => store.userData.user_no);
 
   const getlist = () => {
     axios({
-      method:"get",
-      url :`${baseUrl}live/following`,
-      data : {user_no : nowUserNo}
-    }).then((res)=>{
-      setList(res.data.content)
-    }).catch(error =>
-      console.log(error))
-  }
-  useEffect(()=>{
-    getlist()
-  },[])
+      method: "get",
+      url: `${baseUrl}live/followingRoom`,
+      data: { userNo: nowUserNo },
+    })
+      .then((res) => {
+        console.log("HostFollowings res.data 가져온 결과", res.data);
+        setList(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    getlist();
+    console.log("Hostfollowings 컴포넌트 getList 결과", list);
+  }, []);
 
   if (loading) {
     return <h2>Loading...</h2>;
@@ -52,7 +54,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   } else {
     return (
       <div>
-        <FaUserTimes className={styles.NoGameRoomsImg}/>
+        <FaUserTimes className={styles.NoGameRoomsImg} />
         <div className={styles.marginTopBot}>
           <p className={styles.NoGameRoomsText}>
             지금 놀고 있는 친구가 없습니다.
