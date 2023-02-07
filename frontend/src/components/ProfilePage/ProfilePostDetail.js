@@ -18,9 +18,9 @@ function ProfilePostDetail({ nowContent }) {
   return (
     <div className={styles.background}>
       <p className={styles.text}>{nowContent.title}</p>
-      <img src={nowContent.board_image_url} className={styles.img} alt="img" />
-      <p className={styles.text2}>{nowContent.create_dtm}의 기록</p>
-      {nowContent.first_user && (
+      <img src={nowContent.boardImageUrl} className={styles.img} alt="img" />
+      <p className={styles.text2}>{nowContent.createDtm}의 기록</p>
+      {nowContent.firstUser !== 0 && (
         <div className={styles.OutContainer}>
           <FaCrown className={styles.icon} />
           <div className={styles.LargeContainer}>

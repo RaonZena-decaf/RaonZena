@@ -16,11 +16,12 @@ function ChattingForm({messageList}) {
   }
 
   return (
+
     <div className={styles.container} ref={chattingLog}>
       <div className={styles.chattingbox}>
         {messageList.map(({nickname, message}, idx) => {
           return ( 
-            <div key={idx}>
+            <div key={idx} className={styles.text}>
               {nickname} : {message}
             </div>
           )
