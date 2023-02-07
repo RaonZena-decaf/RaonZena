@@ -9,6 +9,8 @@ import com.ssafy.raonzena.db.repository.UserRepository;
 import com.ssafy.raonzena.db.repository.UserRepositorySupport;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,6 +29,10 @@ public class UserServieImpl implements UserService{
 
     @Autowired
     UserRepositorySupport userRepositorySupport;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
 
     //카카오 토큰 가져오기
     public String getKaKaoAccessToken(String authorizedCode){
@@ -120,6 +126,11 @@ public class UserServieImpl implements UserService{
 
         User userProfile = userRepository.findByUserId(userInfo.getUserId());
 
+        //로그인시 userNo redis에 저장
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        String key = "userNo"+userProfile.getUserNo();
+        valueOperations.set(key, String.valueOf(userProfile.getUserNo()));
+
         return new UserRes(userProfile);
 
     }
@@ -134,6 +145,19 @@ public class UserServieImpl implements UserService{
     public int level(long userNo) {
         User user = userRepository.findByUserNo(userNo);
         return user.getLevel();
+    }
+
+    @Override
+    public void logout(long userNo) {
+        //로그아웃시 userNo redis에서 삭제
+        String key = "userNo"+userNo;
+        redisTemplate.delete(key);
+    }
+
+    @Override
+    public boolean onoff(long followNo) {
+
+        return false;
     }
 
 
