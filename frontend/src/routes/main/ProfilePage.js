@@ -7,9 +7,9 @@ import { Transition } from "react-transition-group";
 import ProfileModal from "../../components/ProfilePage/ProfileModal";
 import { useState } from "react";
 import axios from "axios";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useLayoutEffect } from "react";
 
 function ProfilePage() {
   const [open, setOpen] = useState(false);
@@ -18,6 +18,7 @@ function ProfilePage() {
   const [following, setfollowing] = useState();
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
+  const [feedList, setFeedList] = useState([])
   const location = useLocation();
   const baseUrl = useSelector((store)=> store.baseUrl)
 
@@ -32,7 +33,7 @@ function ProfilePage() {
     }, 300);
   };
 
-  async function getfollowInfo () {
+  async function getInfo () {
     const user_no = location.pathname.split("profile/")[1];
     await axios({
       method: "get",
@@ -51,11 +52,20 @@ function ProfilePage() {
       setFollowingList(res.data)
     })
     .catch((error) => console.log(error))
+
+    await axios({
+      method: "get",
+      url: `${baseUrl}profile/${user_no}/feedlist`
+    })
+    .then((res) =>{
+      setFeedList(res.data)
+    })
+    .catch((error) => console.log(error))
   }
   
-  useEffect(()=>{
-    getfollowInfo()
-  },[])
+  useLayoutEffect(()=>{
+    getInfo()
+  },[location])
 
   return (
     <>
@@ -69,10 +79,12 @@ function ProfilePage() {
               setfollowing={setfollowing}
               followerList={followerList}
               followingList={followingList}
+              feedList={feedList}
             />
             <ProfilePagePhoto
               handleOpen={handleOpen}
               setNowContent={setNowContent}
+              feedList={feedList}
             />
           </div>
         </div>

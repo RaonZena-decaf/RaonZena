@@ -54,7 +54,7 @@ function ProfilePageInfo({ handleOpen,setfollower,setfollowing,followerList,foll
   // 해당 페이지의 유저 프로필을 불러오는 axios 통신
   useLayoutEffect(() => {
     callUserInfo();
-  }, []);
+  }, [location]);
 
   return (
     <div className={styles.background}>

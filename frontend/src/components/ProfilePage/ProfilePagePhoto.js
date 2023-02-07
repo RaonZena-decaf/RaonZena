@@ -4,9 +4,8 @@ import { experimentalStyled as styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
-import { photoList } from "./ProfilePost";
 
-function ProfilePagePhoto({ handleOpen, setNowContent }) {
+function ProfilePagePhoto({ handleOpen, setNowContent,feedList }) {
   const Item = styled(Paper)(({ theme }) => ({
     // backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#222222",
     backgroundColor: "#222222",
@@ -17,6 +16,7 @@ function ProfilePagePhoto({ handleOpen, setNowContent }) {
     color: theme.palette.text.secondary,
   }));
 
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid
@@ -24,7 +24,7 @@ function ProfilePagePhoto({ handleOpen, setNowContent }) {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {photoList.map((photo, idx) => {
+        {feedList.map((photo, idx) => {
           return (
             <Grid xs={2} sm={4} md={4} key={idx}>
               <Item
