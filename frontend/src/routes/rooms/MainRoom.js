@@ -227,7 +227,7 @@ function MainRoom(props) {
   useEffect(() => {
     console.log(subscribes)
     setVideoList({ ...subscribes, publisher });
-    setOpenvidu({ session, videoList, userName });
+    setOpenvidu({ session, videoList, userName, publisher });
   }, [session, publisher, userName, subscribes]);
   // 신호에 따른 화면 렌더링 변화
   const ChangeGame = (event) => {
@@ -255,7 +255,7 @@ function MainRoom(props) {
               ))}
             </div>
           )}
-          {gamename !== "chatSubject" && <GameFrame gamename={gamename} />}
+          {gamename !== "chatSubject" && <GameFrame gamename={gamename} openvidu={openvidu} />}
           <MenuBar
             toggleBar={toggleBar}
             exitaction={leaveSession}

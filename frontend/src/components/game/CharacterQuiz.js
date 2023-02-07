@@ -2,7 +2,8 @@ import { CharacterQuizList } from "./CharacterQuizList";
 import React, { useEffect, useState } from "react";
 import styles from "./CharacterQuiz.module.css";
 
-function CharacterQuiz({ start, result, setResult }) {
+function CharacterQuiz({ start, result, setResult, openvidu }) {
+  console.log(start)
   const [step, setStep] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
 
@@ -11,19 +12,27 @@ function CharacterQuiz({ start, result, setResult }) {
   // const resultcheck =() => {
   //   {result === CharacterQuizList[0].person_answer ? console.log("정답입니다.") : console.log("틀렸습니다.")}
   // }
-
+  if (openvidu.session) {
+    openvidu.session.on("signal:TrueAnswer", (event) => {
+      const data = JSON.parse(event.data)
+      console.log(data.correct)
+      clearTimeout(questioning)
+    })
+  }
+  const questioning = setTimeout((characterimg) => {
+    setShowAnswer(true)
+    if (step >= CharacterQuizList.length -1) {
+      return;
+    }
+  },3000)
+  const showing = setTimeout((resultimg) => {
+    setStep(prev => prev+1)
+    setShowAnswer(false)
+  },1000)
   useEffect(() => {
     if (start) {
-      setTimeout((characterimg) => {
-        setShowAnswer(true);
-        if (step >= CharacterQuizList.length - 1) {
-          return;
-        }
-        setTimeout((resultimg) => {
-          setStep((prev) => prev + 1);
-          setShowAnswer(false);
-        }, 1000);
-      }, 3000);
+      questioning()
+      showing()
     }
   }, [start, step]);
 
@@ -38,6 +47,13 @@ function CharacterQuiz({ start, result, setResult }) {
     if (result !== "") {
       if (result === CharacterQuizList[step].person_answer) {
         console.log("정답");
+        const data = {
+          correct : openvidu.userName
+        }
+        openvidu.session.signal({
+          data: JSON.stringify(data),
+          type: "TrueAnswer"
+        })
         setResult("");
       } else {
         console.log("오답");

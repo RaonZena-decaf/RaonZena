@@ -5,7 +5,7 @@ import GameFrameProgress from "./GameFrameProgress";
 import Catchmind from "../game/catchmind";
 import ShoutInSilence from "../game/ShoutInSilence";
 
-function GameFrameLeft({ start, result, gamename, setResult }) {
+function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
   const [peopleList, setPeopleList] = useState([
     { user: "임길현", points: 90, img: "../profile/profileimg.png" },
     { user: "김찬빈", points: 80, img: "../profile/profileimg.png" },
@@ -45,6 +45,7 @@ function GameFrameLeft({ start, result, gamename, setResult }) {
               start={start}
               result={result}
               setResult={setResult}
+              openvidu={openvidu}
             />
           )}
           {gamename === "joker" && (
