@@ -27,30 +27,14 @@ public class UserController {
     UserService userService;
 
     @GetMapping()
-    public ResponseEntity<UserRes> checkCookie(HttpServletRequest request) {
-        // 쿠키 만료시 Cookie 값이 null이 된다. (유효 시간 동안은 개발자 모드 진입 후(F12) 쿠키 보면 AUTH 라는 이름으로 세션 ID가 들어가 있음)
-        Cookie auth = WebUtils.getCookie(request, "AUTH");
-        System.out.println(auth);
-
-        // 로그인 정보가 있을시
-        if(!ObjectUtils.isEmpty(auth)){
-            if(auth.getValue().equals(request.getSession().getId())){
-                String userNo = (String) request.getSession().getAttribute("userNo");
-                if(userNo != null){
-                    System.out.println("성공");
-                    return ResponseEntity.ok().build();
-                }
-            }
-        }
-        System.out.println("실패ㅠ");
-        // 로그인 만료 or 비 로그인자 일시 -> 204 no content
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> redisTest(HttpSession session) {
+        System.out.println(1234);
+        session.setAttribute("userNo", 123456);
+        return ResponseEntity.ok().build();
     }
 
-
-
     @PostMapping("/kakao/callback")
-    public ResponseEntity<UserRes> kakaoLogin(@RequestBody String code, HttpServletResponse response, HttpSession session){
+    public ResponseEntity<UserRes> kakaoLogin(@RequestBody String code, HttpSession session){
         System.out.println("------------------");
         System.out.println(code.getClass().getName());
 //        System.out.println(code.substring(1,code.length()-1));
@@ -62,11 +46,11 @@ public class UserController {
         // 세션 저장 (세션 ID, 사용자 정보)
         session.setAttribute("userNo", userRes.getUserNo());
 
-        // 쿠키 전달 (세션 ID)
-        response.addCookie(new Cookie("AUTH", session.getId()){{
-            setMaxAge(3600); // 자동 로그인 1시간 유지
-            setPath("/"); // 아래 경로에서 쿠키값 유지
-        }});
+//        // 쿠키 전달 (세션 ID)
+//        response.addCookie(new Cookie("AUTH", session.getId()){{
+//            setMaxAge(3600); // 자동 로그인 1시간 유지
+//            setPath("/"); // 아래 경로에서 쿠키값 유지
+//        }});
 
         return ResponseEntity.ok(userRes);
     }

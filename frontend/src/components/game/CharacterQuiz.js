@@ -14,18 +14,37 @@ function CharacterQuiz({ start, result, setResult }) {
 
   useEffect(() => {
     if (start) {
-      setTimeout(() => {
+      setTimeout((characterimg) => {
         setShowAnswer(true);
         if (step >= CharacterQuizList.length - 1) {
           return;
         }
-        setTimeout(() => {
+        setTimeout((resultimg) => {
           setStep((prev) => prev + 1);
           setShowAnswer(false);
         }, 1000);
       }, 3000);
     }
   }, [start, step]);
+
+  // useEffect(() => {
+  //   result === CharacterQuizList[step].person_answer
+  //     ? console.log("정답")
+  //     : console.log("오답");
+  //   setResult("");
+  // }, [result]);
+
+  useEffect(() => {
+    if (result !== "") {
+      if (result === CharacterQuizList[step].person_answer) {
+        console.log("정답");
+        setResult("");
+      } else {
+        console.log("오답");
+        setResult("");
+      }
+    }
+  }, [result]);
 
   return (
     <div className={styles.background}>

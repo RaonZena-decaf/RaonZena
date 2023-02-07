@@ -5,7 +5,7 @@ import GameFrameProgress from "./GameFrameProgress";
 import Catchmind from "../game/catchmind";
 import ShoutInSilence from "../game/ShoutInSilence";
 
-function GameFrameLeft({ start, result, gamename }) {
+function GameFrameLeft({ start, result, gamename, setResult }) {
   const [peopleList, setPeopleList] = useState([
     { user: "임길현", points: 90, img: "../profile/profileimg.png" },
     { user: "김찬빈", points: 80, img: "../profile/profileimg.png" },
@@ -41,7 +41,11 @@ function GameFrameLeft({ start, result, gamename }) {
             <ShoutInSilence start={start} result={result} />
           )}
           {gamename === "peoplequiz" && (
-            <CharacterQuiz start={start} result={result} />
+            <CharacterQuiz
+              start={start}
+              result={result}
+              setResult={setResult}
+            />
           )}
           {gamename === "joker" && (
             <CharacterQuiz start={start} result={result} />
