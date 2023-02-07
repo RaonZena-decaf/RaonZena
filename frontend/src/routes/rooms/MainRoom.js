@@ -32,11 +32,9 @@ function MainRoom(props) {
   const [gamename, setGameName] = useState("chatSubject");
 
   //메인메뉴 모달을 위한 함수
-  const deleteSubscriber = (streamManager) => {
-    console.log(streamManager);
+  const deleteSubscriber = (deletestream) => {
     setSubscribes((prev) =>
-      prev.filter((stream) => stream.streamManager !== streamManager)
-    );
+      prev.filter((stream) => stream.stream !== deletestream))
   };
   // 임시 사용자 이름 랜덤으로 부여
   function getRandomInt(min, max) {
@@ -69,10 +67,11 @@ function MainRoom(props) {
         });
 
         mySession.on("streamDestroyed", (event) => {
-          deleteSubscriber(event.stream.streamManager);
+          deleteSubscriber(event.stream);
         });
 
         mySession.on("exception", (exception) => {
+          deleteSubscriber(exception.origin.stream)
           console.warn(exception);
         });
         mySession.on("signal:gameChange", (event) => {
@@ -137,7 +136,6 @@ function MainRoom(props) {
                 }
               )
               .then((response) => {
-                console.log("createdtoken", response.data.token);
                 resolve(response.data.token);
               })
               .catch((error) => reject(error));
@@ -227,7 +225,7 @@ function MainRoom(props) {
   };
 
   useEffect(() => {
-    console.log(publisher);
+    console.log(subscribes)
     setVideoList({ ...subscribes, publisher });
     setOpenvidu({ session, videoList, userName });
   }, [session, publisher, userName, subscribes]);
@@ -243,7 +241,7 @@ function MainRoom(props) {
   };
   return (
     <div className={styles.background}>
-      {session !== undefined ? (
+      {publisher !== undefined ? (
         <div>
           {gamename === "chatSubject" && (
             <div className={styles.GameRoomsDisplay}>
