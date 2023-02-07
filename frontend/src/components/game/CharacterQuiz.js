@@ -5,11 +5,6 @@ import styles from "./CharacterQuiz.module.css";
 function CharacterQuiz({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
 
-  // console.log(result);
-
-  // const resultcheck =() => {
-  //   {result === CharacterQuizList[0].person_answer ? console.log("정답입니다.") : console.log("틀렸습니다.")}
-  // }
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
@@ -44,13 +39,6 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
       }
     }
   }, [start, timeRemaining, isAnswerShown]);
-
-  // useEffect(() => {
-  //   result === CharacterQuizList[step].person_answer
-  //     ? console.log("정답")
-  //     : console.log("오답");
-  //   setResult("");
-  // }, [result]);
 
   useEffect(() => {
     if (result !== "") {
