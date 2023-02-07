@@ -5,17 +5,13 @@ import styles from "./Followings.module.css";
 const FollowingListItem = (props) => {
   return (
     <div className={styles.FollowingsInfo}>
-      <div>
-        <img
-          className={styles.ProfileSize}
-          src={props.userImage}
-          alt="Profile"
-        />
+      <div className={styles.FollowingBox}>
+        <img src={props.userImage} className={styles.ProfileImg} alt="프로필" />
       </div>
-      <div className={styles.FollowingInfoFontSize}>
+      <div className={styles.FollowingInfoFont}>
         <p>LV {props.level}</p>
       </div>
-      <div className={styles.FollowingInfoFontSize}>
+      <div className={styles.FollowingInfoFont}>
         <p>{props.userName}</p>
       </div>
       <div>

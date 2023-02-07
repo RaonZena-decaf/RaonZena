@@ -4,25 +4,35 @@ import Item from "./FollowingListItem";
 import styles from "./Followings.module.css";
 import { useSelector } from "react-redux";
 import { FaUsersSlash } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 
 export default function FollowingList() {
   const [list, setlist] = useState([]);
-  const baseUrl = useSelector((store)=>store.baseUrl)
-  const nowUserNo = useSelector((store)=>store.userData.user_no)
+  const baseUrl = useSelector((store) => store.baseUrl);
+  const nowUserNo = useSelector((store) => store.userData.userNo);
+  const user = useSelector((store) => store.userData);
+  const [followUserNo, setFollowUserNo] = useState(1);
   const getlist = () => {
     axios({
-      method:"get",
-      url :`${baseUrl}profile/follower`,
-      data : {user_no : nowUserNo}
-    }).then((res)=>{
-      setlist(res.data.content)
-    }).catch(error =>
-      console.log(error))
-  }
-  useEffect(()=>{
-    getlist()
-  },[])
+      method: "get",
+      url: `${baseUrl}profile/${nowUserNo}/following`,
+      data: { userNo: nowUserNo },
+    })
+      .then((res) => {
+        setlist(res.data);
+      })
+      .catch((error) => console.log("following List 에러: ", error, user));
+  };
+
+  useEffect(() => {
+    getlist();
+  }, []);
+
+  const navigate = useNavigate();
+
+  const navigateToProfile = () => {
+    navigate(`${baseUrl}profile/${followUserNo}`);
+  };
 
   if (list.length > 0) {
     return (
@@ -30,12 +40,13 @@ export default function FollowingList() {
         {list?.map((followInfo, idx) => {
           return (
             <Item
-              userNo={followInfo.user_no}
-              userName={followInfo.user_name}
+              userNo={followInfo.userNo}
+              userName={followInfo.userName}
               level={followInfo.level}
-              userImage={followInfo.user_image_url}
+              userImage={followInfo.userImageUrl}
               isOnline={followInfo.isOnline}
               key={idx}
+              onclick={navigateToProfile}
             />
           );
         })}
@@ -44,7 +55,7 @@ export default function FollowingList() {
   } else {
     return (
       <div>
-        <FaUsersSlash className={styles.NoGameRoomsImg}/>
+        <FaUsersSlash className={styles.NoGameRoomsImg} />
         <div className={styles.marginTopBot}>
           <p className={styles.NoGameRoomsText}>등록한 친구가 없습니다.</p>
         </div>

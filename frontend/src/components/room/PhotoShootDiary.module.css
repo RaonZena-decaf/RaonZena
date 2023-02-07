@@ -39,6 +39,7 @@
   text-align: left;
   font-size: 2rem;
   padding: 1rem;
+  border: none;
 }
 
 .photoshootdiarytextarea {
@@ -56,6 +57,7 @@
   resize: none;
   text-align: left;
   font-family: Noto Sans;
+  border: none;
 }
 
 .photoshootdiarybutton {

@@ -28,15 +28,15 @@ const RoomMenuFrame = ({ show, closeMenu, nowContent, exitaction, ChangeGame}) =
   const [menuContent, setMenuContent] = useState(null);
 
   //잡담주제 호출을 위한 함수
-  const [chattingSubject, setChattingSubject] = useState("예시 잡담 주제") 
+  const [chattingSubject, setChattingSubject] = useState("") 
   const baseUrl = useSelector((store)=>store.baseUrl)
 
   const getSubject = () => {
     axios({
       method:"GET",
-      url:`${baseUrl}games/topicList`
+      url:`${baseUrl}games/gameType/1`
     }).then((res) => {
-      setChattingSubject(res.data)
+      setChattingSubject(res.data.answer)
     }).catch(error=>{
       setChattingSubject("오류가 발생했습니다. 다시 진행해 주세요.")
     })

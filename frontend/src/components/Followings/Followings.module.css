@@ -1,15 +1,20 @@
-.ProfileSize {
-  height: 5rem;
+.ProfileImg {
+  border-radius: 50%;
+  width: 4rem;
+  aspect-ratio: 1/1;
 }
 
 .FollowingList {
   height: 40rem;
   overflow: hidden auto;
+  display: table-caption;
 }
 
-.FollowingInfoFontSize {
+.FollowingInfoFont {
   font-size: 2rem;
   float: left;
+  margin: 0.5rem;
+  align-items: center;
 }
 
 .FollowingsInfo {
@@ -17,7 +22,7 @@
   justify-content: space-between;
   height: 6rem;
   align-items: center;
-  margin: 1.5rem;
+  margin-top: 1.5rem;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -113,9 +118,13 @@
   padding-top: 3rem;
 }
 
-.followingContainer{
+.followingContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 3rem;
+}
+
+.FollowingBox {
+  margin: 1.5rem;
 }
