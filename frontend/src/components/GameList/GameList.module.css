@@ -11,6 +11,7 @@
   justify-content: center;
   align-items: center;
   /* margin: auto; */
+  height: 60px;
   line-height: 3rem;
   overflow: hidden;
   white-space: normal;
@@ -28,9 +29,10 @@
 
 .card {
   max-width: 100%;
-  display: inline-block;
+  display: inline-grid;
   border: none;
-  margin: 2rem;
+  /* margin: auto; */
+  justify-content: left;
 }
 
 .PaginationWhite {
@@ -44,7 +46,7 @@
 }
 
 .imageSize {
-  height: 23rem;
+  height: 15rem;
 }
 
 .GameRoomsDisplay {
@@ -54,7 +56,7 @@
   column-gap: 2rem;
   align-items: center;
   justify-items: stretch;
-  margin-bottom: 10rem;
+  margin: 3rem 0rem 3rem 0rem;
 
   /*
   display: inline-flex;
