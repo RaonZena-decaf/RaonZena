@@ -7,41 +7,54 @@ function Seeking({ start, result, setResult, openvidu }) {
   const videoRef = useRef(null);
   const [analysis, setAnalysis] = useState(null);
 
+  let url = "https://i1.daumcdn.net/thumb/C230x300/?fname=https://t1.daumcdn.net/cfile/tistory/245D5B4E582361D929"
+  const toDataURL = (url) =>
+    fetch(url)
+      .then((response) => response.blob())
+      .then(
+        (blob) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          })
+      );
+
   const handleVideo = async () => {
     const video = videoRef.current;
     const videoBlob = new Blob([new Uint8Array(await video.arrayBuffer)]);
     const formData = new FormData();
     formData.append("requests", videoBlob);
+
     const callGoogleVIsionApi = async (base64) => {
-      let url = "https://vision.googleapis.com/v1/images:annotate" + YOUR_API_KEY;
+      let url =
+        "https://vision.googleapis.com/v1/images:annotate?key=" + YOUR_API_KEY;
       await fetch(url, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           requests: [
             {
               image: {
-                content: formData,
+                content: base64,
               },
-              features: [
-                { type: 'LABEL_DETECTION', maxResults: 10 },
-                { type: 'TEXT_DETECTION', maxResults: 5 },
-                { type: 'DOCUMENT_TEXT_DETECTION', maxResults: 5 },
-                { type: 'WEB_DETECTION', maxResults: 5 },
-              ],
+              features: [{ type: "LABEL_DETECTION", maxResults: 10 }],
             },
           ],
         }),
       })
         .then((res) => res.json())
         .then((data) => {
-          setAnalysis(
-            data.responses[0].fullTextAnnotation.text,
-          );
-          console.log(data.responses[0].fullTextAnnotation.text)
+          // setAnalysis(
+          //   data.responses[0].fullTextAnnotation.text,
+          // );
+          console.log(data);
         })
-        .catch((err) => console.log('error : ', err));
-        callGoogleVIsionApi()
+        .catch((err) => console.log("error : ", err));
     };
+    toDataURL(url).then(base64 => callGoogleVIsionApi(base64))
+
+    // callGoogleVIsionApi(formData)
 
     // try {
     //   const response = await axios.post(
