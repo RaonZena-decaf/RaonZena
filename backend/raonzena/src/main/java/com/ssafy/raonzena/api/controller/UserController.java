@@ -18,8 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisOperationsSessionRepository;
-
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -27,9 +25,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    private RedisOperationsSessionRepository sessionRepository;
 
     @GetMapping()
     public ResponseEntity<UserRes> checkCookie(HttpServletRequest request) {
@@ -66,7 +61,6 @@ public class UserController {
 
         // 세션 저장 (세션 ID, 사용자 정보)
         session.setAttribute("userNo", userRes.getUserNo());
-        sessionRepository.save(session);
 
         // 쿠키 전달 (세션 ID)
         response.addCookie(new Cookie("AUTH", session.getId()){{
@@ -74,7 +68,7 @@ public class UserController {
             setPath("/"); // 아래 경로에서 쿠키값 유지
         }});
 
-        return new ResponseEntity<>(userRes, HttpStatus.OK);
+        return ResponseEntity.ok(userRes);
     }
 
 }
