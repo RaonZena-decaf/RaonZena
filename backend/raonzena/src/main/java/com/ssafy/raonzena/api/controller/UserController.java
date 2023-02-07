@@ -28,6 +28,7 @@ public class UserController {
 
     @GetMapping()
     public ResponseEntity<?> redisTest(HttpSession session) {
+        System.out.println(1234);
         session.setAttribute("userNo", 123456);
         return ResponseEntity.ok().build();
     }
