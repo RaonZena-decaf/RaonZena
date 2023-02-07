@@ -5,10 +5,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { initUserData } from "../../app/userData";
 import { initMyFollowingList } from "../../app/myFollowingList";
+import axios from "axios";
 
 const Navbar = () => {
   //유저정보 가져오기
   const user = useSelector((store) => store.userData);
+  const baseUrl = useSelector((store)=> store.baseUrl)
 
   const navigate = useNavigate();
   const loginConfigure = () => {
@@ -22,10 +24,18 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
+  //로그아웃
   const logout = () => {
+    axios({
+      method:"GET",
+      url:`${baseUrl}user/logout`
+    }).then ((res) => {
+      console.log(res)
+    }).catch(error => console.log(error))
+    
     dispatch(initUserData())
-    navigateToLanding();
     dispatch(initMyFollowingList([]))
+    navigateToLanding();
   }
   
   // 페이지 이동을 위한 함수들
