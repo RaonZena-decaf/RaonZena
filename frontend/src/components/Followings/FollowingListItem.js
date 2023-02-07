@@ -1,10 +1,18 @@
 import { style } from "@mui/system";
-import React, { useState, useNavigate } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Followings.module.css";
+import { useSelector } from "react-redux";
 
 const FollowingListItem = (props) => {
+  const navigate = useNavigate();
+
+  const navigateToProfile = () => {
+    navigate(`/profile/${props.userNo}`);
+  };
+
   return (
-    <div className={styles.FollowingsInfo}>
+    <div className={styles.FollowingsInfo} onClick={navigateToProfile}>
       <div className={styles.FollowingBox}>
         <img src={props.userImage} className={styles.ProfileImg} alt="프로필" />
       </div>

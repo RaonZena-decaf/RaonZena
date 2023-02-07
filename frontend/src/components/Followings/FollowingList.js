@@ -28,12 +28,6 @@ export default function FollowingList() {
     getlist();
   }, []);
 
-  const navigate = useNavigate();
-
-  const navigateToProfile = () => {
-    navigate(`${baseUrl}profile/${followUserNo}`);
-  };
-
   if (list.length > 0) {
     return (
       <div className={styles.FollowingList}>
@@ -46,7 +40,6 @@ export default function FollowingList() {
               userImage={followInfo.userImageUrl}
               isOnline={followInfo.isOnline}
               key={idx}
-              onclick={navigateToProfile}
             />
           );
         })}
