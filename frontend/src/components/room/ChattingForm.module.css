@@ -1,14 +1,16 @@
 .container{
-  height: 92.5vh;
+  height: 90vh;
   overflow: scroll;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  justify-content: end;
 }
 .container::-webkit-scrollbar {
   display: none;
 }
 
-.chattingbox{
-  /* height: 100%; */
-}
 
 .text{
   color: white;
