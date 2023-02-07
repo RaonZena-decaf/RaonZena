@@ -28,7 +28,7 @@ const LivePage = () => {
                   <span className={styles.searchWord}>{state}</span>
                 </>
               )}
-              <GameList className={styles.center} searchWord={state} />
+              <GameList searchWord={state} />
             </div>
           </div>
           <div className={styles.displayFlex}>
