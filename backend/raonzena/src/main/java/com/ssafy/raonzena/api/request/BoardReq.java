@@ -14,6 +14,8 @@ public class BoardReq {
 
     private String title;
 
+    private long userNo;
+
     private long firstUser;
 
     private long secondUser;
@@ -26,6 +28,7 @@ public class BoardReq {
                 .boardImageUrl(boarImageUrl)
                 .content(content)
                 .title(title)
+                .userNo(userNo)
                 .firstUser(firstUser)
                 .secondUser(secondUser)
                 .thirdUser(thirdUser)

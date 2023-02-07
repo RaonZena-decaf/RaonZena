@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import style from "./NoneVideo.module.css";
+import style from "./SampleVideo.module.css";
 
-function CameraComponent() {
+function SampleVideo() {
   let videoRef = useRef(null);
 
   //사용자 웹캠에 접근
@@ -34,8 +34,9 @@ function CameraComponent() {
   return (
     <div className={style.webcamCapture}>
       <video ref={videoRef}></video>
+      <span className={style.username}>유저명</span>
     </div>
   );
 }
 
-export default CameraComponent;
+export default SampleVideo;
