@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import GameFrameLeft from "./GameFrameLeft";
 import GameFrameRight from "./GameFrameRight";
 
-function GameFrame({ gamename }) {
+function GameFrame({ gamename, openvidu }) {
   const [start, setStart] = useState(false);
   const startHandler = () => {
     setStart(true);
@@ -58,6 +58,7 @@ function GameFrame({ gamename }) {
           result={result}
           setResult={setResult}
           gamename={gamename}
+          openvidu={openvidu}
         />
         <GameFrameRight
           start={start}
