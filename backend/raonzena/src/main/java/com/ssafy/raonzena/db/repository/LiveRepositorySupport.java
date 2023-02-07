@@ -38,7 +38,8 @@ public class LiveRepositorySupport  {
                         roomInfo.host,
                         roomInfo.headcount,
                         roomInfo.password,
-                        roomInfo.createDtm)
+                        roomInfo.createDtm,
+                        roomInfo.imageName)
                 ).from(roomInfo)
                 .where(containKeyword(conditions))
                 .fetch();
@@ -54,7 +55,8 @@ public class LiveRepositorySupport  {
                                 roomInfo.host,
                                 roomInfo.headcount,
                                 roomInfo.password,
-                                roomInfo.createDtm)
+                                roomInfo.createDtm,
+                                roomInfo.imageName)
                 ).from(roomInfo)
                  .join(follow)
                  .on(roomInfo.host.userNo.eq(follow.followee))

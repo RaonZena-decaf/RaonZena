@@ -34,7 +34,6 @@ public class ProfileServiceImpl implements ProfileService {
     BoardRepository boardRepository;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     FollowRepository followRepository;
 

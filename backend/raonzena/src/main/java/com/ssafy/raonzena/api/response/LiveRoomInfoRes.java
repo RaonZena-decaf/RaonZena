@@ -26,4 +26,6 @@ public class LiveRoomInfoRes {
 
     private Timestamp createDate;
 
+    private String imageName;
+
 }

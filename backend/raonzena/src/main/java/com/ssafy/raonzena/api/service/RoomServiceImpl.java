@@ -27,7 +27,14 @@ public class RoomServiceImpl implements RoomService{
     public LiveRoomInfoRes addRoom(RoomReq roomReq, User sessionUser) {
 
         // 게임방 생성
-        return roomRepositorySupport.insertRoom(roomReq,sessionUser);
+        //게임 사진 1~30.png로 데이터 넣어주기
+        int min = 1;
+        int max = 30;
+        int randomNo = (int) ((Math.random() * (max - min)) + min);
+        String imageName = "/GameThumbnail/"+randomNo + ".png";
+        System.out.println("============이미지 이름");
+        System.out.println(imageName);
+        return roomRepositorySupport.insertRoom(roomReq,sessionUser,imageName);
     }
 
 }
