@@ -28,10 +28,10 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
     <div>
       <div>
         <div className={styles.container}>
-          {gamename === "imagegame" && (
+          {gamename === "imagetheme" && (
             <CharacterQuiz start={start} result={result} />
           )}
-          {gamename === "seeking" && (
+          {gamename === "objectfast" && (
             <CharacterQuiz start={start} result={result} />
           )}
           {gamename === "catchmind" && (
@@ -40,7 +40,7 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
           {gamename === "talkingsilence" && (
             <ShoutInSilence start={start} result={result} />
           )}
-          {gamename === "peoplequiz" && (
+          {gamename === "personquiz" && (
             <CharacterQuiz
               start={start}
               result={result}

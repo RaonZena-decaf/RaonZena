@@ -19,11 +19,11 @@ function GameFrame({ gamename, openvidu }) {
   const getGameTitle = (gamename) => {
     let tempTitle = "";
     switch (gamename) {
-      case "imagegame":
+      case "imagetheme":
         tempTitle = "이미지 게임";
         break;
 
-      case "seeking":
+      case "objectfast":
         tempTitle = "방안의 보물 찾기";
         break;
 
@@ -35,7 +35,7 @@ function GameFrame({ gamename, openvidu }) {
         tempTitle = "고요 속의 외침";
         break;
 
-      case "peoplequiz":
+      case "personquiz":
         tempTitle = "인물 퀴즈";
         break;
 
