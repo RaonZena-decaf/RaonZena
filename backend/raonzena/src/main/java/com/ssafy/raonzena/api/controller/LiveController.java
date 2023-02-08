@@ -97,7 +97,7 @@ public class LiveController {
         }
     }
 
-    @GetMapping("/live/{followNo}/onoff")
+    @GetMapping("/{followNo}/onoff")
     protected ResponseEntity<?> followingsOnOff(@PathVariable long followNo){
         if(liveService.onoff(followNo)){
             // online일 경우 ok 반환
