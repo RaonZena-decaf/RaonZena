@@ -15,6 +15,6 @@ public class RoomReq {
 
     private Integer headcount;
 
-    private Integer password;
+    private String password;
 
 }
