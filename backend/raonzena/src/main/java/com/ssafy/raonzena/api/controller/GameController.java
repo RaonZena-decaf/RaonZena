@@ -69,4 +69,6 @@ public class GameController {
         return ResponseEntity.ok(gameService.findGameScore(roomNo));
     }
 
+
+
 }

@@ -1,6 +1,7 @@
 package com.ssafy.raonzena.api.controller;
 
 
+import com.ssafy.raonzena.api.request.ExpReq;
 import com.ssafy.raonzena.api.request.FollowReq;
 import com.ssafy.raonzena.api.request.RoomReq;
 import com.ssafy.raonzena.api.response.BoardRes;
@@ -112,6 +113,14 @@ public class ProfileController {
     @GetMapping("/{userNo}/followingCnt")
     public ResponseEntity<Integer> followingCnt(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.followingCnt(userNo));
+    }
+
+    //경험치 와 레벨 업데이트
+    @PutMapping("/expToLevelModify")
+    public ResponseEntity<?> expToLevelModify(@RequestBody ExpReq expReq){
+        profileService.expToLevelModify(expReq);
+        return ResponseEntity.ok().build();
+
     }
 
 }
