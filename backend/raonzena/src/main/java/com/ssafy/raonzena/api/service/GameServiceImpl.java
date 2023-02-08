@@ -156,6 +156,7 @@ public class GameServiceImpl implements GameService{
     public void saveGameScore(GameScoreReq gameScoreReq) {
         String key = "roomNo"+ gameScoreReq.getRoomNo();
         System.out.println(key);
+        System.out.println(redisTemplate.opsForHash().entries(key));
         if (redisTemplate.opsForHash().entries(key)!= null){
             // 저장하기 전에 key값에 들어있는 정보 삭제
             redisTemplate.opsForHash().delete(key);
