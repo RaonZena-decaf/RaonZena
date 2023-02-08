@@ -17,6 +17,6 @@ public class GameScoreReq {
 
     private long roomNo;
 
-    private HashMap<Long, Integer> userData;
+    private List<List<Long>> userData;
 
 }

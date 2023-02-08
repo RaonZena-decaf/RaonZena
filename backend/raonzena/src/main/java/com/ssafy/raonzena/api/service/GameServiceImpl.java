@@ -158,9 +158,10 @@ public class GameServiceImpl implements GameService{
         // 저장하기 전에 key값에 들어있는 정보 삭제
         redisTemplate.opsForHash().delete(key);
         // 게임점수 redis에 저장
-        for (Map.Entry<Long, Integer> userGameData : gameScoreReq.getUserData().entrySet()) {
-            String userNo = userGameData.getKey().toString();
-            int userScore = userGameData.getValue();
+        for (int i=0; i<gameScoreReq.getUserData().size(); i++){
+            List<Long> userGameData = gameScoreReq.getUserData().get(i);
+            String userNo = userGameData.get(0).toString();
+            int userScore = userGameData.get(1).intValue();
             redisTemplate.opsForHash().put(key,userNo,userScore);
         }
         System.out.println(redisTemplate.opsForHash().entries(key));
