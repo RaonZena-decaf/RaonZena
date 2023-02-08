@@ -149,6 +149,7 @@ public class GameServiceImpl implements GameService{
     @Override
     public void saveGameScore(GameScoreReq gameScoreReq) {
         String key = "roomNo"+ gameScoreReq.getRoomNo();
+        System.out.println(key);
         if (redisTemplate.opsForHash().entries(key)!= null){
             // 저장하기 전에 key값에 들어있는 정보 삭제
             redisTemplate.opsForHash().delete(key);
@@ -156,8 +157,10 @@ public class GameServiceImpl implements GameService{
         // 게임점수 redis에 저장
         for (int i=0; i<gameScoreReq.getUserData().size(); i++){
             List<Long> userGameData = gameScoreReq.getUserData().get(i);
+            System.out.println(userGameData.toString());
             String userNo = userGameData.get(0).toString();
             int userScore = userGameData.get(1).intValue();
+            System.out.println(userNo+" "+userScore);
             redisTemplate.opsForHash().put(key,userNo,userScore);
         }
         System.out.println(redisTemplate.opsForHash().entries(key));
