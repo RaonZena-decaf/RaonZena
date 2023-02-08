@@ -14,7 +14,4 @@ public interface UserService {
     int level(long userNo);
 
     void logout(long userNo);
-
-    boolean onoff(long followNo);
-
 }

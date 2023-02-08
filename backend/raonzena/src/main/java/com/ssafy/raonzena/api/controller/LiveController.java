@@ -96,4 +96,15 @@ public class LiveController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/live/{followNo}/onoff")
+    protected ResponseEntity<?> followingsOnOff(@PathVariable long followNo){
+        if(liveService.onoff(followNo)){
+            // online일 경우 ok 반환
+            return ResponseEntity.ok().build();
+        }else{
+            // offline일 경우 noContent 반환
+            return ResponseEntity.noContent().build();
+        }
+    }
 }
