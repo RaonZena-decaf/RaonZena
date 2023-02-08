@@ -77,7 +77,7 @@ const RoomMenuFrame = ({
           )}
           {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu} TotalUsers={TotalUsers}/>}
           {menuContent === "exitRoom" && (
-            <ExitRoom closeMenu={closeMenu} onClick={exitaction()} />
+            <ExitRoom closeMenu={closeMenu} exitaction={exitaction} />
           )}
         </div>
       </div>

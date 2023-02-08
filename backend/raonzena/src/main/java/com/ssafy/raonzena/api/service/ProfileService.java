@@ -1,6 +1,7 @@
 package com.ssafy.raonzena.api.service;
 
 
+import com.ssafy.raonzena.api.request.ExpReq;
 import com.ssafy.raonzena.api.response.BoardRes;
 import com.ssafy.raonzena.api.response.FollowFollowingtRes;
 import com.ssafy.raonzena.api.response.UserProfileRes;
@@ -46,4 +47,6 @@ public interface ProfileService {
     int followerCnt(long userNo);
 
     int followingCnt(long userNo);
+
+    void expToLevelModify(ExpReq expReq);
 }

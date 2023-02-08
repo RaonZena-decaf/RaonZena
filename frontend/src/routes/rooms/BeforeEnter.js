@@ -13,31 +13,34 @@ import {
   FaUser,
 } from "react-icons/fa";
 
-function BeforeEnter(props) {
+function BeforeEnter() {
   const { state } = useLocation();
   console.log("state", state);
-  console.log("props", props);
   const user = useSelector((store) => store.userData);
-  const [userName, setUserName] = useState(user.userId);
-  const [roomId, setroomId] = useState(state);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const navigate = useNavigate();
-  // 방 정보 세팅
-
   // 이전 페이지로 돌아가기
   const backOnClick = () => {
     navigate(-1);
   };
-  // 마이크와 카메라 정보 갱신 부분
+  // 세션 참가
   const joinSession = () => {
-    navigate(`/room/${roomId}`);
+    navigate(`/room/${state.roomNo}`, {
+      state: {
+        mic,
+        camera,
+        roomNo: state.roomNo,
+        roomTitle: state.roomTitle,
+        host: false
+      },
+    });
   };
-  useEffect(() => {
-    if (roomId === undefined && userName === undefined) {
-      navigate("/live");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (state.rootTitle === undefined && user.userId === undefined) {
+  //     navigate("/live");
+  //   }
+  // }, []);
   const micOnClick = () => {
     setMic((prev) => {
       return !prev;

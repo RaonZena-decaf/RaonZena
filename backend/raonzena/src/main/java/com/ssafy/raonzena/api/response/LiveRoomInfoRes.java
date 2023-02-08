@@ -22,7 +22,7 @@ public class LiveRoomInfoRes {
 
     private int headcount;
 
-    private int password;
+    private String password;
 
     private Timestamp createDate;
 
