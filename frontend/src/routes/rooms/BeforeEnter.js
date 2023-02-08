@@ -21,6 +21,8 @@ function BeforeEnter(props) {
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const navigate = useNavigate();
+  // 방 정보 세팅
+  
   // 이전 페이지로 돌아가기
   const backOnClick = () => {
     navigate(-1);
