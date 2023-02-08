@@ -32,7 +32,7 @@ public class GameController {
     // 게임 점수 저장
     @PostMapping("/liveScore")
     public ResponseEntity<?> gameScoreSave(@RequestBody GameScoreReq gameScoreReq){
-        gameService.saveGameScore(gameScoreReq);
+        //gameService.saveGameScore(gameScoreReq);
         return ResponseEntity.ok("Success");
     }
 
