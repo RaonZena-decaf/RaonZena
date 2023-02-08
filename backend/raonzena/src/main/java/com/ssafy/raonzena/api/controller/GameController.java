@@ -4,6 +4,7 @@ package com.ssafy.raonzena.api.controller;
 
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
+import com.ssafy.raonzena.api.response.GameScoreRes;
 import com.ssafy.raonzena.api.response.ImageThemeRes;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.api.service.GameService;
@@ -62,5 +63,10 @@ public class GameController {
 
     }
 
+    @GetMapping("/games/livesScore/{roomNo}")
+    public ResponseEntity<GameScoreRes> gameScoreList(@PathVariable int roomNo){
+        // 게임데이터 조회
+        return ResponseEntity.ok(gameService.findGameScore(roomNo));
+    }
 
 }

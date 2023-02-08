@@ -11,6 +11,7 @@ import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
 import com.ssafy.raonzena.api.response.GameAnswer;
 import com.ssafy.raonzena.api.response.GameAnswerAndImageRes;
+import com.ssafy.raonzena.api.response.GameScoreRes;
 import com.ssafy.raonzena.api.response.ImageThemeRes;
 import com.ssafy.raonzena.db.entity.*;
 import com.ssafy.raonzena.db.repository.*;
@@ -26,11 +27,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+
+import java.util.*;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @Service
 @Transactional
@@ -149,8 +154,6 @@ public class GameServiceImpl implements GameService{
     @Override
     public void saveGameScore(GameScoreReq gameScoreReq) {
         String key = "roomNo"+ gameScoreReq.getRoomNo();
-        System.out.println(key);
-        System.out.println(redisTemplate.opsForHash().entries(key));
         if (!redisTemplate.opsForHash().entries(key).isEmpty()){
             // 저장하기 전에 key값에 들어있는 정보 삭제
             redisTemplate.opsForHash().delete(key);
@@ -158,12 +161,32 @@ public class GameServiceImpl implements GameService{
         // 게임점수 redis에 저장
         for (int i=0; i<gameScoreReq.getUserData().size(); i++){
             List<Long> userGameData = gameScoreReq.getUserData().get(i);
-            System.out.println(userGameData.toString());
             String userNo = userGameData.get(0).toString();
             int userScore = userGameData.get(1).intValue();
-            System.out.println(userNo+" "+userScore);
             redisTemplate.opsForHash().put(key,userNo,userScore);
         }
-        System.out.println(redisTemplate.opsForHash().entries(key));
+    }
+
+    @Override
+    public GameScoreRes findGameScore(long roomNo) {
+        String key = "roomNo"+ roomNo;
+        Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
+        System.out.println(userData.keySet().toString());
+        for(int i=0; i<userData.keySet().size(); i++){
+            List<Long> userGameData = new ArrayList<>();
+        }
+
+        // 전송할 user 점수 데이터
+        List<List<Long>> userDataRes = new ArrayList<>();
+
+        for (Map.Entry<Object, Object> userD : userData.entrySet()) {
+            // 각 유저마다 점수 보내주기
+            List<Long> userGameData = new ArrayList<>();
+            userGameData.add(Long.valueOf(userD.getKey().toString()));
+            userGameData.add(Long.valueOf(userD.getValue().toString()));
+            userDataRes.add(userGameData);
+        }
+
+        return new GameScoreRes(roomNo,userDataRes);
     }
 }
