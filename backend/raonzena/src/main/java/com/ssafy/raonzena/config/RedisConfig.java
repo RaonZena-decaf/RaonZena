@@ -60,6 +60,10 @@ public class RedisConfig{
     public RedisTemplate<?, ?> redisTemplate() {
         RedisTemplate<?, ?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setDefaultSerializer(new StringRedisSerializer());
+        redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
 
