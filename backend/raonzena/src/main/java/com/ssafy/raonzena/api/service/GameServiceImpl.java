@@ -165,16 +165,15 @@ public class GameServiceImpl implements GameService{
             int userScore = userGameData.get(1).intValue();
             redisTemplate.opsForHash().put(key,userNo,userScore);
         }
+        System.out.println(redisTemplate.opsForHash().entries(key));
     }
 
     @Override
     public GameScoreRes findGameScore(long roomNo) {
         String key = "roomNo"+ roomNo;
         Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
-        System.out.println(userData.keySet().toString());
-        for(int i=0; i<userData.keySet().size(); i++){
-            List<Long> userGameData = new ArrayList<>();
-        }
+        System.out.println(userData);
+        System.out.println(userData.keySet());
 
         // 전송할 user 점수 데이터
         List<List<Long>> userDataRes = new ArrayList<>();
