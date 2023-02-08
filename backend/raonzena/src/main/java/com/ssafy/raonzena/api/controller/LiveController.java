@@ -83,9 +83,11 @@ public class LiveController {
     }
 
     @GetMapping("followingRoom")
-    protected ResponseEntity<List<LiveRoomInfoRes>> followingRoomsList(){
+    protected ResponseEntity<List<LiveRoomInfoRes>> followingRoomsList(HttpSession session){
         // 팔로잉 유저들의 방 조회
-        return ResponseEntity.ok(liveService.findFollowingRooms(6)); /////////세션정보 필요//////////
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+        return ResponseEntity.ok(liveService.findFollowingRooms(userNo));
     }
 
     @GetMapping("/{roomNo}")
