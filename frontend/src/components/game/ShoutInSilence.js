@@ -4,8 +4,9 @@ import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { AnswerList } from "./ShoutInSilenceList";
+import SampleVideo from "../camera/SampleVideo";
 
-export default function ShoutInSilence({ start, result, setResult }) {
+export default function ShoutInSilence({ start, result, setResult, IsHost }) {
   const [step, setStep] = useState(0);
   const cameraList = [1, 2, 3, 4, 5, 6];
   const [minutes, setMinutes] = useState(0);
@@ -41,6 +42,26 @@ export default function ShoutInSilence({ start, result, setResult }) {
       .catch((error) => console.log(error));
   }
 
+  //타이머 설정
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      if (parseInt(seconds) > 0) {
+        setSeconds(parseInt(seconds) - 1);
+      }
+      if (parseInt(seconds) === 0) {
+        if (parseInt(minutes) === 0) {
+          clearInterval(countdown);
+        } else {
+          setMinutes(parseInt(minutes) - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+    return () => clearInterval(countdown);
+  }, [minutes, seconds]);
+
+  start = true; // 게임 시작 버튼 눌렸다고 가정
+
   useEffect(() => {
     if (start) {
       if (step >= AnswerList.length - 1) {
@@ -54,17 +75,33 @@ export default function ShoutInSilence({ start, result, setResult }) {
     }
   }, [start, step]);
 
-  return (
-    <div className={styles.background}>
-      <div>
-        제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
-      </div>
+  if (IsHost) {
+    return (
+      <div className={styles.background}>
+        <div>
+          제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+        </div>
 
-      <div>
-        번호: {AnswerList[step].speak_no} / {AnswerList.length}
-      </div>
+        <div>
+          번호: {AnswerList[step].question_no} / {AnswerList.length}
+        </div>
 
-      <div>정답: {AnswerList[step].answer}</div>
-    </div>
-  );
+        <div>정답: {AnswerList[step].answer}</div>
+      </div>
+    );
+  } else {
+    return (
+      <div className={styles.background}>
+        <div>
+          제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+        </div>
+
+        <div>
+          번호: {AnswerList[step].question_no} / {AnswerList.length}
+        </div>
+
+        <div>정답: {AnswerList[step].answer}</div>
+      </div>
+    );
+  }
 }
