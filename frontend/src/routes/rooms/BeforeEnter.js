@@ -13,13 +13,10 @@ import {
   FaUser,
 } from "react-icons/fa";
 
-function BeforeEnter(props) {
+function BeforeEnter() {
   const { state } = useLocation();
-  console.log('state',state)
-  console.log('props',props)
+  console.log("state", state);
   const user = useSelector((store) => store.userData);
-  const [userName, setUserName] = useState(user.userId);
-  const [roomId, setroomId] = useState(state);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const navigate = useNavigate();
@@ -31,13 +28,13 @@ function BeforeEnter(props) {
   };
   // 마이크와 카메라 정보 갱신 부분
   const joinSession = () => {
-    navigate(`/room/${roomId}`);
+    navigate(`/room/${state.roomnumber}`);
   };
-  useEffect(() => {
-    if (roomId === undefined && userName === undefined) {
-      navigate("/live");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (state.rootTitle === undefined && user.userId === undefined) {
+  //     navigate("/live");
+  //   }
+  // }, []);
   const micOnClick = () => {
     setMic((prev) => {
       return !prev;
@@ -55,12 +52,12 @@ function BeforeEnter(props) {
         <div className={style.innercontainer}>
           <div className={style.leftcontainer}>
             <h2 className={style.header}>
-              <span>{roomId}</span>에 참가 준비 중 입니다
+              <span>{state.Roomtitle}</span>에 참가 준비 중 입니다
             </h2>
             <div className={style.bottom}>
               <div className={style.textcont}>
-                <FaUser className={style.highlight} /> 현재 {userName}
-                /6 명이 방에 있습니다
+                <FaUser className={style.highlight} /> 현재 {state.users}/
+                {state.haedcount} 명이 방에 있습니다
               </div>
               <div className={style.textcont}>
                 카메라와 마이크 권한을 요청합니다. <br />
@@ -71,7 +68,9 @@ function BeforeEnter(props) {
                 하시기 바랍니다
               </div>
             </div>
-            <button className={style.button} onClick={backOnClick}>나가기</button>
+            <button className={style.button} onClick={backOnClick}>
+              나가기
+            </button>
           </div>
 
           <div className={style.rightcontainer}>
