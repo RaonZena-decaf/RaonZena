@@ -154,11 +154,4 @@ public class UserServieImpl implements UserService{
         redisTemplate.delete(key);
     }
 
-    @Override
-    public boolean onoff(long followNo) {
-
-        return false;
-    }
-
-
 }
