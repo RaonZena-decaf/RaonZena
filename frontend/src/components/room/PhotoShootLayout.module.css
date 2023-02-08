@@ -19,8 +19,10 @@
 }
 
 .photoshootlayoutbox {
-  background-color: #353839;
-  border-radius: 5px;
+  background-size:cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
   aspect-ratio: 1/1;
   width: 30%;
   margin-bottom: 1rem;

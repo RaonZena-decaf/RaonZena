@@ -239,6 +239,11 @@ function MainRoom(props) {
       type: "gameChange",
     });
   };
+
+  //현재 유저 리스트
+  const TotalUsers = [...subscribes, publisher]
+  console.log(TotalUsers)
+
   return (
     <div className={styles.background}>
       {publisher !== undefined ? (
@@ -263,6 +268,7 @@ function MainRoom(props) {
             mic={props.mic}
             toggleDevice={toggleDevice}
             ChangeGame={ChangeGame}
+            TotalUsers={TotalUsers}
           />
           <ChattingBar
             openChatting={openChatting}
