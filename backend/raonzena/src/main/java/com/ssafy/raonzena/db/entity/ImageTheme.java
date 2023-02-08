@@ -23,4 +23,7 @@ public class ImageTheme {
     @Column(name = "level", nullable = false)
     private Integer level;
 
+    @Column(name="image_name")
+    private String imageName;
+
 }

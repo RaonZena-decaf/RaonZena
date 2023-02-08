@@ -7,6 +7,10 @@
 /package.json
 /package-lock.json
 
+#localsetting
+/src/app/redirectUrl.js
+/src/app/baseUrl.js
+
 # testing
 /coverage
 

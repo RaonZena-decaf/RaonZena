@@ -5,15 +5,12 @@
 }
 
 .RoomTitle {
-  float: left;
+  text-align: left;
   font-size: 2rem;
-  color: #ffffff;
-  justify-content: center;
-  align-items: center;
-  /* margin: auto; */
+  margin: 0;
+  margin-top: 1rem;
   height: 60px;
   line-height: 3rem;
-  overflow: hidden;
   white-space: normal;
   display: -webkit-inline-box;
   -webkit-line-clamp: 2;
@@ -21,18 +18,10 @@
 }
 
 .UserCount {
-  float: left;
   font-size: 2rem;
   color: #ffffff;
   margin: 0;
-}
-
-.card {
-  max-width: 100%;
-  display: inline-grid;
-  border: none;
-  /* margin: auto; */
-  justify-content: left;
+  align-self: flex-end;
 }
 
 .PaginationWhite {
@@ -45,19 +34,14 @@
   font-size: 2rem;
 }
 
-.imageSize {
-  height: 15rem;
-}
-
 .GameRoomsDisplay {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 300px 300px;
+  grid-template-rows: 30rem 30rem;
   column-gap: 2rem;
   align-items: center;
   justify-items: stretch;
   margin: 3rem 0rem 3rem 0rem;
-
   /*
   display: inline-flex;
   justify-content: center;
@@ -66,11 +50,20 @@
   flex-wrap: wrap; */
 }
 
-/* .RoomImage {
-  width: 50%;
-  height: 50%;
-  object-fit: cover;
-} */
+.imageSize {
+  aspect-ratio: 1/1;
+  border-radius: 0.5rem;
+  width: 85%;
+}
+
+.card {
+  max-height: 100%;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .BackGround {
   color: #1f2122;

@@ -92,6 +92,7 @@ export default function GameRoom({ searchWord }) {
     } else {
       alert("Please Login");
     }
+
   };
 
   return (

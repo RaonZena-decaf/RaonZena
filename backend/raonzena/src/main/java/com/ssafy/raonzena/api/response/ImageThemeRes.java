@@ -17,10 +17,13 @@ public class ImageThemeRes {
 
     private int level;
 
+    private String imageName;
+
     @Builder
     public ImageThemeRes(ImageTheme imageTheme) {
         this.themeNo = imageTheme.getThemeNo();
         this.imageUrl = imageTheme.getImageUrl();
         this.level = imageTheme.getLevel();
+        this.imageName = imageTheme.getImageName();
     }
 }

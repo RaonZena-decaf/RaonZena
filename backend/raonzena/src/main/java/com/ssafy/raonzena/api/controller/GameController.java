@@ -55,9 +55,9 @@ public class GameController {
 
     //테마 보여주기
     @GetMapping("/feed/frame")
-    public ResponseEntity<List<ImageThemeRes>> getFrame(){
-        //임시로 userNo 넣어둠
-        long userNo = 1;
+    public ResponseEntity<List<ImageThemeRes>> getFrame(HttpSession session){
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
 
         return ResponseEntity.ok(gameService.getFrame(userNo));
 
