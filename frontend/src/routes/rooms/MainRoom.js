@@ -22,7 +22,7 @@ function MainRoom(props) {
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
   const [userName, setUserName] = useState(user.userId);
-  const [roomId, setroomId] = useState((state.roomNo).toString());
+  const [roomId, setroomId] = useState(state.roomNo.toString());
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
@@ -61,7 +61,7 @@ function MainRoom(props) {
     });
     after
       .then((mySession) => {
-        console.log(mySession)
+        console.log(mySession);
         // --- 3) Specify the actions when events take place in the session ---
         // MainRoom 에서 발생해야 하는 signal들 정리
         mySession.on("streamCreated", (event) => {
@@ -105,7 +105,7 @@ function MainRoom(props) {
                 resolve(response.data.id);
               })
               .catch((response) => {
-                console.log(response)
+                console.log(response);
                 let error = { ...response };
                 if (error?.response?.status === 409) {
                   resolve(roomId);
@@ -210,26 +210,26 @@ function MainRoom(props) {
 
     return () => {
       window.removeEventListener("beforeunload", onbeforeunload);
-      if (subscribes.length === 0) {
-        const data = {};
-        axios
-          .delete(
-            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${roomId}`,
-            data,
-            {
-              headers: {
-                Authorization: `Basic ${btoa(
-                  `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-                )}`,
-                "Content-Type": "application/json",
-              },
-            }
-          )
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => console.log(error));
-      }
+      // if (subscribes.length < 1) {
+      //   const data = {};
+      //   axios
+      //     .delete(
+      //       `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${roomId}`,
+      //       data,
+      //       {
+      //         headers: {
+      //           Authorization: `Basic ${btoa(
+      //             `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+      //           )}`,
+      //           "Content-Type": "application/json",
+      //         },
+      //       }
+      //     )
+      //     .then((response) => {
+      //       console.log(response);
+      //     })
+      //     .catch((error) => console.log(error));
+      // }
     };
   }, []);
 
