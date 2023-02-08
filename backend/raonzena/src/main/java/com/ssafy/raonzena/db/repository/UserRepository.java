@@ -21,11 +21,11 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     //exp 업데이트
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE User t SET t.exp = :exp WHERE t.user_no = :user_no")
+    @Query("UPDATE User t SET t.exp = :exp WHERE t.userNo = :user_no")
     void updateExp(@Param(value="exp") int exp,@Param(value="user_no") long user_no);
 
     //exp와 레벨 업데이트
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE User t SET t.exp = :exp, t.level = :level WHERE t.user_no = :user_no")
+    @Query("UPDATE User t SET t.exp = :exp, t.level = :level WHERE t.userNo = :user_no")
     void updateExpAndLevel(@Param(value="exp") int exp, @Param(value="level") int level, @Param(value="user_no") long userNo);
 }
