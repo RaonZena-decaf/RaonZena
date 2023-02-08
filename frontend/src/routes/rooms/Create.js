@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 
 function Create() {
   const navigate = useNavigate();
+  const baseUrl = useSelector((store) => store.baseUrl);
   const [roomname, setRoomname] = useState("");
   const [password, setPassword] = useState("");
   const [mic, setMic] = useState(true);
@@ -71,29 +72,40 @@ function Create() {
   const createOnClick = (event) => {
     event.preventDefault();
     if (roomname === "") {
-      alert("Please enter a room name");
+      alert("방 제목을 입력해 주세요");
     } else {
-      const data = {
-        roomTitle: roomname,
-        headcount: peoplenum,
-        password: password,
-        host: user.userId,
-      };
-      axios({
-        method: "post",
-        url: "http://localhost:8080/api/v1/user/user/kakao/callback",
-        data: data,
-        headers: { "Content-type": "application/json" },
-      })
-        .then((res) => {
-          navigate(`/room/${res.data.roomNo}`);
+      if (disabled && password === "") {
+        alert("비밀번호를 입력해 주세요");
+      } else {
+        const data = {
+          roomTitle: roomname,
+          headcount: peoplenum,
+          password: password,
+          host: user.userId,
+        };
+        axios({
+          method: "post",
+          url: `${baseUrl}live/room`,
+          data: data,
+          headers: { "Content-type": "application/json" },
         })
-        .catch((error) => {
-          alert("지금은 바쁩니다 다시 시도해 주세요");
-        });
-      console.log(roomname, password, peoplenum);
+          .then((res) => {
+            navigate(`/room/${res.data.roomNo}`, {
+              state: {
+                mic,
+                camera,
+                roomNo: res.data.roomNo,
+                roomTitle: res.data.roomTitle,
+              },
+            });
+          })
+          .catch((error) => {
+            alert("지금은 바쁩니다 다시 시도해 주세요");
+          });
+      }
     }
   };
+
 
   return (
     <>
