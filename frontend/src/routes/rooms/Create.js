@@ -3,6 +3,7 @@ import style from "./create.module.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar";
 import Footer from "../../components/Footer";
+import VideoContainer from "../../components/camera/NoneVideo";
 import {
   FaVideo,
   FaVideoSlash,
@@ -19,6 +20,7 @@ import { useSelector } from "react-redux";
 
 function Create() {
   const navigate = useNavigate();
+  const baseUrl = useSelector((store) => store.baseUrl);
   const [roomname, setRoomname] = useState("");
   const [password, setPassword] = useState("");
   const [mic, setMic] = useState(true);
@@ -57,13 +59,13 @@ function Create() {
   const disableOnClick = (event) => {
     setDisabled((prev) => !prev);
   };
-  const passwordRef = useRef()
-  
+  const passwordRef = useRef();
+
   const labelFocus = () => {
     if (disabled === true) {
-      passwordRef.current.focus()
+      passwordRef.current.focus();
     }
-  }
+  };
 
   const user = useSelector((store) => store.userData);
 
@@ -71,27 +73,38 @@ function Create() {
   const createOnClick = (event) => {
     event.preventDefault();
     if (roomname === "") {
-      alert("Please enter a room name");
+      alert("방 제목을 입력해 주세요");
     } else {
-      const data = {
-        roomTitle: roomname,
-        headcount: peoplenum,
-        password: password,
-        host: user.userId,
-      };
-      axios({
-        method: "post",
-        url: "http://localhost:8080/api/v1/user/user/kakao/callback",
-        data: data,
-        headers: { "Content-type": "application/json" },
-      })
-        .then((res) => {
-          navigate(`/room/${res.data.roomNo}`);
+      if (!disabled && password === "") {
+        alert("비밀번호를 입력해 주세요");
+      } else {
+        const data = {
+          roomTitle: roomname,
+          headcount: peoplenum,
+          password: password,
+          host: user.userId,
+        };
+        axios({
+          method: "post",
+          url: `${baseUrl}live/room`,
+          data: data,
+          headers: { "Content-type": "application/json" },
         })
-        .catch((error) => {
-          alert("지금은 바쁩니다 다시 시도해 주세요");
-        });
-      console.log(roomname, password, peoplenum);
+          .then((res) => {
+            navigate(`/room/${res.data.roomNo}`, {
+              state: {
+                mic,
+                camera,
+                roomNo: res.data.roomNo,
+                roomTitle: res.data.roomTitle,
+              },
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("지금은 바쁩니다 다시 시도해 주세요");
+          });
+      }
     }
   };
 
@@ -132,7 +145,7 @@ function Create() {
                         onClick={disableOnClick}
                         ref={passwordRef}
                       />
-                      <label htmlFor="checkbox" className={style.label}/>
+                      <label htmlFor="checkbox" className={style.label} />
                     </label>
                     <input
                       placeholder="방 비밀번호를 입력하세요"
@@ -146,7 +159,11 @@ function Create() {
 
                   <li>
                     <label className={style.tag}>인원 수</label>
-                    <select className={style.dropdown} name="peoplenum" onChange={peopleOnChange}>
+                    <select
+                      className={style.dropdown}
+                      name="peoplenum"
+                      onChange={peopleOnChange}
+                    >
                       <option value="2">2명</option>
                       <option value="3">3명</option>
                       <option value="4">4명</option>
@@ -162,7 +179,7 @@ function Create() {
             </div>
 
             <div className={style.rightcontainer}>
-              <div className={style.video}>화상</div>
+              <VideoContainer />
               <div className={style.accessory}>
                 {mic ? (
                   <FaMicrophoneAlt

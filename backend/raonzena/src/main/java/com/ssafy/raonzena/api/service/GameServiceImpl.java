@@ -19,13 +19,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+
 import java.util.*;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Service
 @Transactional
@@ -73,46 +83,37 @@ public class GameServiceImpl implements GameService{
     public boolean saveFeed(MultipartFile multipartFile, BoardReq boardReq) {
         //============================
         //1. 사진 s3에 저장
-
+        // [Step 1] 파일이 저장될 경로를 지정
         String folderName = "board-image"; //버킷하위에 생성할 폴더 이름 . 이미지 업로드 후 해당이미지는 버킷네임/feed/디렉토리에 생성
         String fileName = folderName + "/"+multipartFile.getOriginalFilename();
-        //파일 형식 구하기
-        String ext = fileName.split("\\.")[1];
-        String contentType = "";
 
-        //content type을 지정해서 올려주지 않으면 자동으로 "application/octet-stream"으로 고정이 되서 링크 클릭시 웹에서 열리는게 아니라 자동 다운이 시작됨.
-        switch (ext) {
-            case "jpeg":
-                contentType = "image/jpeg";
-                break;
-            case "png":
-                contentType = "image/png";
-                break;
-        }
-        System.out.println(multipartFile.getContentType());
-        try {
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType(multipartFile.getContentType());
-            //s3에 저장
-            amazonS3.putObject(new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), metadata)
-                    .withCannedAcl(CannedAccessControlList.PublicRead));
-        } catch (AmazonServiceException e) {
-            e.printStackTrace();
-        } catch (SdkClientException e) {
-            e.printStackTrace();
+
+        // [Step 2] 업로드할 파일의 메타 데이저 등록
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(multipartFile.getSize());
+        objectMetadata.setContentType(multipartFile.getContentType());
+
+        // [Step 3] AWS S3에 파일 업로드
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.BucketOwnerRead));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
         }
         //s3에 저장된 사진 url
         String s3Url = amazonS3.getUrl(bucket, fileName).toString();
+        System.out.println(s3Url);
+        //===========================
 
-        //============================
+        
         //2. s3에 저장된 url board에 저장
         boardReq.setBoarImageUrl(s3Url);
+        System.out.println(boardReq.toString());
         Board check = boardRepository.save(boardReq.toEntity());
 
         return check != null ? true : false;
     }
+
 
     @Override
     public GameAnswer answer(int gameType) {

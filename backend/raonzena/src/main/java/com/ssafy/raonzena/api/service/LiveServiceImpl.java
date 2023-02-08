@@ -32,9 +32,9 @@ public class LiveServiceImpl implements LiveService {
     }
 
     @Override
-    public List<LiveRoomInfoRes> findFollowingRooms(long sessionUserNo) { /////////세션정보 필요//////////
+    public List<LiveRoomInfoRes> findFollowingRooms(long userNo) {
         // 팔로잉 유저들의 방 조회
-        return liveRepositorySupport.selectFollowingRooms(sessionUserNo);
+        return liveRepositorySupport.selectFollowingRooms(userNo);
     }
 
     @Override

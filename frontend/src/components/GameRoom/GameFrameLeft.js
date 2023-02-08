@@ -29,8 +29,12 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
       <div>
         <div className={styles.container}>
           {gamename === "imagetheme" && (
-            <CharacterQuiz start={start} result={result} />
-          )}
+            <CharacterQuiz
+            start={start}
+            result={result}
+            setResult={setResult}
+            openvidu={openvidu}
+          />          )}
           {gamename === "objectfast" && (
             <CharacterQuiz start={start} result={result} />
           )}

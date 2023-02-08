@@ -22,7 +22,7 @@ public class GameThemeRepositorySupport {
 
         return query
                 .select(Projections.fields(ImageThemeRes.class,
-                        imageTheme.themeNo,imageTheme.imageUrl,imageTheme.level))
+                        imageTheme.themeNo,imageTheme.imageUrl,imageTheme.level,imageTheme.imageName))
                 .from(imageTheme)
                 .where(imageTheme.level.loe(level))
                 .fetch();

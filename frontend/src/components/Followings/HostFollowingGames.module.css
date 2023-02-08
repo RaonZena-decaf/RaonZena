@@ -1,0 +1,96 @@
+.card {
+  max-width: 100%;
+  display: inline-block;
+  border: none;
+  margin: 2rem 2rem 4rem 2rem;
+}
+
+.HostInfo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.HostImage {
+  width: 5rem;
+}
+
+.HostFollowingsList {
+  width: 100%;
+  margin: auto;
+  display: inline-flex;
+  overflow: scroll hidden;
+}
+
+.HostTextInfo {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  line-height: 3rem;
+  overflow: hidden;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.LevelFont {
+  display: inline-block;
+  font-size: 2rem;
+}
+
+.userNameFont {
+  font-size: 2rem;
+}
+
+.RoomInfo {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+.Roomimage {
+  width: 20rem;
+  align-items: center;
+  border-radius: 2.5rem;
+}
+
+.RoomTitle {
+  float: left;
+  font-size: 2rem;
+  color: #ffffff;
+  overflow: hidden;
+  line-height: 3rem;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.UserCount {
+  float: right;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.marginTopBot {
+  padding: 3rem;
+}
+
+.NoGameRoomsText {
+  margin: auto;
+  display: table;
+  font-size: 2.5rem;
+  font-weight: 100;
+  word-break: keep-all;
+  text-align: center;
+}
+
+.NoGameRoomsImg {
+  margin: auto;
+  display: table;
+  font-size: 10rem;
+  padding-top: 3rem;
+}

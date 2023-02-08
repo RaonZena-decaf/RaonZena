@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Followings.module.css";
+import styles from "./FollowingList.module.css";
 import { useSelector } from "react-redux";
 
 const FollowingListItem = (props) => {

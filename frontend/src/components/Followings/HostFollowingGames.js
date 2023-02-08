@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Item from "./HostFollowingsItem";
-import styles from "./Followings.module.css";
+import Item from "./HostFollowingGamesItem";
+import styles from "./HostFollowingGames.module.css";
 import { useSelector } from "react-redux";
 import { FaUserTimes } from "react-icons/fa";
 
@@ -31,6 +31,15 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     return <h2>Loading...</h2>;
   }
 
+  // --------------------스웨거에서 확인한 데이터-------------------
+  // 유저 이름    userName={gameRoomInfo.host.userName}
+  // 유저 이미지  userImage={gameRoomInfo.host.userImageUrl}
+  // 유저 레벨    level={gameRoomInfo.host.level}
+  // 방 이름      roomTitle={gameRoomInfo.roomTitle}
+  // 최대 인원 수 headcount={gameRoomInfo.headcount}
+  // 비밀번호     password={gameRoomInfo.password}
+  // 방 썸네일    roomImage={gameRoomInfo.imageName}
+
   if (list.length > 0) {
     return (
       <div className={styles.HostFollowingsList}>
@@ -38,14 +47,13 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
           return (
             <Item
               key={idx}
-              userName={gameRoomInfo.host.user_name}
-              userImage={gameRoomInfo.host.user_image_url}
+              userName={gameRoomInfo.host.userName}
+              userImage={gameRoomInfo.host.userImageUrl}
               level={gameRoomInfo.host.level}
-              roomTitle={gameRoomInfo.room_title}
+              roomTitle={gameRoomInfo.roomTitle}
               headcount={gameRoomInfo.headcount}
               password={gameRoomInfo.password}
-              // 자동으로 이미지 뽑기 (redux)
-              // roomImage={gameRoomInfo.room_image}
+              roomImage={gameRoomInfo.imageName}
             />
           );
         })}

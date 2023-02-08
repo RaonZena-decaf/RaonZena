@@ -1,29 +1,32 @@
-import { useEffect } from "react";
-import "./PhotoShootLayout.css";
+import { useLayoutEffect } from "react";
+import html2canvas from "html2canvas";
+import styles from "./PhotoShootLayout.module.css";
 
-function PhotoShootLayout({photoFrame}) {
-  const userlist = [
-    { user_name: "김찬빈"},
-    { user_name: "윤수희"},
-    { user_name: "홍영민"},
-    { user_name: "임길현"},
-    { user_name: "최지연"},
-    { user_name: "김민소"},
-  ];
-  // 참가 유저 수에 따른 배치 변경
-  // 화면 사이즈 조절은 더 고려해볼 것.
+function PhotoShootLayout({photoFrame, TotalUsers, frames}) {
+
+  useLayoutEffect(()=>{
+    for (const user of TotalUsers) {
+      html2canvas(document.getElementById(`${user.videos[0].id}`)).then(canvas => {
+        // 이미지 url을 얻는다 
+        const dataUrl = canvas.toDataURL("image/png")
+        //css 텍스트로 입력
+        const facePhoto = document.getElementById(`사진${user.videos[0].id}`)
+        facePhoto.style.cssText = `background-image : url('${dataUrl}')`
+      })
+    }
+  },[])
 
   return (
     <div
-      className="photoFrame"
+      className={styles.photoFrame}
       id="사진촬영완료"
       style={{
-        backgroundImage: `url("../img/PhotoFrame/frame${photoFrame}.jpg")`,
+        backgroundImage: photoFrame,
       }}
     >
-      <div className="photoshootlayoutmaintextcontainer">
-        { userlist.map((user) => {
-            return (<div key={user.user_name} className="photoshootlayoutbox"></div>)
+      <div className={styles.photoshootlayoutmaintextcontainer}>
+        { TotalUsers.map((user) => {
+            return (<div id={`사진${user.videos[0].id}`} className={styles.photoshootlayoutbox}></div>)
           })
         }
       </div>
