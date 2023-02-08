@@ -3,7 +3,9 @@ package com.ssafy.raonzena.api.controller;
 
 
 import com.ssafy.raonzena.api.request.BoardReq;
+import com.ssafy.raonzena.api.request.GameScoreReq;
 import com.ssafy.raonzena.api.response.ImageThemeRes;
+import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,14 @@ public class GameController {
         gameService.saveFeed(multipartFile,boardReq);
         return ResponseEntity.ok("Success");
     }
+
+    // 게임 데이터 저장
+    @PostMapping("/livesScore")
+    public ResponseEntity<?> gameScoreSave(@RequestBody GameScoreReq gameScoreReq){
+        gameService.saveGameScore(gameScoreReq);
+        return ResponseEntity.ok("Success");
+    }
+
 
     //게임데이터
     @GetMapping("/gameType/{gameType}")
