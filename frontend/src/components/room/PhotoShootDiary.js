@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import { useState} from "react";
 import html2canvas from "html2canvas";
 import axios from "axios";
+import { useLayoutEffect } from "react";
 
-function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
+function PhotoShootDiary({ setPhotoFrame, closeMenu,frames }) {
   // redux에 저장된 유저 정보에서 레벨에 따라 option 렌더링이 달라져야 함
   const userlevel = useSelector((store) => store.userData.level);
   const baseUrl = useSelector((store)=> store.baseUrl)
@@ -18,7 +19,6 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
     title: "",
     content: "",
   });
-
   const onChange = (event) => {
     setInput({ ...input, [event.target.name]: event.target.value });
   };
@@ -26,7 +26,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
 
   //피드에 저장하는 axios 통신
   //const userNo = useSelector((store) => store.userData.userNo);
-  const userNo =1;
+  const userNo =5;
   async function save() {
     let question = window.confirm("사진을 저장하겠습니까?");
     if (question === true) {
@@ -39,13 +39,14 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
       await html2canvas(document.getElementById("사진촬영완료")).then(
         async (canvas) => {
           const day = new Date()
-          const dataUrl = canvas.toDataURL("image/png").split(",")[1]
+          const dataUrl = canvas.toDataURL("image/png")
+          const blobBin = atob(dataUrl.split(",")[1])
           let array = []
-          for (let i = 0; i < dataUrl.length; i++) {
-            array.push(dataUrl.charCodeAt(i))
+          for (let i = 0; i < blobBin.length; i++) {
+            array.push(blobBin.charCodeAt(i))
           }
-          const file = new File([new Uint8Array(array)], `${day}.png`, {type:"image/png"})
-          console.log(file)
+          const blob = new Blob([new Uint8Array(array)], {type:"image/png"})
+          const file = new File([blob], `${day}.png`, {type: "image/png"})
           formData.append("file", file)
         }
       );
@@ -87,12 +88,9 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
         <option value="프레임 선택" disabled hidden>
           프레임 선택
         </option>
-        <option value={1}>라온제나</option>
-        <option value={2}>레트로 게임</option>
-        {userlevel > 5 && <option value={3}>노을진 도시</option>}
-        {userlevel > 10 && <option value={4}>우주 유영</option>}
-        {userlevel > 15 && <option value={5}>우주 유영</option>}
-        {userlevel > 20 && <option value={6}>우주 유영</option>}
+        {frames.map((frame) => (
+          <option value={frame.imageUrl}>{frame.imageName}</option>
+        ))}
       </select>
       <input
         className={styles.photoshootdiaryinput}
