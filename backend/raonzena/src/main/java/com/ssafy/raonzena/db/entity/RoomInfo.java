@@ -31,7 +31,7 @@ public class RoomInfo {
     private Integer headcount;
 
     @Column(name = "password")
-    private Integer password;
+    private String password;
 
     @Column(name = "create_dtm", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createDtm;
