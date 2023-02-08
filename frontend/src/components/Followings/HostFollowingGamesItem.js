@@ -12,11 +12,11 @@ export default function FollowingsInGameListItem(props) {
           alt="userImage"
         />
         <div className={styles.HostTextInfo}>
-          <p className={styles.LevelFont}>
+          <span className={styles.LevelFont}>
             {" "}
             LV {props.level} <br></br>
-            <p className={styles.userNameFont}>{props.userName}</p>
-          </p>
+            <span className={styles.userNameFont}>{props.userName}</span>
+          </span>
         </div>
         <div></div>
       </div>

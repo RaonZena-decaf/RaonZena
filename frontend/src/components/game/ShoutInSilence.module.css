@@ -18,7 +18,7 @@
 }
 .highlight,
 .header span {
-  color: #ff00b9;
+  color: #f400b0;
 }
 .leftcontainer {
   text-align: left;
@@ -38,7 +38,7 @@
   text-align: center;
 }
 .button {
-  background: #ff00b9;
+  background: #f400b0;
   border-radius: 10px;
   font-size: 1rem;
   color: #ffffff;

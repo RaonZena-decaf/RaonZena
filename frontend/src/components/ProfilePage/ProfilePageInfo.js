@@ -10,7 +10,6 @@ import { modifyMyFollowingList } from "../../app/myFollowingList";
 import { store } from "../../app/store";
 import { useEffect } from "react";
 
-
 function ProfilePageInfo({
   handleOpen,
   setfollower,
@@ -27,11 +26,10 @@ function ProfilePageInfo({
   const [followBtn, setFollowBtn] = useState(false);
   const navigate = useNavigate();
   const feedLength = feedList.length;
-  const myFollowings = useSelector((store)=> store.myFollowingList)
+  const myFollowings = useSelector((store) => store.myFollowingList);
   const [userInfo, setUserInfo] = useState({});
   const location = useLocation();
   const user_no = parseInt(location.pathname.split("profile/")[1]);
-
 
   async function callUserInfo() {
     axios({
@@ -64,35 +62,41 @@ function ProfilePageInfo({
     await axios({
       method: "get",
       url: `${baseUrl}profile/${loginUserNo}/following`,
-    }).then((res) =>{
-      const array = []
-      const followlist = res.data
+    }).then((res) => {
+      const array = [];
+      const followlist = res.data;
       followlist.forEach((following) => {
-        array.push(following.userNo)
-      })
-      dispatch(modifyMyFollowingList(array))
-    })
+        array.push(following.userNo);
+      });
+      dispatch(modifyMyFollowingList(array));
+    });
   }
 
   //팔로우버튼
   function toggleDone() {
     //팔로우 중이라면 팔로우 해제
     if (followBtn !== true) {
-      console.log(followBtn)
+      console.log(followBtn);
       axios({
-        method:"post",
-        url:`${baseUrl}profile`,
-        data: {"followNo": user_no}
-      }).then((res) => {console.log(res)})
-      .catch(error => console.log(error))
+        method: "post",
+        url: `${baseUrl}profile`,
+        data: { followNo: user_no },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
     } else {
-      console.log(followBtn)
+      console.log(followBtn);
       axios({
-        method:"delete",
-        url:`${baseUrl}profile`,
-        data:user_no
-      }).then((res) => {console.log(res)})
-      .catch(error => console.log(error))
+        method: "delete",
+        url: `${baseUrl}profile`,
+        data: user_no,
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
     }
     //팔로우 중이 아니라면 팔로우
     setFollowBtn(!followBtn);
@@ -102,12 +106,11 @@ function ProfilePageInfo({
   useLayoutEffect(() => {
     callUserInfo();
     if (myFollowings.includes(user_no)) {
-      setFollowBtn(true)
+      setFollowBtn(true);
     } else {
-      setFollowBtn(false)
+      setFollowBtn(false);
     }
-  }, [location,followBtn]);
-
+  }, [location, followBtn]);
 
   return (
     <div className={styles.background}>
@@ -117,12 +120,25 @@ function ProfilePageInfo({
           src={userInfo.userImage}
           className={styles.profileimg}
         />
-        <p className={styles.profileid}>친구코드 : {userInfo.userId}</p>
+        <p className={styles.profileid}>코드 : {userInfo.userId}</p>
       </div>
       <div className={styles.background3}>
-        <span className={styles.profileid2}>
-          {`LV ${userInfo.level} ${userInfo.userName}`}
-        </span>
+        <div className={styles.background5}>
+          <span className={styles.profileid2}>
+            {`LV ${userInfo.level} ${userInfo.userName}`}
+          </span>
+          {loginUserNo === userInfo.userNo
+            ? null
+            : loginUserNo && (
+                <button
+                  onClick={() => toggleDone()}
+                  className={` ${followBtn ? styles.follow : styles.follow2}`}
+                >
+                  {followBtn ? "팔로우 중" : "팔로우"}
+                </button>
+              )}
+          <FaSearch className={styles.search} />
+        </div>
         <div className={styles.background4}>
           <span className={styles.profileid3}>Exp</span>
           <ProfileProgress exp={userInfo.exp} />
@@ -144,22 +160,6 @@ function ProfilePageInfo({
             className={`${styles.profileid4} ${styles.photocard}`}
           >{`팔로워 ${followerCnt}`}</span>
         </div>
-      </div>
-      <div className={styles.background6}>
-        {loginUserNo === userInfo.userNo ? null 
-        : loginUserNo && (
-          <button
-            onClick={() => toggleDone()}
-            className={`${styles.follow} ${styles.photocard} ${
-              followBtn ? styles.follow : styles.follow2
-            }`}
-          >
-            {followBtn ? <div>팔로우 중</div> : <div>팔로우</div>}
-          </button>
-        )}
-      </div>
-      <div className={styles.background2}>
-        <FaSearch className={styles.search} />
       </div>
     </div>
   );

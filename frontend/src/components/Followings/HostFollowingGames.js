@@ -61,13 +61,11 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     );
   } else {
     return (
-      <div>
+      <div className={styles.marginTopBot}>
         <FaUserTimes className={styles.NoGameRoomsImg} />
-        <div className={styles.marginTopBot}>
-          <p className={styles.NoGameRoomsText}>
-            지금 놀고 있는 친구가 없습니다.
-          </p>
-        </div>
+        <p className={styles.NoGameRoomsText}>
+          지금 놀고 있는 친구가 없습니다.
+        </p>
       </div>
     );
   }

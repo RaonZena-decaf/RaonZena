@@ -12,9 +12,7 @@ const FollowingListItem = (props) => {
 
   return (
     <div className={styles.FollowingsInfo} onClick={navigateToProfile}>
-      <div className={styles.FollowingBox}>
-        <img src={props.userImage} className={styles.ProfileImg} alt="프로필" />
-      </div>
+      <img src={props.userImage} className={styles.ProfileImg} alt="프로필" />
       <div className={styles.FollowingInfoFont}>
         <p>LV {props.level}</p>
       </div>
