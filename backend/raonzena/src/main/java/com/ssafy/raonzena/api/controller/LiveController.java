@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +52,10 @@ public class LiveController {
     private Map<Long, Integer> mapSessions = new ConcurrentHashMap<>(); //Map<roomId,참가자수>
 
     @PostMapping("/room")
-    protected ResponseEntity<?> roomAdd(@RequestBody RoomReq roomReq){
-        //////////세션정보로 유저넘버 얻어오기 구현 필요/////////
-        User user = userService.selectUser(1);
+    protected ResponseEntity<?> roomAdd(@RequestBody RoomReq roomReq, HttpSession session){
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+        User user = userService.selectUser(userNo);
 
         //1.room 정보 db에 저장
         LiveRoomInfoRes liveRoomInfoRes = roomService.addRoom(roomReq, user);
