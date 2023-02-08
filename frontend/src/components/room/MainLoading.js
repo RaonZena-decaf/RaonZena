@@ -1,5 +1,6 @@
 import styles from "./MainLoading.module.css"
 import RocketAnimation from "../animaition/Rocket.js"
+import { memo } from "react"
 
 function MainLoading () {
   return (
@@ -12,4 +13,4 @@ function MainLoading () {
   )
 }
 
-export default MainLoading
+export default memo(MainLoading)

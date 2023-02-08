@@ -1,5 +1,6 @@
 import styles from "./NoFeed.module.css";
 import AstronautAnimation from "../animaition/Astronaut";
+import { memo } from "react";
 
 function NoFeed() {
 
@@ -12,4 +13,4 @@ function NoFeed() {
   );
 }
 
-export default NoFeed;
+export default memo(NoFeed);
