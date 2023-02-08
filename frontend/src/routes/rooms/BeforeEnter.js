@@ -63,7 +63,7 @@ function BeforeEnter() {
             <div className={style.bottom}>
               <div className={style.textcont}>
                 <FaUser className={style.highlight} /> 현재 {state.users}/
-                {state.haedcount} 명이 방에 있습니다
+                {state.headcount} 명이 방에 있습니다
               </div>
               <div className={style.textcont}>
                 카메라와 마이크 권한을 요청합니다. <br />
