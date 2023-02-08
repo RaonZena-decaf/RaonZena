@@ -3,13 +3,16 @@ package com.ssafy.raonzena.api.controller;
 
 
 import com.ssafy.raonzena.api.request.BoardReq;
+import com.ssafy.raonzena.api.request.GameScoreReq;
 import com.ssafy.raonzena.api.response.ImageThemeRes;
+import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequestMapping("/api/v1/games")
@@ -25,6 +28,15 @@ public class GameController {
         gameService.saveFeed(multipartFile,boardReq);
         return ResponseEntity.ok("Success");
     }
+
+    // 게임 데이터 저장
+    @PostMapping("/liveScore")
+    public ResponseEntity<?> gameScoreSave(@RequestBody GameScoreReq gameScoreReq){
+        System.out.println(gameScoreReq);
+        gameService.saveGameScore(gameScoreReq);
+        return ResponseEntity.ok("Success");
+    }
+
 
     //게임데이터
     @GetMapping("/gameType/{gameType}")
@@ -43,9 +55,9 @@ public class GameController {
 
     //테마 보여주기
     @GetMapping("/feed/frame")
-    public ResponseEntity<List<ImageThemeRes>> getFrame(){
-        //임시로 userNo 넣어둠
-        long userNo = 1;
+    public ResponseEntity<List<ImageThemeRes>> getFrame(HttpSession session){
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
 
         return ResponseEntity.ok(gameService.getFrame(userNo));
 

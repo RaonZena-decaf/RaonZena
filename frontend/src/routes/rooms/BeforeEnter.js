@@ -32,7 +32,7 @@ function BeforeEnter() {
         camera,
         roomNo: state.roomNo,
         roomTitle: state.roomTitle,
-        host: false,
+        host: false
       },
     });
   };
