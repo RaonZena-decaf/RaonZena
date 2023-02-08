@@ -16,12 +16,13 @@ const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
 function MainRoom(props) {
   const { state } = useLocation();
+  const user = useSelector((store) => store.userData);
   const dispatch = useDispatch();
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
-  const [userName, setUserName] = useState(`User ${getRandomInt(1, 100)}`);
-  const [roomId, setroomId] = useState("Roomc");
+  const [userName, setUserName] = useState("default");
+  const [roomId, setroomId] = useState(state.roomNo);
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
@@ -35,14 +36,15 @@ function MainRoom(props) {
   //메인메뉴 모달을 위한 함수
   const deleteSubscriber = (deletestream) => {
     setSubscribes((prev) =>
-      prev.filter((stream) => stream.stream !== deletestream))
+      prev.filter((stream) => stream.stream !== deletestream)
+    );
   };
-  // 임시 사용자 이름 랜덤으로 부여
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-  }
+  // // 임시 사용자 이름 랜덤으로 부여
+  // function getRandomInt(min, max) {
+  //   min = Math.ceil(min);
+  //   max = Math.floor(max);
+  //   return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+  // }
   const toggleDevice = async (mic, video) => {
     publisher.publishAudio(mic);
     publisher.publishVideo(video);
@@ -55,6 +57,7 @@ function MainRoom(props) {
 
       setTimeout(() => {
         resolve(mySession);
+        setUserName(user.userName);
       }, 1000);
     });
     after
@@ -72,7 +75,7 @@ function MainRoom(props) {
         });
 
         mySession.on("exception", (exception) => {
-          deleteSubscriber(exception.origin.stream)
+          deleteSubscriber(exception.origin.stream);
           console.warn(exception);
         });
         mySession.on("signal:gameChange", (event) => {
@@ -152,12 +155,12 @@ function MainRoom(props) {
               const publisher = await OV.initPublisherAsync(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: true, // Whether you want to start publishing with your video enabled or not
+                publishAudio: state.mic, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: state.camera, // Whether you want to start publishing with your video enabled or not
                 resolution: "640x480", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-                mirror: false, // Whether to mirror your local video or not
+                mirror: true, // Whether to mirror your local video or not
                 streamId: userName, // 다른 것들과 구분하기 위한 변수값
               });
 
@@ -207,6 +210,26 @@ function MainRoom(props) {
 
     return () => {
       window.removeEventListener("beforeunload", onbeforeunload);
+      if (subscribes.length === 0) {
+        const data = {};
+        axios
+          .delete(
+            `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${roomId}`,
+            data,
+            {
+              headers: {
+                Authorization: `Basic ${btoa(
+                  `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+                )}`,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => console.log(error));
+      }
     };
   }, []);
 
@@ -226,7 +249,6 @@ function MainRoom(props) {
   };
 
   useEffect(() => {
-    console.log(subscribes)
     setVideoList({ ...subscribes, publisher });
     setOpenvidu({ session, videoList, userName, publisher });
   }, [session, publisher, userName, subscribes]);
@@ -256,12 +278,14 @@ function MainRoom(props) {
               ))}
             </div>
           )}
-          {gamename !== "chatSubject" && <GameFrame gamename={gamename} openvidu={openvidu} />}
+          {gamename !== "chatSubject" && (
+            <GameFrame gamename={gamename} openvidu={openvidu} />
+          )}
           <MenuBar
             toggleBar={toggleBar}
             exitaction={leaveSession}
-            camera={props.camera}
-            mic={props.mic}
+            camera={state.camera}
+            mic={state.mic}
             toggleDevice={toggleDevice}
             ChangeGame={ChangeGame}
           />
