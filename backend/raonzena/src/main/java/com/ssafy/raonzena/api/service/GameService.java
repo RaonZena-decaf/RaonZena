@@ -5,6 +5,7 @@ import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
 import com.ssafy.raonzena.api.response.GameAnswer;
 import com.ssafy.raonzena.api.response.GameAnswerAndImageRes;
+import com.ssafy.raonzena.api.response.GameScoreRes;
 import com.ssafy.raonzena.api.response.ImageThemeRes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,4 +26,7 @@ public interface GameService {
 
     // 게임 데이터 저장하기
     void saveGameScore(GameScoreReq gameScoreReq);
+
+    // 게임 데이터 저장하기
+    GameScoreRes findGameScore(long roomNo);
 }
