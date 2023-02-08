@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ssafy.raonzena.api.request.BoardReq;
+import com.ssafy.raonzena.api.request.GameScoreReq;
 import com.ssafy.raonzena.api.response.GameAnswer;
 import com.ssafy.raonzena.api.response.GameAnswerAndImageRes;
 import com.ssafy.raonzena.api.response.ImageThemeRes;
@@ -15,6 +16,8 @@ import com.ssafy.raonzena.db.entity.*;
 import com.ssafy.raonzena.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +25,9 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -49,6 +54,9 @@ public class GameServiceImpl implements GameService{
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -142,5 +150,19 @@ public class GameServiceImpl implements GameService{
     public List<ImageThemeRes> getFrame(long userNo) {
         int level = userService.level(userNo);
         return gameThemeRepositorySupport.getThemes(level);
+    }
+
+    @Override
+    public void saveGameScore(GameScoreReq gameScoreReq) {
+        String key = "roomNo"+ gameScoreReq.getRoomNo();
+        // 저장하기 전에 key값에 들어있는 정보 삭제
+        redisTemplate.opsForHash().delete(key);
+        // 게임점수 redis에 저장
+        for (Map.Entry<Long, Integer> userGameData : gameScoreReq.getUserData().entrySet()) {
+            String userNo = userGameData.getKey().toString();
+            int userScore = userGameData.getValue();
+            redisTemplate.opsForHash().put(key,userNo,userScore);
+        }
+        System.out.println(redisTemplate.opsForHash().entries(key));
     }
 }
