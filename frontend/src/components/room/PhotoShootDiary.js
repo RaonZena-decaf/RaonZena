@@ -41,11 +41,11 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
           const day = new Date()
           const dataUrl = canvas.toDataURL("image/png").split(",")[1]
           let array = []
-          for (let i = 0; i<dataUrl.length; i++) {
+          for (let i = 0; i < dataUrl.length; i++) {
             array.push(dataUrl.charCodeAt(i))
           }
-          const blob = new Blob([new Uint8Array(array)], {type: 'multipart/form-data'})
-          const file = new File([blob], `${day}`,{type: 'multipart/form-data'})
+          const file = new File([new Uint8Array(array)], `${day}.png`, {type:"image/png"})
+          console.log(file)
           formData.append("file", file)
         }
       );
@@ -60,10 +60,6 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu }) {
         "userNo" : userNo
       }
       formData.append("boardReq", new Blob([JSON.stringify(data)], {type:"application/json"}))
-
-
-      for (let value of formData.values())
-      { console.log(value)}
 
       axios({
         url:`${baseUrl}games/feed`,

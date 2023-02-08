@@ -22,13 +22,13 @@ function UserGuide({ openModal }) {
     pageBtn3.current.style.backgroundColor = "#cacaca";
   };
   const clickbutton2 = () => {
-    setNowX((prop) => (prop = -69.1));
+    setNowX((prop) => (prop = -72.3));
     pageBtn2.current.style.backgroundColor = "#F400B0";
     pageBtn1.current.style.backgroundColor = "#cacaca";
     pageBtn3.current.style.backgroundColor = "#cacaca";
   };
   const clickbutton3 = () => {
-    setNowX((prop) => (prop = -140));
+    setNowX((prop) => (prop = -145.3));
     pageBtn3.current.style.backgroundColor = "#F400B0";
     pageBtn2.current.style.backgroundColor = "#cacaca";
     pageBtn1.current.style.backgroundColor = "#cacaca";

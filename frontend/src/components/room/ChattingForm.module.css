@@ -2,18 +2,51 @@
   height: 90vh;
   overflow: scroll;
   padding-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-  bottom: 0;
-  justify-content: end;
+
 }
 .container::-webkit-scrollbar {
   display: none;
 }
 
+.innercontainer{
+    display: flex;
+  flex-direction: column;
+  bottom: 0;
+  justify-content: end;
+  gap: 1rem;
+}
 
 .text{
   color: white;
   font-size: 2rem;
   word-break: keep-all;
+  display: flex;
+  flex-direction: row;
+}
+
+.user{}
+
+
+.chatbox{
+  position: relative;
+  width: 67%;
+  background-color: #8f00ff;
+  margin-left: 5%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.chatbox::after{
+  content: '';
+  position: absolute;
+	left: 0;
+	top: 1.8rem;
+	width: 0;
+	height: 0;
+	border: 1rem solid transparent;
+	border-right-color: #8f00ff;
+	border-left: 0;
+	border-top: 0;
+	margin-top: -.5rem;
+	margin-left: -1rem;
 }

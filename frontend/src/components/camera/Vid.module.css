@@ -1,0 +1,12 @@
+.nickname {
+  position: absolute;
+  right: .7rem;
+  bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.videocontainer{
+  position: relative;
+  color: black;
+  text-shadow: white;
+}
