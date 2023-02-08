@@ -30,8 +30,9 @@ public class GameController {
     }
 
     // 게임 데이터 저장
-    @PostMapping("/livesScore")
+    @PostMapping("/liveScore")
     public ResponseEntity<?> gameScoreSave(@RequestBody GameScoreReq gameScoreReq){
+        System.out.println(gameScoreReq);
         gameService.saveGameScore(gameScoreReq);
         return ResponseEntity.ok("Success");
     }
