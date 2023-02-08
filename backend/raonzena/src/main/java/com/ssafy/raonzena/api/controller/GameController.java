@@ -32,8 +32,6 @@ public class GameController {
     // 게임 점수 저장
     @PostMapping("/liveScore")
     public ResponseEntity<?> gameScoreSave(@RequestBody GameScoreReq gameScoreReq){
-        System.out.println(123456789);
-        System.out.println(gameScoreReq.getUserData().toString());
         gameService.saveGameScore(gameScoreReq);
         return ResponseEntity.ok("Success");
     }
