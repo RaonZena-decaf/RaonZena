@@ -63,8 +63,8 @@ public class GameController {
 
     }
 
-    @GetMapping("/games/livesScore/{roomNo}")
-    public ResponseEntity<GameScoreRes> gameScoreList(@PathVariable int roomNo){
+    @GetMapping("/games/liveScore/{roomNo}")
+    public ResponseEntity<GameScoreRes> gameScoreList(@PathVariable long roomNo){
         // 게임데이터 조회
         return ResponseEntity.ok(gameService.findGameScore(roomNo));
     }

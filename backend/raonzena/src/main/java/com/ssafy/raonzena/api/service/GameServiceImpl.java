@@ -184,6 +184,7 @@ public class GameServiceImpl implements GameService{
             userGameData.add(Long.valueOf(userD.getKey().toString()));
             userGameData.add(Long.valueOf(userD.getValue().toString()));
             userDataRes.add(userGameData);
+            System.out.println(userGameData.toString());
         }
 
         return new GameScoreRes(roomNo,userDataRes);
