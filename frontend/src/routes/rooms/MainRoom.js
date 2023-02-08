@@ -16,13 +16,12 @@ const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
 function MainRoom(props) {
   const { state } = useLocation();
-  const user = useSelector((store) => store.userData);
-  const { mic, camera, roomNo, roomTitle, host} = state
+  const dispatch = useDispatch();
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
-  const [userName, setUserName] = useState(user.userId);
-  const [roomId, setroomId] = useState(roomNo);
+  const [userName, setUserName] = useState(`User ${getRandomInt(1, 100)}`);
+  const [roomId, setroomId] = useState("Roomc");
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
@@ -38,6 +37,12 @@ function MainRoom(props) {
     setSubscribes((prev) =>
       prev.filter((stream) => stream.stream !== deletestream))
   };
+  // 임시 사용자 이름 랜덤으로 부여
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+  }
   const toggleDevice = async (mic, video) => {
     publisher.publishAudio(mic);
     publisher.publishVideo(video);
@@ -147,8 +152,8 @@ function MainRoom(props) {
               const publisher = await OV.initPublisherAsync(undefined, {
                 audioSource: undefined, // The source of audio. If undefined default microphone
                 videoSource: undefined, // The source of video. If undefined default webcam
-                publishAudio: mic, // Whether you want to start publishing with your audio unmuted or not
-                publishVideo: camera, // Whether you want to start publishing with your video enabled or not
+                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                publishVideo: true, // Whether you want to start publishing with your video enabled or not
                 resolution: "640x480", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
@@ -255,8 +260,8 @@ function MainRoom(props) {
           <MenuBar
             toggleBar={toggleBar}
             exitaction={leaveSession}
-            camera={camera}
-            mic={mic}
+            camera={props.camera}
+            mic={props.mic}
             toggleDevice={toggleDevice}
             ChangeGame={ChangeGame}
           />
