@@ -83,6 +83,7 @@ function ProfilePage() {
               followingList={followingList}
               feedList={feedList}
             />
+            <hr></hr>
             {feedList.length === 0 ? 
             <NoFeed/>
             :

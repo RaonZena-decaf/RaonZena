@@ -154,6 +154,7 @@ function Create() {
                       onChange={passwordChange}
                       className={style.input}
                       disabled={disabled}
+                      type='number'
                     />
                   </li>
 
@@ -179,7 +180,9 @@ function Create() {
             </div>
 
             <div className={style.rightcontainer}>
-              <VideoContainer />
+              <div className={style.video}>
+                <VideoContainer />
+              </div>
               <div className={style.accessory}>
                 {mic ? (
                   <FaMicrophoneAlt
