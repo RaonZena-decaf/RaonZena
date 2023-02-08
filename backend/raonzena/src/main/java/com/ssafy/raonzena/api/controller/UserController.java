@@ -46,10 +46,7 @@ public class UserController {
     public void logout(HttpSession session){
         System.out.println(session.getAttribute("userNo")+"삭제!!!");
 
-        if(session.getAttribute("userNo") != null){
-            long value = (long) session.getAttribute("userNo");
-            userService.logout(value);
-        }
+        userService.logout(Long.parseLong(session.getAttribute("userNo").toString()));
 
         // 세션에 해당 세션키에 대한 데이터 삭제
         session.removeAttribute("userNo");
