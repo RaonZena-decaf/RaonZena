@@ -2,7 +2,7 @@ import styles from "./LivePage.module.css";
 import Navbar from "../../components/navbar/navbar";
 import GameList from "../../components/GameList/GameList";
 import FollowingList from "../../components/Followings/FollowingList";
-import HostFollowings from "../../components/Followings/HostFollowings";
+import HostFollowings from "../../components/Followings/HostFollowingGames";
 import Footer from "../../components/Footer";
 import { useLocation } from "react-router-dom";
 
