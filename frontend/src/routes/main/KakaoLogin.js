@@ -5,11 +5,13 @@ import styles from "./KakaoLogin.module.css";
 import UnLockAnimation from "../../components/animaition/UnLock.js";
 import { useSelector, useDispatch } from "react-redux";
 import { modifyUserData } from "../../app/userData";
+import { modifyMyFollowingList } from "../../app/myFollowingList";
 
 function KakaoLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const baseUrl = useSelector((store) => store.baseUrl);
+  const followings = useSelector((store) => store.myFollowingList);
   const location = useLocation();
   const KAKAO_CODE = location.search.split("=")[1];
 
@@ -21,9 +23,9 @@ function KakaoLogin() {
       headers: {'Content-type': 'application/json'}
     })
       .then((res) => {
+        //redux 유저정보에 저장
+        dispatch(modifyUserData(res.data));
         setTimeout(() => {
-          //redux 유저정보에 저장
-          dispatch(modifyUserData(res.data));
           navigate("/live");
         }, 1500);
       })
@@ -38,7 +40,7 @@ function KakaoLogin() {
 
   useEffect(() => {
     if (!location.search) return;
-    getToken();
+    getToken()
   }, []);
 
   return (

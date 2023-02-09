@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import html2canvas from "html2canvas";
 import axios from "axios";
-import { useLayoutEffect } from "react";
 
 function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
   // redux에 저장된 유저 정보에서 레벨에 따라 option 렌더링이 달라져야 함
