@@ -26,10 +26,20 @@ function CameraComponent() {
         console.log(error);
       });
   };
+  const turnoffCamera = () => {
+    let video = videoRef.current;
+    var stream = video.srcObject;
+    stream.getTracks().forEach(function (track) {
+      track.stop();
+    });
+  };
 
   useEffect(() => {
     getUserCamera();
-  }, [videoRef]);
+    return () => {
+      turnoffCamera();
+    };
+  }, []);
 
   return (
     <div className={style.webcamCapture}>
