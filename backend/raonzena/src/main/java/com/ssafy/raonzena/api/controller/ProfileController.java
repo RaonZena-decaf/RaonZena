@@ -134,6 +134,14 @@ public class ProfileController {
         }else{
             return ResponseEntity.ok("isNotFollowed");
         }
+
+    }
+
+    //피드 삭제하기
+    @DeleteMapping("/feedDelete/{boardNo}")
+    public ResponseEntity<?> feedDelete(@PathVariable long boardNo){
+        profileService.feedDelete(boardNo);
+        return ResponseEntity.ok().body("success");
     }
 
 }
