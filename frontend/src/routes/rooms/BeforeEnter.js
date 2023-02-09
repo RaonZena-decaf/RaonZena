@@ -32,7 +32,7 @@ function BeforeEnter() {
         camera,
         roomNo: state.roomNo,
         roomTitle: state.roomTitle,
-        host: false
+        host: false,
       },
     });
   };
@@ -59,11 +59,13 @@ function BeforeEnter() {
           <div className={style.innercontainer}>
             <div className={style.leftcontainer}>
               <h2 className={style.header}>
-                <span>{roomId}</span>에 참가 준비 중 입니다.
+                <span>{state.roomTitle}</span>에 참가 준비 중 입니다.
               </h2>
               <div>
                 <div className={style.textcont}>
-                  <FaUser className={style.highlight} /> 현재 {userName}
+                  <FaUser className={style.highlight} /> 현재 ???{" "}
+                  {/* state.userCnt 현재 인원수 받아와야 함 */}
+                  {state.userCnt}
                   /6 명이 방에 있습니다.
                 </div>
                 <div className={style.textcont}>
