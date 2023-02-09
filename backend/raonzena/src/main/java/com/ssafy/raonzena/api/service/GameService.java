@@ -29,4 +29,10 @@ public interface GameService {
 
     // 게임 데이터 저장하기
     GameScoreRes findGameScore(long roomNo);
+
+    // 캐치마인드 그림 저장하기
+    void savePainting(String painting, long roomNo);
+
+    // 캐치마인드 그림 보내기
+    String findPainting(long roomNo);
 }

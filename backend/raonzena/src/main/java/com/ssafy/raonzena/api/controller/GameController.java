@@ -38,6 +38,18 @@ public class GameController {
         return ResponseEntity.ok("Success");
     }
 
+    // 캐치마인드 그림 송신
+    @PostMapping("/{roomNo}/catchMind")
+    public ResponseEntity<?> paintingSave(@PathVariable long roomNo, @RequestBody String painting){
+        gameService.savePainting(painting,roomNo);
+        return ResponseEntity.ok("Success");
+    }
+
+    // 캐치마인드 그림 수신
+    @GetMapping("/{roomNo}/catchMind")
+    public ResponseEntity<?> paintingDetails(@PathVariable long roomNo){
+        return ResponseEntity.ok(gameService.findPainting(roomNo));
+    }
 
     //게임데이터 (인생역전 제외)
     @GetMapping("/gameType/{gameType}")

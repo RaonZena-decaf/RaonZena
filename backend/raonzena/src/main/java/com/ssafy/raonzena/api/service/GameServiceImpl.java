@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +67,9 @@ public class GameServiceImpl implements GameService{
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisTemplate<String, String> redisDrawTemplate;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -207,5 +211,27 @@ public class GameServiceImpl implements GameService{
         System.out.println(userDataRes.toString());
 
         return new GameScoreRes(roomNo,userDataRes);
+    }
+
+    @Override
+    public void savePainting(String painting, long roomNo) {
+        String key = "roomNo"+ roomNo + "catchMind";
+
+//        if (redisDrawTemplate.opsForValue().get(key) != null){
+//            // 저장하기 전에 key값에 들어있는 정보 삭제
+//            redisDrawTemplate.delete(key);
+//        }
+
+        // 그림 문자열 redis에 저장
+        redisDrawTemplate.opsForValue().set(key, painting);
+
+        System.out.println(redisDrawTemplate.opsForValue().get(key));
+    }
+
+    @Override
+    public String findPainting(long roomNo) {
+        String key = "roomNo" + roomNo + "catchMind";
+
+        return redisDrawTemplate.opsForValue().get(key);
     }
 }
