@@ -96,7 +96,7 @@ public class ProfileRepositorySupport { //implements ProfileRepository
     public void feedDelete(long boardNo) {
 
         query.delete(board).where(board.boardNo.eq(boardNo)).execute();
-        
+
     }
 
 
