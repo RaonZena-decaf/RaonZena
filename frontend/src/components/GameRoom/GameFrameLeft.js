@@ -30,11 +30,12 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
         <div className={styles.container}>
           {gamename === "imagetheme" && (
             <CharacterQuiz
-            start={start}
-            result={result}
-            setResult={setResult}
-            openvidu={openvidu}
-          />          )}
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+            />
+          )}
           {gamename === "objectfast" && (
             <CharacterQuiz start={start} result={result} />
           )}
@@ -42,7 +43,12 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
             <Catchmind start={start} result={result} />
           )}
           {gamename === "talkingsilence" && (
-            <ShoutInSilence start={start} result={result} />
+            <ShoutInSilence
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+            />
           )}
           {gamename === "personquiz" && (
             <CharacterQuiz

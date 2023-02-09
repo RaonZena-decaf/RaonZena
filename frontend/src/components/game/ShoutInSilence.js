@@ -1,23 +1,40 @@
-import React, { useState, useEffect } from "react";
-import Camera from "../camera/camera1";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { AnswerList } from "./ShoutInSilenceList";
-import SampleVideo from "../camera/SampleVideo";
 
-export default function ShoutInSilence({ start, result, setResult, IsHost }) {
+export default function ShoutInSilence({
+  start,
+  result,
+  setResult,
+  IsHost,
+  openvidu,
+}) {
+  const timeLimit = 5;
+
   const [step, setStep] = useState(0);
-  const cameraList = [1, 2, 3, 4, 5, 6];
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(timeLimit);
   const [isCorrect, setIsCorrect] = useState(false); // 정답 유무
   const [showAnswer, setShowAnswer] = useState(false);
   const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
+  const videoRef = useRef(null);
+  const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(3);
+  const [gameStart, setGameStart] = useState(start);
 
-  const answerOnchange = (e) => {
-    setAnswer(e.target.value);
+  // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
+  if (openvidu.session) {
+    openvidu.session.on("signal:TrueAnswer", (event) => {
+      const data = JSON.parse(event.data);
+      setIsAnswerShown(true);
+    });
+  }
+
+  const handleVideo = () => {
+    const video = videoRef.current;
   };
 
   const answerOnclick = (e) => {
@@ -33,7 +50,7 @@ export default function ShoutInSilence({ start, result, setResult, IsHost }) {
   function getAnswerList() {
     axios({
       method: "get",
-      url: `${baseUrl}api/v1/games/gameType/2`,
+      url: `${baseUrl}games/gameType/2`,
     })
       .then((res) => {
         console.log(res);
@@ -44,49 +61,93 @@ export default function ShoutInSilence({ start, result, setResult, IsHost }) {
 
   //타이머 설정
   useEffect(() => {
-    const countdown = setInterval(() => {
-      if (parseInt(seconds) > 0) {
-        setSeconds(parseInt(seconds) - 1);
+    if (gameStart) {
+      const countdown = setInterval(() => {
+        if (parseInt(seconds) > 0) {
+          setSeconds(parseInt(seconds) - 1);
+        }
+        if (parseInt(seconds) === 0) {
+          if (parseInt(minutes) === 0) {
+            clearInterval(countdown);
+          } else {
+            setMinutes(parseInt(minutes) - 1);
+            setSeconds(59);
+          }
+        }
+      }, 1000);
+      return () => clearInterval(countdown);
+    }
+  }, [gameStart, minutes, seconds]);
+
+  // 정답 체크 기능
+  useEffect(() => {
+    if (gameStart && step <= AnswerList.length - 1) {
+      if (timeRemaining > 0 && !isAnswerShown) {
+        const intervalId = setInterval(() => {
+          setTimeRemaining(timeRemaining - 1);
+        }, 100);
+        return () => clearInterval(intervalId);
       }
-      if (parseInt(seconds) === 0) {
-        if (parseInt(minutes) === 0) {
-          clearInterval(countdown);
+      if (timeRemaining === 0 && !isAnswerShown) {
+        setIsAnswerShown(true);
+      }
+      if (isAnswerShown) {
+        if (step === AnswerList.length - 1) {
+          setIsAnswerShown(true);
+          return;
         } else {
-          setMinutes(parseInt(minutes) - 1);
-          setSeconds(59);
+          setTimeout(() => {
+            setIsAnswerShown(false);
+            setTimeRemaining(3);
+            setStep((prev) => (prev += 1));
+          }, 1000);
         }
       }
-    }, 1000);
-    return () => clearInterval(countdown);
-  }, [minutes, seconds]);
-
-  start = true; // 게임 시작 버튼 눌렸다고 가정
+    }
+  }, [gameStart, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
-    if (start) {
-      if (step >= AnswerList.length - 1) {
-        alert("게임이 종료되었습니다.");
-        return;
+    if (result !== "") {
+      if (result === AnswerList[step].answer) {
+        console.log("정답");
+        const data = {
+          correct: openvidu.userName,
+        };
+        openvidu.session.signal({
+          data: JSON.stringify(data),
+          type: "TrueAnswer",
+        });
+        setResult("");
+      } else {
+        console.log("오답");
+        setResult("");
       }
-      setTimeout(() => {
-        setStep((prev) => prev + 1);
-        setSeconds(parseInt(10));
-      }, 10000);
     }
-  }, [start, step]);
+  }, [result]);
+
+  useEffect(() => {
+    const video = openvidu.publisher;
+    video.addVideoElement(videoRef.current);
+  }, []);
+
+  IsHost = true;
 
   if (IsHost) {
     return (
-      <div className={styles.background}>
-        <div>
-          제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+      <div>
+        <div className={styles.AnswerFont}>
+          {AnswerList[step].question_no} / {AnswerList.length}
         </div>
 
-        <div>
-          번호: {AnswerList[step].question_no} / {AnswerList.length}
+        <div className={styles.AnswerFont}>
+          문제 : {AnswerList[step].answer}
         </div>
-
-        <div>정답: {AnswerList[step].answer}</div>
+        <div>
+          <video autoPlay={false} ref={videoRef} width="80%" height="80%" />
+          <span className={styles.HostCameraTimeLimit}>
+            {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+          </span>
+        </div>
       </div>
     );
   } else {
@@ -100,7 +161,7 @@ export default function ShoutInSilence({ start, result, setResult, IsHost }) {
           번호: {AnswerList[step].question_no} / {AnswerList.length}
         </div>
 
-        <div>정답: {AnswerList[step].answer}</div>
+        <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
       </div>
     );
   }
