@@ -4,7 +4,6 @@ import styles from "./CharacterQuiz.module.css";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
 
-const URL = "https://teachablemachine.withgoogle.com/models/SsOoeAyA_/";
 
 function Seeking({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
@@ -15,10 +14,11 @@ function Seeking({ start, result, setResult, openvidu }) {
   const videoRef = useRef(null);
   useEffect(() => {
     const init = async () => {
-      const modelURL = URL + "model.json";
-      const metadataURL = URL + "metadata.json";
-
+      const modelURL = "./model.json";
+      const metadataURL = "./metadata.json";
+      
       setModel(await tmImage.load(modelURL, metadataURL));
+      console.log(modelURL)
       setMaxPredictions(model.getTotalClasses());
 
       const flip = true;
