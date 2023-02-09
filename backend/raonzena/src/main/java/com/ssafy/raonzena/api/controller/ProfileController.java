@@ -1,6 +1,7 @@
 package com.ssafy.raonzena.api.controller;
 
 
+import com.ssafy.raonzena.api.request.ExpReq;
 import com.ssafy.raonzena.api.request.FollowReq;
 import com.ssafy.raonzena.api.request.RoomReq;
 import com.ssafy.raonzena.api.response.BoardRes;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +33,14 @@ public class ProfileController {
 
     // 팔로우 하기
     @PostMapping
-    protected ResponseEntity<?> follow(@RequestBody FollowReq followReq){
-        //////////세션정보로 유저넘버 얻어오기 구현 필요/////////
-        User user = userService.selectUser(1);
+    protected ResponseEntity<?> follow(@RequestBody FollowReq followReq, HttpSession session){
+
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+        User user = userService.selectUser(userNo);
 
         // 팔로우 성공시 ok 반환
-        if(profileService.follow(followReq.getFollowNo(), user.getUserNo())){ /////////세션정보 필요//////////
+        if(profileService.follow(followReq.getFollowNo(), user.getUserNo())){
             return ResponseEntity.ok().build();
         } else {
             // 팔로우 실패 시 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
@@ -79,12 +83,13 @@ public class ProfileController {
     }
 
     @DeleteMapping("{followNo}")
-    protected ResponseEntity<?> unfollow(@PathVariable long followNo) {
-        //////////세션정보로 유저넘버 얻어오기 구현 필요/////////
-        User user = userService.selectUser(1);
+    protected ResponseEntity<?> unfollow(@PathVariable long followNo, HttpSession session) {
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+        User user = userService.selectUser(userNo);
 
         // 언팔로우 성공시 ok 반환
-        if (profileService.unfollow(followNo, user.getUserNo())) { /////////세션정보 필요//////////
+        if (profileService.unfollow(followNo, user.getUserNo())) {
             return ResponseEntity.ok().build();
         } else {
             // 언팔로우 실패 시 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
@@ -108,6 +113,14 @@ public class ProfileController {
     @GetMapping("/{userNo}/followingCnt")
     public ResponseEntity<Integer> followingCnt(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.followingCnt(userNo));
+    }
+
+    //경험치 와 레벨 업데이트
+    @PutMapping("/expToLevelModify")
+    public ResponseEntity<?> expToLevelModify(@RequestBody ExpReq expReq){
+        profileService.expToLevelModify(expReq);
+        return ResponseEntity.ok().build();
+
     }
 
 }

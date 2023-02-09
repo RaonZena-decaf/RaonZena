@@ -101,6 +101,7 @@ function Create() {
             });
           })
           .catch((error) => {
+            console.log(error);
             alert("지금은 바쁩니다 다시 시도해 주세요");
           });
       }
