@@ -43,10 +43,16 @@ public interface ProfileService {
 
     //피드 디테일
     BoardRes feedDetail(long feedNo);
-
+    
+    //팔로워 수
     int followerCnt(long userNo);
-
+    
+    //팔로잉 수
     int followingCnt(long userNo);
-
+    
+    //경험치 수정하기
     void expToLevelModify(ExpReq expReq);
+    
+    //피드 삭제하기
+    void feedDelete(long boardNo);
 }

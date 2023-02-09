@@ -12,6 +12,7 @@ import com.ssafy.raonzena.db.entity.QFollow;
 import com.ssafy.raonzena.db.entity.QUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -90,6 +91,13 @@ public class ProfileRepositorySupport { //implements ProfileRepository
         return null;
     }
 
+    //피드 삭제
+    @Transactional
+    public void feedDelete(long boardNo) {
+
+        query.delete(board).where(board.boardNo.eq(boardNo)).execute();
+
+    }
 
 
 }
