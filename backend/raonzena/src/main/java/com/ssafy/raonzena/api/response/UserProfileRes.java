@@ -28,7 +28,7 @@ public class UserProfileRes {
 
     private Integer level;
 
-    private Timestamp createDate;
+    private Timestamp createDtm;
 
-    private String userImage;
+    private String userImageUrl;
 }
