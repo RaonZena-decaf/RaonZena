@@ -154,21 +154,23 @@ public class GameServiceImpl implements GameService{
     @Override
     public void saveGameScore(GameScoreReq gameScoreReq) {
         String key = "roomNo"+ gameScoreReq.getRoomNo();
-        System.out.println("저장"+1);
+
         if (!redisTemplate.opsForHash().entries(key).isEmpty()){
             // 저장하기 전에 key값에 들어있는 정보 삭제
-            System.out.println(key.getClass().getName());
-            redisTemplate.opsForHash().delete(key);
-            System.out.println("저장"+2);
+            Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
+            for (Map.Entry<Object, Object> userD : userData.entrySet()) {
+                redisTemplate.opsForHash().delete(key, userD.getKey());
+            }
         }
+
         // 게임점수 redis에 저장
         for (int i=0; i<gameScoreReq.getUserData().size(); i++){
             List<Long> userGameData = gameScoreReq.getUserData().get(i);
             String userNo = userGameData.get(0).toString();
             String userScore = userGameData.get(1).toString();
             redisTemplate.opsForHash().put(key,userNo,userScore);
-            System.out.println("저장"+3);
         }
+
         System.out.println(redisTemplate.opsForHash().entries(key));
     }
 
@@ -176,8 +178,6 @@ public class GameServiceImpl implements GameService{
     public GameScoreRes findGameScore(long roomNo) {
         String key = "roomNo"+ roomNo;
         Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
-        System.out.println(userData);
-        System.out.println(userData.keySet());
 
         // 전송할 user 점수 데이터
         List<List<Long>> userDataRes = new ArrayList<>();
@@ -188,9 +188,9 @@ public class GameServiceImpl implements GameService{
             userGameData.add(Long.valueOf(userD.getKey().toString()));
             userGameData.add(Long.valueOf(userD.getValue().toString()));
             userDataRes.add(userGameData);
-            System.out.println("조회"+4);
-            System.out.println(userGameData.toString());
         }
+
+        System.out.println(userDataRes.toString());
 
         return new GameScoreRes(roomNo,userDataRes);
     }
