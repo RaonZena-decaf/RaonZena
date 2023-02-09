@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./GameFrameRight.module.css";
-import SampleVideo from "../camera/SampleVideo";
 
-function GameFrameRight({ startHandler, start, setResult }) {
+import UserVideoComponent from "../camera/UserVideoComponent";
+
+function GameFrameRight({ startHandler, start, setResult, openvidu }) {
   const peopleList = [1, 2, 3, 4, 5, 6];
   const [answer, setAnswer] = useState("");
   const answerOnchange = (e) => {
@@ -21,8 +22,8 @@ function GameFrameRight({ startHandler, start, setResult }) {
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        {peopleList.map((people, idx) => {
-          return <SampleVideo key={idx} />;
+        {openvidu.subscribes.map((sub, idx) => {
+          return <UserVideoComponent key={idx} streamManager={sub}/>;
         })}
       </div>
       <div className={styles.submit}>
