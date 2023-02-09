@@ -75,7 +75,7 @@ export default function GameRoom({ searchWord }) {
     } else {
       navigate("/live");
     }
-  };
+  }
 
   useLayoutEffect(() => {
     // 방들 리스트를 로딩
@@ -88,9 +88,9 @@ export default function GameRoom({ searchWord }) {
 
   const navigateToCreateRoom = () => {
     if (loginConfigure) {
-      alert("Please Login");
-    } else {
       navigate("/makeroom");
+    } else {
+      alert("Please Login");
     }
   };
 

@@ -9,16 +9,14 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
-import com.ssafy.raonzena.api.response.GameAnswer;
-import com.ssafy.raonzena.api.response.GameAnswerAndImageRes;
-import com.ssafy.raonzena.api.response.GameScoreRes;
-import com.ssafy.raonzena.api.response.ImageThemeRes;
+import com.ssafy.raonzena.api.response.*;
 import com.ssafy.raonzena.db.entity.*;
 import com.ssafy.raonzena.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -58,6 +57,9 @@ public class GameServiceImpl implements GameService{
     GamePersonQuizRepository gamePersonQuizRepository;
 
     @Autowired
+    GameChanceRepository gameChanceRepository;
+
+    @Autowired
     GameThemeRepositorySupport gameThemeRepositorySupport;
 
     @Autowired
@@ -65,6 +67,9 @@ public class GameServiceImpl implements GameService{
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisTemplate<String, String> redisDrawTemplate;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -146,6 +151,19 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
+    public List<ChanceRes> chanceGameData(List<Integer> randomNo) {
+        List<ChanceRes> chances = new ArrayList<>();
+        for(int i=0; i<randomNo.size(); i++){
+            int data = randomNo.get(i);
+            //entity to dto
+            Chance chance = gameChanceRepository.findByChanceNo(data);
+            chances.add(new ChanceRes(chance));
+        }
+        return chances;
+    }
+
+
+    @Override
     public List<ImageThemeRes> getFrame(long userNo) {
         int level = userService.level(userNo);
         return gameThemeRepositorySupport.getThemes(level);
@@ -154,21 +172,23 @@ public class GameServiceImpl implements GameService{
     @Override
     public void saveGameScore(GameScoreReq gameScoreReq) {
         String key = "roomNo"+ gameScoreReq.getRoomNo();
-        System.out.println("저장"+1);
+
         if (!redisTemplate.opsForHash().entries(key).isEmpty()){
             // 저장하기 전에 key값에 들어있는 정보 삭제
-            System.out.println(key.getClass().getName());
-            redisTemplate.opsForHash().delete(String.valueOf(key));
-            System.out.println("저장"+2);
+            Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
+            for (Map.Entry<Object, Object> userD : userData.entrySet()) {
+                redisTemplate.opsForHash().delete(key, userD.getKey());
+            }
         }
+
         // 게임점수 redis에 저장
         for (int i=0; i<gameScoreReq.getUserData().size(); i++){
             List<Long> userGameData = gameScoreReq.getUserData().get(i);
             String userNo = userGameData.get(0).toString();
-            int userScore = userGameData.get(1).intValue();
+            String userScore = userGameData.get(1).toString();
             redisTemplate.opsForHash().put(key,userNo,userScore);
-            System.out.println("저장"+3);
         }
+
         System.out.println(redisTemplate.opsForHash().entries(key));
     }
 
@@ -176,8 +196,6 @@ public class GameServiceImpl implements GameService{
     public GameScoreRes findGameScore(long roomNo) {
         String key = "roomNo"+ roomNo;
         Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
-        System.out.println(userData);
-        System.out.println(userData.keySet());
 
         // 전송할 user 점수 데이터
         List<List<Long>> userDataRes = new ArrayList<>();
@@ -188,10 +206,32 @@ public class GameServiceImpl implements GameService{
             userGameData.add(Long.valueOf(userD.getKey().toString()));
             userGameData.add(Long.valueOf(userD.getValue().toString()));
             userDataRes.add(userGameData);
-            System.out.println("조회"+4);
-            System.out.println(userGameData.toString());
         }
 
+        System.out.println(userDataRes.toString());
+
         return new GameScoreRes(roomNo,userDataRes);
+    }
+
+    @Override
+    public void savePainting(String painting, long roomNo) {
+        String key = "roomNo"+ roomNo + "catchMind";
+
+//        if (redisDrawTemplate.opsForValue().get(key) != null){
+//            // 저장하기 전에 key값에 들어있는 정보 삭제
+//            redisDrawTemplate.delete(key);
+//        }
+
+        // 그림 문자열 redis에 저장
+        redisDrawTemplate.opsForValue().set(key, painting);
+
+        System.out.println(redisDrawTemplate.opsForValue().get(key));
+    }
+
+    @Override
+    public String findPainting(long roomNo) {
+        String key = "roomNo" + roomNo + "catchMind";
+
+        return redisDrawTemplate.opsForValue().get(key);
     }
 }

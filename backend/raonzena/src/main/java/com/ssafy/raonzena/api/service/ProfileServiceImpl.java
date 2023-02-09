@@ -148,5 +148,11 @@ public class ProfileServiceImpl implements ProfileService {
 
 
     }
+    //피드 삭제
+    @Override
+    public void feedDelete(long boardNo) {
+
+        profileRepositorySupport.feedDelete(boardNo);
+    }
 
 }

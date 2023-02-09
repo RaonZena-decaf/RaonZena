@@ -4,6 +4,7 @@ package com.ssafy.raonzena.api.controller;
 
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
+import com.ssafy.raonzena.api.response.ChanceRes;
 import com.ssafy.raonzena.api.response.GameScoreRes;
 import com.ssafy.raonzena.api.response.ImageThemeRes;
 import com.ssafy.raonzena.api.response.UserRes;
@@ -37,8 +38,20 @@ public class GameController {
         return ResponseEntity.ok("Success");
     }
 
+    // 캐치마인드 그림 송신
+    @PostMapping("/{roomNo}/catchMind")
+    public ResponseEntity<?> paintingSave(@PathVariable long roomNo, @RequestBody String painting){
+        gameService.savePainting(painting,roomNo);
+        return ResponseEntity.ok("Success");
+    }
 
-    //게임데이터
+    // 캐치마인드 그림 수신
+    @GetMapping("/{roomNo}/catchMind")
+    public ResponseEntity<?> paintingDetails(@PathVariable long roomNo){
+        return ResponseEntity.ok(gameService.findPainting(roomNo));
+    }
+
+    //게임데이터 (인생역전 제외)
     @GetMapping("/gameType/{gameType}")
     public ResponseEntity<?> gameData(@PathVariable int gameType){
         //- 1 : 채팅 주제
@@ -52,6 +65,13 @@ public class GameController {
 
         return ResponseEntity.ok(gameService.answer(gameType));
     }
+
+    //게임데이터 (인생역전)
+    @GetMapping("/gameType/chanceGame")
+    public ResponseEntity<List<ChanceRes>> chanceGameData(@RequestBody List<Integer> randomNo){
+        return ResponseEntity.ok(gameService.chanceGameData(randomNo));
+    }
+
 
     //테마 보여주기
     @GetMapping("/feed/frame")
@@ -68,6 +88,8 @@ public class GameController {
         // 게임데이터 조회
         return ResponseEntity.ok(gameService.findGameScore(roomNo));
     }
+
+
 
 
 

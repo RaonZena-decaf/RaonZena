@@ -111,4 +111,14 @@ public class LiveController {
             return ResponseEntity.noContent().build();
         }
     }
+
+    @DeleteMapping("/{roomNo}")
+    protected ResponseEntity<?> roomRemove(@PathVariable long roomNo){
+        if(liveService.removeRoom(roomNo)){
+            // 방 정상 삭제 시
+            return ResponseEntity.ok("success");
+        }else{
+            return ResponseEntity.noContent().build();
+        }
+    }
 }

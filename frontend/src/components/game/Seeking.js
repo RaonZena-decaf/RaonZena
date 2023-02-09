@@ -1,9 +1,64 @@
 import { CharacterQuizList } from "./CharacterQuizList";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./CharacterQuiz.module.css";
+import * as tf from "@tensorflow/tfjs";
+import * as tmImage from "@teachablemachine/image";
 
-function CharacterQuiz({ start, result, setResult, openvidu }) {
+const URL = "https://teachablemachine.withgoogle.com/models/SsOoeAyA_/";
+
+function Seeking({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
+  const [model, setModel] = useState(null);
+  const [webcam, setWebcam] = useState(null);
+  const [maxPredictions, setMaxPredictions] = useState(null);
+  const labelContainerRef = useRef(null);
+  const videoRef = useRef(null);
+  useEffect(() => {
+    const init = async () => {
+      const modelURL = URL + "model.json";
+      const metadataURL = URL + "metadata.json";
+
+      setModel(await tmImage.load(modelURL, metadataURL));
+      setMaxPredictions(model.getTotalClasses());
+
+      const flip = true;
+      setWebcam(new tmImage.Webcam(200, 200, flip));
+      await webcam.setup();
+      await webcam.play();
+      requestAnimationFrame(loop);
+    };
+
+    init();
+  }, []);
+  // useEffect(() => {
+  //   const setupWebcam = async () => {
+  //     if (!model) return;
+
+  //     const newWebcam = new tmImage.Webcam(200, 200, true);
+  //     await newWebcam.setup();
+  //     await newWebcam.play();
+  //     setWebcam(newWebcam);
+  //     window.requestAnimationFrame(loop);
+  //   };
+
+  //   setupWebcam();
+  // }, [model]);
+
+  const loop = async () => {
+    webcam.update();
+    await predict();
+    requestAnimationFrame(loop);
+  };
+
+  const predict = async () => {
+    const prediction = await model.predict(webcam.canvas);
+    for (let i = 0; i < maxPredictions; i++) {
+      const classPrediction =
+        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      document.getElementById("label-container").childNodes[i].innerHTML =
+        classPrediction;
+    }
+  };
 
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
@@ -58,7 +113,11 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
       }
     }
   }, [result]);
-
+  useEffect(() => {
+    const video = openvidu.publisher;
+    video.addVideoElement(videoRef.current);
+  }, []);
+  
   return (
     <div className={styles.background}>
       {isAnswerShown ? (
@@ -73,9 +132,9 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
         />
       )}
 
-      {/* <div>{CharacterQuizList[step].person_no}</div> */}
+      <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
     </div>
   );
 }
 
-export default CharacterQuiz;
+export default Seeking;

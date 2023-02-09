@@ -4,6 +4,7 @@ import CharacterQuiz from "../game/CharacterQuiz";
 import GameFrameProgress from "./GameFrameProgress";
 import Catchmind from "../game/catchmind";
 import ShoutInSilence from "../game/ShoutInSilence";
+import Seeking from "../game/Seeking";
 
 function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
   const [peopleList, setPeopleList] = useState([
@@ -30,19 +31,31 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
         <div className={styles.container}>
           {gamename === "imagetheme" && (
             <CharacterQuiz
-            start={start}
-            result={result}
-            setResult={setResult}
-            openvidu={openvidu}
-          />          )}
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+            />
+          )}
+
           {gamename === "objectfast" && (
-            <CharacterQuiz start={start} result={result} />
+            <Seeking
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+            />
           )}
           {gamename === "catchmind" && (
             <Catchmind start={start} result={result} />
           )}
           {gamename === "talkingsilence" && (
-            <ShoutInSilence start={start} result={result} />
+            <ShoutInSilence
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+            />
           )}
           {gamename === "personquiz" && (
             <CharacterQuiz
