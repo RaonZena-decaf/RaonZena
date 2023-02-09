@@ -97,6 +97,7 @@ function Create() {
                 camera,
                 roomNo: res.data.roomNo,
                 roomTitle: res.data.roomTitle,
+                host : true
               },
             });
           })

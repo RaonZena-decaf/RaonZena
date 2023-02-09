@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class UserProfileRes {
 
-    private Integer userNo;
+    private long userNo;
 
     private String userId;
 
@@ -28,7 +28,7 @@ public class UserProfileRes {
 
     private Integer level;
 
-    private Timestamp createDate;
+    private Timestamp createDtm;
 
-    private String userImage;
+    private String userImageUrl;
 }
