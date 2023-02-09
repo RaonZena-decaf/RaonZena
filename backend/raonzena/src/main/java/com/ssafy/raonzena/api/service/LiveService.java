@@ -18,4 +18,6 @@ public interface LiveService {
     boolean isAccessible(long roomNo, int sessionHeadCount); /////////세션정보 필요//////////
     // 팔로우 onoffline 확인
     boolean onoff(long followNo);
+    // 방 삭제
+    boolean removeRoom(long roomNo);
 }

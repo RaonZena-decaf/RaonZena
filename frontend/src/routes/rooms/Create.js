@@ -82,8 +82,9 @@ function Create() {
           roomTitle: roomname,
           headcount: peoplenum,
           password: password,
-          host: user.userId,
+          // host: user.userId,
         };
+        console.log("방 만들때 데이터", data);
         axios({
           method: "post",
           url: `${baseUrl}live/room`,
@@ -155,7 +156,7 @@ function Create() {
                       onChange={passwordChange}
                       className={style.input}
                       disabled={disabled}
-                      type='number'
+                      type="number"
                     />
                   </li>
 

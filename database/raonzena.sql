@@ -170,7 +170,11 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `raonzena`.`chance`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `raonzena`.`chance` (
+<<<<<<< HEAD
   `chance_no` BIGINT NOT NULL AUTO_INCREMENT,
+=======
+  `chance_no` BIGINT NOT NULL,
+>>>>>>> 3c5a200932c296f22d47892c90b719bedeb585d8
   `chance_id` VARCHAR(50) NULL,
   `item` VARCHAR(200) NULL,
   PRIMARY KEY (`chance_no`))
