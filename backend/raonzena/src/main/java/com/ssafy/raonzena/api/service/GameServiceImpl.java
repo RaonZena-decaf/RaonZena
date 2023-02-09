@@ -213,4 +213,11 @@ public class GameServiceImpl implements GameService{
 
         System.out.println(redisDrawTemplate.opsForValue().get(key));
     }
+
+    @Override
+    public String findPainting(long roomNo) {
+        String key = "roomNo" + roomNo + "catchMind";
+
+        return redisDrawTemplate.opsForValue().get(key);
+    }
 }

@@ -44,6 +44,12 @@ public class GameController {
         return ResponseEntity.ok("Success");
     }
 
+    // 캐치마인드 그림 수신
+    @GetMapping("/{roomNo}/catchMind")
+    public ResponseEntity<?> paintingDetails(@PathVariable long roomNo){
+        return ResponseEntity.ok(gameService.findPainting(roomNo));
+    }
+
     //게임데이터
     @GetMapping("/gameType/{gameType}")
     public ResponseEntity<?> gameData(@PathVariable int gameType){

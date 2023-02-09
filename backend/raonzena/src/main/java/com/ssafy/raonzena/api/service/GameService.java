@@ -32,4 +32,7 @@ public interface GameService {
 
     // 캐치마인드 그림 저장하기
     void savePainting(String painting, long roomNo);
+
+    // 캐치마인드 그림 보내기
+    String findPainting(long roomNo);
 }
