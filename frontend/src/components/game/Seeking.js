@@ -4,7 +4,7 @@ import styles from "./CharacterQuiz.module.css";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
 
-const URL = "https://storage.googleapis.com/tm-model/SsOoeAyA_/";
+const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
 function Seeking({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
   const [model, setModel] = useState(null);
@@ -23,7 +23,7 @@ function Seeking({ start, result, setResult, openvidu }) {
         setModel(newmodel);
         const flip = true;
         const newcam = new tmImage.Webcam(200, 200, flip);
-        await setWebcam(newcam);
+        setWebcam(newcam);
         resolve(newmodel, newcam);
       });
       steps
