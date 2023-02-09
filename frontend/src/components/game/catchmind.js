@@ -18,7 +18,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
           .then((res) => {
             console.log(res.data);
             const image = new Image();
-            image.src = res.data
+            image.src = res.data;
             image.onload = function () {
               ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             };
@@ -39,7 +39,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
 
     function stopPainting(event) {
       painting = false;
-      
+
       const dataURL = canvas.toDataURL();
       //axios 통신 어케하죠?
       //axios 통신해서 백으로 dataURL보내주기
@@ -52,10 +52,11 @@ function Catchmind({ start, result, setResult, openvidu }) {
           console.log(res);
         })
         .catch((error) => console.log("following List 에러: ", error));
-
-      openvidu.session.signal({
-        type: "CanvasDraw",
-      });
+      if (openvidu.session) {
+        openvidu.session.signal({
+          type: "CanvasDraw",
+        });
+      }
 
       // axios 통신해서 백에서 dataURL 받아오기
       // dataURL = 받아와서
