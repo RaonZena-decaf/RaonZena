@@ -13,6 +13,7 @@ const RoomMenuFrame = ({
   nowContent,
   exitaction,
   ChangeGame,
+  TotalUsers,
 }) => {
   const animation = [
     show === "entering" ? "MenuOpen" : show === "exiting" ? "MenuClose" : null,
@@ -74,9 +75,9 @@ const RoomMenuFrame = ({
               getSubject={getSubject}
             />
           )}
-          {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu} />}
+          {menuContent === "takePhoto" && <PhotoShoot closeMenu={closeMenu} TotalUsers={TotalUsers}/>}
           {menuContent === "exitRoom" && (
-            <ExitRoom closeMenu={closeMenu} onClick={exitaction()} />
+            <ExitRoom closeMenu={closeMenu} exitaction={exitaction} />
           )}
         </div>
       </div>

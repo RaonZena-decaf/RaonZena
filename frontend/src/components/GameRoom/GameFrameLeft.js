@@ -29,24 +29,33 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
     <div>
       <div>
         <div className={styles.container}>
-          {gamename === "imagegame" && (
-            <CharacterQuiz start={start} result={result} />
-          )}
-          {gamename === "seeking" && (
-            <Seeking
+          {gamename === "imagetheme" && (
+            <CharacterQuiz
               start={start}
               result={result}
               setResult={setResult}
               openvidu={openvidu}
             />
           )}
+
+          {gamename === "objectfast" && (
+            <CharacterQuiz               start={start}
+            result={result}
+            setResult={setResult}
+            openvidu={openvidu} />
+          )}
           {gamename === "catchmind" && (
             <Catchmind start={start} result={result} />
           )}
           {gamename === "talkingsilence" && (
-            <ShoutInSilence start={start} result={result} />
+            <ShoutInSilence
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+            />
           )}
-          {gamename === "peoplequiz" && (
+          {gamename === "personquiz" && (
             <CharacterQuiz
               start={start}
               result={result}

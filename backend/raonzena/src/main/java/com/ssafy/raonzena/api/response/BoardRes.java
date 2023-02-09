@@ -20,7 +20,9 @@ public class BoardRes {
     private String content;
 
     private String title;
+
     private long userNo;
+
     private Timestamp createDtm;
 
     private long firstUser;

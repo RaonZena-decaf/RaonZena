@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +52,10 @@ public class LiveController {
     private Map<Long, Integer> mapSessions = new ConcurrentHashMap<>(); //Map<roomId,참가자수>
 
     @PostMapping("/room")
-    protected ResponseEntity<?> roomAdd(@RequestBody RoomReq roomReq){
-        //////////세션정보로 유저넘버 얻어오기 구현 필요/////////
-        User user = userService.selectUser(2);
+    protected ResponseEntity<?> roomAdd(@RequestBody RoomReq roomReq, HttpSession session){
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+        User user = userService.selectUser(userNo);
 
         //1.room 정보 db에 저장
         LiveRoomInfoRes liveRoomInfoRes = roomService.addRoom(roomReq, user);
@@ -81,9 +83,11 @@ public class LiveController {
     }
 
     @GetMapping("followingRoom")
-    protected ResponseEntity<List<LiveRoomInfoRes>> followingRoomsList(){
+    protected ResponseEntity<List<LiveRoomInfoRes>> followingRoomsList(HttpSession session){
         // 팔로잉 유저들의 방 조회
-        return ResponseEntity.ok(liveService.findFollowingRooms(6)); /////////세션정보 필요//////////
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+        return ResponseEntity.ok(liveService.findFollowingRooms(userNo));
     }
 
     @GetMapping("/{roomNo}")
@@ -94,6 +98,17 @@ public class LiveController {
         } else {
             // 게임 접속 불가능하면 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/{followNo}/onoff")
+    protected ResponseEntity<?> followingsOnOff(@PathVariable long followNo){
+        if(liveService.onoff(followNo)){
+            // online일 경우 ok 반환
+            return ResponseEntity.ok().build();
+        }else{
+            // offline일 경우 noContent 반환
+            return ResponseEntity.noContent().build();
         }
     }
 }

@@ -9,6 +9,8 @@ import com.ssafy.raonzena.db.repository.UserRepository;
 import com.ssafy.raonzena.db.repository.UserRepositorySupport;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,6 +30,10 @@ public class UserServieImpl implements UserService{
     @Autowired
     UserRepositorySupport userRepositorySupport;
 
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
+
     //카카오 토큰 가져오기
     public String getKaKaoAccessToken(String authorizedCode){
         // HttpHeader 오브젝트 생성
@@ -38,8 +44,8 @@ public class UserServieImpl implements UserService{
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "c271efde78c62f250965bf71db6657fb");//kakao rest-api 키
-        params.add("redirect_uri", "http://localhost:3000/oauth/kakao/callback");
-        //params.add("redirect_uri", "https://i8a507.p.ssafy.io/oauth");  //redirect-url 나중에 서버 주소 받음 바꾸기 //  https://i8a507.p.ssafy.io/oauth   http://localhost:3000/oauth/kakao/callback
+//        params.add("redirect_uri", "http://localhost:3000/oauth/kakao/callback");
+        params.add("redirect_uri", "https://i8a507.p.ssafy.io/oauth/kakao/callback");  //redirect-url 나중에 서버 주소 받음 바꾸기 //  https://i8a507.p.ssafy.io/oauth   http://localhost:3000/oauth/kakao/callback
         // /kakao/callback
         params.add("code", authorizedCode);
 
@@ -120,6 +126,11 @@ public class UserServieImpl implements UserService{
 
         User userProfile = userRepository.findByUserId(userInfo.getUserId());
 
+        //로그인시 userNo redis에 저장
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        String key = "userNo"+userProfile.getUserNo();
+        valueOperations.set(key, String.valueOf(userProfile.getUserNo()));
+
         return new UserRes(userProfile);
 
     }
@@ -136,5 +147,11 @@ public class UserServieImpl implements UserService{
         return user.getLevel();
     }
 
+    @Override
+    public void logout(long userNo) {
+        //로그아웃시 userNo redis에서 삭제
+        String key = "userNo"+userNo;
+        redisTemplate.delete(key);
+    }
 
 }

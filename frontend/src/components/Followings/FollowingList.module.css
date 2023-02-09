@@ -1,31 +1,54 @@
 .ProfileImg {
+  width: 5rem;
   border-radius: 50%;
-  width: 4rem;
   aspect-ratio: 1/1;
+  border: solid 0.4rem transparent;
+  background-image: linear-gradient(#fff, #fff), 
+  linear-gradient(to right, #8f00ff 0%,  #f400b0 100%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 }
 
 .FollowingList {
-  height: 40rem;
-  overflow: hidden auto;
+  max-height: 40rem;
+  overflow: scroll;
   display: table-caption;
+}
+
+.FollowingList::-webkit-scrollbar {
+  display: none;
 }
 
 .FollowingInfoFont {
   font-size: 2rem;
-  float: left;
   margin: 0.5rem;
-  align-items: center;
+}
+
+.FollowingInfoFont p {
+  margin: 0;
 }
 
 .FollowingsInfo {
-  display: inline-flex;
-  justify-content: space-between;
-  height: 6rem;
+  display: flex;
+  justify-content: start;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   text-overflow: ellipsis;
-  overflow: hidden;
   white-space: nowrap;
+  gap: 1rem;
+}
+.FollowingsInfo:hover{
+  color: #f400b0;
+  cursor: pointer;
+  animation: changecolor 0.3s ease;
+}
+@keyframes changecolor {
+  0% {
+    color: white;
+  }
+  100% {
+    color: #f400b0;
+  }
 }
 
 .card {
@@ -47,11 +70,7 @@
 .Roomimage {
   width: 20rem;
   align-items: center;
-}
-
-.HostInfo {
-  display: inline-flex;
-  align-items: center;
+  border-radius: 2.5rem;
 }
 
 .RoomTitle {
@@ -80,23 +99,6 @@
 .userNameFont {
   font-size: 2rem;
 }
-.HostFollowingsList {
-  width: 100%;
-  margin: auto;
-  display: inline-flex;
-  overflow: scroll hidden;
-}
-.HostTextInfo {
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  line-height: 3rem;
-  overflow: hidden;
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
 
 .marginTopBot {
   padding: 3rem;
@@ -123,8 +125,4 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 3rem;
-}
-
-.FollowingBox {
-  margin: 1.5rem;
 }

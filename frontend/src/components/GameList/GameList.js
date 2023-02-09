@@ -1,5 +1,5 @@
 import styles from "./GameList.module.css";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import axios from "axios";
 import GameRoomsDisplay from "./GameListDisplay";
 import { Pagination } from "@mui/material";
@@ -20,7 +20,7 @@ export default function GameRoom({ searchWord }) {
   const navigate = useNavigate();
 
   const loginConfigure = () => {
-    if (user.user_no === "") {
+    if (user.userNo === "") {
       return false;
     } else {
       return true;
@@ -30,10 +30,10 @@ export default function GameRoom({ searchWord }) {
   const [gameRoomList, setGameRoomList] = useState([]);
   const [curGameRoomList, setCurGameRoomList] = useState([]);
 
-  const getList = (Search) => {
+  async function getList(Search) {
     if (loginConfigure()) {
       if (Search === null || "") {
-        axios({
+        await axios({
           method: "GET",
           url: `${baseUrl}live`,
         })
@@ -53,10 +53,10 @@ export default function GameRoom({ searchWord }) {
           })
           .catch((error) => console.log(error));
       } else {
-        axios({
+        await axios({
           method: "get",
-          url: `${baseUrl}live?keyword="${Search}"`,
-          params: Search,
+          url: `${baseUrl}live`,
+          params: { keyword: Search },
         })
           .then((res) => {
             setGameRoomList(res.data);
@@ -77,7 +77,7 @@ export default function GameRoom({ searchWord }) {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // 방들 리스트를 로딩
     getList(searchWord);
   }, [currentPage, searchWord]);
@@ -88,9 +88,9 @@ export default function GameRoom({ searchWord }) {
 
   const navigateToCreateRoom = () => {
     if (loginConfigure) {
-      navigate("/live");
-    } else {
       alert("Please Login");
+    } else {
+      navigate("/makeroom");
     }
   };
 
@@ -112,23 +112,18 @@ export default function GameRoom({ searchWord }) {
         </div>
       ) : (
         // 열려있는 게임방이 없는 경우
-        <div>
+        <div className={styles.nodatacontainer}>
           <FaCommentDots className={styles.NoGameRoomsImg} />
-          <div className={styles.marginTopBot}>
-            <p className={styles.NoGameRoomsText}>열려 있는 방이 없습니다 </p>
-            <p className={styles.NoGameRoomsText}>
-              방을 만들고 친구들을 불러보세요!
-            </p>
-          </div>
-
-          <div className={styles.marginAuto}>
-            <button
-              className={styles.CreateGameButton}
-              onClick={navigateToCreateRoom}
-            >
-              방 만들기
-            </button>
-          </div>
+          <p className={styles.NoGameRoomsText}>열려 있는 방이 없습니다 </p>
+          <p className={styles.NoGameRoomsText}>
+            방을 만들고 친구들을 불러보세요!
+          </p>
+          <button
+            className={styles.CreateGameButton}
+            onClick={navigateToCreateRoom}
+          >
+            방 만들기
+          </button>
         </div>
       )}
     </div>

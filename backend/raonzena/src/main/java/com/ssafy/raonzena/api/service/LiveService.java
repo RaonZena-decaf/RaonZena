@@ -16,4 +16,6 @@ public interface LiveService {
     List<LiveRoomInfoRes> findFollowingRooms(long sessionUserNo); /////////세션정보 필요//////////
     // 유저 게임 참가 가능 여부 조회
     boolean isAccessible(long roomNo, int sessionHeadCount); /////////세션정보 필요//////////
+    // 팔로우 onoffline 확인
+    boolean onoff(long followNo);
 }

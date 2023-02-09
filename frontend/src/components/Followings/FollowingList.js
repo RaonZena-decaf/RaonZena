@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Item from "./FollowingListItem";
-import styles from "./Followings.module.css";
+import styles from "./FollowingList.module.css";
 import { useSelector } from "react-redux";
 import { FaUsersSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";

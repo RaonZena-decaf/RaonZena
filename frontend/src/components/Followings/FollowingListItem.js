@@ -1,7 +1,6 @@
-import { style } from "@mui/system";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Followings.module.css";
+import styles from "./FollowingList.module.css";
 import { useSelector } from "react-redux";
 
 const FollowingListItem = (props) => {
@@ -13,9 +12,7 @@ const FollowingListItem = (props) => {
 
   return (
     <div className={styles.FollowingsInfo} onClick={navigateToProfile}>
-      <div className={styles.FollowingBox}>
-        <img src={props.userImage} className={styles.ProfileImg} alt="프로필" />
-      </div>
+      <img src={props.userImage} className={styles.ProfileImg} alt="프로필" />
       <div className={styles.FollowingInfoFont}>
         <p>LV {props.level}</p>
       </div>

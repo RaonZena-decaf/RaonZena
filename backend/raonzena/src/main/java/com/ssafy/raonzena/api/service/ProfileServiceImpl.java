@@ -1,6 +1,7 @@
 package com.ssafy.raonzena.api.service;
 
 
+import com.ssafy.raonzena.api.request.ExpReq;
 import com.ssafy.raonzena.api.response.BoardRes;
 import com.ssafy.raonzena.api.response.FollowFollowingtRes;
 import com.ssafy.raonzena.api.response.UserProfileRes;
@@ -34,9 +35,11 @@ public class ProfileServiceImpl implements ProfileService {
     BoardRepository boardRepository;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     FollowRepository followRepository;
+
+    @Autowired
+    UserService userService;
 
     @Override
     public boolean follow(long followNo, long userNo) {
@@ -118,6 +121,32 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public int followingCnt(long userNo) {
         return following(userNo).size();
+    }
+
+
+    //exp ,level update
+    @Override
+    public void expToLevelModify(ExpReq expReq) {
+        //유저 정보 불러온다.
+        User user = userService.selectUser(expReq.getUserNo());
+
+        int exp = user.getExp();
+        int level = user.getLevel();
+
+
+        int changeExp = expReq.getExp() + exp; //바뀐 exp
+
+        if(changeExp >= 200){  //유저의 exp 가 200이 넘어가면 level이 올라가고 exp-200을 exp에 업데이트 한다.
+            level += 1;
+            exp = changeExp - 200;
+            userRepository.updateExpAndLevel(exp,level,expReq.getUserNo());
+        }else{                 //200 안넘어가면 exp만 추가한다.
+            exp = changeExp;
+            userRepository.updateExp(exp,expReq.getUserNo());
+        }
+
+
+
     }
 
 }

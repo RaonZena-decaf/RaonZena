@@ -43,8 +43,8 @@ function ProfileModal({ show, handleClose, nowContent, follower, following }) {
         onClick={(e) => e.stopPropagation()}
       >
         {nowContent && <ProfilePostDetail nowContent={nowContent} />}
-        {following && <ProfileFollowingListDetail following={following} />}
-        {follower && <ProfileFollowerListDetail follower={follower} />}
+        {following && <ProfileFollowingListDetail following={following} handleClose={handleClose}/>}
+        {follower && <ProfileFollowerListDetail follower={follower} handleClose={handleClose}/>}
       </div>
     </div>
   );

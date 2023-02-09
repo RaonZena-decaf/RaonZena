@@ -14,9 +14,11 @@ const GameRoomsDisplay = ({ gameRoomList, loading }) => {
           <Item
             title={gameRoomInfo.roomTitle}
             users={gameRoomInfo.headcount}
-            image_src={gameRoomInfo.host.image_src}
+            image_src={gameRoomInfo.imageName}
+            // image_src="/GameThumbnail/1.png"
             headcount={gameRoomInfo.headcount}
             key={idx}
+            roomNo={gameRoomInfo.roomNo}
           />
         );
       })}

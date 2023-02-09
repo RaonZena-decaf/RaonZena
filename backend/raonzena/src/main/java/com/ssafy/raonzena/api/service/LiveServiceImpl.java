@@ -4,6 +4,7 @@ import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.repository.LiveRepositorySupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,9 @@ public class LiveServiceImpl implements LiveService {
     @Autowired
     LiveRepositorySupport liveRepositorySupport;
 
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
     @Override
     public List<LiveRoomInfoRes> findRooms(Map<String, Object> conditions){
         // 현재 실행중인 방 조회
@@ -28,14 +32,25 @@ public class LiveServiceImpl implements LiveService {
     }
 
     @Override
-    public List<LiveRoomInfoRes> findFollowingRooms(long sessionUserNo) { /////////세션정보 필요//////////
+    public List<LiveRoomInfoRes> findFollowingRooms(long userNo) {
         // 팔로잉 유저들의 방 조회
-        return liveRepositorySupport.selectFollowingRooms(sessionUserNo);
+        return liveRepositorySupport.selectFollowingRooms(userNo);
     }
 
     @Override
     public boolean isAccessible(long roomNo, int sessionHeadCount) { /////////세션정보 필요//////////
         // 유저 게임 참가 가능 여부 조회
         return liveRepositorySupport.isAccessible(roomNo,sessionHeadCount);
+    }
+
+    @Override
+    public boolean onoff(long followNo) {
+        // 팔로우한 사람의 현재상태
+        String key = "userNo"+followNo;
+        if (redisTemplate.opsForValue().get(key) != null){
+            // redis에 저장되어 있으면 online상태
+            return true;
+        }
+        return false;
     }
 }

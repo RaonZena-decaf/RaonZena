@@ -1,28 +1,24 @@
 import { style } from "@mui/system";
 import React, { useState, useNavigate } from "react";
-import styles from "./Followings.module.css";
+import styles from "./HostFollowingGames.module.css";
 
 export default function FollowingsInGameListItem(props) {
-  // userName
-  // userImage
-  // level
-  // roomTitle
-  // headcount
-  // password
-  // currentCount
-
   return (
     <div className={styles.card}>
       <div className={styles.HostInfo}>
         <img
-          className={styles.ProfileSize}
+          className={styles.HostImage}
           src={props.userImage}
           alt="userImage"
         />
         <div className={styles.HostTextInfo}>
-          <p className={styles.LevelFont}> LV {props.level}</p>
-          <p className={styles.userNameFont}>{props.userName}</p>
+          <span className={styles.LevelFont}>
+            {" "}
+            LV {props.level} <br></br>
+            <span className={styles.userNameFont}>{props.userName}</span>
+          </span>
         </div>
+        <div></div>
       </div>
       <div>
         <img
@@ -41,8 +37,6 @@ export default function FollowingsInGameListItem(props) {
           </p>
         </div>
       </div>
-
-      <div className={styles.RoomInfo}></div>
     </div>
   );
 }

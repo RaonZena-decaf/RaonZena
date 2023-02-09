@@ -17,20 +17,27 @@
 }
 
 .background2 {
-  width: 25vw;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 3rem;
   gap: 1rem;
+  cursor: pointer;
 }
 
 .img {
-  width: 5vw;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 50%;
+  border: solid 0.3rem transparent;
+  background-image: linear-gradient(#fff, #fff), 
+  linear-gradient(to right, #8f00ff 0%,  #f400b0 100%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 }
 
 .text {
   margin: 3rem;
-  color: #ff00b9;
+  color: #f400b0;
 }

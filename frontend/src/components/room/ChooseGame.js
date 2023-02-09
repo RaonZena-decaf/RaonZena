@@ -13,11 +13,11 @@ function ChooseGame({ ChangeGame }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.IconText} onClick={ChangeGame} id="imagegame">
+      <div className={styles.IconText} onClick={ChangeGame} id="imagetheme">
         <FaHandPaper className={styles.NoClick} />
         <div className={styles.gameName}>이미지 게임</div>
       </div>
-      <div className={styles.IconText} onClick={ChangeGame} id="seeking">
+      <div className={styles.IconText} onClick={ChangeGame} id="objectfast">
         <FaSketch className={styles.NoClick} />
         <div className={styles.gameName}>방 안의 보물찾기</div>
       </div>
@@ -29,7 +29,7 @@ function ChooseGame({ ChangeGame }) {
         <FaBell className={styles.NoClick} />
         <div className={styles.gameName}>고요 속의 외침</div>
       </div>
-      <div className={styles.IconText} onClick={ChangeGame} id="peoplequiz">
+      <div className={styles.IconText} onClick={ChangeGame} id="personquiz">
         <FaUserCircle className={styles.NoClick} />
         <div className={styles.gameName}>인물 퀴즈</div>
       </div>

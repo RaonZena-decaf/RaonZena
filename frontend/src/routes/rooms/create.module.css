@@ -3,7 +3,6 @@
   font-weight: bold;
   font-size: 5rem;
   color: white;
-  font-family: "Noto Sans";
   padding: 10rem 8.3% 0 8.3%;
   display: flex;
   flex-direction: column;
@@ -43,7 +42,7 @@
 }
 .highlight,
 .header span {
-  color: #ff00b9;
+  color: #f400b0;
 }
 .leftcontainer {
   text-align: left;
@@ -57,6 +56,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width : 30%
 }
 
 .textcont {
@@ -64,13 +64,12 @@
   text-align: center;
 }
 .video {
-  width: 30rem;
-  height: 30rem;
-  background-color: tomato;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 1rem;
+  width: 140%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  overflow: hidden;
+  /* background:  linear-gradient(90deg, #8f00ff, #ff00a8); */
 }
 .accessory {
   display: flex;
@@ -84,50 +83,25 @@
 }
 
 .button {
-  background: #ff00b9;
+  background-color: #f400b0;
   border-radius: 1rem;
   padding: 1rem 2rem 1rem 2rem;
   cursor: pointer;
   font-size: 2rem;  
   align-self: flex-start;
+  color: #ffffff;
+  border: none;
 }
 
-.notselected {
-  display: inline-block;
-  height: 3rem;
-  width: 3rem;
-  line-height: 3rem;
-  background: #3e3e3e;
-  border-radius: 2rem;
-  font-size: 2rem;
-  color: #f300b0;
-  font-weight: 800;
-  border: 0;
-  margin: 0.1rem;
-  cursor: pointer;
-}
-.selected {
-  display: inline-block;
-  height: 3rem;
-  width: 3rem;
-  line-height: 3rem;
-  background: #3e3e3e;
-  border-radius: 2rem;
-  font-size: 2rem;
-  color: #f300b0;
-  font-weight: 800;
-  margin: 0.1rem;
-  border: 3px solid transparent;
-  background-image: linear-gradient(#444444, #444444),
-    linear-gradient(to right, #9d00f1ed 0%, #f400b0 100%);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-}
 .enter {
+  background-color: #f400b0;
   border-radius: 1rem;
   padding: 1rem 2rem 1rem 2rem;
+  font-size: 2rem;  
   cursor: pointer;
   align-self: flex-end;
+  color: #ffffff;
+  border: none;
 }
 .checkbox{
   position: absolute;
@@ -186,14 +160,17 @@ form ul li {
   padding: 1rem;
   margin: 0.5rem;
   color: white;
-  text-align: center;
   float: left;
 }
-::placeholder {
+.input::placeholder {
   text-align: start;
   color: #cacaca;
   font-size: 1.5rem;
-  padding-left: 5%;
+}
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* https://codepen.io/caseycallow/pen/yaGQMo 라디오 버튼 커스텀 참고 */
