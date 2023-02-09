@@ -54,17 +54,6 @@
   flex-wrap: nowrap;
 }
 
-.TimeLimit {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 1.5rem;
-  position: absolute;
-  bottom: 3%;
-  right: 1%;
-  color: black;
-  text-shadow: -2px 0 #ffff, 0 2px #ffff, 2px 0 #ffff, 0 -2px #ffff;
-}
-
 .webcamCapture {
   /* width: 90%;
   height: 70%; */
@@ -76,10 +65,21 @@
   position: relative;
 }
 
+.TimeLimit {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+  position: absolute;
+  bottom: 3%;
+  right: 1%;
+  color: black;
+  text-shadow: -2px 0 #ffff, 0 2px #ffff, 2px 0 #ffff, 0 -2px #ffff;
+}
+
 .AnswerFont {
-  text-align: left;
+  /* text-align: left;
   font-size: 2rem;
-  line-height: 3rem;
+  line-height: 3rem; */
 
   display: flex;
   justify-content: flex-end;

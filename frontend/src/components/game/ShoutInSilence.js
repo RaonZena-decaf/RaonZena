@@ -130,7 +130,7 @@ export default function ShoutInSilence({
     video.addVideoElement(videoRef.current);
   }, []);
 
-  if (host) {
+  if (true) {
     return (
       <div>
         <div>
@@ -143,13 +143,13 @@ export default function ShoutInSilence({
         </div>
         <div>
           <div className={styles.webcamCapture}>
-            <span className={styles.AnswerFont}>
-              문제 : {AnswerList[step].answer}
-            </span>
             <video ref={videoRef} />
-            <span className={styles.TimeLimit}>
+            <div className={styles.TimeLimit}>
+              <p>문제 : {AnswerList[step].answer}</p>
+              <p> </p>
               제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
-            </span>
+              <span></span>
+            </div>
           </div>
         </div>
       </div>
