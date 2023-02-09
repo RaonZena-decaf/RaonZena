@@ -5,7 +5,7 @@
   font-weight: bold;
   font-size: 5rem;
   color: white;
-  font-family: "Noto Sans";
+  font-family: "GmarketSans";
   padding-left: 8.3%;
   padding-right: 8.3%;
   display: flex;
@@ -19,7 +19,7 @@
   border-radius: 20px;
   padding: 2rem;
   color: #ffffff;
-  font-family: "Noto Sans";
+  font-family: "GmarketSans";
   font-weight: 700;
 }
 .innercontainer {
