@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class UserProfileRes {
 
-    private Integer userNo;
+    private long userNo;
 
     private String userId;
 
