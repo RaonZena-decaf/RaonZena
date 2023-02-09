@@ -1,6 +1,8 @@
 package com.ssafy.raonzena.api.service;
 
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
+import com.ssafy.raonzena.db.entity.RoomInfo;
+import com.ssafy.raonzena.db.repository.LiveRepository;
 import com.ssafy.raonzena.db.repository.LiveRepositorySupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,14 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class LiveServiceImpl implements LiveService {
 
     @Autowired
     LiveRepositorySupport liveRepositorySupport;
+
+    @Autowired
+    LiveRepository liveRepository;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
@@ -49,6 +54,17 @@ public class LiveServiceImpl implements LiveService {
         String key = "userNo"+followNo;
         if (redisTemplate.opsForValue().get(key) != null){
             // redis에 저장되어 있으면 online상태
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeRoom(long roomNo) {
+        // 방 삭제
+        RoomInfo roomInfo = liveRepository.findByRoomNo(roomNo);
+        if(roomInfo != null){
+            liveRepository.delete(roomInfo);
             return true;
         }
         return false;
