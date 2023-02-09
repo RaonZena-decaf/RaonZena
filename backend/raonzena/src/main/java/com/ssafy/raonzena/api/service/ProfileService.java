@@ -49,4 +49,6 @@ public interface ProfileService {
     int followingCnt(long userNo);
 
     void expToLevelModify(ExpReq expReq);
+
+    void feedDelete(long boardNo);
 }
