@@ -9,10 +9,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
-import com.ssafy.raonzena.api.response.GameAnswer;
-import com.ssafy.raonzena.api.response.GameAnswerAndImageRes;
-import com.ssafy.raonzena.api.response.GameScoreRes;
-import com.ssafy.raonzena.api.response.ImageThemeRes;
+import com.ssafy.raonzena.api.response.*;
 import com.ssafy.raonzena.db.entity.*;
 import com.ssafy.raonzena.db.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -56,6 +54,9 @@ public class GameServiceImpl implements GameService{
 
     @Autowired
     GamePersonQuizRepository gamePersonQuizRepository;
+
+    @Autowired
+    GameChanceRepository gameChanceRepository;
 
     @Autowired
     GameThemeRepositorySupport gameThemeRepositorySupport;
@@ -144,6 +145,19 @@ public class GameServiceImpl implements GameService{
         GameAnswerAndImageRes answer = new GameAnswerAndImageRes(data.getPersonAnswer(), data.getImageUrl());
         return answer;
     }
+
+    @Override
+    public List<ChanceRes> chanceGameData(List<Integer> randomNo) {
+        List<ChanceRes> chances = new ArrayList<>();
+        for(int i=0; i<randomNo.size(); i++){
+            int data = randomNo.get(i);
+            //entity to dto
+            Chance chance = gameChanceRepository.findByChanceNo(data);
+            chances.add(new ChanceRes(chance));
+        }
+        return chances;
+    }
+
 
     @Override
     public List<ImageThemeRes> getFrame(long userNo) {
