@@ -154,7 +154,7 @@ function Create() {
                       onChange={passwordChange}
                       className={style.input}
                       disabled={disabled}
-                      type='number'
+                      type="number"
                     />
                   </li>
 

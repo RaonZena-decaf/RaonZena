@@ -8,7 +8,7 @@ export default function ShoutInSilence({
   start,
   result,
   setResult,
-  host,
+  IsHost,
   openvidu,
 }) {
   const timeLimit = 5;
@@ -130,27 +130,23 @@ export default function ShoutInSilence({
     video.addVideoElement(videoRef.current);
   }, []);
 
-  if (host) {
+  IsHost = true;
+
+  if (IsHost) {
     return (
       <div>
-        <div>
-          {/* <div className={styles.questionNo}>
-            {AnswerList[step].question_no} / {AnswerList.length}
-          </div> */}
-          {/* <div className={styles.AnswerFont}>
-            문제 : {AnswerList[step].answer}
-          </div> */}
+        <div className={styles.AnswerFont}>
+          {AnswerList[step].question_no} / {AnswerList.length}
+        </div>
+
+        <div className={styles.AnswerFont}>
+          문제 : {AnswerList[step].answer}
         </div>
         <div>
-          <div className={styles.webcamCapture}>
-            <span className={styles.AnswerFont}>
-              문제 : {AnswerList[step].answer}
-            </span>
-            <video ref={videoRef} />
-            <span className={styles.TimeLimit}>
-              제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
-            </span>
-          </div>
+          <video autoPlay={false} ref={videoRef} width="80%" height="80%" />
+          <span className={styles.HostCameraTimeLimit}>
+            {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+          </span>
         </div>
       </div>
     );
