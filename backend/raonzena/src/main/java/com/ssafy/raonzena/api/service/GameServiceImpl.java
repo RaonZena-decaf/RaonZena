@@ -164,8 +164,8 @@ public class GameServiceImpl implements GameService{
         // 게임점수 redis에 저장
         for (int i=0; i<gameScoreReq.getUserData().size(); i++){
             List<Long> userGameData = gameScoreReq.getUserData().get(i);
-            long userNo = userGameData.get(0);
-            long userScore = userGameData.get(1);
+            String userNo = userGameData.get(0).toString();
+            String userScore = userGameData.get(1).toString();
             redisTemplate.opsForHash().put(key,userNo,userScore);
             System.out.println("저장"+3);
         }
