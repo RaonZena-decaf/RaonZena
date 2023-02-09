@@ -1,11 +1,31 @@
 import React, { useRef, useState, useEffect } from "react";
 import style from "../game/catchmind.module.css";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-function Catchmind() {
+function Catchmind({ start, result, setResult, openvidu }) {
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
+  const baseUrl = useSelector((store) => store.baseUrl);
 
   useEffect(() => {
+    if (openvidu.session) {
+      openvidu.session.on("signal:CanvasDraw", (event) => {
+        axios({
+          method: "get",
+          url: `${baseUrl}games/1/catchMind`,
+        })
+          .then((res) => {
+            console.log(res.data);
+            const image = new Image();
+            image.src = res.data;
+            image.onload = function () {
+              ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+            };
+          })
+          .catch((error) => console.log("following List 에러: ", error));
+      });
+    }
     const canvas = canvasRef.current;
 
     const ctx = canvas.getContext("2d");
@@ -19,6 +39,27 @@ function Catchmind() {
 
     function stopPainting(event) {
       painting = false;
+
+      const dataURL = canvas.toDataURL();
+      //axios 통신 어케하죠?
+      //axios 통신해서 백으로 dataURL보내주기
+      axios({
+        method: "post",
+        url: `${baseUrl}games/1/catchMind`,
+        data: dataURL,
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log("following List 에러: ", error));
+      if (openvidu.session) {
+        openvidu.session.signal({
+          type: "CanvasDraw",
+        });
+      }
+
+      // axios 통신해서 백에서 dataURL 받아오기
+      // dataURL = 받아와서
     }
 
     function startPainting(event) {

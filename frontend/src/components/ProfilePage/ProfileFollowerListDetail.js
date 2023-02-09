@@ -1,26 +1,38 @@
 import styles from "./ProfileFollowerListDetail.module.css";
 import { useNavigate } from "react-router-dom";
+import NoFollow from "./NoFollow";
 
-function ProfileFollowerListDetail({handleClose, follower}) {
-  const navigate = useNavigate()
+function ProfileFollowerListDetail({ handleClose, follower }) {
+  const navigate = useNavigate();
   const moveToProfile = (userNo) => {
-    handleClose()
-    navigate(`/profile/${userNo}`)
-  }
-
+    handleClose();
+    navigate(`/profile/${userNo}`);
+  };
 
   return (
     <div className={styles.background}>
       <span className={styles.text}>팔로워 목록</span>
-      <div>
-        {follower.map((follower, userNo) => (
-          <div key={userNo} className={styles.background2} onClick={() => moveToProfile(follower.userNo)}>
-            <img className={styles.img} alt="img" src={follower.userImageUrl} />
-            <span>{`Lv ${follower.level}`}</span>
-            <span>{follower.userName}</span>
-          </div>
-        ))}
-      </div>
+      {follower.length === 0 ? (
+        <NoFollow />
+      ) : (
+        <div>
+          {follower.map((follower, userNo) => (
+            <div
+              key={userNo}
+              className={styles.background2}
+              onClick={() => moveToProfile(follower.userNo)}
+            >
+              <img
+                className={styles.img}
+                alt="img"
+                src={follower.userImageUrl}
+              />
+              <span>{`Lv ${follower.level}`}</span>
+              <span>{follower.userName}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -7,8 +7,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { modifyMyFollowingList } from "../../app/myFollowingList";
-import { store } from "../../app/store";
-import { useEffect } from "react";
+import ModalPortal from "../Modal/Portal";
+import SearchModalFrame from "../Modal/SearchModalFrame";
+import { Transition } from "react-transition-group";
 
 function ProfilePageInfo({
   handleOpen,
@@ -19,17 +20,28 @@ function ProfilePageInfo({
   feedList,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const baseUrl = useSelector((store) => store.baseUrl);
   const loginUserNo = useSelector((store) => store.userData.userNo);
+  const myFollowings = useSelector((store) => store.myFollowingList);
+  const user_no = parseInt(location.pathname.split("profile/")[1]);
   const [followerCnt, setFollowerCnt] = useState(0);
   const [followingCnt, setFollowingCnt] = useState(0);
-  const [followBtn, setFollowBtn] = useState(false);
-  const navigate = useNavigate();
-  const feedLength = feedList.length;
-  const myFollowings = useSelector((store) => store.myFollowingList);
+  const [followBtn, setFollowBtn] = useState();
   const [userInfo, setUserInfo] = useState({});
-  const location = useLocation();
-  const user_no = parseInt(location.pathname.split("profile/")[1]);
+  const feedLength = feedList.length;
+  //모달 표시를 위한 함수
+  const [modalOn, setModalOn] = useState(false);
+  const openModal = () => {
+    setModalOn(true);
+  };
+
+  //모달을 닫는 함수
+  const closeModal = () => {
+    setModalOn(false);
+  };
+  
 
   async function callUserInfo() {
     axios({
@@ -58,48 +70,33 @@ function ProfilePageInfo({
         setFollowingCnt(res.data);
       })
       .catch((error) => console.log(error));
-    // 로그인 유저의 팔로잉 리스트
-    await axios({
-      method: "get",
-      url: `${baseUrl}profile/${loginUserNo}/following`,
-    }).then((res) => {
-      const array = [];
-      const followlist = res.data;
-      followlist.forEach((following) => {
-        array.push(following.userNo);
-      });
-      dispatch(modifyMyFollowingList(array));
-    });
   }
 
   //팔로우버튼
   function toggleDone() {
     //팔로우 중이라면 팔로우 해제
     if (followBtn !== true) {
-      console.log(followBtn);
       axios({
-        method: "post",
+        method: "POST",
         url: `${baseUrl}profile`,
-        data: { followNo: user_no },
+        data: {"followNo": user_no},
+        Headers:{"Content-Type": 'application/json'}
       })
         .then((res) => {
-          console.log(res);
+          dispatch(modifyMyFollowingList([...myFollowings, user_no]))
         })
         .catch((error) => console.log(error));
     } else {
-      console.log(followBtn);
       axios({
         method: "delete",
-        url: `${baseUrl}profile`,
-        data: user_no,
+        url: `${baseUrl}profile/${user_no}`,
       })
         .then((res) => {
-          console.log(res);
+          const filtered = myFollowings.filter((eliment) => eliment !== user_no)
+          dispatch(modifyMyFollowingList([filtered]))
         })
         .catch((error) => console.log(error));
     }
-    //팔로우 중이 아니라면 팔로우
-    setFollowBtn(!followBtn);
   }
 
   // 해당 페이지의 유저 프로필을 불러오는 axios 통신
@@ -110,7 +107,7 @@ function ProfilePageInfo({
     } else {
       setFollowBtn(false);
     }
-  }, [location, followBtn]);
+  }, [location, myFollowings]);
 
   return (
     <div className={styles.background}>
@@ -120,7 +117,7 @@ function ProfilePageInfo({
           src={userInfo.userImage}
           className={styles.profileimg}
         />
-        <p className={styles.profileid}>코드 : {userInfo.userId}</p>
+        <p className={styles.profileid}>친구코드 : {userInfo.userId}</p>
       </div>
       <div className={styles.background3}>
         <div className={styles.background5}>
@@ -137,14 +134,14 @@ function ProfilePageInfo({
                   {followBtn ? "팔로우 중" : "팔로우"}
                 </button>
               )}
-          <FaSearch className={styles.search} />
+          <FaSearch className={styles.search} onClick={openModal} />
         </div>
         <div className={styles.background4}>
           <span className={styles.profileid3}>Exp</span>
           <ProfileProgress exp={userInfo.exp} />
         </div>
         <div>
-          <span className={styles.profileid4}>{`기록 ${feedLength}`}</span>
+          <span className={styles.profileid5}>{`기록 ${feedLength}`}</span>
           <span
             onClick={() => {
               handleOpen();
@@ -161,6 +158,16 @@ function ProfilePageInfo({
           >{`팔로워 ${followerCnt}`}</span>
         </div>
       </div>
+      <ModalPortal>
+        <Transition unmountOnExit in={modalOn} timeout={500}>
+          {(state) => (
+            <SearchModalFrame
+              show={state}
+              closeModal={closeModal}
+            />
+          )}
+        </Transition>
+      </ModalPortal>
     </div>
   );
 }
