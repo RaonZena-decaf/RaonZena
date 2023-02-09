@@ -4,7 +4,7 @@ import styles from "./CharacterQuiz.module.css";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
 
-
+const URL = "https://storage.googleapis.com/tm-model/SsOoeAyA_/";
 function Seeking({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
   const [model, setModel] = useState(null);
@@ -14,18 +14,27 @@ function Seeking({ start, result, setResult, openvidu }) {
   const videoRef = useRef(null);
   useEffect(() => {
     const init = async () => {
-      const modelURL = "./model.json";
-      const metadataURL = "./metadata.json";
-      
-      setModel(await tmImage.load(modelURL, metadataURL));
-      console.log(modelURL)
-      setMaxPredictions(model.getTotalClasses());
-
-      const flip = true;
-      setWebcam(new tmImage.Webcam(200, 200, flip));
-      await webcam.setup();
-      await webcam.play();
-      requestAnimationFrame(loop);
+      const modelURL = URL + "model.json";
+      const metadataURL = URL + "metadata.json";
+      const steps = new Promise(async (resolve, reject) => {
+        const newmodel = await Object.freeze(
+          tmImage.load(modelURL, metadataURL)
+        );
+        setModel(newmodel);
+        const flip = true;
+        const newcam = new tmImage.Webcam(200, 200, flip);
+        await setWebcam(newcam);
+        resolve(newmodel, newcam);
+      });
+      steps
+        .then(async (newmodel, newcam) => {
+          setMaxPredictions(newmodel.getTotalClasses());
+          await webcam.setup();
+        })
+        .then(async () => {
+          await webcam.play();
+          requestAnimationFrame(loop);
+        });
     };
 
     init();
@@ -117,20 +126,14 @@ function Seeking({ start, result, setResult, openvidu }) {
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
   }, []);
-  
+
   return (
     <div className={styles.background}>
-      {isAnswerShown ? (
-        <div className={styles.result}>
-          <h1>정답은 {CharacterQuizList[step].person_answer} 입니다.</h1>
-        </div>
-      ) : (
-        <img
-          alt="img"
-          src={CharacterQuizList[step].image_url}
-          className={styles.img}
-        />
-      )}
+      <div id="label-container">
+        {Array.from({ length: maxPredictions }).map((_, i) => (
+          <div key={i} />
+        ))}
+      </div>
 
       <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
     </div>
