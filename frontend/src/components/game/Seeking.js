@@ -1,78 +1,65 @@
 import { CharacterQuizList } from "./CharacterQuizList";
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./CharacterQuiz.module.css";
-const YOUR_API_KEY = "AIzaSyBAijqtvFdcOvI05NGyyZS61zek7wqNDVw";
+import * as tf from "@tensorflow/tfjs";
+import * as tmImage from "@teachablemachine/image";
+
+const URL = "https://teachablemachine.withgoogle.com/models/SsOoeAyA_/";
+
 function Seeking({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
+  const [model, setModel] = useState(null);
+  const [webcam, setWebcam] = useState(null);
+  const [maxPredictions, setMaxPredictions] = useState(null);
+  const labelContainerRef = useRef(null);
   const videoRef = useRef(null);
-  const [analysis, setAnalysis] = useState(null);
+  useEffect(() => {
+    const init = async () => {
+      const modelURL = URL + "model.json";
+      const metadataURL = URL + "metadata.json";
 
-  let url = "https://i1.daumcdn.net/thumb/C230x300/?fname=https://t1.daumcdn.net/cfile/tistory/245D5B4E582361D929"
-  const toDataURL = (url) =>
-    fetch(url)
-      .then((response) => response.blob())
-      .then(
-        (blob) =>
-          new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          })
-      );
+      setModel(await tmImage.load(modelURL, metadataURL));
+      setMaxPredictions(model.getTotalClasses());
 
-  const handleVideo = async () => {
-    const video = videoRef.current;
-    const videoBlob = new Blob([new Uint8Array(await video.arrayBuffer)]);
-    const formData = new FormData();
-    formData.append("requests", videoBlob);
-
-    const callGoogleVIsionApi = async (base64) => {
-      let url =
-        "https://vision.googleapis.com/v1/images:annotate?key=" + YOUR_API_KEY;
-      await fetch(url, {
-        method: "POST",
-        body: JSON.stringify({
-          requests: [
-            {
-              image: {
-                content: base64,
-              },
-              features: [{ type: "LABEL_DETECTION", maxResults: 10 }],
-            },
-          ],
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // setAnalysis(
-          //   data.responses[0].fullTextAnnotation.text,
-          // );
-          console.log(data);
-        })
-        .catch((err) => console.log("error : ", err));
+      const flip = true;
+      setWebcam(new tmImage.Webcam(200, 200, flip));
+      await webcam.setup();
+      await webcam.play();
+      requestAnimationFrame(loop);
     };
-    toDataURL(url).then(base64 => callGoogleVIsionApi(base64))
 
-    // callGoogleVIsionApi(formData)
+    init();
+  }, []);
+  // useEffect(() => {
+  //   const setupWebcam = async () => {
+  //     if (!model) return;
 
-    // try {
-    //   const response = await axios.post(
-    //     "https://vision.googleapis.com/v1/images:annotate",
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //         Authorization: `Bearer ${YOUR_API_KEY}`,
-    //       },
-    //     }
-    //   );
-    //   setAnalysis(response.data);
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+  //     const newWebcam = new tmImage.Webcam(200, 200, true);
+  //     await newWebcam.setup();
+  //     await newWebcam.play();
+  //     setWebcam(newWebcam);
+  //     window.requestAnimationFrame(loop);
+  //   };
+
+  //   setupWebcam();
+  // }, [model]);
+
+  const loop = async () => {
+    webcam.update();
+    await predict();
+    requestAnimationFrame(loop);
   };
+
+  const predict = async () => {
+    const prediction = await model.predict(webcam.canvas);
+    for (let i = 0; i < maxPredictions; i++) {
+      const classPrediction =
+        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+      document.getElementById("label-container").childNodes[i].innerHTML =
+        classPrediction;
+    }
+  };
+
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
@@ -130,6 +117,7 @@ function Seeking({ start, result, setResult, openvidu }) {
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
   }, []);
+  
   return (
     <div className={styles.background}>
       {isAnswerShown ? (
@@ -143,14 +131,8 @@ function Seeking({ start, result, setResult, openvidu }) {
           className={styles.img}
         />
       )}
-      <video
-        autoPlay={true}
-        ref={videoRef}
-        width="100%"
-        height="100%"
-        onPlay={handleVideo}
-      />
-      {analysis && <pre>{JSON.stringify(analysis, null, 2)}</pre>}
+
+      <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
     </div>
   );
 }

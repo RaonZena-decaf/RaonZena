@@ -39,10 +39,12 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
           )}
 
           {gamename === "objectfast" && (
-            <CharacterQuiz               start={start}
-            result={result}
-            setResult={setResult}
-            openvidu={openvidu} />
+            <Seeking
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+            />
           )}
           {gamename === "catchmind" && (
             <Catchmind start={start} result={result} />
