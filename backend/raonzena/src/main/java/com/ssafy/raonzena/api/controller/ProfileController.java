@@ -123,4 +123,17 @@ public class ProfileController {
 
     }
 
+    // 팔로우 상태 확인
+    @GetMapping("/{followNo}/status")
+    public ResponseEntity<?> followStatus(@PathVariable long followNo, HttpSession session){
+
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+
+        if(profileService.isFollowed(userNo,followNo)!=null){
+            return ResponseEntity.ok("isFollowed");
+        }else{
+            return ResponseEntity.ok("isNotFollowed");
+        }
+    }
+
 }
