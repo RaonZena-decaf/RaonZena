@@ -8,9 +8,8 @@ const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
 function Seeking({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
   const [model, setModel] = useState(null);
-  const [webcam, setWebcam] = useState(null);
+  const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
-  const labelContainerRef = useRef(null);
   const videoRef = useRef(null);
   useEffect(() => {
     const init = async () => {
@@ -30,15 +29,17 @@ function Seeking({ start, result, setResult, openvidu }) {
         setMaxPredictions(newmodel.getTotalClasses());
       });
     };
-    if (webcam) {
+    init();
+  }, []);
+  useEffect(() => {
+    if (!model && !webcam) {
+      return;
+    } else {
       webcam.setup();
       webcam.play();
       requestAnimationFrame(loop);
     }
-
-    init();
   }, [webcam]);
-  
   // useEffect(() => {
   //   const setupWebcam = async () => {
   //     if (!model) return;
