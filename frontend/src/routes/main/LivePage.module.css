@@ -66,3 +66,29 @@
   font-size: 3rem;
   margin-left: 3rem;
 }
+
+.followingsListTitle{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.followSearch {
+  color: white  ;
+  font-size: 3rem;
+}
+
+.followSearch:hover{
+  cursor: pointer;
+  color: #f400b0;
+  animation: changecolor 0.3s ease;
+}
+
+@keyframes changecolor {
+  0% {
+    color: white;
+  }
+  100% {
+    color: #f400b0;
+  }
+}

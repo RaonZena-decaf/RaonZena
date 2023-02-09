@@ -23,7 +23,7 @@ function ProfilePage() {
   const [feedList, setFeedList] = useState([])
   const location = useLocation();
   const baseUrl = useSelector((store)=> store.baseUrl)
-
+  const myFollowingList = useSelector((store)=> store.myFollowingList)
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -67,7 +67,7 @@ function ProfilePage() {
   
   useLayoutEffect(()=>{
     getInfo()
-  },[location])
+  },[location, myFollowingList])
 
   return (
     <>
