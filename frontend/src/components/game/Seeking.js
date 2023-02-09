@@ -24,21 +24,21 @@ function Seeking({ start, result, setResult, openvidu }) {
         const flip = true;
         const newcam = new tmImage.Webcam(200, 200, flip);
         setWebcam(newcam);
-        resolve(newmodel, newcam);
+        setTimeout(resolve(newmodel, newcam), 3000);
       });
-      steps
-        .then(async (newmodel, newcam) => {
-          setMaxPredictions(newmodel.getTotalClasses());
-          await webcam.setup();
-        })
-        .then(async () => {
-          await webcam.play();
-          requestAnimationFrame(loop);
-        });
+      steps.then(async (newmodel, newcam) => {
+        setMaxPredictions(newmodel.getTotalClasses());
+      });
     };
+    if (webcam) {
+      webcam.setup();
+      webcam.play();
+      requestAnimationFrame(loop);
+    }
 
     init();
-  }, []);
+  }, [webcam]);
+  
   // useEffect(() => {
   //   const setupWebcam = async () => {
   //     if (!model) return;
