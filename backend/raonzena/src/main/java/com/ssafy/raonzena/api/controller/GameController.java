@@ -37,6 +37,12 @@ public class GameController {
         return ResponseEntity.ok("Success");
     }
 
+    // 캐치마인드 그림 송신
+    @PostMapping("/{roomNo}/catchMind")
+    public ResponseEntity<?> paintingSave(@PathVariable long roomNo, @RequestBody String painting){
+        gameService.savePainting(painting,roomNo);
+        return ResponseEntity.ok("Success");
+    }
 
     //게임데이터
     @GetMapping("/gameType/{gameType}")
