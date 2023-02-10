@@ -152,14 +152,10 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public List<ChanceRes> chanceGameData(List<Integer> randomNo) {
-        List<ChanceRes> chances = new ArrayList<>();
-        for(int i=0; i<randomNo.size(); i++){
-            int data = randomNo.get(i);
-            //entity to dto
-            Chance chance = gameChanceRepository.findByChanceNo(data);
-            chances.add(new ChanceRes(chance));
-        }
-        return chances;
+        return randomNo.stream()
+                .map(data -> gameChanceRepository.findByChanceNo(data))
+                .map(ChanceRes::new)
+                .collect(Collectors.toList());
     }
 
 
