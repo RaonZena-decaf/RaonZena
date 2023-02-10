@@ -19,7 +19,7 @@ function Lotto({ start, result, openvidu, host }) {
 
   openvidu.session.on("signal:SeedNumber", (event) => {
     const num = JSON.parse(event.data);
-    console.log(num);
+    console.log("받은거", typeof num, num);
     console.log(baseUrl);
     axios({
       method: "GET",
@@ -36,9 +36,9 @@ function Lotto({ start, result, openvidu, host }) {
   useEffect(() => {
     if (!host) {
       const num = _.sampleSize(_.range(1, 9), 8);
-      const data = { num: num };
+
       openvidu.session.signal({
-        data: data,
+        data: JSON.stringify(num),
         type: "SeedNumber",
       });
     }
