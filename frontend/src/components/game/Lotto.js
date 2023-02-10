@@ -10,6 +10,14 @@ function Lotto({ start, result, openvidu, host }) {
   const [isclicked, setisclick] = useState(false);
   const [clickedlist, setclickedlist] = useState([]);
   const [cardlist, setCardlist] = useState([]);
+  useEffect(() => {
+    const audio = new Audio();
+    audio.src = "../music/Little Fish.mp3";
+    audio.play();
+    return () => {
+      audio.pause();
+    }
+  },[]);
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
