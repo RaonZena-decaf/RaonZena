@@ -216,8 +216,11 @@ public class GameServiceImpl implements GameService{
     @Override
     public int findActiveHeadCount(long roomNo) {
         String key = "roomNo"+ roomNo + "HC";
-        // 게임에 참여중인 사람 수 반환
-        return Integer.parseInt(redisDrawTemplate.opsForValue().get(key));
+        if(redisDrawTemplate.opsForValue().get(key)!=null){
+            // 게임에 참여중인 사람 수 반환
+            return Integer.parseInt(redisDrawTemplate.opsForValue().get(key));
+        }
+        return -1;
     }
 
 

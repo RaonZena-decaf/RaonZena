@@ -92,7 +92,11 @@ public class GameController {
     @GetMapping("/{roomNo}/join")
     public ResponseEntity<?> headCountDetails(@PathVariable long roomNo){
         // 방에 참여중인 인원수 조회
-        return ResponseEntity.ok(gameService.findActiveHeadCount(roomNo));
+        if (gameService.findActiveHeadCount(roomNo)>-1){
+            return ResponseEntity.ok(gameService.findActiveHeadCount(roomNo));
+        }
+        // 방이 없으면 noContent 반환
+        return ResponseEntity.noContent().build();
     }
 
 
