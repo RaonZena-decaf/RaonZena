@@ -21,12 +21,10 @@ function Lotto({ start, result, openvidu, host }) {
     const num = JSON.parse(event.data);
     console.log(num);
     console.log(baseUrl);
-    // console.log(num);
     axios({
       method: "GET",
       url: `${baseUrl}games/gameType/chanceGame`,
-      data: { num: num },
-      headers: { "Content-type": "application/json" },
+      data: num,
     })
       .then((res) => {
         console.log(res.data);
