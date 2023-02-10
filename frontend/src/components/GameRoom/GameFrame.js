@@ -65,6 +65,7 @@ function GameFrame({ gamename, openvidu, host }) {
           start={start}
           startHandler={startHandler}
           setResult={setResult}
+          host={host}
         />
       </div>
     </div>
