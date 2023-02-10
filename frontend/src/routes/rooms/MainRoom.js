@@ -264,8 +264,8 @@ function MainRoom(props) {
   };
 
   //현재 유저 리스트
-  const TotalUsers = [...subscribes, publisher]
-  console.log(TotalUsers)
+  const TotalUsers = [...subscribes, publisher];
+  console.log(TotalUsers);
 
   return (
     <div className={styles.background}>
@@ -284,7 +284,11 @@ function MainRoom(props) {
             </div>
           )}
           {gamename !== "chatSubject" && (
-            <GameFrame gamename={gamename} openvidu={openvidu} />
+            <GameFrame
+              gamename={gamename}
+              openvidu={openvidu}
+              host={state.host}
+            />
           )}
           <MenuBar
             toggleBar={toggleBar}
