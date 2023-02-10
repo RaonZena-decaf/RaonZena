@@ -27,19 +27,19 @@ function Catchmind({ start, result, setResult, openvidu }) {
       });
     }
     // 게임 데이터 통신
-    // axios({
-    //   method: "get",
-    //   url: `${baseUrl}games/1/catchMind`,
-    // })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     const image = new Image();
-    //     image.src = res.data;
-    //     image.onload = function () {
-    //       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    //     };
-    //   })
-    //   .catch((error) => console.log("following List 에러: ", error));
+    axios({
+      method: "get",
+      url: `${baseUrl}games/1/catchMind`,
+    })
+      .then((res) => {
+        console.log(res.data);
+        const image = new Image();
+        image.src = res.data;
+        image.onload = function () {
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+      })
+      .catch((error) => console.log("following List 에러: ", error));
     
     const canvas = canvasRef.current;
     
@@ -58,6 +58,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
       const dataURL = canvas.toDataURL();
       //axios 통신 어케하죠?
       //axios 통신해서 백으로 dataURL보내주기
+      console.log(dataURL);
       axios({
         method: "post",
         url: `${baseUrl}games/1/catchMind`,
