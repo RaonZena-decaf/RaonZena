@@ -8,6 +8,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [QuizList, setQuizList] = useState([]);
+
   useEffect(() => {
     // 게임 데이터 통신
     axios({
@@ -20,8 +21,9 @@ function Catchmind({ start, result, setResult, openvidu }) {
       })
       .catch((error) => console.log("following List 에러: ", error));
   }, []);
+
   useEffect(() => {
-    if (openvidu && openvidu.session) {
+    if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         console.log("그림");
         axios({
@@ -36,7 +38,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
               ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             };
           })
-          .catch((error) => console.log("following List 에러: ", error));
+          .catch((error) => console.log("받는 동작 에러: ", error));
       });
     }
 
@@ -78,13 +80,16 @@ function Catchmind({ start, result, setResult, openvidu }) {
       })
         .then((res) => {
           console.log(res);
+          if (openvidu.session) {
+            openvidu.session.signal({
+              data: JSON.stringify([]),
+              type: "CanvasDraw",
+            });
+          }
         })
-        .catch((error) => console.log("following List 에러: ", error));
-      if (openvidu && openvidu.session) {
-        openvidu.session.signal({
-          type: "CanvasDraw",
+        .catch((error) => {
+          console.log("보내는거 에러: ", error);
         });
-      }
     }
 
     function startPainting(event) {
@@ -192,7 +197,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
         }
       }
     }
-  }, [start, timeRemaining, isAnswerShown, openvidu]);
+  }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
     if (result !== "") {
