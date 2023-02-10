@@ -9,7 +9,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
   const baseUrl = useSelector((store) => store.baseUrl);
 
   useEffect(() => {
-    if (openvidu.session) {
+    if (openvidu && openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         axios({
           method: "get",
