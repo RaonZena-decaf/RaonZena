@@ -192,7 +192,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
         }
       }
     }
-  }, [start, timeRemaining, isAnswerShown]);
+  }, [start, timeRemaining, isAnswerShown, openvidu]);
 
   useEffect(() => {
     if (result !== "") {
