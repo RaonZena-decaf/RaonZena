@@ -223,6 +223,15 @@ public class GameServiceImpl implements GameService{
         return -1;
     }
 
+    @Override
+    public void saveActiveHeadCount(long roomNo, int headCount) {
+        String key = "roomNo"+ roomNo + "HC";
+        // 게임참여인원수 저장
+        redisDrawTemplate.opsForValue().set(key, String.valueOf(headCount));
+
+        System.out.println(redisDrawTemplate.opsForValue().get(key));
+    }
+
 
     @Override
     public void savePainting(String painting, long roomNo) {

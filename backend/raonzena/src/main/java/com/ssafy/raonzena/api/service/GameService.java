@@ -37,4 +37,7 @@ public interface GameService {
 
     // 캐치마인드 그림 보내기
     String findPainting(long roomNo);
+
+    // 게임참여 인원수 저장
+    void saveActiveHeadCount(long roomNo, int headCount);
 }

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequestMapping("/api/v1/games")
@@ -105,6 +106,18 @@ public class GameController {
         return ResponseEntity.noContent().build();
     }
 
+//    @PutMapping("/{roomNo}/join")
+//    public ResponseEntity<?> headCountSave(@PathVariable long roomNo, @RequestBody int headCount){
+//        // 참여인원수 저장
+//        gameService.saveActiveHeadCount(roomNo,headCount);
+//        return ResponseEntity.ok("Success");
+//    }
 
+    @PutMapping("/{roomNo}/join")
+    public ResponseEntity<?> headCountSave(@PathVariable long roomNo, @RequestBody Map<String, Integer> request){
+        // 참여인원수 저장
+        gameService.saveActiveHeadCount(roomNo,request.get("headCount"));
+        return ResponseEntity.ok("Success");
+    }
 
 }
