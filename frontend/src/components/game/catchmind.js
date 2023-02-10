@@ -7,9 +7,9 @@ function Catchmind({ start, result, setResult, openvidu }) {
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
-
+  const [QuizList, setQuizList] = useState([])
   useEffect(() => {
-    if (openvidu.session) {
+    if (openvidu && openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         axios({
           method: "get",
@@ -26,8 +26,23 @@ function Catchmind({ start, result, setResult, openvidu }) {
           .catch((error) => console.log("following List 에러: ", error));
       });
     }
+    // 게임 데이터 통신
+    // axios({
+    //   method: "get",
+    //   url: `${baseUrl}games/1/catchMind`,
+    // })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     const image = new Image();
+    //     image.src = res.data;
+    //     image.onload = function () {
+    //       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    //     };
+    //   })
+    //   .catch((error) => console.log("following List 에러: ", error));
+    
     const canvas = canvasRef.current;
-
+    
     const ctx = canvas.getContext("2d");
 
     canvas.style.margin = "20px";
@@ -140,7 +155,53 @@ function Catchmind({ start, result, setResult, openvidu }) {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, width, height);
   }, []);
+  const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(5);
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (start && step <= QuizList.length - 1) {
+      if (timeRemaining > 0 && !isAnswerShown) {
+        const intervalId = setInterval(() => {
+          setTimeRemaining(timeRemaining - 1);
+        }, 100);
+        return () => clearInterval(intervalId);
+      }
+      if (timeRemaining === 0 && !isAnswerShown) {
+        setIsAnswerShown(true);
+      }
+      if (isAnswerShown) {
+        if (step === QuizList.length - 1) {
+          setIsAnswerShown(true);
+          return;
+        } else {
+          setTimeout(() => {
+            setIsAnswerShown(false);
+            setTimeRemaining(3);
+            setStep((prev) => (prev += 1));
+          }, 100);
+        }
+      }
+    }
+  }, [start, timeRemaining, isAnswerShown]);
 
+  useEffect(() => {
+    if (result !== "") {
+      if (result === QuizList[step].person_answer) {
+        console.log("정답");
+        const data = {
+          correct: openvidu.userName,
+        };
+        openvidu.session.signal({
+          data: JSON.stringify(data),
+          type: "TrueAnswer",
+        });
+        setResult("");
+      } else {
+        console.log("오답");
+        setResult("");
+      }
+    }
+  }, [result]);
   return (
     <div>
       <canvas id="canvas" ref={canvasRef}></canvas>

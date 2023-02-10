@@ -35,9 +35,14 @@ function Seeking({ start, result, setResult, openvidu }) {
     if (!model && !webcam) {
       return;
     } else {
-      webcam.setup();
-      webcam.play();
-      requestAnimationFrame(loop);
+      const steps = new Promise((resolve, reject) => {
+        webcam.setup()
+        resolve(webcam.setup())
+      })
+      steps.then(() => {
+        webcam.play()
+        requestAnimationFrame(loop);
+      })
     }
   }, [webcam]);
   // useEffect(() => {
