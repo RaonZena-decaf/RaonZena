@@ -89,7 +89,11 @@ public class GameController {
         return ResponseEntity.ok(gameService.findGameScore(roomNo));
     }
 
-
+    @GetMapping("/{roomNo}/join")
+    public ResponseEntity<?> headCountDetails(@PathVariable long roomNo){
+        // 방에 참여중인 인원수 조회
+        return ResponseEntity.ok(gameService.findActiveHeadCount(roomNo));
+    }
 
 
 
