@@ -6,7 +6,7 @@ import Catchmind from "../game/catchmind";
 import ShoutInSilence from "../game/ShoutInSilence";
 import Seeking from "../game/Seeking";
 
-function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
+function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
   const [peopleList, setPeopleList] = useState([
     { user: "임길현", points: 90, img: "../profile/profileimg.png" },
     { user: "김찬빈", points: 80, img: "../profile/profileimg.png" },
@@ -30,7 +30,7 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
       <div>
         <div className={styles.container}>
           {gamename === "imagetheme" && (
-            <CharacterQuiz
+            <Seeking
               start={start}
               result={result}
               setResult={setResult}
@@ -47,7 +47,13 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
             />
           )}
           {gamename === "catchmind" && (
-            <Catchmind start={start} result={result} />
+            <Catchmind
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+              host={host}
+            />
           )}
           {gamename === "talkingsilence" && (
             <ShoutInSilence

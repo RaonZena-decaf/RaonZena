@@ -5,7 +5,7 @@ import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "../../components/camera/UserVideoComponent";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 
 import axios from "axios";
 import Loading from "../../components/room/MainLoading";
@@ -17,7 +17,6 @@ const OPENVIDU_SERVER_SECRET = "RAONZENA";
 function MainRoom(props) {
   const { state } = useLocation();
   const user = useSelector((store) => store.userData);
-  const dispatch = useDispatch();
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
@@ -26,6 +25,7 @@ function MainRoom(props) {
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
+  const [host, sestHost] = useState(state.host)
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
@@ -52,6 +52,8 @@ function MainRoom(props) {
   useEffect(() => {
     const OV = new OpenVidu();
     setOV(OV);
+    // console 몇개 없애는 코드
+    // OV.enableProdMode()
     const after = new Promise((resolve, reject) => {
       const mySession = OV.initSession();
       setTimeout(() => {
@@ -284,7 +286,7 @@ function MainRoom(props) {
             </div>
           )}
           {gamename !== "chatSubject" && (
-            <GameFrame gamename={gamename} openvidu={openvidu} />
+            <GameFrame gamename={gamename} openvidu={openvidu} host={host}/>
           )}
           <MenuBar
             toggleBar={toggleBar}
