@@ -36,9 +36,9 @@ function Lotto({ start, result, openvidu, host }) {
   useEffect(() => {
     if (!host) {
       const num = _.sampleSize(_.range(1, 9), 8);
-      // const data = { num: num };
+      const data = { num: num };
       openvidu.session.signal({
-        data: JSON.stringify(num),
+        data: data,
         type: "SeedNumber",
       });
     }
