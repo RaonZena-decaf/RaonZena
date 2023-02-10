@@ -264,20 +264,34 @@ function MainRoom(props) {
   };
 
   //현재 유저 리스트
-  const TotalUsers = [...subscribes, publisher]
-  console.log(TotalUsers)
+  const TotalUsers = [...subscribes, publisher];
+
+  const card = () => {
+    if (subscribes.length === 0) {
+      return "card1";
+    }
+    else if (subscribes.length === 1) {
+      return "card2";
+    }
+    else if (subscribes.length <= 3) {
+      return "card3";
+    }
+    else if (4 <= subscribes.length ) {
+      return "card4";
+    }
+  };
 
   return (
     <div className={styles.background}>
       {publisher !== undefined ? (
-        <div>
+        <div className={styles.background2}>
           {gamename === "chatSubject" && (
             <div className={styles.GameRoomsDisplay}>
-              <div className={styles.card}>
+              <div className={styles[card()]}>
                 <UserVideoComponent streamManager={publisher} />
               </div>
               {subscribes.map((sub, i) => (
-                <div key={i} className={styles.card}>
+                <div key={i} className={styles[card()]}>
                   <UserVideoComponent streamManager={sub} />
                 </div>
               ))}

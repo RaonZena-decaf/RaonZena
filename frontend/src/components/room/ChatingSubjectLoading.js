@@ -10,7 +10,7 @@ function ChatingSubjectLoading({chattingSubject, getSubject}) {
     if (hidden===true) {
     setTimeout(() => {
       sethidden(false);
-    },1000)}
+    },500)}
   }, [hidden]);
 
   return (

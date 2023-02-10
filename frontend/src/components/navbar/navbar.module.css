@@ -76,39 +76,16 @@
   color: #f400b0;
 }
 
-.profilebox {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5%;
-  font-size: 2rem;
-  background-color: #f400b0;
-  padding: 1rem;
-  border-radius: 5px;
-  word-break: keep-all;
-}
-
-.profilebox:hover {
-  cursor: pointer;
-  background-color: #cb0091;
-}
-
 .profileimg {
   border-radius: 50%;
-  width: 3rem;
+  width: 4rem;
   aspect-ratio: 1/1;
-}
-
-.createRoom {
-  background-color: #f400b0;
-  display: flex;
-  padding: 1rem;
-  border-radius: 5px;
-  text-align: center;
-  align-items: center;
-  font-size: 1.5rem;
-  height: 3rem;
-  word-break: keep-all;
+  cursor: pointer;
+  border: solid 0.3rem transparent;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(to right, #8f00ff 0%, #ff00a8 100%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 }
 
 .createRoom:hover {
@@ -125,6 +102,24 @@
   opacity: 0.8;
 }
 
+.logout {
+  font-size: 4rem;
+  color: crimson;
+}
+
+.logout:hover {
+  cursor: pointer;
+  animation: logout 1.5s cubic-bezier(0.5, 0.5, 0, 0);
+  animation-iteration-count: infinite;
+}
+
+@keyframes logout {
+  50% {
+    opacity: 50%;
+    scale: 0.9;
+  }
+}
+
 .active {
   color: #f400b0;
 }
@@ -132,7 +127,7 @@
 .router {
   font-weight: bold;
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 4rem;
 }
 
 .router:hover {
@@ -156,4 +151,107 @@
   100% {
     color: #f400b0;
   }
+}
+
+/* 로그아웃 애니메이션을 위한 CSS */
+
+.wave {
+  position: absolute;
+  background-color: #9d00f2;
+  bottom: -100vh;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transform: translateX(-100vw) translateY(100vh);
+}
+
+.wave2 {
+  position: absolute;
+  background-color: #f400b0;
+  bottom: -100vh;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transform: translateX(-100vw) translateY(100vh);
+}
+
+.wave3 {
+  position: absolute;
+  background-color: #1f2122;
+  bottom: -100vh;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transform: translateX(-100vw) translateY(100vh);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wash1 {
+  animation: wash 3.5s ease-in-out;
+}
+.wash2 {
+  animation: wash2 3.5s ease-in-out;
+}
+.wash3 {
+  animation: wash3 3.5s ease-in-out;
+}
+
+@keyframes wash {
+  0% {
+    transform: translateY(100vh);
+  }
+  25% {
+    transform: translateY(-9vh);
+  }
+  75% {
+    transform: translateY(-9vh);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+@keyframes wash2 {
+  0% {
+    transform: translateY(100vh);
+  }
+  10% {
+    transform: translateY(100vh);
+  }
+  35% {
+    transform: translateY(-9vh);
+  }
+  65% {
+    transform: translateY(-9vh);
+  }
+  90% {
+    transform: translateY(100vh);
+  }
+}
+@keyframes wash3 {
+  0% {
+    transform: translateY(100vh);
+  }
+  20% {
+    transform: translateY(100vh);
+  }
+  45% {
+    transform: translateY(-9vh);
+  }
+  55% {
+    transform: translateY(-9vh);
+  }
+  80% {
+    transform: translateY(100vh);
+  }
+}
+
+.logoutComment {
+  margin: 0;
+  background: linear-gradient(90deg, #8f00ff, #f400b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+  font-size: 15rem;
 }
