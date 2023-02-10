@@ -9,7 +9,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
   const baseUrl = useSelector((store) => store.baseUrl);
 
   useEffect(() => {
-    if (openvidu.session) {
+    if (openvidu && openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         axios({
           method: "get",
@@ -52,7 +52,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
           console.log(res);
         })
         .catch((error) => console.log("following List 에러: ", error));
-      if (openvidu.session) {
+      if (openvidu && openvidu.session) {
         openvidu.session.signal({
           type: "CanvasDraw",
         });
