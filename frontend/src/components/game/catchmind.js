@@ -21,6 +21,15 @@ function Catchmind({ start, result, setResult, openvidu }) {
       })
       .catch((error) => console.log("following List 에러: ", error));
   }, []);
+  
+  useEffect(() => {
+    const audio = new Audio();
+    audio.src = "../music/The Trapezist.mp3";
+    audio.play();
+    return () => {
+      audio.pause();
+    }
+  },[]);
 
   useEffect(() => {
     if (openvidu.session) {
