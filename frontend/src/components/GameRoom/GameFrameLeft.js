@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./GameFrameLeft.module.css";
 import CharacterQuiz from "../game/CharacterQuiz";
+import Lotte from "../game/Lotto";
 import GameFrameProgress from "./GameFrameProgress";
 import Catchmind from "../game/catchmind";
 import ShoutInSilence from "../game/ShoutInSilence";
@@ -72,7 +73,12 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
             />
           )}
           {gamename === "joker" && (
-            <CharacterQuiz start={start} result={result} />
+            <Lotte
+              start={start}
+              result={result}
+              openvidu={openvidu}
+              host={host}
+            />
           )}
         </div>
         <div className={styles.progressframe}>

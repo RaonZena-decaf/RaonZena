@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("/api/v1/games")
 @RestController
@@ -68,8 +71,11 @@ public class GameController {
 
     //게임데이터 (인생역전)
     @GetMapping("/gameType/chanceGame")
-    public ResponseEntity<List<ChanceRes>> chanceGameData(@RequestBody List<Integer> randomNo){
-        return ResponseEntity.ok(gameService.chanceGameData(randomNo));
+    public ResponseEntity<List<ChanceRes>> chanceGameData(@RequestBody String randomNo){
+        ArrayList<Integer> randomData = new ArrayList<>(Arrays.stream(randomNo.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList()));
+        return ResponseEntity.ok(gameService.chanceGameData(randomData));
     }
 
 

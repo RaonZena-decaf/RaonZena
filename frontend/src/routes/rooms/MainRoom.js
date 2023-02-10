@@ -5,7 +5,7 @@ import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "../../components/camera/UserVideoComponent";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 import axios from "axios";
 import Loading from "../../components/room/MainLoading";
@@ -25,7 +25,7 @@ function MainRoom(props) {
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
-  const [host, sestHost] = useState(state.host)
+  const [host, sestHost] = useState(state.host);
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
@@ -266,8 +266,8 @@ function MainRoom(props) {
   };
 
   //현재 유저 리스트
-  const TotalUsers = [...subscribes, publisher]
-  console.log(TotalUsers)
+  const TotalUsers = [...subscribes, publisher];
+  console.log(TotalUsers);
 
   return (
     <div className={styles.background}>
@@ -286,7 +286,7 @@ function MainRoom(props) {
             </div>
           )}
           {gamename !== "chatSubject" && (
-            <GameFrame gamename={gamename} openvidu={openvidu} host={host}/>
+            <GameFrame gamename={gamename} openvidu={openvidu} host={host} />
           )}
           <MenuBar
             toggleBar={toggleBar}

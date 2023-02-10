@@ -19,7 +19,7 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
-        }, 100);
+        }, 1000);
         return () => clearInterval(intervalId);
       }
       if (timeRemaining === 0 && !isAnswerShown) {
@@ -34,7 +34,7 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
             setIsAnswerShown(false);
             setTimeRemaining(3);
             setStep((prev) => (prev += 1));
-          }, 100);
+          }, 1000);
         }
       }
     }

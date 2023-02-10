@@ -77,10 +77,10 @@ public class GameServiceImpl implements GameService{
     private final AmazonS3 amazonS3;
     //===============================================================
     //더미데이터 넣으면 아래 코드로 바꾸기! -> 더미데이터들 수 다 통일하기
-//        static int min = 1;
-//        static int max = 100;
-//        static int randomNo = (int) ((Math.random() * (max - min)) + min);
-    static int randomNo = 1;
+        static int min = 1;
+        static int max = 100;
+        static int randomNo = (int) ((Math.random() * (max - min)) + min);
+//    static int randomNo = 1;
     //===============================================================
 
 
@@ -128,10 +128,12 @@ public class GameServiceImpl implements GameService{
 
 
         if(gameType == 1){
+            max = 102;
             Chat data =  gameChatRepository.findByChatNo(randomNo);
             GameAnswer answer = new GameAnswer(data.getTopic());
            return answer;
         }else if (gameType == 2){
+            max = 402;
             SpeakAndDraw data =  gameSpeakAndDrawRepository.findBySpeekNo(randomNo);
             GameAnswer answer = new GameAnswer(data.getAnswer());
             return answer;
@@ -145,6 +147,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public GameAnswerAndImageRes answerAndImage(int gameType) {
+        max =  250;
         PersonQuiz data = gamePersonQuizRepository.findByPersonNO(randomNo);
         GameAnswerAndImageRes answer = new GameAnswerAndImageRes(data.getPersonAnswer(), data.getImageUrl());
         return answer;
@@ -152,14 +155,10 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public List<ChanceRes> chanceGameData(List<Integer> randomNo) {
-        List<ChanceRes> chances = new ArrayList<>();
-        for(int i=0; i<randomNo.size(); i++){
-            int data = randomNo.get(i);
-            //entity to dto
-            Chance chance = gameChanceRepository.findByChanceNo(data);
-            chances.add(new ChanceRes(chance));
-        }
-        return chances;
+        return randomNo.stream()
+                .map(data -> gameChanceRepository.findByChanceNo(data))
+                .map(ChanceRes::new)
+                .collect(Collectors.toList());
     }
 
 
