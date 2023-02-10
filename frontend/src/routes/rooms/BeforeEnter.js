@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./beforeenter.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/navbar/navbar";
 import VideoContainer from "../../components/camera/NoneVideo";
-import { useSelector } from "react-redux";
 import {
   FaVideo,
   FaVideoSlash,
@@ -15,8 +14,6 @@ import {
 
 function BeforeEnter() {
   const { state } = useLocation();
-  console.log("state", state);
-  const user = useSelector((store) => store.userData);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const navigate = useNavigate();
@@ -84,7 +81,7 @@ function BeforeEnter() {
 
             <div className={style.rightcontainer}>
               <div className={style.video}>
-                <VideoContainer />
+                <VideoContainer mic={mic} camera={camera}/>
               </div>
               <div className={style.accessory}>
                 {mic ? (
