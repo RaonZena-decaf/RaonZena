@@ -4,32 +4,47 @@ import styles from "./CharacterQuiz.module.css";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
 
-const URL = "https://teachablemachine.withgoogle.com/models/SsOoeAyA_/";
-
+const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
 function Seeking({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
   const [model, setModel] = useState(null);
-  const [webcam, setWebcam] = useState(null);
+  const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
-  const labelContainerRef = useRef(null);
   const videoRef = useRef(null);
   useEffect(() => {
     const init = async () => {
       const modelURL = URL + "model.json";
       const metadataURL = URL + "metadata.json";
-
-      setModel(await tmImage.load(modelURL, metadataURL));
-      setMaxPredictions(model.getTotalClasses());
-
-      const flip = true;
-      setWebcam(new tmImage.Webcam(200, 200, flip));
-      await webcam.setup();
-      await webcam.play();
-      requestAnimationFrame(loop);
+      const steps = new Promise(async (resolve, reject) => {
+        const newmodel = await Object.freeze(
+          tmImage.load(modelURL, metadataURL)
+        );
+        setModel(newmodel);
+        const flip = true;
+        const newcam = new tmImage.Webcam(200, 200, flip);
+        setWebcam(newcam);
+        setTimeout(resolve(newmodel, newcam), 3000);
+      });
+      steps.then(async (newmodel, newcam) => {
+        setMaxPredictions(newmodel.getTotalClasses());
+      });
     };
-
     init();
   }, []);
+  useEffect(() => {
+    if (!model && !webcam) {
+      return;
+    } else {
+      const steps = new Promise((resolve, reject) => {
+        webcam.setup()
+        resolve(webcam.setup())
+      })
+      steps.then(() => {
+        webcam.play()
+        requestAnimationFrame(loop);
+      })
+    }
+  }, [webcam]);
   // useEffect(() => {
   //   const setupWebcam = async () => {
   //     if (!model) return;
@@ -117,20 +132,14 @@ function Seeking({ start, result, setResult, openvidu }) {
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
   }, []);
-  
+
   return (
     <div className={styles.background}>
-      {isAnswerShown ? (
-        <div className={styles.result}>
-          <h1>정답은 {CharacterQuizList[step].person_answer} 입니다.</h1>
-        </div>
-      ) : (
-        <img
-          alt="img"
-          src={CharacterQuizList[step].image_url}
-          className={styles.img}
-        />
-      )}
+      <div id="label-container">
+        {Array.from({ length: maxPredictions }).map((_, i) => (
+          <div key={i} />
+        ))}
+      </div>
 
       <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
     </div>
@@ -138,3 +147,45 @@ function Seeking({ start, result, setResult, openvidu }) {
 }
 
 export default Seeking;
+
+
+// <div>
+// {/* <div>
+//   <div className={styles.questionNo}>
+//     {step+1} / {AnswerList.length}
+//   </div>
+//   <div className={styles.AnswerFont}>
+//     문제 : {AnswerList[step].answer}
+//   </div>
+// </div> */}
+// <div
+//   style={isWrong ? { display: "revert" } : { display: "none" }}
+//   id="wrongAlert"
+//   className={styles.fadeoutbox}
+// >
+//   {/* {isWrong ? "틀렸습니다" : "???"} */}
+//   틀렸습니다 {isWrong}
+// </div>
+
+// <div>
+//   <div className={styles.webcamCapture}>
+//     <video ref={videoRef} width="80%" />
+//     <div className={styles.Container}>
+//       <span className={styles.TimeLimit}>
+//         {" "}
+//         {minutes} :{" "}
+//         {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+//       </span>
+//       <span className={styles.AnswerFont}>
+//         {AnswerList[step].answer}
+//       </span>
+//     </div>
+//   </div>
+// </div>
+// {/* <Transition unmountOnExit in={open} timeout={500}>
+//   {(state) => <GameAnswerModal show={state} handleOpen={handleOpen} />}
+// </Transition>
+// {modalOpen ? { showModal } : {}} */}
+// </div>
+// );
+// } 

@@ -90,7 +90,6 @@ function ProfilePageInfo({
       axios({
         method: "delete",
         url: `${baseUrl}profile/${user_no}`,
-        // data: user_no,
       })
         .then((res) => {
           const filtered = myFollowings.filter((eliment) => eliment !== user_no)
