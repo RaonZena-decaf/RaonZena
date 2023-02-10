@@ -147,7 +147,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public GameAnswerAndImageRes answerAndImage(int gameType) {
-        max =  252;
+        max =  250;
         PersonQuiz data = gamePersonQuizRepository.findByPersonNO(randomNo);
         GameAnswerAndImageRes answer = new GameAnswerAndImageRes(data.getPersonAnswer(), data.getImageUrl());
         return answer;
