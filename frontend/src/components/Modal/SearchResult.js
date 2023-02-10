@@ -83,7 +83,7 @@ const SearchResult = ({ search, closeModal }) => {
                   <p>{user.userName}</p>
                 </div>
               </div>
-              {MyFollowingList.includes(user.userNo) || UserNo ==="" ? null : (
+              {MyFollowingList.includes(user.userNo) || UserNo ==="" || user.userNo === UserNo ? null : (
                 <FaUserPlus className={styles.followBtn} onClick={() => {Follow(user.userNo)}}/>
               )}
             </div>

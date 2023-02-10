@@ -42,7 +42,7 @@ function ProfileModal({ show, handleClose, nowContent, follower, following }) {
         className={`${styles.modalContainer} ${styles[slide]}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {nowContent && <ProfilePostDetail nowContent={nowContent} />}
+        {nowContent && <ProfilePostDetail nowContent={nowContent} handleClose={handleClose}/>}
         {following && <ProfileFollowingListDetail following={following} handleClose={handleClose}/>}
         {follower && <ProfileFollowerListDetail follower={follower} handleClose={handleClose}/>}
       </div>

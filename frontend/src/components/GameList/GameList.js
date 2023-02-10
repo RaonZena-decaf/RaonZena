@@ -49,7 +49,6 @@ export default function GameRoom({ searchWord }) {
               indexOfLastCard
             );
             setCurGameRoomList(newGameRoomLIst);
-            console.log("현재 페이지 게임 리스트", curGameRoomList);
           })
           .catch((error) => console.log(error));
       } else {
@@ -88,9 +87,9 @@ export default function GameRoom({ searchWord }) {
 
   const navigateToCreateRoom = () => {
     if (loginConfigure) {
-      navigate("/makeroom");
-    } else {
       alert("Please Login");
+    } else {
+      navigate("/makeroom");
     }
   };
 

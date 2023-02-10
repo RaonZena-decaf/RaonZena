@@ -13,15 +13,17 @@ export default function FollowingList() {
   const user = useSelector((store) => store.userData);
   const [followUserNo, setFollowUserNo] = useState(1);
   const getlist = () => {
-    axios({
-      method: "get",
-      url: `${baseUrl}profile/${nowUserNo}/following`,
-      data: { userNo: nowUserNo },
-    })
-      .then((res) => {
-        setlist(res.data);
+    if (nowUserNo) {
+      axios({
+        method: "get",
+        url: `${baseUrl}profile/${nowUserNo}/following`,
+        data: { userNo: nowUserNo },
       })
-      .catch((error) => console.log("following List 에러: ", error, user));
+        .then((res) => {
+          setlist(res.data);
+        })
+        .catch((error) => console.log("following List 에러: ", error, user));
+    }
   };
 
   useEffect(() => {
