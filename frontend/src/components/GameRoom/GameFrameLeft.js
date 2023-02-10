@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./GameFrameLeft.module.css";
 import CharacterQuiz from "../game/CharacterQuiz";
+import Lotte from "../game/Lotto";
 import GameFrameProgress from "./GameFrameProgress";
 import Catchmind from "../game/catchmind";
 import ShoutInSilence from "../game/ShoutInSilence";
 import Seeking from "../game/Seeking";
 
-function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
+function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
   const [peopleList, setPeopleList] = useState([
     { user: "임길현", points: 90, img: "../profile/profileimg.png" },
     { user: "김찬빈", points: 80, img: "../profile/profileimg.png" },
@@ -66,7 +67,12 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu }) {
             />
           )}
           {gamename === "joker" && (
-            <CharacterQuiz start={start} result={result} />
+            <Lotte
+              start={start}
+              result={result}
+              openvidu={openvidu}
+              host={host}
+            />
           )}
         </div>
         <div className={styles.progressframe}>
