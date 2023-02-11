@@ -1,9 +1,10 @@
 import { LottoList } from "./LottoList";
 import React, { useState, useEffect } from "react";
 import styles from "./Lotto.module.css";
-import _ from "lodash";
+import _, { lastIndexOf } from "lodash";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { data, string } from "@tensorflow/tfjs";
 
 function Lotto({ start, result, openvidu, host }) {
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -25,18 +26,50 @@ function Lotto({ start, result, openvidu, host }) {
     });
   }
 
+  // openvidu.session.on("signal:SeedNumber", (event) => {
+  //   const num = JSON.stringify(event.data);
+  //   console.log(baseUrl);
+  //   console.log(typeof num);
+  //   console.log("데이터 받아옴", num);
+
+  //   axios({
+  //     method: "GET",
+  //     // url: `${baseUrl}games/gameType/chanceGame`,
+  //     // url: `${baseUrl}games/gameType/chanceGame?randomNo=${num}`,
+  //     url: `${baseUrl}games/gameType/chanceGame?randomNo=[2,4,5,6,7,1,3,8]`,
+  //     // data: num,
+  //   })
+  //     .then((res) => {
+  //       // console.log(res.data);
+  //       setCardlist(res.data);
+  //       console.log("성공");
+  //     })
+  //     .catch((error) => console.log(error));
+  // });
+
+  // useEffect(() => {
+  //   if (!host) {
+  //     const num = _.sampleSize(_.range(1, 9), 8);
+  //     // const number = num.join(",");
+  //     console.log("데이터 보내는 곳", num);
+  //     openvidu.session.signal({
+  //       data: JSON.stringify(num),
+  //       type: "SeedNumber",
+  //       // headers: { "Content-type": "application/json" },
+  //     });
+  //   }
+  // }, []);
+
   openvidu.session.on("signal:SeedNumber", (event) => {
-    const num = JSON.parse(event.data);
-    console.log("받은거", typeof num, num);
-    console.log(baseUrl);
+    const encodedRandomNo = encodeURIComponent(event.data);
     axios({
       method: "GET",
-      url: `${baseUrl}games/gameType/chanceGame`,
-      data: num,
+
+      url: `${baseUrl}games/gameType/chanceGame?randomNo=${encodedRandomNo}`,
     })
       .then((res) => {
-        console.log(res.data);
         setCardlist(res.data);
+        console.log("성공");
       })
       .catch((error) => console.log(error));
   });
@@ -45,6 +78,7 @@ function Lotto({ start, result, openvidu, host }) {
     if (!host) {
       const num = _.sampleSize(_.range(1, 9), 8);
 
+      console.log("데이터 보내는 곳", num);
       openvidu.session.signal({
         data: JSON.stringify(num),
         type: "SeedNumber",
