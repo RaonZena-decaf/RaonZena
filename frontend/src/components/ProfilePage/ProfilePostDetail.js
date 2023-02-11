@@ -17,28 +17,30 @@ function ProfilePostDetail({ nowContent, handleClose }) {
   // nowContent.ThirdUser
   // 각각의 유저 이름과 유저 프로필 사진 데이터를 요청. axios로 요청
 
-
   // 받은 날짜 데이터를 수정
-  const date = new Date(nowContent.createDtm)
-  const timestamp = date.toLocaleString().slice(0, -3)
+  const date = new Date(nowContent.createDtm);
+  const timestamp = date.toLocaleString().slice(0, -3);
+  const userNo = useSelector((store) => store.userData.userNo);
 
-  const baseUrl = useSelector((store)=>store.baseUrl)
+  const baseUrl = useSelector((store) => store.baseUrl);
   // 피드 삭제 요청 함수
   async function feedDelete() {
     if (window.confirm("기록을 삭제하시겠습니까?")) {
-      await handleClose()
       await axios({
-        method:"delete",
-        url : `${baseUrl}profile/feedDelete/${nowContent.boardNo}`
-      }).then((res) => {
-        console.log('삭제됨')
-      }).catch(error => console.error)
-      alert("삭제하였습니다.")
+        method: "delete",
+        url: `${baseUrl}profile/feedDelete/${nowContent.boardNo}`,
+      })
+        .then((res) => {
+          console.log("삭제됨");
+        })
+        .catch((error) => console.error);
+      alert("삭제하였습니다.");
+      await handleClose();
+      window.location.reload();
     } else {
-      alert("취소하였습니다.") 
+      alert("취소하였습니다.");
     }
   }
-
 
   return (
     <div className={styles.background}>
@@ -86,7 +88,9 @@ function ProfilePostDetail({ nowContent, handleClose }) {
         </div>
       )}
       <div className={styles.textarea}>{nowContent.content}</div>
-      <FaTrash className={styles.deleteBtn} onClick={()=>feedDelete()}/>
+      {nowContent.userNo === userNo ? (
+        <FaTrash className={styles.deleteBtn} onClick={() => feedDelete()} />
+      ) : null}
     </div>
   );
 }

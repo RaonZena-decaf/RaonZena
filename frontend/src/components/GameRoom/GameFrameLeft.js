@@ -27,7 +27,7 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
     return b.points - a.points;
   });
   return (
-    <div>
+    <div className={styles.leftcontainer}>
       <div>
         <div className={styles.container}>
           {gamename === "imagetheme" && (

@@ -271,14 +271,11 @@ function MainRoom(props) {
   const card = () => {
     if (subscribes.length === 0) {
       return "card1";
-    }
-    else if (subscribes.length === 1) {
+    } else if (subscribes.length === 1) {
       return "card2";
-    }
-    else if (subscribes.length <= 3) {
+    } else if (subscribes.length <= 3) {
       return "card3";
-    }
-    else if (4 <= subscribes.length ) {
+    } else if (4 <= subscribes.length) {
       return "card4";
     }
   };
@@ -300,7 +297,13 @@ function MainRoom(props) {
             </div>
           )}
           {gamename !== "chatSubject" && (
-            <GameFrame gamename={gamename} openvidu={openvidu} host={host} />
+            <GameFrame
+              gamename={gamename}
+              openvidu={openvidu}
+              host={host}
+              publisher={publisher}
+              subscribes={subscribes}
+            />
           )}
           <MenuBar
             toggleBar={toggleBar}
