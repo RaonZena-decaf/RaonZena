@@ -18,50 +18,14 @@ function Lotto({ start, result, openvidu, host }) {
     });
   }
 
-  // openvidu.session.on("signal:SeedNumber", (event) => {
-  //   const num = JSON.stringify(event.data);
-  //   console.log(baseUrl);
-  //   console.log(typeof num);
-  //   console.log("데이터 받아옴", num);
-
-  //   axios({
-  //     method: "GET",
-  //     // url: `${baseUrl}games/gameType/chanceGame`,
-  //     // url: `${baseUrl}games/gameType/chanceGame?randomNo=${num}`,
-  //     url: `${baseUrl}games/gameType/chanceGame?randomNo=[2,4,5,6,7,1,3,8]`,
-  //     // data: num,
-  //   })
-  //     .then((res) => {
-  //       // console.log(res.data);
-  //       setCardlist(res.data);
-  //       console.log("성공");
-  //     })
-  //     .catch((error) => console.log(error));
-  // });
-
-  // useEffect(() => {
-  //   if (!host) {
-  //     const num = _.sampleSize(_.range(1, 9), 8);
-  //     // const number = num.join(",");
-  //     console.log("데이터 보내는 곳", num);
-  //     openvidu.session.signal({
-  //       data: JSON.stringify(num),
-  //       type: "SeedNumber",
-  //       // headers: { "Content-type": "application/json" },
-  //     });
-  //   }
-  // }, []);
-
   openvidu.session.on("signal:SeedNumber", (event) => {
     const encodedRandomNo = encodeURIComponent(event.data);
     axios({
       method: "GET",
-
       url: `${baseUrl}games/gameType/chanceGame?randomNo=${encodedRandomNo}`,
     })
       .then((res) => {
         setCardlist(res.data);
-        console.log("성공");
       })
       .catch((error) => console.log(error));
   });
@@ -100,17 +64,21 @@ function Lotto({ start, result, openvidu, host }) {
           return (
             <div key={idx} className={styles.flip}>
               <div className={styles.card}>
-                {!clickedlist.includes(lotto) ? (
+                {!clickedlist.includes(lotto.chanceId) ? (
                   <div
                     className={styles.front}
                     onClick={handleclick}
-                    id={lotto}
+                    id={lotto.chanceId}
                   >
                     앞면
                   </div>
                 ) : (
-                  <div className={styles.back} onClick={handleclick} id={lotto}>
-                    {lotto}
+                  <div
+                    className={styles.back}
+                    onClick={handleclick}
+                    id={lotto.chanceId}
+                  >
+                    {lotto.item}
                   </div>
                 )}
               </div>
@@ -123,17 +91,21 @@ function Lotto({ start, result, openvidu, host }) {
           return (
             <div key={idx} className={styles.flip}>
               <div className={styles.card}>
-                {!clickedlist.includes(lotto) ? (
+                {!clickedlist.includes(lotto.chanceId) ? (
                   <div
                     className={styles.front}
                     onClick={handleclick}
-                    id={lotto}
+                    id={lotto.chanceId}
                   >
                     앞면
                   </div>
                 ) : (
-                  <div className={styles.back} onClick={handleclick} id={lotto}>
-                    {lotto}
+                  <div
+                    className={styles.back}
+                    onClick={handleclick}
+                    id={lotto.chanceId}
+                  >
+                    {lotto.item}
                   </div>
                 )}
               </div>
