@@ -72,10 +72,13 @@ public class GameController {
 
     //게임데이터 (인생역전)
     @GetMapping("/gameType/chanceGame")
-    public ResponseEntity<List<ChanceRes>> chanceGameData(@RequestBody String randomNo){
-        ArrayList<Integer> randomData = new ArrayList<>(Arrays.stream(randomNo.split(","))
+    public ResponseEntity<List<ChanceRes>> chanceGameData(@RequestParam("randomNo") String randomNo){
+
+        String randomNums = randomNo.substring(1,randomNo.length()-1);
+        ArrayList<Integer> randomData = new ArrayList<>(Arrays.stream(randomNums.split(","))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList()));
+
         return ResponseEntity.ok(gameService.chanceGameData(randomData));
     }
 
