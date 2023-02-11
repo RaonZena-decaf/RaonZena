@@ -1,9 +1,26 @@
-import { CharacterQuizList } from "./CharacterQuizList";
 import React, { useEffect, useState } from "react";
 import styles from "./CharacterQuiz.module.css";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function CharacterQuiz({ start, result, setResult, openvidu }) {
   const [step, setStep] = useState(0);
+  const baseUrl = useSelector((store) => store.baseUrl);
+
+  const [characterimg, setCharacterimg] = useState({});
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: `${baseUrl}games/gameType/4`,
+    })
+      .then((res) => {
+        setCharacterimg(res.data);
+        console.log(res.data);
+        console.log(setCharacterimg);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
@@ -15,7 +32,7 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
   const [timeRemaining, setTimeRemaining] = useState(3);
 
   useEffect(() => {
-    if (start && step <= CharacterQuizList.length - 1) {
+    if (start && step <= characterimg.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
@@ -26,7 +43,7 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
         setIsAnswerShown(true);
       }
       if (isAnswerShown) {
-        if (step === CharacterQuizList.length - 1) {
+        if (step === characterimg.length - 1) {
           setIsAnswerShown(true);
           return;
         } else {
@@ -42,7 +59,7 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
 
   useEffect(() => {
     if (result !== "") {
-      if (result === CharacterQuizList[step].person_answer) {
+      if (result === characterimg[step].answer) {
         console.log("정답");
         const data = {
           correct: openvidu.userName,
@@ -63,17 +80,18 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
     <div className={styles.background}>
       {isAnswerShown ? (
         <div className={styles.result}>
-          <h1>정답은 {CharacterQuizList[step].person_answer} 입니다.</h1>
+          <h1>정답은 {characterimg[step].answer} 입니다.</h1>
         </div>
       ) : (
-        <img
-          alt="img"
-          src={CharacterQuizList[step].image_url}
-          className={styles.img}
-        />
+        characterimg &&
+        characterimg[step] && (
+          <img
+            alt="img"
+            src={characterimg[step].imageUrl}
+            className={styles.img}
+          />
+        )
       )}
-
-      {/* <div>{CharacterQuizList[step].person_no}</div> */}
     </div>
   );
 }

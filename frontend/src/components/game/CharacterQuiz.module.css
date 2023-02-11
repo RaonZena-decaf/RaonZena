@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   background-color: #353839;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 .img {
   height: 100%;
