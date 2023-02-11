@@ -48,9 +48,6 @@ public class GameServiceImpl implements GameService{
     GameChatRepository gameChatRepository;
 
     @Autowired
-    GameObjectFastRepository gameObjectFastRepository;
-
-    @Autowired
     GameSpeakAndDrawRepository gameSpeakAndDrawRepository;
 
     @Autowired
@@ -116,40 +113,48 @@ public class GameServiceImpl implements GameService{
     @Override
     public GameAnswer answer(int gameType) {
         //- 1 : 채팅 주제
-        //- 2 : 고요속의 외침 , 캐치마인드
-        //- 3 : 특정 물건 빨리 가져오기
+        //- 2 : 캐치마인드
+        //- 3 : 고요속의 외침
 
         int min = 1;
         if(gameType == 1){
             int  max = 102;
             int randomNo = (int) ((Math.random() * (max - min)) + min);
-
             Chat data =  gameChatRepository.findByChatNo(randomNo);
             GameAnswer answer = new GameAnswer(data.getTopic());
-           return answer;
+            return answer;
         }else if (gameType == 2){
             int  max = 402;
             int randomNo = (int) ((Math.random() * (max - min)) + min);
-
             SpeakAndDraw data =  gameSpeakAndDrawRepository.findBySpeekNo(randomNo);
             GameAnswer answer = new GameAnswer(data.getAnswer());
             return answer;
         }
-//        else if(gameType == 3){
-//            //ObjectFast data = gameObjectFastRepository.findByObjectNo(randomNo);
-//            GameAnswer answer = new GameAnswer(data.getImageUrl());
-//            return answer;
-//        }
         return new GameAnswer("존재하지 않는 게임입니다.");
     }
 
     @Override
-    public GameAnswerAndImageRes answerAndImage(int gameType) {
+    public List<GameAnswer> answerList() {
+        int min = 1;
+        int  max = 402;
+        List<GameAnswer> answerList = new ArrayList<>();
+        for(int i=0; i<5;i++) {
+            int randomNo = (int) ((Math.random() * (max - min)) + min);
+            SpeakAndDraw data = gameSpeakAndDrawRepository.findBySpeekNo(randomNo);
+            GameAnswer answer = new GameAnswer(data.getAnswer());
+            answerList.add(answer);
+        }
+        return answerList;
+    }
+
+    @Override
+    public GameAnswerAndImageRes answerAndImage() {
         int min = 1;
         int max = 250;
         int randomNo = (int) ((Math.random() * (max - min)) + min);
-
+        System.out.println(randomNo);
         PersonQuiz data = gamePersonQuizRepository.findByPersonNO(randomNo);
+
         GameAnswerAndImageRes answer = new GameAnswerAndImageRes(data.getPersonAnswer(), data.getImageUrl());
         return answer;
     }

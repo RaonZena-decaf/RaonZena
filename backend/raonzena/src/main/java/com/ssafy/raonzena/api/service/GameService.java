@@ -12,11 +12,14 @@ public interface GameService {
 
     boolean saveFeed(MultipartFile multipartFile, BoardReq boardReq);
 
-    //게임데이터 - 정답만
+    //게임데이터 1개 - 정답만
     GameAnswer answer(int gameType);
 
+    //게임데이터 5개 - 정답만
+    List<GameAnswer> answerList();
+
     //게임데이터 - 정답 + 이미지
-    GameAnswerAndImageRes answerAndImage(int gameType);
+    GameAnswerAndImageRes answerAndImage();
 
     //게임데이터 - 인생역전
     List<ChanceRes> chanceGameData(List<Integer> randomNo);
