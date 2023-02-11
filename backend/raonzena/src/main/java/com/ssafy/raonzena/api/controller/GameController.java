@@ -57,14 +57,15 @@ public class GameController {
 
     //게임데이터 (인생역전 제외)
     @GetMapping("/gameType/{gameType}")
-    public ResponseEntity<?> gameData(@PathVariable int gameType){
+    public ResponseEntity<?> gameData(@PathVariable int gameType) {
         //- 1 : 채팅 주제
-        //- 2 : 고요속의 외침 , 캐치마인드
-        //- 3 : 특정 물건 빨리 가져오기
-        //- 4 : 인물퀴즈
-
-        if(gameType == 4){
-            return ResponseEntity.ok(gameService.answerAndImage(gameType));
+        //- 2 : 캐치마인드
+        //- 3 : 고요속의 외침
+        if(gameType == 3){
+            return ResponseEntity.ok(gameService.answerList());
+        }
+        if (gameType == 4) {
+            return ResponseEntity.ok(gameService.answerAndImage());
         }
 
         return ResponseEntity.ok(gameService.answer(gameType));
