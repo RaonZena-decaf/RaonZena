@@ -127,10 +127,6 @@
   -webkit-animation: fadeout 2s; /* Safari and Chrome */
   -o-animation: fadeout 5s; /* Opera */
   animation-fill-mode: forwards;
-
-  /* display: flex;
-    justify-content: center;
-    align-items: center; */
   z-index: 1;
   position: absolute;
   bottom: 17%;
