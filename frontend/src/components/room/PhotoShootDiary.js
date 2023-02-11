@@ -31,10 +31,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
       // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
 
       // 사진 영역을 촬영하는 함수
-      window.scrollTo(0, 0);
-
-      await html2canvas(document.getElementById("사진촬영완료"), {
-        logging: true,
+      await html2canvas(document.querySelector("#사진촬영완료"), {
         allowTaint: true,
         useCORS: true
       }).then(
