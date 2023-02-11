@@ -33,11 +33,13 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
       // 사진 영역을 촬영하는 함수
       window.scrollTo(0, 0);
 
-      await html2canvas(document.getElementById("사진촬영완료")).then(
+      await html2canvas(document.getElementById("사진촬영완료"), {
+        allowTaint: true,
+        useCORS: true
+      }).then(
         async (canvas) => {
           const day = new Date();
           const dataUrl = canvas.toDataURL("image/png");
-          console.log(dataUrl)
           const blobBin = atob(dataUrl.split(",")[1]);
           let array = [];
           for (let i = 0; i < blobBin.length; i++) {
