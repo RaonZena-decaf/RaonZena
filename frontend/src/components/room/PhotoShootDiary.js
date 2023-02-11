@@ -34,6 +34,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
       window.scrollTo(0, 0);
 
       await html2canvas(document.getElementById("사진촬영완료"), {
+        logging: true,
         allowTaint: true,
         useCORS: true
       }).then(
