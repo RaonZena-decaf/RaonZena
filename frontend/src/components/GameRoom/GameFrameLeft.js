@@ -62,6 +62,7 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
               result={result}
               setResult={setResult}
               openvidu={openvidu}
+              host={host}
             />
           )}
           {gamename === "personquiz" && (
