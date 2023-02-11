@@ -20,6 +20,7 @@ export default function GameRoom({ searchWord }) {
   const navigate = useNavigate();
 
   const loginConfigure = () => {
+    console.log("게임 리스트에 있는 user 정보", user)
     if (user.userNo === "") {
       return false;
     } else {
@@ -87,9 +88,9 @@ export default function GameRoom({ searchWord }) {
 
   const navigateToCreateRoom = () => {
     if (loginConfigure) {
-      alert("Please Login");
-    } else {
       navigate("/makeroom");
+    } else {
+      alert("Please Login");
     }
   };
 
