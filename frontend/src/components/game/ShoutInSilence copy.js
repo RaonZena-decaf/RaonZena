@@ -8,7 +8,7 @@ export default function ShoutInSilence({
   start,
   result,
   setResult,
-  IsHost,
+  host,
   openvidu,
 }) {
   const timeLimit = 5;
@@ -22,8 +22,8 @@ export default function ShoutInSilence({
   const baseUrl = useSelector((store) => store.baseUrl);
   const videoRef = useRef(null);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(3);
-  const [gameStart, setGameStart] = useState(start);
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+  // const [gameStart, setGameStart] = useState(start);
 
   // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
   if (openvidu.session) {
@@ -59,33 +59,14 @@ export default function ShoutInSilence({
       .catch((error) => console.log(error));
   }
 
-  //타이머 설정
-  useEffect(() => {
-    if (gameStart) {
-      const countdown = setInterval(() => {
-        if (parseInt(seconds) > 0) {
-          setSeconds(parseInt(seconds) - 1);
-        }
-        if (parseInt(seconds) === 0) {
-          if (parseInt(minutes) === 0) {
-            clearInterval(countdown);
-          } else {
-            setMinutes(parseInt(minutes) - 1);
-            setSeconds(59);
-          }
-        }
-      }, 1000);
-      return () => clearInterval(countdown);
-    }
-  }, [gameStart, minutes, seconds]);
-
   // 정답 체크 기능
   useEffect(() => {
-    if (gameStart && step <= AnswerList.length - 1) {
+    if (start && step <= AnswerList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
+        //
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
-        }, 100);
+        }, 1000);
         return () => clearInterval(intervalId);
       }
       if (timeRemaining === 0 && !isAnswerShown) {
@@ -95,21 +76,24 @@ export default function ShoutInSilence({
         if (step === AnswerList.length - 1) {
           setIsAnswerShown(true);
           return;
-        } else {
+        }
+        // 답 보여주는 함수
+        else {
           setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
         }
       }
     }
-  }, [gameStart, timeRemaining, isAnswerShown]);
+  }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
     if (result !== "") {
       if (result === AnswerList[step].answer) {
         console.log("정답");
+        alert("정답");
         const data = {
           correct: openvidu.userName,
         };
@@ -120,6 +104,7 @@ export default function ShoutInSilence({
         setResult("");
       } else {
         console.log("오답");
+        alert("오답");
         setResult("");
       }
     }
@@ -130,38 +115,57 @@ export default function ShoutInSilence({
     video.addVideoElement(videoRef.current);
   }, []);
 
-  IsHost = true;
-
-  if (IsHost) {
+  if (true) {
     return (
       <div>
-        <div className={styles.AnswerFont}>
-          {AnswerList[step].question_no} / {AnswerList.length}
-        </div>
-
-        <div className={styles.AnswerFont}>
-          문제 : {AnswerList[step].answer}
-        </div>
+        {/* <div>
+          <div className={styles.questionNo}>
+            {step+1} / {AnswerList.length}
+          </div>
+          <div className={styles.AnswerFont}>
+            문제 : {AnswerList[step].answer}
+          </div>
+        </div> */}
         <div>
-          <video autoPlay={false} ref={videoRef} width="80%" height="80%" />
-          <span className={styles.HostCameraTimeLimit}>
-            {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
-          </span>
+          <div className={styles.webcamCapture}>
+            <video ref={videoRef} width="80%" />
+            <div className={styles.Container}>
+              <span className={styles.TimeLimit}>
+                {" "}
+                {minutes} :{" "}
+                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+              </span>
+              <span className={styles.AnswerFont}>
+                {AnswerList[step].answer}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     );
   } else {
     return (
-      <div className={styles.background}>
+      <div>
+        {/* <div>
+          <div className={styles.questionNo}>
+            {AnswerList[step].question_no} / {AnswerList.length}
+          </div>
+          <div className={styles.AnswerFont}>
+            문제 : {AnswerList[step].answer}
+          </div>
+        </div> */}
         <div>
-          제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+          <div className={styles.webcamCapture}>
+            <video ref={videoRef} width="80%" />
+            <div className={styles.Container}>
+              <span className={styles.TimeLimit}>
+                {" "}
+                {minutes} :{" "}
+                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+              </span>
+            </div>
+          </div>
         </div>
-
-        <div>
-          번호: {AnswerList[step].question_no} / {AnswerList.length}
-        </div>
-
-        <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
       </div>
     );
   }

@@ -3,6 +3,10 @@ import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { AnswerList } from "./ShoutInSilenceList";
+import { Transition } from "react-transition-group";
+import GameAnswerModal from "../Modal/GameAnswerModal";
+import ShowResult from "./ShowResult";
+import { style } from "@mui/system";
 
 export default function ShoutInSilence({
   start,
@@ -11,19 +15,28 @@ export default function ShoutInSilence({
   host,
   openvidu,
 }) {
-  const timeLimit = 5;
+  const timeLimit = 10;
 
   const [step, setStep] = useState(0);
+  const [modalShow, setModalShow] = useState(false);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(timeLimit);
-  const [isCorrect, setIsCorrect] = useState(false); // 정답 유무
+  const [isWrong, setIsWrong] = useState(false); // 정답 유무
   const [showAnswer, setShowAnswer] = useState(false);
   const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
   const videoRef = useRef(null);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(3);
-  const [gameStart, setGameStart] = useState(start);
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+
+  // const [gameStart, setGameStart] = useState(start);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setTimeout(() => {}, 300);
+  };
 
   // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
   if (openvidu.session) {
@@ -50,7 +63,7 @@ export default function ShoutInSilence({
   function getAnswerList() {
     axios({
       method: "get",
-      url: `${baseUrl}games/gameType/2`,
+      url: `${baseUrl}games/gameType/1`,
     })
       .then((res) => {
         console.log(res);
@@ -59,57 +72,46 @@ export default function ShoutInSilence({
       .catch((error) => console.log(error));
   }
 
-  //타이머 설정
-  useEffect(() => {
-    if (gameStart) {
-      const countdown = setInterval(() => {
-        if (parseInt(seconds) > 0) {
-          setSeconds(parseInt(seconds) - 1);
-        }
-        if (parseInt(seconds) === 0) {
-          if (parseInt(minutes) === 0) {
-            clearInterval(countdown);
-          } else {
-            setMinutes(parseInt(minutes) - 1);
-            setSeconds(59);
-          }
-        }
-      }, 1000);
-      return () => clearInterval(countdown);
-    }
-  }, [gameStart, minutes, seconds]);
-
   // 정답 체크 기능
   useEffect(() => {
-    if (gameStart && step <= AnswerList.length - 1) {
+    if (start && step <= AnswerList.length - 1) {
+      // 시간이 남았는데 정답을 못맞춘 경우
       if (timeRemaining > 0 && !isAnswerShown) {
+        //
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
-        }, 100);
+        }, 1000);
         return () => clearInterval(intervalId);
       }
+      // 제한 시간이 끝난 후 정답을 못맞춘 경우
       if (timeRemaining === 0 && !isAnswerShown) {
         setIsAnswerShown(true);
       }
+
+      //정답을 맞춘 경우
       if (isAnswerShown) {
+        //마지막 문제인 경우
         if (step === AnswerList.length - 1) {
           setIsAnswerShown(true);
           return;
         } else {
-          setTimeout(() => {
+          const timeoutId = setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
+          return () => clearTimeout(timeoutId);
         }
       }
     }
-  }, [gameStart, timeRemaining, isAnswerShown]);
+  }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
     if (result !== "") {
+      //정답 맞춘 로직
       if (result === AnswerList[step].answer) {
         console.log("정답");
+        // setModalShow(true);
         const data = {
           correct: openvidu.userName,
         };
@@ -118,54 +120,79 @@ export default function ShoutInSilence({
           type: "TrueAnswer",
         });
         setResult("");
-      } else {
+      }
+      //틀린 로직
+      else {
         console.log("오답");
         setResult("");
+        document.getElementById("wrongMassage").style.display = "block";
+        setTimeout(function () {
+          document.getElementById("wrongMassage").style.display = "none";
+        }, 200);
       }
     }
   }, [result]);
+
+  function wrongAlert() {}
 
   useEffect(() => {
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
   }, []);
 
-  if (true) {
+  // 모달창 노출 여부 state
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+  };
+
+  function checkAnswer() {}
+
+  if (host) {
     return (
       <div>
-        <div>
-          {/* <div className={styles.questionNo}>
-            {AnswerList[step].question_no} / {AnswerList.length}
-          </div> */}
-          {/* <div className={styles.AnswerFont}>
-            문제 : {AnswerList[step].answer}
-          </div> */}
+        <div id="wrongMassage" className={styles.wrongMassage}>
+          틀렸습니다
         </div>
         <div>
           <div className={styles.webcamCapture}>
-            <video ref={videoRef} />
-            <div className={styles.TimeLimit}>
-              <p>문제 : {AnswerList[step].answer}</p>
-              <p> </p>
-              제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
-              <span></span>
+            <video ref={videoRef} width="80%" />
+            <div className={styles.Container}>
+              <span className={styles.TimeLimit}>
+                {" "}
+                {minutes} :{" "}
+                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+              </span>
+              <span className={styles.AnswerFont}>
+                {AnswerList[step].answer}
+              </span>
             </div>
           </div>
         </div>
       </div>
     );
-  } else {
+  }
+  // 게스트 화면
+  else {
     return (
-      <div className={styles.background}>
-        <div>
-          제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+      <div>
+        <div id="wrongMassage" className={styles.wrongMassage}>
+          틀렸습니다
         </div>
-
         <div>
-          번호: {AnswerList[step].question_no} / {AnswerList.length}
+          <div className={styles.webcamCapture}>
+            <video ref={videoRef} width="80%" />
+            <div className={styles.Container}>
+              <span className={styles.TimeLimit}>
+                {" "}
+                {minutes} :{" "}
+                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+              </span>
+            </div>
+          </div>
         </div>
-
-        <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
       </div>
     );
   }

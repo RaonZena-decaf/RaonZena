@@ -1,18 +1,14 @@
 export const AnswerList = [
   {
-    question_no: 1,
-    answer: "손흥민",
+    answer: "등잔 밑이 어둡다",
   },
   {
-    question_no: 2,
-    answer: "영민쮸",
+    answer: "삼성",
   },
   {
-    question_no: 3,
-    answer: "가는 말이 고와야 오는 말이 곱다",
-  },
-  {
-    question_no: 4,
     answer: "SSAFY",
+  },
+  {
+    answer: "월드컵",
   },
 ];
