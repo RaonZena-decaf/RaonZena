@@ -3,9 +3,6 @@ import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { AnswerList } from "./ShoutInSilenceList";
-import { Transition } from "react-transition-group";
-import GameAnswerModal from "../Modal/GameAnswerModal";
-import ShowResult from "./ShowResult";
 import { style } from "@mui/system";
 
 export default function ShoutInSilence({
