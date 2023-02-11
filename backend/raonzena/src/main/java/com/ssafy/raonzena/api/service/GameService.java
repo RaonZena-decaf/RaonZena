@@ -19,7 +19,7 @@ public interface GameService {
     List<GameAnswer> answerList();
 
     //게임데이터 - 정답 + 이미지
-    GameAnswerAndImageRes answerAndImage();
+    List<GameAnswerAndImageRes> answerAndImage();
 
     //게임데이터 - 인생역전
     List<ChanceRes> chanceGameData(List<Integer> randomNo);
