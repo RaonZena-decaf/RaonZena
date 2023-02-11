@@ -20,7 +20,6 @@ export default function GameRoom({ searchWord }) {
   const navigate = useNavigate();
 
   const loginConfigure = () => {
-    console.log("게임 리스트에 있는 user 정보", user)
     if (user.userNo === "") {
       return false;
     } else {
@@ -39,7 +38,6 @@ export default function GameRoom({ searchWord }) {
           url: `${baseUrl}live`,
         })
           .then((res) => {
-            console.log(" GameList res.data 가져온 결과", res.data);
             setGameRoomList(res.data);
             // Get currCards
             const indexOfLastCard = currentPage * cardsPerPage;

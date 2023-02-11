@@ -15,19 +15,17 @@ export default function ShoutInSilence({
   const timeLimit = 10;
 
   const [step, setStep] = useState(0);
-  const [modalShow, setModalShow] = useState(false);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(timeLimit);
   const [isWrong, setIsWrong] = useState(false); // 정답 유무
-  const [showAnswer, setShowAnswer] = useState(false);
   const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
   const videoRef = useRef(null);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
 
-  // const [gameStart, setGameStart] = useState(start);
-
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -104,28 +102,30 @@ export default function ShoutInSilence({
   }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
-    if (result !== "") {
-      //정답 맞춘 로직
-      if (result === AnswerList[step].answer) {
-        console.log("정답");
-        // setModalShow(true);
-        const data = {
-          correct: openvidu.userName,
-        };
-        openvidu.session.signal({
-          data: JSON.stringify(data),
-          type: "TrueAnswer",
-        });
-        setResult("");
-      }
-      //틀린 로직
-      else {
-        console.log("오답");
-        setResult("");
-        document.getElementById("wrongMassage").style.display = "block";
-        setTimeout(function () {
-          document.getElementById("wrongMassage").style.display = "none";
-        }, 200);
+    if (host === false) {
+      if (result !== "") {
+        //정답 맞춘 로직
+        if (result === AnswerList[step].answer) {
+          console.log("정답");
+          // setModalShow(true);
+          const data = {
+            correct: openvidu.userName,
+          };
+          openvidu.session.signal({
+            data: JSON.stringify(data),
+            type: "TrueAnswer",
+          });
+          setResult("");
+        }
+        //틀린 로직
+        else {
+          console.log("오답");
+          setResult("");
+          document.getElementById("wrongMassage").style.display = "block";
+          setTimeout(function () {
+            document.getElementById("wrongMassage").style.display = "none";
+          }, 200);
+        }
       }
     }
   }, [result]);
@@ -144,15 +144,12 @@ export default function ShoutInSilence({
   const showModal = () => {
     setModalOpen(true);
   };
-
-  function checkAnswer() {}
+  
+  console.log("host는===", host)
 
   if (host) {
     return (
       <div>
-        <div id="wrongMassage" className={styles.wrongMassage}>
-          틀렸습니다
-        </div>
         <div>
           <div className={styles.webcamCapture}>
             <video ref={videoRef} width="80%" />
