@@ -48,7 +48,6 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
           formData.append("file", file);
         }
       );
-
       const data = {
         boardImageUrl: "",
         title: input.title,
@@ -71,10 +70,11 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
       })
         .then((res) => {
           alert("사진이 저장되었습니다.");
+          closeMenu()
         })
         .catch((error) => {
           alert("저장에 실패하였습니다. 다시 시도해 주세요.");
-          console.log(error);
+          closeMenu()
         });
     } else {
       alert("취소하였습니다.");
