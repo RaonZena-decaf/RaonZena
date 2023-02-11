@@ -37,6 +37,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
         async (canvas) => {
           const day = new Date();
           const dataUrl = canvas.toDataURL("image/png");
+          console.log(dataUrl)
           const blobBin = atob(dataUrl.split(",")[1]);
           let array = [];
           for (let i = 0; i < blobBin.length; i++) {
