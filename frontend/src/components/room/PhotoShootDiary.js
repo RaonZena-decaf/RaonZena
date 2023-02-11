@@ -32,7 +32,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
 
       // 사진 영역을 촬영하는 함수
       await html2canvas(document.querySelector("#사진촬영완료"), {
-        allowTaint: true,
+        allowTaint: false,
         useCORS: true
       }).then(
         async (canvas) => {
