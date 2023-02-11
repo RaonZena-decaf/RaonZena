@@ -27,11 +27,11 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
     return b.points - a.points;
   });
   return (
-    <div>
+    <div className={styles.leftcontainer}>
       <div>
         <div className={styles.container}>
           {gamename === "imagetheme" && (
-            <CharacterQuiz
+            <Seeking
               start={start}
               result={result}
               setResult={setResult}
@@ -48,7 +48,13 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
             />
           )}
           {gamename === "catchmind" && (
-            <Catchmind start={start} result={result} />
+            <Catchmind
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+              host={host}
+            />
           )}
           {gamename === "talkingsilence" && (
             <ShoutInSilence
@@ -56,6 +62,7 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
               result={result}
               setResult={setResult}
               openvidu={openvidu}
+              host={host}
             />
           )}
           {gamename === "personquiz" && (

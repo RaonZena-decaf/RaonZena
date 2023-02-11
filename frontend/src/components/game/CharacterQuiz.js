@@ -75,7 +75,14 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
       }
     }
   }, [result]);
-
+  useEffect(() => {
+    const audio = new Audio();
+    audio.src = "../music/Girasol.mp3";
+    audio.play();
+    return () => {
+      audio.pause();
+    }
+  },[]);
   return (
     <div className={styles.background}>
       {isAnswerShown ? (

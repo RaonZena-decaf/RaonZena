@@ -59,7 +59,7 @@
   height: 70%; */
   /* aspect-ratio: auto 1/1; */
   /* overflow: hidden; */
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
@@ -68,11 +68,11 @@
 .TimeLimit {
   display: flex;
   justify-content: flex-end;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   position: absolute;
-  bottom: 3%;
-  right: 1%;
-  color: black;
+  top: 3%;
+  left: 1%;
+  color: red;
   text-shadow: -2px 0 #ffff, 0 2px #ffff, 2px 0 #ffff, 0 -2px #ffff;
 }
 
@@ -83,12 +83,12 @@
 
   display: flex;
   justify-content: flex-end;
-  font-size: 1.5rem;
+  font-size: 3.5rem;
   position: absolute;
-  top: 3%;
-  right: 1%;
-  color: black;
-  text-shadow: -2px 0 #ffff, 0 2px #ffff, 2px 0 #ffff, 0 -2px #ffff;
+  bottom: 3%;
+  left: 0%;
+  color: white;
+  text-shadow: -2px 0 #f400b0, 0 2px #f400b0, 2px 0 #f400b0, 0 -2px #f400b0;
 }
 
 .background {
@@ -110,4 +110,30 @@
   margin: 0;
   /* height: 60px; */
   line-height: 3rem;
+}
+
+.Container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.wrongMassage {
+  color: red;
+  /* padding: 10px; */
+  font-size: 3rem;
+  animation: fadeout 2s;
+  -moz-animation: fadeout 5s; /* Firefox */
+  -webkit-animation: fadeout 2s; /* Safari and Chrome */
+  -o-animation: fadeout 5s; /* Opera */
+  animation-fill-mode: forwards;
+  z-index: 1;
+  position: absolute;
+  bottom: 17%;
+  left: 51%;
+  display: none;
+}
+
+.hidden {
+  display: none;
 }

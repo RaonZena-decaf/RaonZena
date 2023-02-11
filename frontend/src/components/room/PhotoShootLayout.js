@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import html2canvas from "html2canvas";
 import styles from "./PhotoShootLayout.module.css";
 
-function PhotoShootLayout({ photoFrame, TotalUsers, frames }) {
+function PhotoShootLayout({ photoFrame, TotalUsers }) {
   useLayoutEffect(() => {
     for (const user of TotalUsers) {
       html2canvas(document.getElementById(`${user.videos[0].id}`)).then(
@@ -22,7 +22,7 @@ function PhotoShootLayout({ photoFrame, TotalUsers, frames }) {
       className={styles.photoFrame}
       id="사진촬영완료"
       style={{
-        backgroundImage: photoFrame,
+        backgroundImage: `url(${photoFrame})`,
       }}
     >
       <div className={styles.photoshootlayoutmaintextcontainer}>

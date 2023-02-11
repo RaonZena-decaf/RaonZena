@@ -6,7 +6,6 @@ import axios from "axios";
 
 function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
   // redux에 저장된 유저 정보에서 레벨에 따라 option 렌더링이 달라져야 함
-  const userlevel = useSelector((store) => store.userData.level);
   const baseUrl = useSelector((store) => store.baseUrl);
 
   const frameSelect = (e) => {
@@ -32,9 +31,10 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
       // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
 
       // 사진 영역을 촬영하는 함수
-      window.scrollTo(0, 0);
-
-      await html2canvas(document.getElementById("사진촬영완료")).then(
+      await html2canvas(document.querySelector("#사진촬영완료"), {
+        allowTaint: false,
+        useCORS: true
+      }).then(
         async (canvas) => {
           const day = new Date();
           const dataUrl = canvas.toDataURL("image/png");
@@ -48,7 +48,6 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
           formData.append("file", file);
         }
       );
-
       const data = {
         boardImageUrl: "",
         title: input.title,
@@ -71,10 +70,11 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
       })
         .then((res) => {
           alert("사진이 저장되었습니다.");
+          closeMenu()
         })
         .catch((error) => {
           alert("저장에 실패하였습니다. 다시 시도해 주세요.");
-          console.log(error);
+          closeMenu()
         });
     } else {
       alert("취소하였습니다.");
@@ -83,18 +83,21 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
 
   return (
     <div className={styles.photoshootdiaryflex}>
-      <select
-        className={styles.photoshootdiaryselect}
-        onChange={frameSelect}
-        defaultValue="프레임 선택"
-      >
-        <option value="프레임 선택" disabled hidden>
-          프레임 선택
-        </option>
-        {frames.map((frame) => (
-          <option value={frame.imageUrl}>{frame.imageName}</option>
-        ))}
-      </select>
+      {frames ? (
+        <select
+          className={styles.photoshootdiaryselect}
+          onChange={frameSelect}
+          defaultValue="프레임 선택"
+        >
+          <option value="프레임 선택" disabled hidden>
+            프레임 선택
+          </option>
+          {frames.map((frame) => (
+            <option value={frame.imageUrl}>{frame.imageName}</option>
+          ))}
+        </select>
+      ) : null}
+
       <input
         className={styles.photoshootdiaryinput}
         name="title"

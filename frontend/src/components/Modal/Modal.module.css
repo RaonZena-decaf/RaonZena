@@ -254,10 +254,10 @@
   justify-content: space-between;
   align-items: first center;
   margin-top: 2rem;
-
 }
 
 .followBtn{
+  margin-left: 2rem;
   font-size: 3rem;
 }
 

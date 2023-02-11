@@ -30,9 +30,10 @@
 
 .gradient {
   margin: 0;
-  background: linear-gradient(90deg, #8f00ff, #ff00a8);
+  background: linear-gradient(90deg, #8f00ff, #f400b0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  width: fit-content;
 }
 
 .pinkbutton {

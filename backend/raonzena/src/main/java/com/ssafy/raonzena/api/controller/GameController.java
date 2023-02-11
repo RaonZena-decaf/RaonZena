@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequestMapping("/api/v1/games")
 @RestController
@@ -53,14 +57,15 @@ public class GameController {
 
     //게임데이터 (인생역전 제외)
     @GetMapping("/gameType/{gameType}")
-    public ResponseEntity<?> gameData(@PathVariable int gameType){
+    public ResponseEntity<?> gameData(@PathVariable int gameType) {
         //- 1 : 채팅 주제
-        //- 2 : 고요속의 외침 , 캐치마인드
-        //- 3 : 특정 물건 빨리 가져오기
-        //- 4 : 인물퀴즈
-
-        if(gameType == 4){
-            return ResponseEntity.ok(gameService.answerAndImage(gameType));
+        //- 2 : 캐치마인드
+        //- 3 : 고요속의 외침
+        if(gameType == 3){
+            return ResponseEntity.ok(gameService.answerList());
+        }
+        if (gameType == 4) {
+            return ResponseEntity.ok(gameService.answerAndImage());
         }
 
         return ResponseEntity.ok(gameService.answer(gameType));
@@ -68,8 +73,14 @@ public class GameController {
 
     //게임데이터 (인생역전)
     @GetMapping("/gameType/chanceGame")
-    public ResponseEntity<List<ChanceRes>> chanceGameData(@RequestBody List<Integer> randomNo){
-        return ResponseEntity.ok(gameService.chanceGameData(randomNo));
+    public ResponseEntity<List<ChanceRes>> chanceGameData(@RequestParam("randomNo") String randomNo){
+
+        String randomNums = randomNo.substring(1,randomNo.length()-1);
+        ArrayList<Integer> randomData = new ArrayList<>(Arrays.stream(randomNums.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList()));
+
+        return ResponseEntity.ok(gameService.chanceGameData(randomData));
     }
 
 
@@ -89,8 +100,28 @@ public class GameController {
         return ResponseEntity.ok(gameService.findGameScore(roomNo));
     }
 
+    @GetMapping("/{roomNo}/join")
+    public ResponseEntity<?> headCountDetails(@PathVariable long roomNo){
+        // 방에 참여중인 인원수 조회
+        if (gameService.findActiveHeadCount(roomNo)>-1){
+            return ResponseEntity.ok(gameService.findActiveHeadCount(roomNo));
+        }
+        // 방이 없으면 noContent 반환
+        return ResponseEntity.noContent().build();
+    }
 
+//    @PutMapping("/{roomNo}/join")
+//    public ResponseEntity<?> headCountSave(@PathVariable long roomNo, @RequestBody int headCount){
+//        // 참여인원수 저장
+//        gameService.saveActiveHeadCount(roomNo,headCount);
+//        return ResponseEntity.ok("Success");
+//    }
 
-
+    @PutMapping("/{roomNo}/join")
+    public ResponseEntity<?> headCountSave(@PathVariable long roomNo, @RequestBody Map<String, Integer> request){
+        // 참여인원수 저장
+        gameService.saveActiveHeadCount(roomNo,request.get("headCount"));
+        return ResponseEntity.ok("Success");
+    }
 
 }

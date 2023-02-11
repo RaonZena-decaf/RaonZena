@@ -11,16 +11,18 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   const nowUserNo = useSelector((store) => store.userData.user_no);
 
   const getlist = () => {
-    axios({
-      method: "get",
-      url: `${baseUrl}live/followingRoom`,
-      data: { userNo: nowUserNo },
-    })
-      .then((res) => {
-        console.log("HostFollowings res.data 가져온 결과", res.data);
-        setList(res.data);
+    if (nowUserNo) {
+      axios({
+        method: "get",
+        url: `${baseUrl}live/followingRoom`,
+        data: { userNo: nowUserNo },
       })
-      .catch((error) => console.log(error));
+        .then((res) => {
+          console.log("HostFollowings res.data 가져온 결과", res.data);
+          setList(res.data);
+        })
+        .catch((error) => console.log(error));
+    }
   };
   useEffect(() => {
     getlist();

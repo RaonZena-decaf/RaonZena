@@ -19,28 +19,40 @@ function KakaoLogin() {
     await axios({
       method: "POST",
       url: `${baseUrl}user/kakao/callback`,
-      data:  KAKAO_CODE,
-      headers: {'Content-type': 'application/json'}
+      data: KAKAO_CODE,
+      headers: { "Content-type": "application/json" },
     })
       .then((res) => {
         //redux 유저정보에 저장
         dispatch(modifyUserData(res.data));
+        //로그인 이후 자신이 팔로우하고 있는 사람들의 정보를 가져옴
+        axios({
+          method: "get",
+          url: `${baseUrl}profile/${res.data.userNo}/following`,
+        })
+          .then((res) => {
+            const array = [];
+            res.data.map((follwings) => array.push(follwings.userNo));
+            dispatch(modifyMyFollowingList(array));
+          })
+          .catch((error) => console.log(error));
+
         setTimeout(() => {
           navigate("/live");
-        }, 1500);
+        }, 1450);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         setTimeout(() => {
           alert("로그인에 실패하였습니다. 다시 시도해 주세요.");
           navigate("/");
         }, 1500);
       });
-  };
+  }
 
   useEffect(() => {
     if (!location.search) return;
-    getToken()
+    getToken();
   }, []);
 
   return (
