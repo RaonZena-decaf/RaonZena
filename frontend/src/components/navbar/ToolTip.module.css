@@ -20,6 +20,7 @@
   border-radius: .5rem;
   width:fit-content;
   top:120%;
+  opacity: .7;
 }
 
 .tooltip::after{
@@ -34,7 +35,6 @@
 	border-top: 0;
 	margin-left: -40%;
 	margin-top: -13px;
-
 }
 
 @keyframes tooltip {
@@ -42,9 +42,9 @@
     opacity: 0;
   }
   50% {
-    opacity: 1;
+    opacity: .7;
   }
   100% {
-    opacity: 1;
+    opacity: .7;
   }
 }
