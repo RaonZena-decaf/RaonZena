@@ -62,46 +62,39 @@ function Landing() {
   useEffect(() => {
     const landpage = document.querySelector("#landpage");
     const guidepage = document.querySelector("#guidepage");
+    function handleWheel1(e) {
+      e.preventDefault();
+      if (e.deltaY > 0) {
+        window.scrollBy({
+          top: window.innerHeight,
+          behavior: "smooth",
+        });
+      } else {
+        window.scrollBy({
+          top: -window.innerHeight,
+          behavior: "smooth",
+        });
+      }
+    }
 
-    landpage.addEventListener(
-      "wheel",
-      (event) => {
-        event.preventDefault();
+    landpage.addEventListener("wheel", handleWheel1, { passive: false });
 
-        if (event.deltaY > 0) {
-          window.scrollBy({
-            top: window.innerHeight,
-            behavior: "smooth",
-          });
-        } else {
-          window.scrollBy({
-            top: -window.innerHeight,
-            behavior: "smooth",
-          });
-        }
-      },
-      { passive: false }
-    );
+    function handleWheel2(e) {
+      e.preventDefault();
 
-    guidepage.addEventListener(
-      "wheel",
-      (event) => {
-        event.preventDefault();
-
-        if (event.deltaY > 0) {
-          guidepage.scrollBy({
-            left: window.innerWidth*0.83,
-            behavior: "smooth",
-          });
-        } else {
-          guidepage.scrollTo({
-            left: 0,
-            behavior: "smooth",
-          });
-        }
-      },
-      { passive: false }
-    );
+      if (e.deltaY > 0) {
+        guidepage.scrollBy({
+          left: window.innerWidth * 0.83,
+          behavior: "smooth",
+        });
+      } else {
+        guidepage.scrollTo({
+          left: 0,
+          behavior: "smooth",
+        });
+      }
+    }
+    guidepage.addEventListener("wheel", handleWheel2, { passive: false });
   }, []);
   //무작위 난수 생성
   function randomNum(min, max) {

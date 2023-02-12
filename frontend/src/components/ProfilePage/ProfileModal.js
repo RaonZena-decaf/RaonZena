@@ -6,15 +6,12 @@ import { useEffect } from "react";
 
 function ProfileModal({ show, handleClose, nowContent, follower, following }) {
   useEffect(() => {
-    document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`;
+    function handleWheel(e) {
+      e.preventDefault();
+    }
+    window.addEventListener("wheel", handleWheel, { passive: false });
     return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+      window.removeEventListener("wheel", handleWheel);
     };
   }, []);
 
@@ -42,9 +39,24 @@ function ProfileModal({ show, handleClose, nowContent, follower, following }) {
         className={`${styles.modalContainer} ${styles[slide]}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {nowContent && <ProfilePostDetail nowContent={nowContent} handleClose={handleClose}/>}
-        {following && <ProfileFollowingListDetail following={following} handleClose={handleClose}/>}
-        {follower && <ProfileFollowerListDetail follower={follower} handleClose={handleClose}/>}
+        {nowContent && (
+          <ProfilePostDetail
+            nowContent={nowContent}
+            handleClose={handleClose}
+          />
+        )}
+        {following && (
+          <ProfileFollowingListDetail
+            following={following}
+            handleClose={handleClose}
+          />
+        )}
+        {follower && (
+          <ProfileFollowerListDetail
+            follower={follower}
+            handleClose={handleClose}
+          />
+        )}
       </div>
     </div>
   );

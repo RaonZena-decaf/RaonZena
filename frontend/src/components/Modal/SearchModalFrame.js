@@ -20,15 +20,13 @@ const SearchModalFrame = ({ show, closeModal }) => {
   ];
 
   useEffect(() => {
-    document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`;
+    function handleWheel(e) {
+      e.preventDefault();
+    }
+    window.addEventListener("wheel", handleWheel, { passive: false });
+
     return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+      window.removeEventListener("wheel", handleWheel);
     };
   }, []);
 
@@ -46,8 +44,6 @@ const SearchModalFrame = ({ show, closeModal }) => {
     event.preventDefault();
   };
 
-  
-
   return (
     <div className={`${styles[fadeAnimationClass]} ${styles.zindex}`}>
       <div
@@ -60,7 +56,9 @@ const SearchModalFrame = ({ show, closeModal }) => {
           onClick={(e) => e.stopPropagation()}
         >
           <div className={styles.searchHeader}>
-            <div>User <span className={styles.highlight}>Search</span></div>
+            <div>
+              User <span className={styles.highlight}>Search</span>
+            </div>
             <form className={styles.searchforms} onSubmit={enterSearch}>
               <input
                 className={styles.searchPerson}
@@ -78,7 +76,7 @@ const SearchModalFrame = ({ show, closeModal }) => {
           >
             ✖
           </button>
-          <SearchResult search={search} closeModal={closeModal}/>
+          <SearchResult search={search} closeModal={closeModal} />
         </div>
       </div>
     </div>
