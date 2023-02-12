@@ -63,6 +63,9 @@ public class GameServiceImpl implements GameService{
     UserService userService;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
@@ -250,6 +253,26 @@ public class GameServiceImpl implements GameService{
         System.out.println(redisDrawTemplate.opsForValue().get(key));
     }
 
+    @Override
+    public List<UserRes> findGameUser(long roomNo) {
+        String key = "roomNo"+ roomNo;
+        Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
+
+        // 전송할 user 데이터
+        List<UserRes> userDataRes = new ArrayList<>();
+
+        for (Map.Entry<Object, Object> userD : userData.entrySet()) {
+            // 유저아이디로 유저프로필 조회 후 배열에 저장
+            User user = userRepository.findByUserNo(Long.valueOf(userD.getKey().toString()));
+
+            userDataRes.add(new UserRes(user));
+        }
+
+        System.out.println(userDataRes.toString());
+
+        return userDataRes;
+    }
+
 
     @Override
     public void savePainting(String painting, long roomNo) {
@@ -267,4 +290,6 @@ public class GameServiceImpl implements GameService{
 
         return redisDrawTemplate.opsForValue().get(key);
     }
+
+
 }
