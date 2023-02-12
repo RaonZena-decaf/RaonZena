@@ -62,16 +62,13 @@ function Landing() {
   useEffect(() => {
     const landpage = document.querySelector("#landpage");
     const guidepage = document.querySelector("#guidepage");
+    const firstpage = document.querySelector("#firstpage");
+
     function handleWheel1(e) {
       e.preventDefault();
       if (e.deltaY > 0) {
         window.scrollBy({
           top: window.innerHeight,
-          behavior: "smooth",
-        });
-      } else {
-        window.scrollBy({
-          top: -window.innerHeight,
           behavior: "smooth",
         });
       }
@@ -88,13 +85,25 @@ function Landing() {
           behavior: "smooth",
         });
       } else {
-        guidepage.scrollTo({
-          left: 0,
+        guidepage.scrollBy({
+          left: -window.innerWidth * 0.83,
           behavior: "smooth",
         });
       }
     }
     guidepage.addEventListener("wheel", handleWheel2, { passive: false });
+
+    function handleWheel3(e) {
+      e.preventDefault();
+      if (e.deltaY < 0) {
+        window.scrollBy({
+          top: -window.innerHeight,
+          behavior: "smooth",
+        });
+      }
+    }
+    firstpage.addEventListener("wheel", handleWheel3, { passive: false });
+
   }, []);
   //무작위 난수 생성
   function randomNum(min, max) {
@@ -105,8 +114,8 @@ function Landing() {
   return (
     <>
       <Navbar />
-      <div className={styles.background} id="landpage">
-        <div className={styles.grid}>
+      <div className={styles.background}>
+        <div className={styles.grid} id="landpage">
           {Array.from(Array(200)).map((x, index) => (
             <div
               key={index}
@@ -139,7 +148,7 @@ function Landing() {
           </div>
         </div>
         <div className={styles.background3} id="guidepage">
-          <div className={styles.background2}>
+          <div className={styles.background2} id="firstpage">
             <p id={styles.serviceintro}>서비스 소개</p>
             <p className={styles.title} id={styles.pinkcolor}>
               우리들을 잇다, 즐거움을 잇다
