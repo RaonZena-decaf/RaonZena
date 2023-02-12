@@ -29,6 +29,10 @@
   overflow: scroll;
 }
 
+.HostFollowingsList::-webkit-scrollbar{
+  display: none;
+}
+
 .HostTextInfo {
   justify-content: center;
   align-items: center;
