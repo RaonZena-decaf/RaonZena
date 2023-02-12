@@ -1,16 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+  dispatch,
+} from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { AnswerList } from "./ShoutInSilenceList";
-import { style } from "@mui/system";
 
-export default function ShoutInSilence({
+function ShoutInSilence({
   start,
   result,
   setResult,
   host,
   openvidu,
+  peopleList,
 }) {
   const timeLimit = 10;
 
@@ -23,7 +28,7 @@ export default function ShoutInSilence({
   const videoRef = useRef(null);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
-
+  const [answerList, setAnswerList] = useState([]);
   const [showAnswer, setShowAnswer] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,14 +59,13 @@ export default function ShoutInSilence({
   };
 
   //axios로 정답 리스트 가져오는 부분
-  const [answerList, setAnswerList] = useState([]);
   function getAnswerList() {
     axios({
       method: "get",
-      url: `${baseUrl}games/gameType/1`,
+      url: `${baseUrl}games/gameType/3`,
     })
       .then((res) => {
-        console.log(res);
+        console.log("고요속의 외침 정답 가져온 전체 결과 =>", res.data);
         setAnswerList(res.data);
       })
       .catch((error) => console.log(error));
@@ -69,7 +73,7 @@ export default function ShoutInSilence({
 
   // 정답 체크 기능
   useEffect(() => {
-    if (start && step <= AnswerList.length - 1) {
+    if (start && step <= answerList.length - 1) {
       // 시간이 남았는데 정답을 못맞춘 경우
       if (timeRemaining > 0 && !isAnswerShown) {
         //
@@ -86,8 +90,11 @@ export default function ShoutInSilence({
       //정답을 맞춘 경우
       if (isAnswerShown) {
         //마지막 문제인 경우
-        if (step === AnswerList.length - 1) {
+        if (step === answerList.length - 1) {
           setIsAnswerShown(true);
+
+          // 더 할 것인지 아닌지 확인
+
           return;
         } else {
           const timeoutId = setTimeout(() => {
@@ -105,7 +112,7 @@ export default function ShoutInSilence({
     if (host === false) {
       if (result !== "") {
         //정답 맞춘 로직
-        if (result === AnswerList[step].answer) {
+        if (result === answerList[step].answer) {
           console.log("정답");
           // setModalShow(true);
           const data = {
@@ -130,8 +137,6 @@ export default function ShoutInSilence({
     }
   }, [result]);
 
-  function wrongAlert() {}
-
   useEffect(() => {
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
@@ -144,50 +149,61 @@ export default function ShoutInSilence({
   const showModal = () => {
     setModalOpen(true);
   };
-  
-  console.log("host는===", host)
 
-  if (host) {
-    return (
-      <div>
+  useEffect(() => {
+    getAnswerList();
+  }, []);
+
+  return (
+    <div>
+      {host ? (
         <div>
           <div className={styles.webcamCapture}>
-            <video ref={videoRef} width="80%" />
+            <video autoPlay={true} ref={videoRef} width="80%" />
             <div className={styles.Container}>
+              <span className={styles.questionNo}>
+                {step + 1} / {answerList.length}
+              </span>
               <span className={styles.TimeLimit}>
                 {" "}
                 {minutes} :{" "}
                 {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
               </span>
-              <span className={styles.AnswerFont}>
-                {AnswerList[step].answer}
-              </span>
+              {answerList.length > 0 ? (
+                <span className={styles.AnswerFont}>
+                  정답 : {answerList[step].answer}
+                </span>
+              ) : null}
             </div>
           </div>
         </div>
-      </div>
-    );
-  }
-  // 게스트 화면
-  else {
-    return (
-      <div>
-        <div id="wrongMassage" className={styles.wrongMassage}>
-          틀렸습니다
-        </div>
+      ) : (
         <div>
+          <div id="wrongMassage" className={styles.wrongMassage}>
+            틀렸습니다
+          </div>
           <div className={styles.webcamCapture}>
-            <video ref={videoRef} width="80%" />
+            <video autoPlay={true} ref={videoRef} width="80%" />
             <div className={styles.Container}>
+              <span className={styles.questionNo}>
+                {step + 1} / {answerList.length}
+              </span>
               <span className={styles.TimeLimit}>
                 {" "}
                 {minutes} :{" "}
                 {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
               </span>
+              {answerList.length > 0 ? (
+                <span className={styles.AnswerFont}>
+                  정답 :{" "}
+                  {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
+                </span>
+              ) : null}
             </div>
           </div>
         </div>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
+export default React.memo(ShoutInSilence);
