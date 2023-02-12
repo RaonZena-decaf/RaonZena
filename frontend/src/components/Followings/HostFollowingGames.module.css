@@ -24,8 +24,9 @@
 
 .HostFollowingsList {
   margin: auto;
+  width: 100%;
   display: inline-flex;
-  overflow: scroll hidden;
+  overflow: scroll;
 }
 
 .HostFollowingsList::-webkit-scrollbar{
