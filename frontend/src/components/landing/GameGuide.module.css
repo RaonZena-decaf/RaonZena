@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   behavior: smooth;
+  justify-self: center;
 }
 .carouselcontainer {
   transition: transform 0.5s;
@@ -15,8 +16,11 @@
 
 .carouselcontainer img {
   cursor: pointer;
-  height: 18vw;
-  aspect-ratio: auto 1/1;
+  height: 25vw;
+  width: 13.3vw;
+  border-radius: 2rem;
+  object-fit: cover;
+
   transition: scale .5s ease;
 }
 
