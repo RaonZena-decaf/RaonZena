@@ -6,7 +6,6 @@ import axios from "axios";
 
 const Item = (props) => {
   const navigate = useNavigate();
-  console.log("게임 리스트 아이템 프롭 내용", props.headcount);
 
   const navigateToGameRoom = () => {
     navigate(`/beforeroom/${props.roomNo}`, {

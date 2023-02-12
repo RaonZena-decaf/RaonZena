@@ -1,39 +1,74 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "./NoneVideo.module.css";
 
-function CameraComponent() {
-  let videoRef = useRef(null);
+function CameraComponent({ camera, mic }) {
+  const videoRef = useRef(null);
+  const [videoStream, setVideoStream] = useState();
+  const tmp = useRef();
+  const [columns, setColumns] = useState([]);
 
-  //사용자 웹캠에 접근
+  async function startCamera(deviceId) {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        deviceId,
+      },
+      audio: true,
+    });
 
-  const getUserCamera = () => {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-      })
-      .then((stream) => {
-        //비디오 tag에 stream 추가
-        let video = videoRef.current;
+    console.log(stream);
 
-        video.srcObject = stream;
+    if (stream) {
+      videoRef.current.srcObject = stream;
+      tmp.current = stream;
+    }
+    console.log(tmp, videoRef.current);
+  }
 
-        var playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.then((_) => {}).catch((error) => {});
+  function stopVideo() {
+    if (tmp) {
+      tmp.current.getTracks().forEach((track) => {
+        if (track.readyState === "live") {
+          track.stop();
         }
-      })
-      .catch((error) => {
-        console.log(error);
       });
-  };
+    }
+  }
+
+  async function getDevices() {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const cols = [];
+    devices.forEach((device) => {
+      if (device.kind === "videoinput") {
+        startCamera(device.deviceId);
+        cols.push({
+          label: device.label,
+          deviceId: device.deviceId,
+        });
+      }
+    });
+
+    setColumns(cols);
+  }
+  useEffect(() => {
+    getDevices();
+    return () => {
+      stopVideo();
+    };
+  }, []);
 
   useEffect(() => {
-    getUserCamera();
-  }, [videoRef]);
+    console.log(camera);
+    videoRef.current.muted = !mic;
+    if (camera) {
+      videoRef.current.play()
+    } else {
+      videoRef.current.pause()
+    }
+  }, [mic, camera]);
 
   return (
     <div className={style.webcamCapture}>
-      <video ref={videoRef}></video>
+      <video ref={videoRef} autoPlay muted={true} className={camera? null : style.grayscale}></video>
     </div>
   );
 }

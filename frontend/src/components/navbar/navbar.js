@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./navbar.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+import {
+  FaSearch,
+  FaPowerOff,
+  FaHome,
+  FaRegPlayCircle,
+  FaClinicMedical,
+} from "react-icons/fa";
 import { initUserData } from "../../app/userData";
 import { initMyFollowingList } from "../../app/myFollowingList";
 import axios from "axios";
+import Tooltip from "./ToolTip";
 
 const Navbar = () => {
   //유저정보 가져오기
   const user = useSelector((store) => store.userData);
-  const baseUrl = useSelector((store)=> store.baseUrl)
+  const baseUrl = useSelector((store) => store.baseUrl);
 
   const navigate = useNavigate();
   const loginConfigure = () => {
@@ -23,21 +30,28 @@ const Navbar = () => {
   const isLogin = loginConfigure();
 
   const dispatch = useDispatch();
-
   //로그아웃
+  const [animation, setAnimation] = useState("");
   const logout = () => {
     axios({
-      method:"GET",
-      url:`${baseUrl}user/logout`
-    }).then ((res) => {
-      console.log(res)
-    }).catch(error => console.log(error))
-    
-    dispatch(initUserData())
-    dispatch(initMyFollowingList([]))
-    navigateToLanding();
-  }
-  
+      method: "GET",
+      url: `${baseUrl}user/logout`,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
+    setAnimation("wash");
+    setTimeout(() => {
+      dispatch(initUserData());
+    }, 1000);
+    dispatch(initMyFollowingList([]));
+    setTimeout(() => {
+      setAnimation("");
+      navigateToLanding();
+    }, 1900);
+  };
+
   // 페이지 이동을 위한 함수들
   const navigateToLanding = () => {
     navigate("/");
@@ -68,6 +82,7 @@ const Navbar = () => {
   const enterSearch = (event) => {
     event.preventDefault();
     // 입력값을 들고 live로 이동
+    setSearchBar(false);
     navigate("/live", { state: search });
   };
 
@@ -79,10 +94,16 @@ const Navbar = () => {
 
   // 현재 라우터 위치에 따른 색 변경 함수
   let nowContent = useLocation();
-
   const activerouter = [nowContent.pathname === "/" ? "active" : null];
-
   const activerouter2 = [nowContent.pathname === "/live" ? "active" : null];
+  const activerouter3 = [nowContent.pathname === "/makeroom" ? "active" : null];
+
+  // 검색 바 출력 용
+  const [searchBar, setSearchBar] = useState(false);
+  const activerouter4 = [searchBar === true ? "active" : null];
+  const searchBarOpen = () => {
+    setSearchBar(true);
+  };
 
   return (
     <div className={styles.navbar}>
@@ -91,19 +112,47 @@ const Navbar = () => {
         <p className={styles.LogoTitle}>RaonZena</p>
       </div>
       <div className={styles.rightSide}>
-        <div
-          className={`${styles.router} ${styles[activerouter]}`}
-          onClick={navigateToLanding}
-        >
-          Home
-        </div>
-        <div
-          className={`${styles.router} ${styles[activerouter2]}`}
-          onClick={navigateToLive}
-        >
-          Live
-        </div>
-        <div>
+        {isLogin ? (
+          <Tooltip message={"프로필"}>
+            <img
+              src={user.userImage}
+              alt="profileimg"
+              className={styles.profileimg}
+              onClick={navigateToProfile}
+            />
+          </Tooltip>
+        ) : null}
+
+        <Tooltip message={"메인"}>
+          <FaHome
+            className={`${styles.router} ${styles[activerouter]}`}
+            onClick={navigateToLanding}
+          />
+        </Tooltip>
+
+        <Tooltip message={"라이브"}>
+          <FaRegPlayCircle
+            className={`${styles.router} ${styles[activerouter2]}`}
+            onClick={navigateToLive}
+          />
+        </Tooltip>
+
+        {isLogin ? (
+          <Tooltip message={"만들기"}>
+            <FaClinicMedical
+              className={`${styles.router} ${styles[activerouter3]}`}
+              onClick={navigateToCreateRoom}
+            />
+          </Tooltip>
+        ) : null}
+        <Tooltip message={"검색"}>
+          <FaSearch
+            className={`${styles.router} ${styles[activerouter4]}`}
+            onClick={searchBarOpen}
+          />
+        </Tooltip>
+
+        {searchBar ? (
           <form onSubmit={enterSearch} className={styles.searchforms}>
             <input
               className={styles.searchRooms}
@@ -115,25 +164,11 @@ const Navbar = () => {
               <FaSearch className={styles.lens} />
             </button>
           </form>
-        </div>
-
+        ) : null}
         {isLogin ? (
-          <>
-            <div className={styles.profilebox} onClick={navigateToProfile}>
-              <div>{user.userName}</div>
-              <img
-                src={user.userImage}
-                alt="profileimg"
-                className={styles.profileimg}
-              />
-            </div>
-            <div className={styles.createRoom} onClick={navigateToCreateRoom}>
-              방 만들기
-            </div>
-            <div className={styles.createRoom} onClick={logout}>
-              로그아웃
-            </div>
-          </>
+          <Tooltip message={"로그아웃"}>
+            <FaPowerOff className={styles.logout} onClick={logout} />
+          </Tooltip>
         ) : (
           <img
             className={styles.Login}
@@ -142,6 +177,13 @@ const Navbar = () => {
             alt="kakaologin"
           />
         )}
+      </div>
+      <div className={`${styles.wave} ${styles[`${animation}1`]}`}></div>
+      <div className={`${styles.wave2} ${styles[`${animation}1-1`]}`}></div>
+      <div className={`${styles.wave} ${styles[`${animation}2`]}`}></div>
+      <div className={`${styles.wave2} ${styles[`${animation}2-2`]}`}></div>
+      <div className={`${styles.wave3} ${styles[`${animation}3`]}`}>
+        <div className={styles.logoutComment}>See you next time!</div>
       </div>
     </div>
   );

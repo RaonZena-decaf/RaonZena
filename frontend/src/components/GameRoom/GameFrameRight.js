@@ -19,6 +19,18 @@ function GameFrameRight({ startHandler, start, setResult, openvidu }) {
     setAnswer("");
   };
 
+  const videoFrame = () => {
+    if (peopleList.length === 1) {
+      return "videoFrame";
+    } else if (peopleList.length === 2) {
+      return "videoFrame2";
+    } else if (peopleList.length <= 4) {
+      return "videoFrame3";
+    } else if (5 <= peopleList.length) {
+      return "videoFrame4";
+    }
+  };
+
   return (
     <div className={styles.background}>
       <div className={styles.container}>
@@ -27,8 +39,7 @@ function GameFrameRight({ startHandler, start, setResult, openvidu }) {
         })}
       </div>
       <div className={styles.submit}>
-        {/* <input className={styles.answer}></input> */}
-        <form id="answer">
+        <form id="answer" className={styles.answer}>
           <input
             value={answer}
             onChange={answerOnchange}
@@ -47,7 +58,7 @@ function GameFrameRight({ startHandler, start, setResult, openvidu }) {
         </button>
         {!start ? (
           <button className={styles.button} onClick={startHandler}>
-            게임시작
+            시작
           </button>
         ) : (
           <button className={styles.button}>게임종료</button>

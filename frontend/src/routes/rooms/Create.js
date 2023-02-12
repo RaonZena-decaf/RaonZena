@@ -182,7 +182,7 @@ function Create() {
 
             <div className={style.rightcontainer}>
               <div className={style.video}>
-                <VideoContainer />
+                <VideoContainer mic={mic} camera={camera}/>
               </div>
               <div className={style.accessory}>
                 {mic ? (

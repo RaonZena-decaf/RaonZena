@@ -8,28 +8,45 @@ import { FaUserTimes } from "react-icons/fa";
 const HostFollowings = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
   const baseUrl = useSelector((store) => store.baseUrl);
-  const nowUserNo = useSelector((store) => store.userData.user_no);
-
-  const getlist = () => {
-    axios({
-      method: "get",
-      url: `${baseUrl}live/followingRoom`,
-      data: { userNo: nowUserNo },
-    })
-      .then((res) => {
-        console.log("HostFollowings res.data 가져온 결과", res.data);
-        setList(res.data);
+  const nowUserNo = useSelector((store) => store.userData.userNo);
+  async function getlist() {
+    if (nowUserNo) {
+      await axios({
+        method: "get",
+        url: `${baseUrl}live/followingRoom`,
       })
-      .catch((error) => console.log(error));
-  };
+        .then((res) => {
+          setList(res.data);
+          if (res.data.length > 0) {
+            const scrollChange = document.querySelector("#scrollChange");
+            scrollChange.addEventListener(
+              "wheel",
+              (event) => {
+                event.preventDefault();
+                if (event.deltaY > 0) {
+                  scrollChange.scrollBy({
+                    left: 200,
+                    behavior: "smooth",
+                  });
+                } else {
+                  scrollChange.scrollBy({
+                    left: -200,
+                    behavior: "smooth",
+                  });
+                }
+              },
+              { passive: false }
+            );
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }
   useEffect(() => {
     getlist();
+    // 가로 스크롤링 이벤트
     console.log("Hostfollowings 컴포넌트 getList 결과", list);
   }, []);
-
-  if (loading) {
-    return <h2>Loading...</h2>;
-  }
 
   // --------------------스웨거에서 확인한 데이터-------------------
   // 유저 이름    userName={gameRoomInfo.host.userName}
@@ -40,35 +57,35 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   // 비밀번호     password={gameRoomInfo.password}
   // 방 썸네일    roomImage={gameRoomInfo.imageName}
 
-  if (list.length > 0) {
-    return (
-      <div className={styles.HostFollowingsList}>
-        {list?.map((gameRoomInfo, idx) => {
-          return (
-            <Item
-              key={idx}
-              userName={gameRoomInfo.host.userName}
-              userImage={gameRoomInfo.host.userImageUrl}
-              level={gameRoomInfo.host.level}
-              roomTitle={gameRoomInfo.roomTitle}
-              headcount={gameRoomInfo.headcount}
-              password={gameRoomInfo.password}
-              roomImage={gameRoomInfo.imageName}
-            />
-          );
-        })}
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.marginTopBot}>
-        <FaUserTimes className={styles.NoGameRoomsImg} />
-        <p className={styles.NoGameRoomsText}>
-          지금 놀고 있는 친구가 없습니다.
-        </p>
-      </div>
-    );
-  }
+  return (
+    <div className={styles.HostFollowingsList} id="scrollChange">
+      {list.length > 0 ? (
+        <>
+          {list?.map((gameRoomInfo, idx) => {
+            return (
+              <Item
+                key={idx}
+                userName={gameRoomInfo.host.userName}
+                userImage={gameRoomInfo.host.userImageUrl}
+                level={gameRoomInfo.host.level}
+                roomTitle={gameRoomInfo.roomTitle}
+                headcount={gameRoomInfo.headcount}
+                password={gameRoomInfo.password}
+                roomImage={gameRoomInfo.imageName}
+              />
+            );
+          })}
+        </>
+      ) : (
+        <div className={styles.NoGameRooms}>
+          <FaUserTimes className={styles.NoGameRoomsImg} />
+          <p className={styles.NoGameRoomsText}>
+            지금 놀고 있는 친구가 없습니다.
+          </p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default HostFollowings;
