@@ -25,7 +25,7 @@
 .HostFollowingsList {
   margin: auto;
   display: inline-flex;
-  overflow: scroll;
+  overflow: scroll hidden;
 }
 
 .HostFollowingsList::-webkit-scrollbar{
@@ -86,9 +86,7 @@
   color: #ffffff;
 }
 
-.marginTopBot {
 
-}
 
 .NoGameRoomsText {
   margin: auto;
