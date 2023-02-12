@@ -9,6 +9,7 @@ import GuideModalFrame from "../../components/Modal/GuideModalFrame";
 import VideoChat from "../../components/animaition/VideoChat.js";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import GameGuide from "../../components/landing/GameGuide";
 
 function Landing() {
   //로그인 함수
@@ -60,6 +61,7 @@ function Landing() {
 
   useEffect(() => {
     const landpage = document.querySelector("#landpage");
+    const guidepage = document.querySelector("#guidepage");
 
     landpage.addEventListener(
       "wheel",
@@ -74,6 +76,26 @@ function Landing() {
         } else {
           window.scrollBy({
             top: -window.innerHeight,
+            behavior: "smooth",
+          });
+        }
+      },
+      { passive: false }
+    );
+
+    guidepage.addEventListener(
+      "wheel",
+      (event) => {
+        event.preventDefault();
+
+        if (event.deltaY > 0) {
+          guidepage.scrollBy({
+            left: window.innerWidth*0.83,
+            behavior: "smooth",
+          });
+        } else {
+          guidepage.scrollTo({
+            left: 0,
             behavior: "smooth",
           });
         }
@@ -123,8 +145,7 @@ function Landing() {
             </div>
           </div>
         </div>
-
-        <div className={styles.background3}>
+        <div className={styles.background3} id="guidepage">
           <div className={styles.background2}>
             <p id={styles.serviceintro}>서비스 소개</p>
             <p className={styles.title} id={styles.pinkcolor}>
@@ -134,16 +155,22 @@ function Landing() {
             <div className={styles.maintextcontainer}>
               <div className={styles.maintext2}>
                 라온제나는 유저분들 간의 시간과 즐거움을 잇는 서비스입니다.
-                간단한 게임을 즐기며, 함께 사진을 찍어 여러 프레임에 보관할 수 있습니다. 
-                소소한 이야기를 나눌 수 있는 작은 관계로부터 이어짐의 즐거움을 느껴 보세요.
+                간단한 게임을 즐기며, 함께 사진을 찍어 여러 프레임에 보관할 수
+                있습니다. 소소한 이야기를 나눌 수 있는 작은 관계로부터 이어짐의
+                즐거움을 느껴 보세요.
               </div>
               <VideoChat />
             </div>
           </div>
-        </div>
-        <div className={styles.background3}>
+
           <div className={styles.background2}>
+            <p id={styles.serviceintro}>이용 가이드</p>
             <UserGuide openModal={openModal} />
+          </div>
+
+          <div className={styles.background2}>
+            <p id={styles.serviceintro}>게임 가이드</p>
+            <GameGuide openModal={openModal} />
           </div>
         </div>
         <ModalPortal>

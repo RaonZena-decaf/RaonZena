@@ -3,8 +3,12 @@ import { FaUserPlus } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-function EntryDropUp({ show, setdrop }) {
+import { modifyMyFollowingList } from "../../app/myFollowingList";
+
+function EntryDropUp({ show, setdrop, TotalUsers }) {
   const closeDrop = () => {
     setdrop(false);
   };
@@ -19,33 +23,40 @@ function EntryDropUp({ show, setdrop }) {
 
   let animationClass = animation.join(" ");
   let slideAnimationClass = slide.join(" ");
-
-  useEffect(() => {
-    //참가유저 리스트를 받아오는 axios 통신
-  });
-
   //임시 유저 리스트. 현재 방 참가자 현황을 가져온 후, 팔로우 검증을 해서 boolean값을 적어줘야 한다.
-  const userlist = [
-    { user_name: "김찬빈", user_no:123, following: false },
-    { user_name: "윤수희", user_no:126,following: false },
-    { user_name: "홍영민", user_no:125,following: true },
-    { user_name: "임길현", user_no:124,following: true },
-    { user_name: "최지연", user_no:127,following: false },
-  ];
+  const [userList, setUserList] = useState([]);
 
-  const baseUrl = useSelector((store)=> store.baseUrl)
-  const user = useSelector((store)=>store.userData.user_no)
-  async function addFollowing(user_no) {
-    // axios 통신을 통해 팔로우 추가
+  const dispatch = useDispatch();
+  const baseUrl = useSelector((store) => store.baseUrl);
+  const UserNo = useSelector((store) => store.userData.userNo);
+  const location = useLocation();
+  const roomNo = location.pathname.split("room/")[1];
+  const MyFollowingList = useSelector((store) => store.myFollowingList);
+
+  async function Follow(userNo) {
     await axios({
       method: "POST",
-      url: `${baseUrl}profile/${user}`,
-      data: {followee: user_no},
-    }).then((res) => {
-      let followed = userlist.findIndex(function(data) {return data.user_no === user_no})
-      userlist[followed].following = true
+      url: `${baseUrl}profile`,
+      data: { followNo: userNo },
+      Headers: { "Content-Type": "application/json" },
     })
+      .then((res) => {
+        dispatch(modifyMyFollowingList([...MyFollowingList, userNo]));
+      })
+      .catch((error) => console.log(error));
   }
+
+  useEffect(() => {
+    axios({
+      method: "Get",
+      url: `${baseUrl}games/${roomNo}`,
+    })
+      .then((res) => {
+        setUserList(res);
+      })
+      .catch((error) => console.log(error));
+    //참가유저 리스트를 받아오는 axios 통신
+  }, [TotalUsers]);
 
   return (
     <div
@@ -56,13 +67,19 @@ function EntryDropUp({ show, setdrop }) {
         className={`${styles.container} ${styles[slideAnimationClass]}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {userlist.map((user) => {
+        {userList.map((user) => {
           return (
             <div key={user.user_name} className={styles.usercontainer}>
-              {user.user_name}
-              {user.following === false && (
+              {user.userName}
+              {MyFollowingList.includes(user.userNo) ||
+              user.userNo === UserNo ? null : (
                 <span>
-                  <FaUserPlus className={styles.plusIcon} onClick={addFollowing(user.user_no)}/>
+                  <FaUserPlus
+                    className={styles.plusIcon}
+                    onClick={() => {
+                      Follow(user.userNo);
+                    }}
+                  />
                 </span>
               )}
             </div>

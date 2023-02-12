@@ -92,7 +92,7 @@ function MenuBar({
       </div>
 
       <Transition unmountOnExit in={drop} timeout={500}>
-        {(state) => <EntryDropUp show={state} setdrop={setdrop} />}
+        {(state) => <EntryDropUp show={state} setdrop={setdrop} TotalUsers={TotalUsers} />}
       </Transition>
 
       <div className={style.IconWithText} onClick={menuOpen} id="chatSubject">
