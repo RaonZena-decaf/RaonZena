@@ -9,14 +9,37 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
   const baseUrl = useSelector((store) => store.baseUrl);
   const nowUserNo = useSelector((store) => store.userData.userNo);
-  const getlist = () => {
+  async function getlist()  {
     if (nowUserNo) {
-      axios({
+      await axios({
         method: "get",
         url: `${baseUrl}live/followingRoom`,
       })
         .then((res) => {
           setList(res.data);
+          if (res.data.length > 0) {
+            const scrollChange = document.querySelector("#scrollChange");
+            console.log(scrollChange);
+            console.log('이벤트리스너 부착');
+            scrollChange.addEventListener(
+              "wheel",
+              (event) => {
+                event.preventDefault();
+                if (event.deltaY > 0) {
+                  window.scrollBy({
+                    left: 30,
+                    behavior: "smooth",
+                  });
+                } else {
+                  window.scrollBy({
+                    left: -30,
+                    behavior: "smooth",
+                  });
+                }
+              },
+              { passive: false }
+            );
+          }
         })
         .catch((error) => console.log(error));
     }
@@ -24,28 +47,6 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   useEffect(() => {
     getlist();
     // 가로 스크롤링 이벤트
-    if (list.length > 0) {
-      const scrollChange = document.querySelector("#scrollChange");
-      console.log(scrollChange);
-      scrollChange.addEventListener(
-        "wheel",
-        (event) => {
-          event.preventDefault();
-          if (event.deltaY > 0) {
-            window.scrollBy({
-              left: 30,
-              behavior: "smooth",
-            });
-          } else {
-            window.scrollBy({
-              left: -30,
-              behavior: "smooth",
-            });
-          }
-        },
-        { passive: false }
-      );
-    }
     console.log("Hostfollowings 컴포넌트 getList 결과", list);
   }, []);
 
