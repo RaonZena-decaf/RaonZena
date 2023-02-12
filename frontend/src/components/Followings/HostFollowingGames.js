@@ -25,12 +25,11 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   useEffect(() => {
     if (list.length > 0) {
       const scrollChange = document.querySelector("#scrollChange");
-
+      console.log(scrollChange)
       scrollChange.addEventListener(
         "wheel",
         (event) => {
           event.preventDefault();
-
           if (event.deltaY > 0) {
             window.scrollBy({
               left: 30,
@@ -38,7 +37,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
             });
           } else {
             window.scrollBy({
-              left: 30,
+              left: -30,
               behavior: "smooth",
             });
           }
