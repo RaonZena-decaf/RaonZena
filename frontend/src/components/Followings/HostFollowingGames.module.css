@@ -25,7 +25,8 @@
 .HostFollowingsList {
   margin: auto;
   width: 100%;
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
   overflow: scroll;
 }
 
@@ -87,7 +88,9 @@
   color: #ffffff;
 }
 
-
+.NoGameRooms{
+  justify-self: center;
+}
 
 .NoGameRoomsText {
   margin: auto;
