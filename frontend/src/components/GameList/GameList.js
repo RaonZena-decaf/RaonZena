@@ -6,7 +6,6 @@ import { Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FaCommentDots } from "react-icons/fa";
-import { initUserData } from "../../app/userData";
 
 export default function GameRoom({ searchWord }) {
   const user = useSelector((store) => store.userData);

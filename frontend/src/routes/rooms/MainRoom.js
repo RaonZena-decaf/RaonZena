@@ -17,6 +17,7 @@ const OPENVIDU_SERVER_SECRET = "RAONZENA";
 function MainRoom(props) {
   const { state } = useLocation();
   const user = useSelector((store) => store.userData);
+  const baseUrl = useSelector((store) => store.baseUrl);
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
@@ -206,32 +207,36 @@ function MainRoom(props) {
   const onbeforeunload = (event) => {
     leaveSession();
   };
+  useEffect(() => {
+    const data = {
+      headCount: subscribes.length,
+    };
+    axios({
+      method: "put",
+      url: `${baseUrl}games/${props.roomNo}/join`,
+      data: data,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
+  }, [subscribes]);
 
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
 
     return () => {
+      if (subscribes.length < 1) {
+        axios({
+          method: "delete",
+          url: `${baseUrl}live/${state.roomNo}`,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
+      }
       window.removeEventListener("beforeunload", onbeforeunload);
-      // if (subscribes.length < 1) {
-      //   const data = {};
-      //   axios
-      //     .delete(
-      //       `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${roomId}`,
-      //       data,
-      //       {
-      //         headers: {
-      //           Authorization: `Basic ${btoa(
-      //             `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-      //           )}`,
-      //           "Content-Type": "application/json",
-      //         },
-      //       }
-      //     )
-      //     .then((response) => {
-      //       console.log(response);
-      //     })
-      //     .catch((error) => console.log(error));
-      // }
     };
   }, []);
 
