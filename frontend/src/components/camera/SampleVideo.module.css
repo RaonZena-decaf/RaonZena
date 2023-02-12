@@ -1,8 +1,4 @@
 .webcamCapture {
-  width: 90%;
-  height: 70%;
-  aspect-ratio: auto 1/1;
-  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,10 +8,10 @@
 .username {
   display: flex;
   justify-content: flex-end;
-  font-size: 1.5rem;
+  font-size: 2rem;
   position: absolute;
-  bottom: 3%;
-  right: 1%;
+  bottom: 0;
+  right: 0;
   color: black;
-  text-shadow: -2px 0 #ffff, 0 2px #ffff, 2px 0 #ffff, 0 -2px #ffff;
+  text-shadow: -1px 0 #ffff, 0 1px #ffff, 1px 0 #ffff, 0 -1px #ffff;
 }

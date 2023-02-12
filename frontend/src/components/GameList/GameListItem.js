@@ -4,7 +4,6 @@ import styles from "./GameList.module.css";
 
 const Item = (props) => {
   const navigate = useNavigate();
-  console.log("게임 리스트 아이템 프롭 내용", props.headcount);
 
   const navigateToGameRoom = () => {
     navigate(`/beforeroom/${props.roomNo}`, {
@@ -16,10 +15,6 @@ const Item = (props) => {
       },
     });
   };
-
-  // const navigateToGameRoom = () => {
-  //   navigate(`/beforeroom/${props.roomNo}`);
-  // };
 
   return (
     <div className={styles.card}>

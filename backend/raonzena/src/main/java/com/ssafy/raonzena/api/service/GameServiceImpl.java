@@ -48,9 +48,6 @@ public class GameServiceImpl implements GameService{
     GameChatRepository gameChatRepository;
 
     @Autowired
-    GameObjectFastRepository gameObjectFastRepository;
-
-    @Autowired
     GameSpeakAndDrawRepository gameSpeakAndDrawRepository;
 
     @Autowired
@@ -66,6 +63,9 @@ public class GameServiceImpl implements GameService{
     UserService userService;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
@@ -75,13 +75,6 @@ public class GameServiceImpl implements GameService{
     private String bucket;
 
     private final AmazonS3 amazonS3;
-    //===============================================================
-    //더미데이터 넣으면 아래 코드로 바꾸기! -> 더미데이터들 수 다 통일하기
-//        static int min = 1;
-//        static int max = 100;
-//        static int randomNo = (int) ((Math.random() * (max - min)) + min);
-    static int randomNo = 1;
-    //===============================================================
 
 
     @Override
@@ -123,43 +116,71 @@ public class GameServiceImpl implements GameService{
     @Override
     public GameAnswer answer(int gameType) {
         //- 1 : 채팅 주제
-        //- 2 : 고요속의 외침 , 캐치마인드
-        //- 3 : 특정 물건 빨리 가져오기
+        //- 2 : 캐치마인드
+        //- 3 : 고요속의 외침
 
-
+        int min = 1;
         if(gameType == 1){
+            int  max = 102;
+            int randomNo = (int) ((Math.random() * (max - min)) + min);
             Chat data =  gameChatRepository.findByChatNo(randomNo);
             GameAnswer answer = new GameAnswer(data.getTopic());
-           return answer;
+            return answer;
         }else if (gameType == 2){
+            int  max = 402;
+            int randomNo = (int) ((Math.random() * (max - min)) + min);
             SpeakAndDraw data =  gameSpeakAndDrawRepository.findBySpeekNo(randomNo);
             GameAnswer answer = new GameAnswer(data.getAnswer());
-            return answer;
-        }else if(gameType == 3){
-            ObjectFast data = gameObjectFastRepository.findByObjectNo(randomNo);
-            GameAnswer answer = new GameAnswer(data.getImageUrl());
             return answer;
         }
         return new GameAnswer("존재하지 않는 게임입니다.");
     }
 
     @Override
-    public GameAnswerAndImageRes answerAndImage(int gameType) {
-        PersonQuiz data = gamePersonQuizRepository.findByPersonNO(randomNo);
-        GameAnswerAndImageRes answer = new GameAnswerAndImageRes(data.getPersonAnswer(), data.getImageUrl());
-        return answer;
+    public List<GameAnswer> answerList() {
+        int min = 1;
+        int  max = 402;
+        List<GameAnswer> answerList = new ArrayList<>();
+        for(int i=0; i<5;i++) {
+            int randomNo = (int) ((Math.random() * (max - min)) + min);
+            SpeakAndDraw data = gameSpeakAndDrawRepository.findBySpeekNo(randomNo);
+            GameAnswer answer = new GameAnswer(data.getAnswer());
+            answerList.add(answer);
+        }
+        return answerList;
+    }
+
+    @Override
+    public List<GameAnswerAndImageRes> answerAndImage() {
+        int min = 1;
+        int max = 250;
+        int cnt = 10;
+
+        Set<Integer> set = new HashSet<>();
+        while (set.size() < cnt) {
+            int randomNo = (int) ((Math.random() * (max - min)) + min);
+            set.add(randomNo);
+        }
+
+        Integer[] randomNumbers = set.toArray(new Integer[0]);
+        System.out.println(Arrays.toString(randomNumbers));
+        List<GameAnswerAndImageRes> answerList = new ArrayList<>(cnt);
+
+        for(int i=0; i< cnt; i++){
+            PersonQuiz data = gamePersonQuizRepository.findByPersonNO(randomNumbers[i]);
+            GameAnswerAndImageRes answer = new GameAnswerAndImageRes(data.getPersonAnswer(), data.getImageUrl());
+            answerList.add(answer);
+        }
+
+        return answerList;
     }
 
     @Override
     public List<ChanceRes> chanceGameData(List<Integer> randomNo) {
-        List<ChanceRes> chances = new ArrayList<>();
-        for(int i=0; i<randomNo.size(); i++){
-            int data = randomNo.get(i);
-            //entity to dto
-            Chance chance = gameChanceRepository.findByChanceNo(data);
-            chances.add(new ChanceRes(chance));
-        }
-        return chances;
+        return randomNo.stream()
+                .map(data -> gameChanceRepository.findByChanceNo(data))
+                .map(ChanceRes::new)
+                .collect(Collectors.toList());
     }
 
 
@@ -214,13 +235,48 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
+    public int findActiveHeadCount(long roomNo) {
+        String key = "roomNo"+ roomNo + "HC";
+        if(redisDrawTemplate.opsForValue().get(key)!=null){
+            // 게임에 참여중인 사람 수 반환
+            return Integer.parseInt(redisDrawTemplate.opsForValue().get(key));
+        }
+        return -1;
+    }
+
+    @Override
+    public void saveActiveHeadCount(long roomNo, int headCount) {
+        String key = "roomNo"+ roomNo + "HC";
+        // 게임참여인원수 저장
+        redisDrawTemplate.opsForValue().set(key, String.valueOf(headCount));
+
+        System.out.println(redisDrawTemplate.opsForValue().get(key));
+    }
+
+    @Override
+    public List<UserRes> findGameUser(long roomNo) {
+        String key = "roomNo"+ roomNo;
+        Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
+
+        // 전송할 user 데이터
+        List<UserRes> userDataRes = new ArrayList<>();
+
+        for (Map.Entry<Object, Object> userD : userData.entrySet()) {
+            // 유저아이디로 유저프로필 조회 후 배열에 저장
+            User user = userRepository.findByUserNo(Long.valueOf(userD.getKey().toString()));
+
+            userDataRes.add(new UserRes(user));
+        }
+
+        System.out.println(userDataRes.toString());
+
+        return userDataRes;
+    }
+
+
+    @Override
     public void savePainting(String painting, long roomNo) {
         String key = "roomNo"+ roomNo + "catchMind";
-
-//        if (redisDrawTemplate.opsForValue().get(key) != null){
-//            // 저장하기 전에 key값에 들어있는 정보 삭제
-//            redisDrawTemplate.delete(key);
-//        }
 
         // 그림 문자열 redis에 저장
         redisDrawTemplate.opsForValue().set(key, painting);
@@ -234,4 +290,6 @@ public class GameServiceImpl implements GameService{
 
         return redisDrawTemplate.opsForValue().get(key);
     }
+
+
 }

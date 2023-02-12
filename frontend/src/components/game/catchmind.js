@@ -7,25 +7,42 @@ function Catchmind({ start, result, setResult, openvidu }) {
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
+  const [QuizList, setQuizList] = useState([]);
+
+  useEffect(() => {
+    // 게임 데이터 통신
+    axios({
+      method: "get",
+      url: `${baseUrl}games/gameType/2`,
+    })
+      .then((res) => {
+        console.log(res.data);
+        setQuizList(res.data);
+      })
+      .catch((error) => console.log("following List 에러: ", error));
+  }, []);
+  
+  useEffect(() => {
+    const audio = new Audio();
+    audio.src = "../music/The Trapezist.mp3";
+    audio.play();
+    return () => {
+      audio.pause();
+    }
+  },[]);
 
   useEffect(() => {
     if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
-        axios({
-          method: "get",
-          url: `${baseUrl}games/1/catchMind`,
-        })
-          .then((res) => {
-            console.log(res.data);
-            const image = new Image();
-            image.src = res.data;
-            image.onload = function () {
-              ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-            };
-          })
-          .catch((error) => console.log("following List 에러: ", error));
+        const data = JSON.parse(event.data);
+        const image = new Image();
+        image.src = data.data;
+        image.onload = () => {
+          ctx.drawImage(image, 0, 0);
+        };
       });
     }
+
     const canvas = canvasRef.current;
 
     const ctx = canvas.getContext("2d");
@@ -39,27 +56,13 @@ function Catchmind({ start, result, setResult, openvidu }) {
 
     function stopPainting(event) {
       painting = false;
-
       const dataURL = canvas.toDataURL();
-      //axios 통신 어케하죠?
-      //axios 통신해서 백으로 dataURL보내주기
-      axios({
-        method: "post",
-        url: `${baseUrl}games/1/catchMind`,
-        data: dataURL,
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => console.log("following List 에러: ", error));
       if (openvidu.session) {
         openvidu.session.signal({
+          data: JSON.stringify({ data: dataURL }),
           type: "CanvasDraw",
         });
       }
-
-      // axios 통신해서 백에서 dataURL 받아오기
-      // dataURL = 받아와서
     }
 
     function startPainting(event) {
@@ -140,7 +143,53 @@ function Catchmind({ start, result, setResult, openvidu }) {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, width, height);
   }, []);
+  const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(5);
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (start && step <= QuizList.length - 1) {
+      if (timeRemaining > 0 && !isAnswerShown) {
+        const intervalId = setInterval(() => {
+          setTimeRemaining(timeRemaining - 1);
+        }, 100);
+        return () => clearInterval(intervalId);
+      }
+      if (timeRemaining === 0 && !isAnswerShown) {
+        setIsAnswerShown(true);
+      }
+      if (isAnswerShown) {
+        if (step === QuizList.length - 1) {
+          setIsAnswerShown(true);
+          return;
+        } else {
+          setTimeout(() => {
+            setIsAnswerShown(false);
+            setTimeRemaining(3);
+            setStep((prev) => (prev += 1));
+          }, 100);
+        }
+      }
+    }
+  }, [start, timeRemaining, isAnswerShown]);
 
+  useEffect(() => {
+    if (result !== "") {
+      if (result === QuizList[step].person_answer) {
+        console.log("정답");
+        const data = {
+          correct: openvidu.userName,
+        };
+        openvidu.session.signal({
+          data: JSON.stringify(data),
+          type: "TrueAnswer",
+        });
+        setResult("");
+      } else {
+        console.log("오답");
+        setResult("");
+      }
+    }
+  }, [result]);
   return (
     <div>
       <canvas id="canvas" ref={canvasRef}></canvas>

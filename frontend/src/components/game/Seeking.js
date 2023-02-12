@@ -35,9 +35,14 @@ function Seeking({ start, result, setResult, openvidu }) {
     if (!model && !webcam) {
       return;
     } else {
-      webcam.setup();
-      webcam.play();
-      requestAnimationFrame(loop);
+      const steps = new Promise((resolve, reject) => {
+        webcam.setup()
+        resolve(webcam.setup())
+      })
+      steps.then(() => {
+        webcam.play()
+        requestAnimationFrame(loop);
+      })
     }
   }, [webcam]);
   // useEffect(() => {
@@ -142,3 +147,45 @@ function Seeking({ start, result, setResult, openvidu }) {
 }
 
 export default Seeking;
+
+
+// <div>
+// {/* <div>
+//   <div className={styles.questionNo}>
+//     {step+1} / {AnswerList.length}
+//   </div>
+//   <div className={styles.AnswerFont}>
+//     문제 : {AnswerList[step].answer}
+//   </div>
+// </div> */}
+// <div
+//   style={isWrong ? { display: "revert" } : { display: "none" }}
+//   id="wrongAlert"
+//   className={styles.fadeoutbox}
+// >
+//   {/* {isWrong ? "틀렸습니다" : "???"} */}
+//   틀렸습니다 {isWrong}
+// </div>
+
+// <div>
+//   <div className={styles.webcamCapture}>
+//     <video ref={videoRef} width="80%" />
+//     <div className={styles.Container}>
+//       <span className={styles.TimeLimit}>
+//         {" "}
+//         {minutes} :{" "}
+//         {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+//       </span>
+//       <span className={styles.AnswerFont}>
+//         {AnswerList[step].answer}
+//       </span>
+//     </div>
+//   </div>
+// </div>
+// {/* <Transition unmountOnExit in={open} timeout={500}>
+//   {(state) => <GameAnswerModal show={state} handleOpen={handleOpen} />}
+// </Transition>
+// {modalOpen ? { showModal } : {}} */}
+// </div>
+// );
+// } 

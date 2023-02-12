@@ -38,7 +38,6 @@ export default function GameRoom({ searchWord }) {
           url: `${baseUrl}live`,
         })
           .then((res) => {
-            console.log(" GameList res.data 가져온 결과", res.data);
             setGameRoomList(res.data);
             // Get currCards
             const indexOfLastCard = currentPage * cardsPerPage;
@@ -49,7 +48,6 @@ export default function GameRoom({ searchWord }) {
               indexOfLastCard
             );
             setCurGameRoomList(newGameRoomLIst);
-            console.log("현재 페이지 게임 리스트", curGameRoomList);
           })
           .catch((error) => console.log(error));
       } else {

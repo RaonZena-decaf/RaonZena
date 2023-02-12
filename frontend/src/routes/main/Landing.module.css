@@ -4,50 +4,44 @@
   font-size: 5rem;
   color: white;
   font-family: "GmarketSans";
-  padding: 10rem 8.3% 0 8.3%;
   display: flex;
   flex-direction: column;
   word-break: keep-all;
 }
 
 .background2 {
-  background-color: #353839;
-  border-radius: 2rem;
+  background-color: #222222;
+  border-radius: 1rem;
+  padding: 5rem;
+  margin: 5rem;
+  height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .background3 {
-  background-color: #222222;
-  width: auto;
-  height: auto;
-  border-radius: 2rem;
-  padding: 5rem;
+  background-color: #353839;
+  border-radius: 1rem;
   text-align: left;
-  margin: 3%;
+  margin: 11rem 8.3% 0 8.3%;
+  display: grid;
+  grid-template-columns: 83vw 83vw 83vw;
+  align-items: center;
+  overflow: scroll;
 }
+
+.background3::-webkit-scrollbar {
+  display: none;
+}
+
 
 .gradient {
   margin: 0;
-  background: linear-gradient(90deg, #8f00ff, #ff00a8);
+  background: linear-gradient(90deg, #8f00ff, #f400b0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.pinkbutton {
-  margin-top: 5rem;
-  background-color: #f400b0;
-  font-size: 2rem;
-  color: white;
-  border-radius: 1rem;
-  border: none;
-  padding: 1rem 2rem 1rem 2rem;
-  cursor: pointer;
-}
-
-.pinkbutton:hover {
-  background-color: #cb0091;
+  width: fit-content;
 }
 
 .box1 {
@@ -80,12 +74,12 @@
 
 .title {
   margin: 0;
+  font-size: 6.8rem;
 }
 
 .subtitle {
   margin: 0;
   font-size: 4.5rem;
-  margin-bottom: 2rem;
 }
 
 #serviceintro {
@@ -106,4 +100,175 @@
 
 .center {
   justify-content: center;
+}
+
+.grid {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 5;
+  background-color: #1f2122;
+  position: relative;
+}
+
+.gridItems {
+  width: 5%;
+  height: 10%;
+  aspect-ratio: 1/1;
+  opacity: 0;
+  transition: opacity 2s ease 0.4s, transform 0.8s ease;
+  animation-duration: infinite;
+  border-radius: 1rem;
+  animation: flow 2s ease;
+  box-shadow: 0 0 50px #c5c5c5;
+  scale: 0.8;
+}
+
+@keyframes flow {
+  0% {
+    opacity: 0.1;
+    scale: 0.7;
+  }
+  50% {
+    opacity: 0.3;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 0.8;
+  }
+}
+
+.gridItems:hover {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  transform: scale(1.2);
+}
+
+.popupanimation {
+  animation: titlepop 1s ease-in;
+}
+
+.Main {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  font-size: 10rem;
+  z-index: 10;
+  transform: translateX(-50%) translateY(-50%);
+  pointer-events: none;
+  background: linear-gradient(90deg, #8f00ff, #f400b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.Main2 {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: 60%;
+  text-align: center;
+  font-size: 3.5rem;
+  z-index: 10;
+  transform: translateX(-50%) translateY(-50%);
+  pointer-events: none;
+  background: linear-gradient(90deg, #8f00ff, #f400b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes titlepop {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.Sub {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  font-size: 3rem;
+  opacity: 0.5;
+  z-index: 10;
+  transform: translateX(-50%) translateY(-50%);
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+}
+
+.Sub:hover {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.arrow {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  font-size: 2rem;
+  opacity: 0.5;
+  z-index: 10;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.arrow:hover {
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.LandingLogo {
+  position: absolute;
+  top: 8%;
+  left: 44%;
+  width: 12%;
+  aspect-ratio: 1/1;
+  z-index: 10;
+  transform: translateX(-50%) translateY(-50%);
+  pointer-events: none;
+  border-radius: 50%;
+  background-color: #1f2122;
+}
+
+.clockanimation {
+  animation: clock 10s ease;
+  animation-iteration-count: infinite;
+}
+
+@keyframes clock {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(36deg);
+  }
+  20% {
+    transform: rotate(72deg);
+  }
+  30% {
+    transform: rotate(108deg);
+  }
+  40% {
+    transform: rotate(144deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  60% {
+    transform: rotate(216deg);
+  }
+  70% {
+    transform: rotate(252deg);
+  }
+  80% {
+    transform: rotate(288deg);
+  }
+  90% {
+    transform: rotate(324deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

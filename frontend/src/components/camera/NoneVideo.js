@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "./NoneVideo.module.css";
 
-function CameraComponent() {
+function CameraComponent({ camera, mic }) {
   const videoRef = useRef(null);
   const [videoStream, setVideoStream] = useState();
-  const tmp = useRef()
+  const tmp = useRef();
   const [columns, setColumns] = useState([]);
 
   async function startCamera(deviceId) {
@@ -15,13 +15,13 @@ function CameraComponent() {
       audio: true,
     });
 
-    console.log(stream)
+    console.log(stream);
 
     if (stream) {
       videoRef.current.srcObject = stream;
       tmp.current = stream;
     }
-    console.log(tmp, videoRef.current)
+    console.log(tmp, videoRef.current);
   }
 
   function stopVideo() {
@@ -51,13 +51,24 @@ function CameraComponent() {
   }
   useEffect(() => {
     getDevices();
-    return () => {stopVideo();}
-    ;
+    return () => {
+      stopVideo();
+    };
   }, []);
+
+  useEffect(() => {
+    console.log(camera);
+    videoRef.current.muted = !mic;
+    if (camera) {
+      videoRef.current.play()
+    } else {
+      videoRef.current.pause()
+    }
+  }, [mic, camera]);
 
   return (
     <div className={style.webcamCapture}>
-      <video ref={videoRef} autoPlay></video>
+      <video ref={videoRef} autoPlay muted={true} className={camera? null : style.grayscale}></video>
     </div>
   );
 }

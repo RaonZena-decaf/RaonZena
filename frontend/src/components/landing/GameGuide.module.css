@@ -15,7 +15,7 @@
 
 .carouselcontainer img {
   cursor: pointer;
-  height: 25vw;
+  height: 18vw;
   aspect-ratio: auto 1/1;
   transition: scale .5s ease;
 }

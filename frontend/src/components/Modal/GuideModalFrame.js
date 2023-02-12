@@ -9,7 +9,6 @@ import LotteryGuideModal from "./LotteryGuideModal";
 import PersonQuizGuideModal from "./PersonQuizGuideModal";
 import PhotoGuideModal from "./PhotoGuideModal";
 import ShoutInSilenceGuideModal from "./ShoutInSilenceGuideModal";
-import TreasureHuntGuideModal from "./TreasureHuntGuideModal";
 import styles from "./Modal.module.css";
 
 const GuideModalFrame = ({ show, closeModal, nowContent }) => {
@@ -31,20 +30,17 @@ const GuideModalFrame = ({ show, closeModal, nowContent }) => {
 
   useEffect(() => {
     setModalContent(nowContent);
-    document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`;
+    function handleWheel(e) {
+      e.preventDefault();
+    }
+    window.addEventListener("wheel", handleWheel, { passive: false });
     return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = "";
-      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+      window.removeEventListener("wheel", handleWheel);
     };
   }, [nowContent]);
 
   const nextGuide = () => {
-    if (modalContent < 8) {
+    if (modalContent < 7) {
       setModalContent(modalContent + 1);
     }
   };
@@ -75,12 +71,17 @@ const GuideModalFrame = ({ show, closeModal, nowContent }) => {
           {modalContent === 0 && <GameGuideModal closeModal={closeModal} />}
           {modalContent === 1 && <PhotoGuideModal closeModal={closeModal} />}
           {modalContent === 2 && <ChattingGuideModal closeModal={closeModal} />}
-          {modalContent === 3 && <ImageGameGuideModal closeModal={closeModal} />}
-          {modalContent === 4 && <TreasureHuntGuideModal closeModal={closeModal} />}
-          {modalContent === 5 && <CatchMindModal closeModal={closeModal} />}
-          {modalContent === 6 && <ShoutInSilenceGuideModal closeModal={closeModal} />}
-          {modalContent === 7 && <PersonQuizGuideModal closeModal={closeModal} />}
-          {modalContent === 8 && <LotteryGuideModal closeModal={closeModal} />}
+          {modalContent === 3 && (
+            <ImageGameGuideModal closeModal={closeModal} />
+          )}
+          {modalContent === 4 && <CatchMindModal closeModal={closeModal} />}
+          {modalContent === 5 && (
+            <ShoutInSilenceGuideModal closeModal={closeModal} />
+          )}
+          {modalContent === 6 && (
+            <PersonQuizGuideModal closeModal={closeModal} />
+          )}
+          {modalContent === 7 && <LotteryGuideModal closeModal={closeModal} />}
         </div>
       </div>
     </div>
