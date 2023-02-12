@@ -1,6 +1,4 @@
 .container {
-  background-color: #1f2122;
-  color: white;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,7 +6,35 @@
   align-items: center;
 }
 
-.title {
-  font-size: 4rem;
-  margin-top: 6rem;
+.box1 {
+  border-radius: 2rem;
+  background-color: #1f2122;
+  padding: 10rem;
+  animation: rotate 2s ease-in;
 }
+
+.box2 {
+  border-radius: 2rem;
+  background-color: #8f00ff;
+  padding: 10rem;
+  animation: rotate 2s ease-in;
+}
+
+.box3 {
+  border-radius: 2rem;
+  background-color: #f400b0;
+  padding: 10rem;
+  animation: rotate 2s ease-in;
+}
+
+
+@keyframes rotate {
+  0% {
+    scale: 0;
+    transform: rotate(180deg);
+  }
+  100% {
+    scale: 3.5;
+  }
+}
+

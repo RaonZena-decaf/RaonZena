@@ -1,0 +1,50 @@
+.container {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+}
+
+.container:hover > .tooltip {
+  display: block;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  z-index: 200;
+  animation: tooltip 1s ease;
+  font-size: 1.5rem;
+  word-break: keep-all;
+  background-color: #8f00ff;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  border-radius: .5rem;
+  width:fit-content;
+  top:120%;
+  opacity: .7;
+}
+
+.tooltip::after{
+  content: '';
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 10px solid transparent;
+	border-bottom-color: #8f00ff;
+	border-top: 0;
+	margin-left: -40%;
+	margin-top: -13px;
+}
+
+@keyframes tooltip {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: .7;
+  }
+  100% {
+    opacity: .7;
+  }
+}

@@ -9,17 +9,51 @@
   padding-right: 8.3%;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+}
+
+.background2{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .GameRoomsDisplay {
+  position: relative;
   display: flex;
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
+  height: 100%;
+  align-items: center;
 }
-.card {
+
+.card1{
   display: inline-block;
   border: none;
   padding: 1rem;
-  width: 30rem;
+  width: 55vw;
+}
+
+.card2{
+  display: inline-block;
+  border: none;
+  padding: 1rem;
+  width: 40vw;
+  height: fit-content;
+}
+
+.card3{
+  display: inline-block;
+  border: none;
+  padding: 1rem;
+  width: 27vw;
+
+}
+
+.card4{
+  display: inline-block;
+  border: none;
+  padding: 1rem;
+  width: 25vw;
 
 }

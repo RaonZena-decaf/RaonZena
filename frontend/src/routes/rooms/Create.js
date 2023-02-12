@@ -82,7 +82,6 @@ function Create() {
           roomTitle: roomname,
           headcount: peoplenum,
           password: password,
-          // host: user.userId,
         };
         console.log("방 만들때 데이터", data);
         axios({
@@ -183,7 +182,7 @@ function Create() {
 
             <div className={style.rightcontainer}>
               <div className={style.video}>
-                <VideoContainer />
+                <VideoContainer mic={mic} camera={camera}/>
               </div>
               <div className={style.accessory}>
                 {mic ? (

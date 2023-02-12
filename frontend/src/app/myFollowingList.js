@@ -14,7 +14,7 @@ export default function myFollowingList(state = initialState, action) {
   
   switch (action.type) {
     case MODIFY_MYFOLLOWINGLIST:
-      return action.data;
+      return  action.data;
     case INIT_MYFOLLOWINGLIST:
       return initialState;
     default:

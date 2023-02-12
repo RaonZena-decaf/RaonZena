@@ -5,7 +5,7 @@ import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "../../components/camera/UserVideoComponent";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import axios from "axios";
 import Loading from "../../components/room/MainLoading";
@@ -17,7 +17,7 @@ const OPENVIDU_SERVER_SECRET = "RAONZENA";
 function MainRoom(props) {
   const { state } = useLocation();
   const user = useSelector((store) => store.userData);
-  const dispatch = useDispatch();
+  const baseUrl = useSelector((store) => store.baseUrl);
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
@@ -26,6 +26,7 @@ function MainRoom(props) {
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
+  const [host, sestHost] = useState(state.host);
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
@@ -52,6 +53,8 @@ function MainRoom(props) {
   useEffect(() => {
     const OV = new OpenVidu();
     setOV(OV);
+    // console 몇개 없애는 코드
+    // OV.enableProdMode()
     const after = new Promise((resolve, reject) => {
       const mySession = OV.initSession();
       setTimeout(() => {
@@ -204,32 +207,36 @@ function MainRoom(props) {
   const onbeforeunload = (event) => {
     leaveSession();
   };
+  useEffect(() => {
+    const data = {
+      headCount: subscribes.length,
+    };
+    axios({
+      method: "put",
+      url: `${baseUrl}games/${props.roomNo}/join`,
+      data: data,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
+  }, [subscribes]);
 
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
 
     return () => {
+      if (subscribes.length < 1) {
+        axios({
+          method: "delete",
+          url: `${baseUrl}live/${state.roomNo}`,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
+      }
       window.removeEventListener("beforeunload", onbeforeunload);
-      // if (subscribes.length < 1) {
-      //   const data = {};
-      //   axios
-      //     .delete(
-      //       `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${roomId}`,
-      //       data,
-      //       {
-      //         headers: {
-      //           Authorization: `Basic ${btoa(
-      //             `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-      //           )}`,
-      //           "Content-Type": "application/json",
-      //         },
-      //       }
-      //     )
-      //     .then((response) => {
-      //       console.log(response);
-      //     })
-      //     .catch((error) => console.log(error));
-      // }
     };
   }, []);
 
@@ -264,27 +271,44 @@ function MainRoom(props) {
   };
 
   //현재 유저 리스트
-  const TotalUsers = [...subscribes, publisher]
-  console.log(TotalUsers)
+  const TotalUsers = [...subscribes, publisher];
+
+  const card = () => {
+    if (subscribes.length === 0) {
+      return "card1";
+    } else if (subscribes.length === 1) {
+      return "card2";
+    } else if (subscribes.length <= 3) {
+      return "card3";
+    } else if (4 <= subscribes.length) {
+      return "card4";
+    }
+  };
 
   return (
     <div className={styles.background}>
       {publisher !== undefined ? (
-        <div>
+        <div className={styles.background2}>
           {gamename === "chatSubject" && (
             <div className={styles.GameRoomsDisplay}>
-              <div className={styles.card}>
+              <div className={styles[card()]}>
                 <UserVideoComponent streamManager={publisher} />
               </div>
               {subscribes.map((sub, i) => (
-                <div key={i} className={styles.card}>
+                <div key={i} className={styles[card()]}>
                   <UserVideoComponent streamManager={sub} />
                 </div>
               ))}
             </div>
           )}
           {gamename !== "chatSubject" && (
-            <GameFrame gamename={gamename} openvidu={openvidu} />
+            <GameFrame
+              gamename={gamename}
+              openvidu={openvidu}
+              host={host}
+              publisher={publisher}
+              subscribes={subscribes}
+            />
           )}
           <MenuBar
             toggleBar={toggleBar}

@@ -23,10 +23,14 @@
 }
 
 .HostFollowingsList {
-  width: 100%;
   margin: auto;
+  width: 100%;
   display: inline-flex;
-  overflow: scroll hidden;
+  overflow: scroll;
+}
+
+.HostFollowingsList::-webkit-scrollbar{
+  display: none;
 }
 
 .HostTextInfo {
@@ -83,8 +87,9 @@
   color: #ffffff;
 }
 
-.marginTopBot {
-  padding: 3rem;
+.NoGameRooms{
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 .NoGameRoomsText {

@@ -21,7 +21,7 @@ function MenuBar({
   mic,
   toggleDevice,
   ChangeGame,
-  TotalUsers
+  TotalUsers,
 }) {
   // 방 유저 정보를 axios 정보로 받아와서 리스트로 저장 => 참가자 드롭업 하부 컴포넌트로 삽입
   const [videoEnabled, setVideoEnabled] = useState(camera);
@@ -29,12 +29,12 @@ function MenuBar({
   // redux에서 createroom이나 enter 단계에서 설정한 기본값을 받아와야 함
   // 음성 및 영상 토글을 위한 함수
   const toggleAudio = () => {
-    toggleDevice(!audioEnabled, videoEnabled)
-    setAudioEnabled((prev) => !prev)
+    toggleDevice(!audioEnabled, videoEnabled);
+    setAudioEnabled((prev) => !prev);
   };
   const toggleVideo = () => {
-    toggleDevice(audioEnabled, !videoEnabled )
-    setVideoEnabled((prev) => !prev)
+    toggleDevice(audioEnabled, !videoEnabled);
+    setVideoEnabled((prev) => !prev);
   };
   // 참가자dropup을 위한 state
   const [drop, setdrop] = useState(false);
@@ -54,7 +54,7 @@ function MenuBar({
       eventTarget.current.className = `${style.IconWithText} ${style.active}`;
     }
     if (event.target.id === "chatSubject") {
-      ChangeGame(event)
+      ChangeGame(event);
     }
   };
   const closeMenu = () => {
@@ -66,7 +66,6 @@ function MenuBar({
 
   return (
     <div className={style.UpperContainer}>
-      {/* <div className={style.MiddleContainer1}> */}
       <div className={style.IconWithText} onClick={toggleAudio}>
         {audioEnabled ? <FaMicrophoneAlt /> : <FaMicrophoneAltSlash />}
         {audioEnabled ? (
@@ -91,13 +90,11 @@ function MenuBar({
         <FaUserAlt />
         <p className={style.UnderIcon}>참가자</p>
       </div>
-      {/* </div> */}
 
       <Transition unmountOnExit in={drop} timeout={500}>
-        {(state) => <EntryDropUp show={state} setdrop={setdrop} />}
+        {(state) => <EntryDropUp show={state} setdrop={setdrop} TotalUsers={TotalUsers} />}
       </Transition>
 
-      {/* <div className={style.MiddleContainer2}> */}
       <div className={style.IconWithText} onClick={menuOpen} id="chatSubject">
         <FaMugHot className={style.Noclick} />
         <p className={`${style.UnderIcon} ${style.Noclick}`}>잡담주제</p>
@@ -110,9 +107,7 @@ function MenuBar({
         <FaCamera className={style.Noclick} />
         <p className={`${style.UnderIcon} ${style.Noclick}`}>사진촬영</p>
       </div>
-      {/* </div> */}
 
-      {/* <div className={style.MiddleContainer3}> */}
       <div className={style.IconWithText} onClick={toggleBar}>
         <FaComments />
         <p className={style.UnderIcon}>채팅</p>
@@ -120,7 +115,6 @@ function MenuBar({
       <div className={style.ExitButton} onClick={menuOpen} id="exitRoom">
         나가기
       </div>
-      {/* </div> */}
 
       <MenuPortal>
         <Transition unmountOnExit in={menuOn} timeout={500}>

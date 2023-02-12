@@ -1,9 +1,9 @@
 import styles from "./GameFrame.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, publisher } from "react";
 import GameFrameLeft from "./GameFrameLeft";
 import GameFrameRight from "./GameFrameRight";
 
-function GameFrame({ gamename, openvidu }) {
+function GameFrame({ gamename, openvidu, host, subscribes }) {
   const [start, setStart] = useState(false);
   const startHandler = () => {
     setStart(true);
@@ -59,11 +59,15 @@ function GameFrame({ gamename, openvidu }) {
           setResult={setResult}
           gamename={gamename}
           openvidu={openvidu}
+          host={host}
         />
         <GameFrameRight
           start={start}
           startHandler={startHandler}
           setResult={setResult}
+          host={host}
+          publisher={publisher}
+          subscribes={subscribes}
         />
       </div>
     </div>
