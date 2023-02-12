@@ -5,16 +5,25 @@ import _, { lastIndexOf } from "lodash";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { data, string } from "@tensorflow/tfjs";
+import { store } from "../../app/store";
 
 function Lotto({ start, result, openvidu, host }) {
   const baseUrl = useSelector((store) => store.baseUrl);
+  const userinfo = useSelector((store) => store.userData);
   const [isclicked, setisclick] = useState(false);
   const [clickedlist, setclickedlist] = useState([]);
   const [cardlist, setCardlist] = useState([]);
+  const [userName, setUserName] = useState(null);
+
+  console.log("여기!!!!!!!!!!!!!!!!!!");
+  console.log(userinfo);
+
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       setclickedlist((prev) => [...prev, data.clicked]);
+      console.log("여기다!!!!!!!!!!!!!!!!!!");
+      console.log("User ID: ", event.from.connectionId);
     });
   }
 
@@ -54,6 +63,10 @@ function Lotto({ start, result, openvidu, host }) {
         type: "TrueAnswer",
       });
       setisclick(true);
+      console.log("여기다!!!!!!!!!!!!!!!!!!!!!!!!");
+      console.log(e.target.id);
+      // setUserName(data);
+      // console.log("User Name: ", userName);
     }
   };
   return (

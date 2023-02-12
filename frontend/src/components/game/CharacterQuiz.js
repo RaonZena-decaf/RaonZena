@@ -44,8 +44,11 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
       }
       if (isAnswerShown) {
         if (step === characterimg.length - 1) {
-          setIsAnswerShown(true);
-          return;
+          setTimeout(() => {
+            setIsAnswerShown(false);
+            setTimeRemaining(3);
+            setStep((prev) => (prev += 1));
+          }, 1000);
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
@@ -56,6 +59,32 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
       }
     }
   }, [start, timeRemaining, isAnswerShown]);
+
+  // useEffect(() => {
+  //   if (start && step <= characterimg.length - 1) {
+  //     if (timeRemaining > 0 && !isAnswerShown) {
+  //       const intervalId = setInterval(() => {
+  //         setTimeRemaining(timeRemaining - 1);
+  //       }, 500);
+  //       return () => clearInterval(intervalId);
+  //     }
+  //     if (timeRemaining === 0 && !isAnswerShown) {
+  //       setIsAnswerShown(true);
+  //     }
+  //     if (isAnswerShown) {
+  //       if (step === characterimg.length - 1) {
+  //         setIsAnswerShown(true);
+  //         return;
+  //       } else {
+  //         setTimeout(() => {
+  //           setIsAnswerShown(false);
+  //           setTimeRemaining(3);
+  //           setStep((prev) => (prev += 1));
+  //         }, 500);
+  //       }
+  //     }
+  //   }
+  // }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
     if (result !== "") {
@@ -78,22 +107,172 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
 
   return (
     <div className={styles.background}>
-      {isAnswerShown ? (
-        <div className={styles.result}>
-          <h1>정답은 {characterimg[step].answer} 입니다.</h1>
-        </div>
-      ) : (
-        characterimg &&
-        characterimg[step] && (
-          <img
-            alt="img"
-            src={characterimg[step].imageUrl}
-            className={styles.img}
-          />
+      {start ? (
+        step === characterimg.length ? (
+          <div className={styles.result}>
+            <h1>인물퀴즈 끝!!!</h1>
+          </div>
+        ) : isAnswerShown ? (
+          <div className={styles.result}>
+            <h1>{characterimg[step].answer}</h1>
+          </div>
+        ) : (
+          characterimg &&
+          characterimg[step] && (
+            <img
+              alt="img"
+              src={characterimg[step].imageUrl}
+              className={styles.img}
+            />
+          )
         )
+      ) : (
+        <div className={styles.result}>
+          <h1>인물퀴즈 시작합니다!!!</h1>
+        </div>
       )}
     </div>
   );
+
+  //   return (
+  //     // 9번까지 출력후 종료 표시
+  //     // <div className={styles.background}>
+  //     //   {start ? (
+  //     //     characterimg && characterimg.length === step + 1 ? (
+  //     //       <div className={styles.result}>
+  //     //         <h1>인물퀴즈 끝!!</h1>
+  //     //       </div>
+  //     //     ) : isAnswerShown ? (
+  //     //       <div className={styles.result}>
+  //     //         <h1>{characterimg[step].answer}</h1>
+  //     //       </div>
+  //     //     ) : (
+  //     //       characterimg &&
+  //     //       characterimg[step] && (
+  //     //         <img
+  //     //           alt="img"
+  //     //           src={characterimg[step].imageUrl}
+  //     //           className={styles.img}
+  //     //         />
+  //     //       )
+  //     //     )
+  //     //   ) : (
+  //     //     <div className={styles.result}>
+  //     //       <h1>인물퀴즈 시작합니다!!!</h1>
+  //     //     </div>
+  //     //   )}
+  //     // </div>
+
+  //     // 10번 이미지 나오고 10번 답은 안나오고 끝 표시
+  //     // <div className={styles.background}>
+  //     //   {start ? (
+  //     //     step === characterimg.length - 1 && isAnswerShown ? (
+  //     //       <div className={styles.result}>
+  //     //         {lastAnswerShown ? (
+  //     //           <div>
+  //     //             <h1>인물퀴즈 끝!!</h1>
+  //     //           </div>
+  //     //         ) : (
+  //     //           <>
+  //     //             <h1>{characterimg[step].answer}</h1>
+  //     //             <div>
+  //     //               <h1>Exit</h1>
+  //     //             </div>
+  //     //             {setLastAnswerShown(true)}
+  //     //           </>
+  //     //         )}
+  //     //       </div>
+  //     //     ) : isAnswerShown ? (
+  //     //       <div className={styles.result}>
+  //     //         <h1>{characterimg[step].answer}</h1>
+  //     //       </div>
+  //     //     ) : (
+  //     //       characterimg &&
+  //     //       characterimg[step] && (
+  //     //         <img
+  //     //           alt="img"
+  //     //           src={characterimg[step].imageUrl}
+  //     //           className={styles.img}
+  //     //         />
+  //     //       )
+  //     //     )
+  //     //   ) : (
+  //     //     <div className={styles.result}>
+  //     //       <h1>인물퀴즈 시작합니다!!!</h1>
+  //     //     </div>
+  //     //   )}
+  //     // </div>
+
+  //   //   <div className={styles.background}>
+  //   //     {start ? (
+  //   //       step === characterimg.length - 1 && isAnswerShown ? (
+  //   //         <div className={styles.result}>
+  //   //           <h1>인물퀴즈 끝!!!</h1>
+  //   //         </div>
+  //   //       ) : isAnswerShown ? (
+  //   //         <div className={styles.result}>
+  //   //           <h1>{characterimg[step].answer}</h1>
+  //   //         </div>
+  //   //       ) : (
+  //   //         characterimg &&
+  //   //         characterimg[step] && (
+  //   //           <img
+  //   //             alt="img"
+  //   //             src={characterimg[step].imageUrl}
+  //   //             className={styles.img}
+  //   //           />
+  //   //         )
+  //   //       )
+  //   //     ) : (
+  //   //       <div className={styles.result}>
+  //   //         <h1>인물퀴즈 시작합니다!!!</h1>
+  //   //       </div>
+  //   //     )}
+  //   //   </div>
+  //   // );
+
+  //   //   <div className={styles.background}>
+  //   //     {start ? (
+  //   //       isAnswerShown ? (
+  //   //         <div className={styles.result}>
+  //   //           <h1>{characterimg[step].answer}</h1>
+  //   //         </div>
+  //   //       ) : (
+  //   //         characterimg &&
+  //   //         characterimg[step] && (
+  //   //           <img
+  //   //             alt="img"
+  //   //             src={characterimg[step].imageUrl}
+  //   //             className={styles.img}
+  //   //           />
+  //   //         )
+  //   //       )
+  //   //     ) : (
+  //   //       <div className={styles.result}>
+  //   //         <h1>인물퀴즈 시작합니다!!!</h1>
+  //   //       </div>
+  //   //     )}
+  //   //   </div>
+  //   // );
+
+  //   // return (
+  //   //   <div className={styles.background}>
+  //   //     {isAnswerShown ? (
+  //   //       <div className={styles.result}>
+  //   //         <h1>정답은 {characterimg[step].answer} 입니다.</h1>
+  //   //       </div>
+  //   //     ) : (
+  //   //       characterimg &&
+  //   //       characterimg[step] && (
+  //   //         <img
+  //   //           alt="img"
+  //   //           src={characterimg[step].imageUrl}
+  //   //           className={styles.img}
+  //   //         />
+  //   //       )
+  //   //     )}
+  //   //   </div>
+  //   // );
 }
 
 export default CharacterQuiz;
