@@ -148,16 +148,27 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
-    public  List<GameAnswerAndImageRes> answerAndImage() {
+    public List<GameAnswerAndImageRes> answerAndImage() {
         int min = 1;
         int max = 250;
-        List<GameAnswerAndImageRes> answerList = new ArrayList<>();
-        for(int i=0; i<10; i++){
+        int cnt = 10;
+
+        Set<Integer> set = new HashSet<>();
+        while (set.size() < cnt) {
             int randomNo = (int) ((Math.random() * (max - min)) + min);
-            PersonQuiz data = gamePersonQuizRepository.findByPersonNO(randomNo);
+            set.add(randomNo);
+        }
+
+        Integer[] randomNumbers = set.toArray(new Integer[0]);
+        System.out.println(Arrays.toString(randomNumbers));
+        List<GameAnswerAndImageRes> answerList = new ArrayList<>(cnt);
+
+        for(int i=0; i< cnt; i++){
+            PersonQuiz data = gamePersonQuizRepository.findByPersonNO(randomNumbers[i]);
             GameAnswerAndImageRes answer = new GameAnswerAndImageRes(data.getPersonAnswer(), data.getImageUrl());
             answerList.add(answer);
         }
+
         return answerList;
     }
 
