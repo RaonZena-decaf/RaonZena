@@ -143,6 +143,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, width, height);
   }, []);
+
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(5);
   const [step, setStep] = useState(0);
@@ -194,17 +195,17 @@ function Catchmind({ start, result, setResult, openvidu }) {
     <div>
       <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
-        <span className="red">red</span>
-        <span className="yellow">yellow</span>
-        <span className="orange">orange</span>
-        <span className="green">green</span>
-        <span className="blue">blue</span>
-        <span className="navy">navy</span>
-        <span className="purple">purple</span>
-        <span className="black">black</span>
-        <span className="white">white</span>
-        <span className="clear">clear</span>
-        <span className="fill">fill</span>
+        <span className={`${style.container1} red`}>red</span>
+        <span className={`${style.container1} yellow`}>yellow</span>
+        <span className={`${style.container1} orange`}>orange</span>
+        <span className={`${style.container1} green`}>green</span>
+        <span className={`${style.container1} blue`}>blue</span>
+        <span className={`${style.container1} navy`}>navy</span>
+        <span className={`${style.container1} purple`}>purple</span>
+        <span className={`${style.container1} black`}>black</span>
+        <span className={`${style.container1} white`}>white</span>
+        <span className={style.buttonBlack}>clear</span>
+        <span className={style.buttonBlack}>fill</span>
       </div>
     </div>
   );
