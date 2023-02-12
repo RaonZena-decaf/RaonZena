@@ -23,8 +23,9 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     }
   };
   useEffect(() => {
-    const scrollChange = document.querySelector("#scrollChange");
-    if (scrollChange) {
+    if (list.length > 0) {
+      const scrollChange = document.querySelector("#scrollChange");
+
       scrollChange.addEventListener(
         "wheel",
         (event) => {
