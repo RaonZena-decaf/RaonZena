@@ -1,6 +1,5 @@
-import { CharacterQuizList } from "./CharacterQuizList";
 import React, { useEffect, useState, useRef } from "react";
-import styles from "./CharacterQuiz.module.css";
+import styles from "./Seeking.module.css";
 import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
 
@@ -10,6 +9,7 @@ function Seeking({ start, result, setResult, openvidu }) {
   const [model, setModel] = useState(null);
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
+  const [label, setLabel] = useState(null);
   const videoRef = useRef(null);
   useEffect(() => {
     const init = async () => {
@@ -31,33 +31,21 @@ function Seeking({ start, result, setResult, openvidu }) {
     };
     init();
   }, []);
+
   useEffect(() => {
     if (!model && !webcam) {
       return;
     } else {
       const steps = new Promise((resolve, reject) => {
-        webcam.setup()
-        resolve(webcam.setup())
-      })
+        webcam.setup();
+        resolve(webcam.setup());
+      });
       steps.then(() => {
-        webcam.play()
+        webcam.play();
         requestAnimationFrame(loop);
-      })
+      });
     }
   }, [webcam]);
-  // useEffect(() => {
-  //   const setupWebcam = async () => {
-  //     if (!model) return;
-
-  //     const newWebcam = new tmImage.Webcam(200, 200, true);
-  //     await newWebcam.setup();
-  //     await newWebcam.play();
-  //     setWebcam(newWebcam);
-  //     window.requestAnimationFrame(loop);
-  //   };
-
-  //   setupWebcam();
-  // }, [model]);
 
   const loop = async () => {
     webcam.update();
@@ -67,11 +55,23 @@ function Seeking({ start, result, setResult, openvidu }) {
 
   const predict = async () => {
     const prediction = await model.predict(webcam.canvas);
+    let max = 0;
+    let highlabel = undefined;
     for (let i = 0; i < maxPredictions; i++) {
-      const classPrediction =
-        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-      document.getElementById("label-container").childNodes[i].innerHTML =
-        classPrediction;
+      if (prediction[i].probability.toFixed(2) > max) {
+        max = prediction[i].probability.toFixed(2);
+        highlabel = prediction[i].className;
+      }
+    }
+    document.getElementById("label-container").childNode.innerHTML = highlabel;
+    if (highlabel === "rock") {
+      const data = {
+        correct: openvidu.userName,
+      };
+      openvidu.session.signal({
+        data: JSON.stringify(data),
+        type: "TrueAnswer",
+      });
     }
   };
 
@@ -79,24 +79,28 @@ function Seeking({ start, result, setResult, openvidu }) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       setIsAnswerShown(true);
+      console.log(data);
+      setfail(data)
     });
   }
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(3);
-
+  const [fail, setfail] = useState(null);
+  // 임시
+  const [QuizList, setQuizList] = useState([]);
   useEffect(() => {
-    if (start && step <= CharacterQuizList.length - 1) {
+    if (start && step <= QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
-        }, 100);
+        }, 1000);
         return () => clearInterval(intervalId);
       }
       if (timeRemaining === 0 && !isAnswerShown) {
         setIsAnswerShown(true);
       }
       if (isAnswerShown) {
-        if (step === CharacterQuizList.length - 1) {
+        if (step === QuizList.length - 1) {
           setIsAnswerShown(true);
           return;
         } else {
@@ -104,68 +108,32 @@ function Seeking({ start, result, setResult, openvidu }) {
             setIsAnswerShown(false);
             setTimeRemaining(3);
             setStep((prev) => (prev += 1));
-          }, 100);
+          }, 1000);
         }
       }
     }
   }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
-    if (result !== "") {
-      if (result === CharacterQuizList[step].person_answer) {
-        console.log("정답");
-        const data = {
-          correct: openvidu.userName,
-        };
-        openvidu.session.signal({
-          data: JSON.stringify(data),
-          type: "TrueAnswer",
-        });
-        setResult("");
-      } else {
-        console.log("오답");
-        setResult("");
-      }
-    }
-  }, [result]);
-  useEffect(() => {
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
   }, []);
 
-  return (
+  return isAnswerShown ? (
+    <div className={styles.result}>
+      <h1>{fail}</h1>
+    </div>
+  ) : (
     <div className={styles.background}>
       <div id="label-container">
-        {Array.from({ length: maxPredictions }).map((_, i) => (
-          <div key={i} />
-        ))}
+        <div />
       </div>
-
       <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
     </div>
   );
 }
 
 export default Seeking;
-
-
-// <div>
-// {/* <div>
-//   <div className={styles.questionNo}>
-//     {step+1} / {AnswerList.length}
-//   </div>
-//   <div className={styles.AnswerFont}>
-//     문제 : {AnswerList[step].answer}
-//   </div>
-// </div> */}
-// <div
-//   style={isWrong ? { display: "revert" } : { display: "none" }}
-//   id="wrongAlert"
-//   className={styles.fadeoutbox}
-// >
-//   {/* {isWrong ? "틀렸습니다" : "???"} */}
-//   틀렸습니다 {isWrong}
-// </div>
 
 // <div>
 //   <div className={styles.webcamCapture}>
@@ -188,4 +156,4 @@ export default Seeking;
 // {modalOpen ? { showModal } : {}} */}
 // </div>
 // );
-// } 
+// }
