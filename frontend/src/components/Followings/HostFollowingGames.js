@@ -24,12 +24,12 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
               (event) => {
                 event.preventDefault();
                 if (event.deltaY > 0) {
-                  window.scrollBy({
+                  scrollChange.scrollBy({
                     left: 100,
                     behavior: "smooth",
                   });
                 } else {
-                  window.scrollBy({
+                  scrollChange.scrollBy({
                     left: -100,
                     behavior: "smooth",
                   });
@@ -77,7 +77,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
           })}
         </>
       ) : (
-        <div >
+        <div className={styles.NoGameRooms}>
           <FaUserTimes className={styles.NoGameRoomsImg} />
           <p className={styles.NoGameRoomsText}>
             지금 놀고 있는 친구가 없습니다.
