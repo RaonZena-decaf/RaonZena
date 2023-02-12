@@ -30,13 +30,13 @@ const GuideModalFrame = ({ show, closeModal, nowContent }) => {
 
   useEffect(() => {
     setModalContent(nowContent);
-    window.addEventListener(
-      "wheel",
-      (event) => {
-        event.preventDefault();
-      },
-      { passive: false }
-    );
+    function handleWheel(e) {
+      e.preventDefault();
+    }
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
   }, [nowContent]);
 
   const nextGuide = () => {
