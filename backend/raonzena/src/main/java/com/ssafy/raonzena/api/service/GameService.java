@@ -4,6 +4,7 @@ package com.ssafy.raonzena.api.service;
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
 import com.ssafy.raonzena.api.response.*;
+import com.ssafy.raonzena.db.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -43,4 +44,7 @@ public interface GameService {
 
     // 게임참여 인원수 저장
     void saveActiveHeadCount(long roomNo, int headCount);
+
+    // 게임참여중인 유저 조회
+    List<UserRes> findGameUser(long roomNo);
 }

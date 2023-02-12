@@ -4,10 +4,7 @@ package com.ssafy.raonzena.api.controller;
 
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
-import com.ssafy.raonzena.api.response.ChanceRes;
-import com.ssafy.raonzena.api.response.GameScoreRes;
-import com.ssafy.raonzena.api.response.ImageThemeRes;
-import com.ssafy.raonzena.api.response.UserRes;
+import com.ssafy.raonzena.api.response.*;
 import com.ssafy.raonzena.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -110,13 +107,6 @@ public class GameController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PutMapping("/{roomNo}/join")
-//    public ResponseEntity<?> headCountSave(@PathVariable long roomNo, @RequestBody int headCount){
-//        // 참여인원수 저장
-//        gameService.saveActiveHeadCount(roomNo,headCount);
-//        return ResponseEntity.ok("Success");
-//    }
-
     @PutMapping("/{roomNo}/join")
     public ResponseEntity<?> headCountSave(@PathVariable long roomNo, @RequestBody Map<String, Integer> request){
         // 참여인원수 저장
@@ -124,4 +114,14 @@ public class GameController {
         return ResponseEntity.ok("Success");
     }
 
+    @GetMapping("/{roomNo}")
+    public ResponseEntity<List<UserRes>> userList(@PathVariable long roomNo){
+        // 방에 참여중인 유저 조회
+        if (gameService.findActiveHeadCount(roomNo)>-1){
+            System.out.println("123456486");
+            return ResponseEntity.ok(gameService.findGameUser(roomNo));
+        }
+        // 방이 없으면 noContent 반환
+        return ResponseEntity.noContent().build();
+    }
 }
