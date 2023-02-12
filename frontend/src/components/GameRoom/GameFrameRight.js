@@ -3,7 +3,7 @@ import styles from "./GameFrameRight.module.css";
 
 import UserVideoComponent from "../camera/UserVideoComponent";
 
-function GameFrameRight({ startHandler, start, setResult, openvidu }) {
+function GameFrameRight({ startHandler, start, setResult, openvidu, subscribes }) {
   const peopleList = [1, 2, 3, 4, 5, 6];
   const [answer, setAnswer] = useState("");
   const answerOnchange = (e) => {
@@ -34,8 +34,11 @@ function GameFrameRight({ startHandler, start, setResult, openvidu }) {
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        {openvidu.subscribes.map((sub, idx) => {
-          return <UserVideoComponent key={idx} streamManager={sub}/>;
+        {subscribes.map((sub, idx) => {
+          return (
+          <div className={styles[videoFrame()]}>
+          <UserVideoComponent key={idx} streamManager={sub}/>;
+          </div>)
         })}
       </div>
       <div className={styles.submit}>
