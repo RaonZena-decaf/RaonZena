@@ -34,7 +34,6 @@ const SearchResult = ({ search, closeModal }) => {
     }).then((res)=>{
       dispatch(modifyMyFollowingList([...MyFollowingList, userNo]))
     }).catch(error => console.log(error))
-
   }
 
   //검색어를 받고 유저를 검색

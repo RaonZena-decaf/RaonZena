@@ -8,14 +8,12 @@ import { FaUserTimes } from "react-icons/fa";
 const HostFollowings = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
   const baseUrl = useSelector((store) => store.baseUrl);
-  const nowUserNo = useSelector((store) => store.userData.user_no);
-
+  const nowUserNo = useSelector((store) => store.userData.userNo);
   const getlist = () => {
     if (nowUserNo) {
       axios({
         method: "get",
         url: `${baseUrl}live/followingRoom`,
-        data: { userNo: nowUserNo },
       })
         .then((res) => {
           console.log("HostFollowings res.data 가져온 결과", res.data);
@@ -25,6 +23,29 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     }
   };
   useEffect(() => {
+    const scrollChange = document.querySelector("#scrollChange");
+    if (scrollChange) {
+      scrollChange.addEventListener(
+        "wheel",
+        (event) => {
+          event.preventDefault();
+
+          if (event.deltaY > 0) {
+            window.scrollBy({
+              left: 30,
+              behavior: "smooth",
+            });
+          } else {
+            window.scrollBy({
+              left: 30,
+              behavior: "smooth",
+            });
+          }
+        },
+        { passive: false }
+      );
+    }
+
     getlist();
     console.log("Hostfollowings 컴포넌트 getList 결과", list);
   }, []);
@@ -44,7 +65,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
 
   if (list.length > 0) {
     return (
-      <div className={styles.HostFollowingsList}>
+      <div className={styles.HostFollowingsList} id="scrollChange">
         {list?.map((gameRoomInfo, idx) => {
           return (
             <Item
