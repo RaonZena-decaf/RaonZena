@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import style from "ovVideo.module.css";
+import style from "./ovVideo.module.css";
 export default class OpenViduVideoComponent extends Component {
   constructor(props) {
     super(props);

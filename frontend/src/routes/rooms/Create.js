@@ -82,7 +82,6 @@ function Create() {
           roomTitle: roomname,
           headcount: peoplenum,
           password: password,
-          // host: user.userId,
         };
         console.log("방 만들때 데이터", data);
         axios({
