@@ -18,34 +18,35 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
         .then((res) => {
           console.log("HostFollowings res.data 가져온 결과", res.data);
           setList(res.data);
+
+          // 가로 스크롤링 이벤트 
+          if (list.length > 0) {
+            const scrollChange = document.querySelector("#scrollChange");
+            console.log(scrollChange);
+            scrollChange.addEventListener(
+              "wheel",
+              (event) => {
+                event.preventDefault();
+                if (event.deltaY > 0) {
+                  window.scrollBy({
+                    left: 30,
+                    behavior: "smooth",
+                  });
+                } else {
+                  window.scrollBy({
+                    left: -30,
+                    behavior: "smooth",
+                  });
+                }
+              },
+              { passive: false }
+            );
+          }
         })
         .catch((error) => console.log(error));
     }
   };
   useEffect(() => {
-    if (list.length > 0) {
-      const scrollChange = document.querySelector("#scrollChange");
-      console.log(scrollChange)
-      scrollChange.addEventListener(
-        "wheel",
-        (event) => {
-          event.preventDefault();
-          if (event.deltaY > 0) {
-            window.scrollBy({
-              left: 30,
-              behavior: "smooth",
-            });
-          } else {
-            window.scrollBy({
-              left: -30,
-              behavior: "smooth",
-            });
-          }
-        },
-        { passive: false }
-      );
-    }
-
     getlist();
     console.log("Hostfollowings 컴포넌트 getList 결과", list);
   }, []);

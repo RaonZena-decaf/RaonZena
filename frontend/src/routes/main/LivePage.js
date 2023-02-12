@@ -10,16 +10,9 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import SearchModalFrame from "../../components/Modal/SearchModalFrame";
-import { useEffect } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { modifyMyFollowingList } from "../../app/myFollowingList";
 
 const LivePage = () => {
   const { state } = useLocation();
-  const baseUrl = useSelector((store) => store.baseUrl);
-  const userNo = useSelector((store) => store.userData.userNo);
-  const dispatch = useDispatch();
 
   //모달 표시를 위한 함수
   const [modalOn, setModalOn] = useState(false);
