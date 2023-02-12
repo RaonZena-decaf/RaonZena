@@ -23,7 +23,6 @@
 }
 
 .HostFollowingsList {
-  width: 100%;
   margin: auto;
   display: inline-flex;
   overflow: scroll;
@@ -88,7 +87,7 @@
 }
 
 .marginTopBot {
-  padding: 3rem;
+
 }
 
 .NoGameRoomsText {
