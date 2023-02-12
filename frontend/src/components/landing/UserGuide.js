@@ -62,33 +62,27 @@ function UserGuide({ openModal }) {
           onClick={openModal}
         />
         <img
-          src="./img/Landing/TresureHuntGuide.webp"
+          src="./img/Landing/CatchMindGuide.webp"
           alt=""
           id="4"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/CatchMindGuide.webp"
+          src="./img/Landing/ShoutInSilenceGuide.webp"
           alt=""
           id="5"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/ShoutInSilenceGuide.webp"
+          src="./img/Landing/PersonQuizGuide.webp"
           alt=""
           id="6"
           onClick={openModal}
         />
         <img
-          src="./img/Landing/PersonQuizGuide.webp"
-          alt=""
-          id="7"
-          onClick={openModal}
-        />
-        <img
           src="./img/Landing/LotteryGuide.webp"
           alt=""
-          id="8"
+          id="7"
           onClick={openModal}
         />
       </div>

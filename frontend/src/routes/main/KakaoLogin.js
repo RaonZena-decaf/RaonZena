@@ -57,8 +57,15 @@ function KakaoLogin() {
 
   return (
     <div className={styles.container}>
-      <UnLockAnimation />
-      <div className={styles.title}>로그인 중입니다. 잠시만 기다려 주세요!</div>
+      <div className={styles.box1}>
+        <div className={styles.box3}>
+          <div className={styles.box1}>
+            <div className={styles.box2}>
+              <div className={styles.box1}></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

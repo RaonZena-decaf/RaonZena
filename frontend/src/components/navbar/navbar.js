@@ -12,6 +12,7 @@ import {
 import { initUserData } from "../../app/userData";
 import { initMyFollowingList } from "../../app/myFollowingList";
 import axios from "axios";
+import Tooltip from "./ToolTip";
 
 const Navbar = () => {
   //유저정보 가져오기
@@ -43,12 +44,12 @@ const Navbar = () => {
     setAnimation("wash");
     setTimeout(() => {
       dispatch(initUserData());
-    }, 1100);
+    }, 1000);
     dispatch(initMyFollowingList([]));
     setTimeout(() => {
       setAnimation("");
       navigateToLanding();
-    }, 3500);
+    }, 1900);
   };
 
   // 페이지 이동을 위한 함수들
@@ -112,32 +113,44 @@ const Navbar = () => {
       </div>
       <div className={styles.rightSide}>
         {isLogin ? (
-          <img
-            src={user.userImage}
-            alt="profileimg"
-            className={styles.profileimg}
-            onClick={navigateToProfile}
-          />
-        ) : null}
-        <FaHome
-          className={`${styles.router} ${styles[activerouter]}`}
-          onClick={navigateToLanding}
-        />
-        <FaRegPlayCircle
-          className={`${styles.router} ${styles[activerouter2]}`}
-          onClick={navigateToLive}
-        />
-        {isLogin ? (
-          <FaClinicMedical
-            className={`${styles.router} ${styles[activerouter3]}`}
-            onClick={navigateToCreateRoom}
-          />
+          <Tooltip message={"프로필"}>
+            <img
+              src={user.userImage}
+              alt="profileimg"
+              className={styles.profileimg}
+              onClick={navigateToProfile}
+            />
+          </Tooltip>
         ) : null}
 
-        <FaSearch
-          className={`${styles.router} ${styles[activerouter4]}`}
-          onClick={searchBarOpen}
-        />
+        <Tooltip message={"메인"}>
+          <FaHome
+            className={`${styles.router} ${styles[activerouter]}`}
+            onClick={navigateToLanding}
+          />
+        </Tooltip>
+
+        <Tooltip message={"라이브"}>
+          <FaRegPlayCircle
+            className={`${styles.router} ${styles[activerouter2]}`}
+            onClick={navigateToLive}
+          />
+        </Tooltip>
+
+        {isLogin ? (
+          <Tooltip message={"만들기"}>
+            <FaClinicMedical
+              className={`${styles.router} ${styles[activerouter3]}`}
+              onClick={navigateToCreateRoom}
+            />
+          </Tooltip>
+        ) : null}
+        <Tooltip message={"검색"}>
+          <FaSearch
+            className={`${styles.router} ${styles[activerouter4]}`}
+            onClick={searchBarOpen}
+          />
+        </Tooltip>
 
         {searchBar ? (
           <form onSubmit={enterSearch} className={styles.searchforms}>
@@ -153,7 +166,9 @@ const Navbar = () => {
           </form>
         ) : null}
         {isLogin ? (
-          <FaPowerOff className={styles.logout} onClick={logout} />
+          <Tooltip message={"로그아웃"}>
+            <FaPowerOff className={styles.logout} onClick={logout} />
+          </Tooltip>
         ) : (
           <img
             className={styles.Login}
@@ -164,9 +179,11 @@ const Navbar = () => {
         )}
       </div>
       <div className={`${styles.wave} ${styles[`${animation}1`]}`}></div>
-      <div className={`${styles.wave2} ${styles[`${animation}2`]}`}></div>
+      <div className={`${styles.wave2} ${styles[`${animation}1-1`]}`}></div>
+      <div className={`${styles.wave} ${styles[`${animation}2`]}`}></div>
+      <div className={`${styles.wave2} ${styles[`${animation}2-2`]}`}></div>
       <div className={`${styles.wave3} ${styles[`${animation}3`]}`}>
-        <div className={styles.logoutComment}>RaonZena</div>
+        <div className={styles.logoutComment}>See you next time!</div>
       </div>
     </div>
   );

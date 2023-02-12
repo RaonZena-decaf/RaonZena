@@ -95,11 +95,13 @@
 
 .Login {
   width: 8rem;
+  transition: opacity 0.5s ease;
 }
 
 .Login:hover {
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 0.7;
+  transition: opacity 0.5s ease;
 }
 
 .logout {
@@ -128,11 +130,12 @@
   font-weight: bold;
   margin: 0;
   font-size: 4rem;
+  transition: color 0.3s ease;
 }
 
 .router:hover {
   color: #f400b0;
-  animation: changecolor 0.3s ease;
+  transition: color 0.3s ease;
   cursor: pointer;
 }
 
@@ -144,35 +147,26 @@
   gap: 2rem;
 }
 
-@keyframes changecolor {
-  0% {
-    color: white;
-  }
-  100% {
-    color: #f400b0;
-  }
-}
-
 /* 로그아웃 애니메이션을 위한 CSS */
 
 .wave {
   position: absolute;
-  background-color: #9d00f2;
+  background-color: #9d00f2ad;
   bottom: -100vh;
   left: 0;
   width: 100vw;
   height: 100vh;
-  transform: translateX(-100vw) translateY(100vh);
+  transform: translateY(100vh);
 }
 
 .wave2 {
   position: absolute;
-  background-color: #f400b0;
+  background-color: #f400afaf;
   bottom: -100vh;
   left: 0;
   width: 100vw;
   height: 100vh;
-  transform: translateX(-100vw) translateY(100vh);
+  transform: translateY(100vh);
 }
 
 .wave3 {
@@ -182,68 +176,81 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  transform: translateX(-100vw) translateY(100vh);
+  transform: translateY(100vh);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .wash1 {
-  animation: wash 3.5s ease-in-out;
+  animation: wash 2s ease-in-out;
+}
+.wash1-1 {
+  animation: wash1-1 2s ease-in-out;
 }
 .wash2 {
-  animation: wash2 3.5s ease-in-out;
+  animation: wash2 2s ease-in-out;
+}
+.wash2-2 {
+  animation: wash2-2 2s ease-in-out;
 }
 .wash3 {
-  animation: wash3 3.5s ease-in-out;
+  animation: wash3 2s ease-in-out;
 }
 
 @keyframes wash {
   0% {
     transform: translateY(100vh);
   }
-  25% {
-    transform: translateY(-9vh);
-  }
-  75% {
+  50% {
     transform: translateY(-9vh);
   }
   100% {
-    transform: translateY(100vh);
+    transform: translateY(-9vh);
   }
 }
-@keyframes wash2 {
-  0% {
-    transform: translateY(100vh);
-  }
+@keyframes wash1-1 {
   10% {
     transform: translateY(100vh);
   }
-  35% {
+  60% {
     transform: translateY(-9vh);
   }
-  65% {
+  100% {
     transform: translateY(-9vh);
-  }
-  90% {
-    transform: translateY(100vh);
   }
 }
-@keyframes wash3 {
-  0% {
-    transform: translateY(100vh);
-  }
+@keyframes wash2 {
   20% {
     transform: translateY(100vh);
   }
-  45% {
+  70% {
     transform: translateY(-9vh);
   }
-  55% {
+  100% {
     transform: translateY(-9vh);
+  }
+}
+@keyframes wash2-2 {
+  30% {
+    transform: translateY(100vh);
   }
   80% {
+    transform: translateY(-9vh);
+  }
+  100% {
+    transform: translateY(-9vh);
+  }
+}
+@keyframes wash3 {
+  40% {
     transform: translateY(100vh);
+  }
+  90% {
+    transform: translateY(-9vh);
+  }
+  100% {
+    transform: translateY(-9vh);
   }
 }
 

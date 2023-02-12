@@ -9,7 +9,6 @@ import LotteryGuideModal from "./LotteryGuideModal";
 import PersonQuizGuideModal from "./PersonQuizGuideModal";
 import PhotoGuideModal from "./PhotoGuideModal";
 import ShoutInSilenceGuideModal from "./ShoutInSilenceGuideModal";
-import TreasureHuntGuideModal from "./TreasureHuntGuideModal";
 import styles from "./Modal.module.css";
 
 const GuideModalFrame = ({ show, closeModal, nowContent }) => {
@@ -44,7 +43,7 @@ const GuideModalFrame = ({ show, closeModal, nowContent }) => {
   }, [nowContent]);
 
   const nextGuide = () => {
-    if (modalContent < 8) {
+    if (modalContent < 7) {
       setModalContent(modalContent + 1);
     }
   };
@@ -76,11 +75,10 @@ const GuideModalFrame = ({ show, closeModal, nowContent }) => {
           {modalContent === 1 && <PhotoGuideModal closeModal={closeModal} />}
           {modalContent === 2 && <ChattingGuideModal closeModal={closeModal} />}
           {modalContent === 3 && <ImageGameGuideModal closeModal={closeModal} />}
-          {modalContent === 4 && <TreasureHuntGuideModal closeModal={closeModal} />}
-          {modalContent === 5 && <CatchMindModal closeModal={closeModal} />}
-          {modalContent === 6 && <ShoutInSilenceGuideModal closeModal={closeModal} />}
-          {modalContent === 7 && <PersonQuizGuideModal closeModal={closeModal} />}
-          {modalContent === 8 && <LotteryGuideModal closeModal={closeModal} />}
+          {modalContent === 4 && <CatchMindModal closeModal={closeModal} />}
+          {modalContent === 5 && <ShoutInSilenceGuideModal closeModal={closeModal} />}
+          {modalContent === 6 && <PersonQuizGuideModal closeModal={closeModal} />}
+          {modalContent === 7 && <LotteryGuideModal closeModal={closeModal} />}
         </div>
       </div>
     </div>
