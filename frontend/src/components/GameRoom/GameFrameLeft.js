@@ -132,6 +132,7 @@ function GameFrameLeft({
               result={result}
               setResult={setResult}
               openvidu={openvidu}
+              host={host}
             />
           )}
           {gamename === "joker" && (
