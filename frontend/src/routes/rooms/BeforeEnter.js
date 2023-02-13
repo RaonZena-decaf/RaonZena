@@ -19,9 +19,9 @@ function BeforeEnter() {
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [password, setPassword] = useState("");
-  const [disabled, setDisabled] = useState(state.password === "True"? false : true);
+  const [disabled, setDisabled] = useState((state.password === "True"? false : true));
   const baseUrl = useSelector((store) => store.baseUrl);
-
+  console.log("왜안뜸?,",state.password, disabled)
   const navigate = useNavigate();
   // 이전 페이지로 돌아가기
   const backOnClick = () => {
@@ -45,6 +45,7 @@ function BeforeEnter() {
         roomNo: state.roomNo,
         inputPassword: password,
       };
+      console.log(data)
       axios({
         method: "post",
         url: `${baseUrl}live/passwordCheck`,
@@ -52,18 +53,18 @@ function BeforeEnter() {
         headers: { "Content-type": "application/json" },
       })
         .then((res) => {
-          if (res.data === "success") {
-            navigate(`/room/${res.data.roomNo}`, {
+          if (res.data === "Success") {
+            navigate(`/room/${state.roomNo}`, {
               state: {
                 mic,
                 camera,
-                roomNo: res.data.roomNo,
-                roomTitle: res.data.roomTitle,
+                roomNo: state.roomNo,
+                roomTitle: state.roomTitle,
                 host: false,
               },
             });
           } else {
-            console.alert("비밀번호가 잘못되었습니다");
+            alert("비밀번호가 잘못되었습니다");
           }
         })
         .catch((error) => {
@@ -126,7 +127,6 @@ function BeforeEnter() {
                   onChange={passwordChange}
                   className={style.input}
                   disabled={disabled}
-                  type="number"
                 />
               </label>
               <button className={style.button} onClick={backOnClick}>

@@ -229,19 +229,26 @@ function MainRoom(props) {
     window.addEventListener("beforeunload", onbeforeunload);
     console.log("길이", subscribes.length)
     return () => {
-      console.log("길이", subscribes.length)
-      if (headcount < 1) {
-        axios({
-          method: "delete",
-          url: `${baseUrl}live/${state.roomNo}`,
-        })
+      console.log("길이2", subscribes.length)
+      axios({
+        method: "get",
+        url: `${baseUrl}games/${state.roomNo}/join`,
+      })
         .then((res) => {
-          console.log(res);
+          if (res.data === 1) {
+            axios({
+              method: "delete",
+              url: `${baseUrl}live/${state.roomNo}`,
+            })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((error) => console.log(error));
+          }
         })
         .catch((error) => console.log(error));
+        window.removeEventListener("beforeunload", onbeforeunload);
       }
-      window.removeEventListener("beforeunload", onbeforeunload);
-    };
   }, []);
 
   // 세션 종료

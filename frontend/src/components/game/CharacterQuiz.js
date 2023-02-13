@@ -3,23 +3,58 @@ import styles from "./CharacterQuiz.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function CharacterQuiz({ start, result, setResult, openvidu }) {
+function CharacterQuiz({ start, result, setResult, openvidu, host }) {
+  const timeLimit = 3;
+
   const [step, setStep] = useState(0);
   const baseUrl = useSelector((store) => store.baseUrl);
+  const [minutes, setMinutes] = useState(0);
+  const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
 
   const [characterimg, setCharacterimg] = useState({});
+  console.log(host);
+  useEffect(() => {
+    if (host) {
+      axios({
+        method: "GET",
+        url: `${baseUrl}games/gameType/4`,
+      })
+        .then((res) => {
+          setCharacterimg(res.data);
+          console.log(res.data);
+          if (openvidu.session) {
+            const data = JSON.parse(res.data);
+            openvidu.session.signal({
+              data: data,
+              type: "SeedNumber",
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: `${baseUrl}games/gameType/4`,
+  //   })
+  //     .then((res) => {
+  //       setCharacterimg(res.data);
+  //       console.log(res.data);
+  //       console.log(setCharacterimg);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: `${baseUrl}games/gameType/4`,
-    })
-      .then((res) => {
-        setCharacterimg(res.data);
-        console.log(res.data);
-        console.log(setCharacterimg);
-      })
-      .catch((error) => console.log(error));
+    if (host) {
+      openvidu.session.signal({
+        data: JSON.stringify(characterimg),
+        type: "charcterimg",
+      });
+    }
   }, []);
 
   if (openvidu.session) {
@@ -27,9 +62,11 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
       const data = JSON.parse(event.data);
       setIsAnswerShown(true);
     });
+    openvidu.session.on("signal:SeedNumber", (event) => {
+      const data = JSON.parse(event.data);
+      setCharacterimg(data);
+    });
   }
-  const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(3);
 
   useEffect(() => {
     if (start && step <= characterimg.length - 1) {
@@ -46,13 +83,13 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
         if (step === characterimg.length - 1) {
           setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
         }
@@ -110,10 +147,20 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
     audio.play();
     return () => {
       audio.pause();
-    }
-  },[]);
+    };
+  }, []);
   return (
     <div className={styles.background}>
+      <div className={styles.Container}>
+        <span className={styles.questionNo}>
+          {step + 1} / {characterimg.length}
+        </span>
+        <span className={styles.TimeLimit}>
+          {" "}
+          {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+        </span>
+      </div>
+
       {start ? (
         step === characterimg.length ? (
           <div className={styles.result}>

@@ -53,18 +53,24 @@ public class ProfileController {
         }
     }
 
-    @GetMapping("{userNo}/follower")  //userNo를 팔로우 하는 사람들
+    @GetMapping("{userNo}/follower")
     public ResponseEntity<List<FollowFollowingtRes>> follower(@PathVariable long userNo){
+        logger.info("userNo를 팔로우 하는 사람들");
+
         return ResponseEntity.ok(profileService.follower(userNo));
     }
 
-    @GetMapping("{userNo}/following") //userNo가 팔로우 하는 사람들
+    @GetMapping("{userNo}/following")
     public ResponseEntity<List<FollowFollowingtRes>> following(@PathVariable long userNo){
+        logger.info("userNo가 팔로우 하는 사람들");
+
         return ResponseEntity.ok(profileService.following(userNo));
     }
 
     @GetMapping("{userNo}")
     public ResponseEntity<UserRes> userProfile(@PathVariable long userNo){
+        logger.info("유저 프로필 정보");
+
         return ResponseEntity.ok(profileService.userInfo(userNo));
     }
 
@@ -81,28 +87,31 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.findProfiles(conditions));
     }
 
-    //피드리스트
     @GetMapping("{userNo}/feedList")
     public ResponseEntity<List<BoardRes>> feedList(@PathVariable long userNo){
+        logger.info("유저 프로필 피드 리스트");
+
         return ResponseEntity.ok(profileService.feedList(userNo));
     }
 
-    //피드 디테일
     @GetMapping("/feed/{feedNo}")
     public ResponseEntity<BoardRes> feedDetail(@PathVariable long feedNo){
+        logger.info("피드 디테일 정보");
 
         return ResponseEntity.ok(profileService.feedDetail(feedNo));
     }
 
-    //팔로워 수
     @GetMapping("/{userNo}/followerCnt")
     public ResponseEntity<Integer> followerCnt(@PathVariable long userNo){
+        logger.info("팔로워 수");
+
         return ResponseEntity.ok(profileService.followerCnt(userNo));
     }
 
-    //팔로잉 수
     @GetMapping("/{userNo}/followingCnt")
     public ResponseEntity<Integer> followingCnt(@PathVariable long userNo){
+        logger.info("팔로잉 수");
+
         return ResponseEntity.ok(profileService.followingCnt(userNo));
     }
 
@@ -121,18 +130,22 @@ public class ProfileController {
         }
     }
 
-    //경험치 와 레벨 업데이트
     @PutMapping("/expToLevelModify")
     public ResponseEntity<?> expToLevelModify(@RequestBody ExpReq expReq){
+        logger.info("경험치와 레벨 갱신");
+
         profileService.expToLevelModify(expReq);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok("Success");
     }
 
-    //피드 삭제하기
     @DeleteMapping("/feedDelete/{boardNo}")
     public ResponseEntity<?> feedDelete(@PathVariable long boardNo){
+        logger.info("피드 삭제하기");
+
         profileService.feedDelete(boardNo);
-        return ResponseEntity.ok().body("success");
+
+        return ResponseEntity.ok("Success");
     }
 
     @DeleteMapping("{followNo}")

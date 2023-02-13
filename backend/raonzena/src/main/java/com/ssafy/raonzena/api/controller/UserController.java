@@ -32,11 +32,9 @@ public class UserController {
 
     @PostMapping("/kakao/callback")
     public ResponseEntity<UserRes> kakaoLogin(@RequestBody String code, HttpSession session){
-        System.out.println("------------------");
-        System.out.println(code.getClass().getName());
-//        System.out.println(code.substring(1,code.length()-1));
-        System.out.println(code);
-        //authorizeCode : 카카오 서버로부터 받은 인가 코드
+        logger.info("카카오 로그인");
+
+        //code : 카카오 서버로부터 받은 인가 코드
         UserRes userRes = userService.KaKaoLogin(code);
 
         // 세션 저장 (세션 ID, 사용자 정보)

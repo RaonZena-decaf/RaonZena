@@ -41,9 +41,9 @@ public class LiveServiceImpl implements LiveService {
     public String passwordCheck(PasswordReq passwordReq) {
         String password = liveRepositorySupport.password(passwordReq.getRoomNo());
         if(password != null && password.equals(passwordReq.getInputPassword())){
-            return "SUCCESS";
+            return "Success";
         }
-        return "FAIL";
+        return "Failure";
     }
 
     @Override
