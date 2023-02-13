@@ -98,8 +98,8 @@ function CharacterQuiz({
       if (result === characterimg[step].answer) {
         console.log("정답");
         const data = {
-          sender: openvidu.userName,
-          answer: result,
+          userNo: openvidu.userNo,
+          score: 5,
         };
         openvidu.session.signal({
           data: JSON.stringify(data),

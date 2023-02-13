@@ -47,7 +47,7 @@ function GameFrameRight({
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        {subscribes.map((sub, idx) => {
+        {openvidu.videoList.map((sub, idx) => {
           return (
             <div className={styles[videoFrame()]}>
               <UserVideoComponent key={idx} streamManager={sub} />

@@ -67,7 +67,8 @@ function Seeking({ start, result, setResult, openvidu }) {
     setLabel(highlabel);
     if (highlabel === "rock") {
       const data = {
-        correct: openvidu.userName,
+        userNo: openvidu.userNo,
+        score : -5
       };
       openvidu.session.signal({
         data: JSON.stringify(data),

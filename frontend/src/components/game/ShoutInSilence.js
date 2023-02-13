@@ -127,7 +127,8 @@ function ShoutInSilence({
           console.log("정답");
           // setModalShow(true);
           const data = {
-            correct: openvidu.userName,
+            userNo: openvidu.userNo,
+            score: 5
           };
           openvidu.session.signal({
             data: JSON.stringify(data),

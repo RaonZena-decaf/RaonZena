@@ -68,8 +68,23 @@ function GameFrameLeft({
         "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
     },
   ]);
-
+  // 내일 확인 해 보자
+  // const userListupdate = () => {
+  //   axios({
+  //     method: "GET",
+  //     url: `${baseUrl}games/${roomNo}`,
+  //   })
+  //     .then((res) => {
+  //       setUserList(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
+  // useEffect (() => {
+  //   userListupdate()
+  // },[openvidu.subscribe])
   useEffect(() => {
+    // userListupdate()
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       console.log(data.userNo);
@@ -133,6 +148,16 @@ function GameFrameLeft({
       //     })
       //   );
       // }
+      if (data.gamename !== "joker") {
+        setUserList((prev) =>
+          prev.map((user) => {
+            if (user.userNo === data.userNo) {
+              return { ...user, exp: user.exp + data.score };
+            }
+            return user;
+          })
+        );
+      }
     });
   }, []);
 
@@ -187,13 +212,13 @@ function GameFrameLeft({
           )}
           {gamename === "catchmind" && (
             <Catchmind
-            start={start}
-            result={result}
-            setResult={setResult}
-            openvidu={openvidu}
-            host={host}
-            setEnd={setEnd}
-            setStart={setStart}
+              start={start}
+              result={result}
+              setResult={setResult}
+              openvidu={openvidu}
+              host={host}
+              setEnd={setEnd}
+              setStart={setStart}
             />
           )}
           {gamename === "talkingsilence" && (

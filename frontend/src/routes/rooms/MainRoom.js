@@ -268,7 +268,7 @@ function MainRoom(props) {
 
   useEffect(() => {
     setVideoList({ ...subscribes, publisher });
-    setOpenvidu({ session, videoList, userName, publisher });
+    setOpenvidu({ session, videoList, userName, publisher, userNo:user.userNo });
   }, [session, publisher, userName, subscribes]);
   // 신호에 따른 화면 렌더링 변화
   const ChangeGame = (event) => {
