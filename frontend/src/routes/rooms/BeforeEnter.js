@@ -40,7 +40,7 @@ function BeforeEnter() {
 
   // 세션 참가
   const joinSession = () => {
-    if (state.password === "true") {
+    if (state.password === "True") {
       const data = {
         roomNo: state.roomNo,
         inputPassword: password,

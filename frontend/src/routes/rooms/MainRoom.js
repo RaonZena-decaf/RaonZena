@@ -227,6 +227,7 @@ function MainRoom(props) {
     window.addEventListener("beforeunload", onbeforeunload);
     console.log("길이", subscribes.length)
     return () => {
+      console.log("길이", subscribes.length)
       if (subscribes.length < 1) {
         axios({
           method: "delete",
