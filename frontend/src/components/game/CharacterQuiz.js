@@ -3,7 +3,7 @@ import styles from "./CharacterQuiz.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function CharacterQuiz({ start, result, setResult, openvidu }) {
+function CharacterQuiz({ start, result, setResult, openvidu, host }) {
   const timeLimit = 3;
 
   const [step, setStep] = useState(0);
@@ -13,24 +13,58 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
 
   const [characterimg, setCharacterimg] = useState({});
+  console.log(host);
+  useEffect(() => {
+    if (host) {
+      axios({
+        method: "GET",
+        url: `${baseUrl}games/gameType/4`,
+      })
+        .then((res) => {
+          setCharacterimg(res.data);
+          console.log(res.data);
+          if (openvidu.session) {
+            const data = JSON.parse(res.data);
+            openvidu.session.signal({
+              data: data,
+              type: "SeedNumber",
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: `${baseUrl}games/gameType/4`,
+  //   })
+  //     .then((res) => {
+  //       setCharacterimg(res.data);
+  //       console.log(res.data);
+  //       console.log(setCharacterimg);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: `${baseUrl}games/gameType/4`,
-    })
-      .then((res) => {
-        setCharacterimg(res.data);
-        console.log(res.data);
-        console.log(setCharacterimg);
-      })
-      .catch((error) => console.log(error));
+    if (host) {
+      openvidu.session.signal({
+        data: JSON.stringify(characterimg),
+        type: "charcterimg",
+      });
+    }
   }, []);
 
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       setIsAnswerShown(true);
+    });
+    openvidu.session.on("signal:SeedNumber", (event) => {
+      const data = JSON.parse(event.data);
+      setCharacterimg(data);
     });
   }
 

@@ -7,8 +7,18 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
   const [start, setStart] = useState(false);
   const startHandler = () => {
     setStart(true);
+    if (openvidu.session) {
+      openvidu.session.signal({
+        data: JSON.stringify({ start: "start" }),
+        type: "StartGame",
+      });
+    }
   };
-
+  if (openvidu.session) {
+    openvidu.session.on("signal:StartGame", () => {
+      setStart(true);
+    });
+  }
   const [result, setResult] = useState("");
   const [gameTitle, setGameTitle] = useState("");
 
