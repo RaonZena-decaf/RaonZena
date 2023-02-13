@@ -1,10 +1,27 @@
 import { style } from "@mui/system";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./HostFollowingGames.module.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 export default function FollowingsInGameListItem(props) {
+
+  // "roomNo": 1040,
+  //   "roomTitle": "dd",
+  //   "host": {
+  //     "userNo": 1,
+  //     "userId": "sdf",
+  //     "userName": "adf",
+  //     "exp": 0,
+  //     "level": 1,
+  //     "createDtm": 1675759213000,
+  //     "userImageUrl": "adf"
+  //   },
+  //   "headcount": 5,
+  //   "password": True,
+  //   "createDate": null,
+  //   "imageName": "/GameThumbnail/24.png"
 
   const navigate = useNavigate();
   const [users, setUsers] = useState(0);
@@ -15,26 +32,37 @@ export default function FollowingsInGameListItem(props) {
       state: {
         roomNo: props.roomNo,
         headcount: props.headcount,
-        roomTitle: props.title,
+        roomTitle: props.roomTitle,
         users: users,
-        password: props.password
+        password: props.password,
       },
     });
   };
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `${baseUrl}games/${props.roomNo}/join`,
+    })
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div className={styles.card}>
       <div className={styles.HostInfo}>
         <img
           className={styles.HostImage}
-          src={props.userImage}
+          src={props.host.userImageUrl}
           alt="userImage"
         />
         <div className={styles.HostTextInfo}>
           <span className={styles.LevelFont}>
             {" "}
             LV {props.level} <br></br>
-            <span className={styles.userNameFont}>{props.userName}</span>
+            <span className={styles.userNameFont}>{props.host.userName}</span>
           </span>
         </div>
         <div></div>
@@ -42,7 +70,7 @@ export default function FollowingsInGameListItem(props) {
       <div>
         <img
           className={styles.Roomimage}
-          src={props.roomImage}
+          src={props.imageName}
           alt="roomImage"
           onClick={navigateToGameRoom}
         />
@@ -53,7 +81,7 @@ export default function FollowingsInGameListItem(props) {
         </div>
         <div className={styles.UserCount}>
           <p>
-            {props.currentCount} / {props.headcount}
+            {users} / {props.headcount}
           </p>
         </div>
       </div>
