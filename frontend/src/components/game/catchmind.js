@@ -69,21 +69,6 @@ function Catchmind({
   // 캐치마인드 그림 부부
   const canvas = canvasRef.current;
 
-  const ctx = canvas.getContext("2d");
-  canvas.style.margin = "20px";
-  canvas.style.border = "3px double";
-  canvas.style.cursor = "pointer";
-  const height = canvas.height;
-  const width = canvas.width;
-  const clearclick = () => {
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, width, height);
-  };
-  const fillclick = () => {
-    ctx.fillStyle = lineColor;
-    ctx.fillRect(0, 0, width, height);
-  };
-
   useEffect(() => {
     if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
@@ -95,6 +80,21 @@ function Catchmind({
         };
       });
     }
+    const ctx = canvas.getContext("2d");
+    canvas.style.margin = "20px";
+    canvas.style.border = "3px double";
+    canvas.style.cursor = "pointer";
+    const height = canvas.height;
+    const width = canvas.width;
+    document.querySelector(".clear").onclick = () => {
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+    };
+
+    document.querySelector(".fill").onclick = () => {
+      ctx.fillStyle = lineColor;
+      ctx.fillRect(0, 0, width, height);
+    };
 
     let painting = false;
 
@@ -259,10 +259,10 @@ function Catchmind({
         <span className={`${styles.buttonColor} purple`}>purple</span>
         <span className={`${styles.buttonColor} black`}>black</span>
         <span className={`${styles.buttonColor} white`}>white</span>
-        <span className={`${styles.buttonBlack} clear`} onClick={clearclick}>
+        <span className={`${styles.buttonBlack} clear`}>
           clear
         </span>
-        <span className={`${styles.buttonBlack} fill`} onClick={fillclick}>
+        <span className={`${styles.buttonBlack} fill`} >
           fill
         </span>
       </div>
