@@ -208,16 +208,17 @@ function MainRoom(props) {
     leaveSession();
   };
   useEffect(() => {
+    console.log("길이", subscribes.length)
     const data = {
-      headCount: subscribes.length,
+      headCount: subscribes.length + 1,
     };
     axios({
       method: "put",
-      url: `${baseUrl}games/${props.roomNo}/join`,
+      url: `${baseUrl}games/${state.roomNo}/join`,
       data: data,
     })
       .then((res) => {
-        console.log(res);
+        console.log("된건가?",res);
       })
       .catch((error) => console.log(error));
   }, [subscribes]);
@@ -249,7 +250,6 @@ function MainRoom(props) {
 
     // Empty all properties...
     setSession(undefined);
-    setSubscribes([]);
     setroomId("None");
     setUserName("User");
     navigate("/live");
