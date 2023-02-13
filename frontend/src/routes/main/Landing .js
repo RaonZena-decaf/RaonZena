@@ -13,26 +13,26 @@ import GameGuide from "../../components/landing/GameGuide";
 
 function Landing() {
   //로그인 함수
-  const user = useSelector((store) => store.userData);
+  // const user = useSelector((store) => store.userData);
 
-  const loginConfigure = () => {
-    if (user.userNo === "") {
-      return false;
-    } else {
-      return true;
-    }
-  };
-  const isLogin = loginConfigure();
+  // const loginConfigure = () => {
+  //   if (user.userNo === "") {
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // };
+  // const isLogin = loginConfigure();
 
-  const redirectUrl = useSelector((store) => store.redirectUrl);
-  const Login = () => {
-    const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
-    const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
-    if (typeof window !== "undefined") {
-      window.location.href = KAKAO_AUTH_URL;
-    }
-  };
+  // const redirectUrl = useSelector((store) => store.redirectUrl);
+  // const Login = () => {
+  //   const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
+  //   const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
+  //   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
+  //   if (typeof window !== "undefined") {
+  //     window.location.href = KAKAO_AUTH_URL;
+  //   }
+  // };
 
   //모달 표시를 위한 함수 및 변수
   const [modalOn, setModalOn] = useState(false);
@@ -48,14 +48,14 @@ function Landing() {
   };
 
   //로그인 여부에 따른 라우터 변경
-  const navigate = useNavigate();
-  const loginCheck = () => {
-    if (isLogin) {
-      navigate("/live");
-    } else {
-      Login();
-    }
-  };
+  // const navigate = useNavigate();
+  // const loginCheck = () => {
+  //   if (isLogin) {
+  //     navigate("/live");
+  //   } else {
+  //     Login();
+  //   }
+  // };
 
   //스크롤 이벤트 감지
 
@@ -103,13 +103,20 @@ function Landing() {
       }
     }
     firstpage.addEventListener("wheel", handleWheel3, { passive: false });
-
   }, []);
   //무작위 난수 생성
   function randomNum(min, max) {
     var randNum = Math.floor(Math.random() * (max - min + 1)) + min;
     return randNum;
   }
+
+  //클릭 시 내려가는 함수
+  const scrollDown = () => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <>
@@ -131,28 +138,42 @@ function Landing() {
             />
             <div className={styles.Main}>RaonZena</div>
             <div className={styles.Main2}>Connect Us, Connect Times</div>
-            <div className={styles.Sub} onClick={loginCheck}>
+            <div className={styles.Sub} onClick={scrollDown}>
               Click To Start
             </div>
-            <div
-              className={styles.arrow}
-              onClick={() => {
-                window.scrollBy({
-                  top: window.innerHeight,
-                  behavior: "smooth",
-                });
-              }}
-            >
+            <div className={styles.arrow} onClick={scrollDown}>
               ▼
             </div>
           </div>
         </div>
+        <div
+          className={styles.leftarrow}
+          onClick={() => {
+            const guidepage = document.querySelector("#guidepage");
+            guidepage.scrollBy({
+              left: -window.innerWidth * 0.83,
+              behavior: "smooth",
+            });
+          }}
+        >
+          ◀
+        </div>
+        <div
+          className={styles.rightarrow}
+          onClick={() => {
+            const guidepage = document.querySelector("#guidepage");
+            guidepage.scrollBy({
+              left: window.innerWidth * 0.83,
+              behavior: "smooth",
+            });
+          }}
+        >
+          ▶
+        </div>
         <div className={styles.background3} id="guidepage">
           <div className={styles.background2} id="firstpage">
             <p id={styles.serviceintro}>서비스 소개</p>
-            <p className={styles.title} id={styles.pinkcolor}>
-              우리들을 잇다, 즐거움을 잇다
-            </p>
+            <p className={styles.title}>우리들을 잇다, 즐거움을 잇다</p>
             <p className={styles.subtitle}>화상을 통해 만드는 이어짐</p>
             <div className={styles.maintextcontainer}>
               <div className={styles.maintext2}>

@@ -41,7 +41,9 @@ function EntryDropUp({ show, setdrop, TotalUsers }) {
       Headers: { "Content-Type": "application/json" },
     })
       .then((res) => {
-        dispatch(modifyMyFollowingList([...MyFollowingList, userNo]));
+        const newfollowing = MyFollowingList.slice()
+        newfollowing.push(userNo)
+        dispatch(modifyMyFollowingList(newfollowing))
       })
       .catch((error) => console.log(error));
   }

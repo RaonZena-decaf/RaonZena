@@ -69,6 +69,7 @@
 .profileid4 {
   font-size: 3rem;
   margin-right: 4rem;
+  transition: color .5s ease;
 }
 
 .profileid5 {
@@ -78,7 +79,6 @@
 
 .profileid4:hover {
   color: #f400b0;
-  animation: changecolor 0.3s ease;
 }
 
 .follow {
@@ -113,23 +113,13 @@
 .search {
   color: white  ;
   font-size: 4rem;
+  transition: color .5s ease;
 }
 
 .search:hover{
   cursor: pointer;
   color: #f400b0;
-  animation: changecolor 0.3s ease;
 }
-
-@keyframes changecolor {
-  0% {
-    color: white;
-  }
-  100% {
-    color: #f400b0;
-  }
-}
-
 
 .photocard:hover {
   cursor: pointer;
