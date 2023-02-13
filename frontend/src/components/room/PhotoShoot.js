@@ -23,6 +23,7 @@ function Photoshoot({closeMenu, TotalUsers}) {
     getFrames()
   },[])
 
+
   return (
     <div className={styles.photoshootbackground}>
       <div className={styles.photoshootFont}>사진 촬영 완료!</div>

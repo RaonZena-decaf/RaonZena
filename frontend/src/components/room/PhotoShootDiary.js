@@ -36,11 +36,9 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
         const formData = new FormData();
         // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
 
-        // 사진 영역을 촬영하는 함수
-        await html2canvas(document.querySelector("#사진촬영완료"), {
-          allowTaint: false,
-          useCORS: true,
-        }).then(async (canvas) => {
+      // 사진 영역을 촬영하는 함수
+      await html2canvas(document.getElementById("사진촬영완료")).then(
+        async (canvas) => {
           const day = new Date();
           const dataUrl = canvas.toDataURL("image/png");
           const blobBin = atob(dataUrl.split(",")[1]);
@@ -48,20 +46,25 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
           for (let i = 0; i < blobBin.length; i++) {
             array.push(blobBin.charCodeAt(i));
           }
-        });
-        const data = {
-          boardImageUrl: "",
-          title: input.title,
-          content: input.content,
-          firstUser: 0,
-          secondUser: 0,
-          thirdUser: 0,
-          userNo: userNo,
-        };
-        formData.append(
-          "boardReq",
-          new Blob([JSON.stringify(data)], { type: "application/json" })
-        );
+          const blob = new Blob([new Uint8Array(array)], { type: "image/png" });
+          const file = new File([blob], `${day}.png`, { type: "image/png" });
+          formData.append("file", file);
+        }
+      );
+      const data = {
+        boardImageUrl: "",
+        title: input.title,
+        content: input.content,
+        firstUser: 0,
+        secondUser: 0,
+        thirdUser: 0,
+        userNo: userNo,
+      };
+      formData.append(
+        "boardReq",
+        new Blob([JSON.stringify(data)], { type: "application/json" })
+      );
+
 
         axios({
           url: `${baseUrl}games/feed`,

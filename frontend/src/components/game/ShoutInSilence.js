@@ -1,10 +1,24 @@
-import React, { useState, useEffect, useRef, useReducer, dispatch } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+  dispatch,
+} from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 // import PhotoShoot from "./PhotoShoot";
 
-function ShoutInSilence({ start, result, setResult, host, openvidu, userList, closeMenu,}) {
+function ShoutInSilence({
+  start,
+  result,
+  setResult,
+  host,
+  openvidu,
+  userList,
+  closeMenu,
+}) {
   const timeLimit = 10; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
@@ -46,15 +60,25 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
 
   //axios로 정답 리스트 가져오는 부분
   function getAnswerList() {
-    axios({
-      method: "get",
-      url: `${baseUrl}games/gameType/3`,
-    })
-      .then((res) => {
-        console.log("고요속의 외침 정답 가져온 전체 결과 =>", res.data);
-        setAnswerList(res.data);
+    if (host) {
+      axios({
+        method: "get",
+        url: `${baseUrl}games/gameType/3`,
       })
-      .catch((error) => console.log(error));
+        .then((res) => {
+          console.log("고요속의 외침 정답 가져온 전체 결과 =>", res.data);
+          setAnswerList(res.data);
+          if (openvidu.session) {
+            const data = JSON.stringify(res.data);
+            console.log("게임 데이터", data);
+            openvidu.session.signal({
+              data: data,
+              type: "SeedNumber",
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+    }
   }
 
   // 정답 체크 기능
@@ -103,7 +127,8 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
           console.log("정답");
           // setModalShow(true);
           const data = {
-            correct: openvidu.userName,
+            userNo: openvidu.userNo,
+            score: 5
           };
           openvidu.session.signal({
             data: JSON.stringify(data),
@@ -148,70 +173,20 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
     getAnswerList();
   }, []);
 
-  // if (step < answerList.length) {
-  //   return (
-  //     <div>
-  //       {host ? (
-  //         <div>
-  //           <div className={styles.webcamCapture}>
-  //             {videoRef.current !== undefined ? (<video autoPlay={true} ref={videoRef} width="80%" />) : null}
-  //             <div className={styles.Container}>
-  //               <span className={styles.questionNo}>
-  //                 {step + 1} / {answerList.length}
-  //               </span>
-  //               <span className={styles.TimeLimit}>
-  //                 {" "}
-  //                 {minutes} :{" "}
-  //                 {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-  //               </span>
-  //               {answerList.length > 0 ? (
-  //                 <span className={styles.AnswerFont}>
-  //                   정답 : {answerList[step].answer}
-  //                 </span>
-  //               ) : null}
-  //             </div>
-  //           </div>
-  //         </div>
-  //       ) : (
-  //         <div>
-  //           <div id="wrongMassage" className={styles.wrongMassage}>
-  //             틀렸습니다
-  //           </div>
-  //             <div className={styles.webcamCapture}>
-  //             {videoRef.current !== undefined ? (<video autoPlay={true} ref={videoRef} width="80%" />) : null}
-  //             <div className={styles.Container}>
-  //               <span className={styles.questionNo}>
-  //                 {step + 1} / {answerList.length}
-  //               </span>
-  //               <span className={styles.TimeLimit}>
-  //                 {" "}
-  //                 {minutes} :{" "}
-  //                 {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-  //               </span>
-  //               {answerList.length > 0 ? (
-  //                 <span className={styles.AnswerFont}>
-  //                   정답 :{" "}
-  //                   {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
-  //                 </span>
-  //               ) : null}
-  //             </div>
-  //           </div>
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // }
-  // else {
-  //   return (<div>
-  //     {showModal && (
-  //       <div className="modal">
-  //         <div className="modal-content">
-  //           <PhotoShoot closeMenu={closeMenu} userList={userList}/>
-  //         </div>
-  //       </div>
-  //     )}
-  //   </div>)
-  // }
+  if (openvidu.session) {
+    openvidu.session.on("signal:TrueAnswer", (event) => {
+      const data = JSON.parse(event.data);
+      setIsAnswerShown(true);
+    });
+    openvidu.session.on("signal:SeedNumber", (event) => {
+      const data = JSON.parse(event.data);
+      setAnswerList(data);
+    });
+    openvidu.session.on("signal:GameRestart", () => {
+      setStep(0);
+      getAnswerList();
+    });
+  }
 
   return (
     <div>
