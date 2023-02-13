@@ -55,6 +55,7 @@ function EntryDropUp({ show, setdrop, TotalUsers }) {
     })
       .then((res) => {
         setUserList(res.data);
+        console.log(res.data)
       })
       .catch((error) => console.log(error));
     //참가유저 리스트를 받아오는 axios 통신
