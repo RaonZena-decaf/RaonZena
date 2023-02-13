@@ -53,7 +53,7 @@ function BeforeEnter() {
         headers: { "Content-type": "application/json" },
       })
         .then((res) => {
-          if (res.data === "success") {
+          if (res.data === "SUCCESS") {
             navigate(`/room/${res.data.roomNo}`, {
               state: {
                 mic,
