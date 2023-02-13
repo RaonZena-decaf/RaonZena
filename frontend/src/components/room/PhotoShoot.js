@@ -18,10 +18,12 @@ function Photoshoot({closeMenu, TotalUsers}) {
         url:`${baseUrl}games/feed/frame`
       }).then((res)=>{
         setFrames(res.data)
+        console.log(res.data)
       }).catch(error => console.log(error))
     }
     getFrames()
   },[])
+
 
   return (
     <div className={styles.photoshootbackground}>
