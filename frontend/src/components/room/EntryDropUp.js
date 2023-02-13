@@ -49,16 +49,19 @@ function EntryDropUp({ show, setdrop, TotalUsers }) {
   }
 
   useEffect(() => {
-    axios({
-      method: "Get",
-      url: `${baseUrl}games/${roomNo}`,
-    })
-      .then((res) => {
-        setUserList(res.data);
-        console.log(res.data)
-      })
-      .catch((error) => console.log(error));
+    // axios({
+    //   method: "Get",
+    //   url: `${baseUrl}games/${roomNo}`,
+    // })
+    //   .then((res) => {
+    //     setUserList(res.data);
+    //     console.log(res.data)
+    //   })
+    //   .catch((error) => console.log(error));
     //참가유저 리스트를 받아오는 axios 통신
+    const group = []
+    TotalUsers.map((user) => (group.push(user.videos[0].id)))
+    setUserList(group)
   }, [TotalUsers]);
 
   return (
@@ -73,8 +76,8 @@ function EntryDropUp({ show, setdrop, TotalUsers }) {
         {userList.map((user) => {
           return (
             <div key={user.user_name} className={styles.usercontainer}>
-              {user.userName}
-              {MyFollowingList.includes(user.userNo) ||
+              {user}
+              {/* {MyFollowingList.includes(user.userNo) ||
               user.userNo === UserNo ? null : (
                 <span>
                   <FaUserPlus
@@ -84,7 +87,7 @@ function EntryDropUp({ show, setdrop, TotalUsers }) {
                     }}
                   />
                 </span>
-              )}
+              )} */}
             </div>
           );
         })}
