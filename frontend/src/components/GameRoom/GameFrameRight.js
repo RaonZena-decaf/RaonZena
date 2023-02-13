@@ -81,9 +81,9 @@ function GameFrameRight({
         </button>
         {!start ? (
           end ? (
-            <div className={styles.button} onClick={restart}>
+            <button className={styles.button} onClick={restart}>
               다시하기
-            </div>
+            </button>
           ) : (
             <button className={styles.button} onClick={startHandler}>
               시작
