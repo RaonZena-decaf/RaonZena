@@ -58,10 +58,13 @@ function KakaoLogin() {
   return (
     <div className={styles.container}>
       <div className={styles.text}>
-        <span>L</span>
+        <span>C</span>
         <span>o</span>
-        <span>a</span>
-        <span>d</span>
+        <span>n</span>
+        <span>n</span>
+        <span>e</span>
+        <span>c</span>
+        <span>t</span>
         <span>i</span>
         <span>n</span>
         <span>g</span>

@@ -329,6 +329,7 @@ function MainRoom(props) {
             toggleDevice={toggleDevice}
             ChangeGame={ChangeGame}
             TotalUsers={TotalUsers}
+            host={host}
           />
           <ChattingBar
             openChatting={openChatting}
