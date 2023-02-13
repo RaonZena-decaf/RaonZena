@@ -207,6 +207,7 @@ function MainRoom(props) {
   const onbeforeunload = (event) => {
     leaveSession();
   };
+  const [headcount, setHeadCount] = useState(0)
   useEffect(() => {
     console.log("길이", subscribes.length)
     const data = {
@@ -219,6 +220,7 @@ function MainRoom(props) {
     })
       .then((res) => {
         console.log("된건가?",res);
+        setHeadCount(subscribes.length)
       })
       .catch((error) => console.log(error));
   }, [subscribes]);
@@ -228,7 +230,7 @@ function MainRoom(props) {
     console.log("길이", subscribes.length)
     return () => {
       console.log("길이", subscribes.length)
-      if (subscribes.length < 1) {
+      if (headcount < 1) {
         axios({
           method: "delete",
           url: `${baseUrl}live/${state.roomNo}`,

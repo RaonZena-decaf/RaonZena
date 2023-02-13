@@ -19,7 +19,7 @@ function BeforeEnter() {
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [password, setPassword] = useState("");
-  const [disabled, setDisabled] = useState(state.password === "true"? false : true);
+  const [disabled, setDisabled] = useState(state.password === "True"? false : true);
   const baseUrl = useSelector((store) => store.baseUrl);
 
   const navigate = useNavigate();
