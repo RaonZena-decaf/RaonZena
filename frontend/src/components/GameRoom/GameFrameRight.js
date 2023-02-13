@@ -12,6 +12,7 @@ function GameFrameRight({
   subscribes,
   roomNo,
   openvidu,
+  setStart,
 }) {
   const [answer, setAnswer] = useState("");
   const [end, setEnd] = useState(false);
@@ -21,6 +22,8 @@ function GameFrameRight({
   if (openvidu.session) {
     openvidu.session.on("signal:GameEnd", () => {
       setEnd(true);
+      setStart(false)
+      console.log(end, start)
     });
   }
   const answerOnclick = (e) => {
