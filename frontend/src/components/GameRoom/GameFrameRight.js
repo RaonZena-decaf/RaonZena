@@ -64,7 +64,7 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
             시작
           </button>
         ) : (
-          <button className={styles.button}>게임종료</button>
+          null
         )}
       </div>
     </div>
