@@ -20,7 +20,6 @@
   linear-gradient(to right, #8f00ff 0%,  #f400b0 100%);
   background-origin: border-box;
   background-clip: content-box, border-box;
-  cursor: pointer;
 }
 
 .HostFollowingsList {
@@ -68,6 +67,7 @@
   width: 20rem;
   align-items: center;
   border-radius: 2.5rem;
+  cursor: pointer;
 }
 
 .RoomTitle {
