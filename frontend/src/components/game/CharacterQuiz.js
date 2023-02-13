@@ -24,7 +24,8 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
           setCharacterimg(res.data);
           console.log(res.data);
           if (openvidu.session) {
-            const data = JSON.parse(res.data);
+            const data = JSON.stringify(res.data);
+            console.log("게임 데이터", data);
             openvidu.session.signal({
               data: data,
               type: "SeedNumber",
@@ -48,14 +49,14 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
   //     .catch((error) => console.log(error));
   // }, []);
 
-  useEffect(() => {
-    if (host) {
-      openvidu.session.signal({
-        data: JSON.stringify(characterimg),
-        type: "charcterimg",
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (host) {
+  //     openvidu.session.signal({
+  //       data: JSON.stringify(characterimg),
+  //       type: "charcterimg",
+  //     });
+  //   }
+  // }, []);
 
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
