@@ -86,7 +86,7 @@ function Lotto({ start, result, openvidu, host }) {
                     onClick={handleclick}
                     id={lotto.chanceId}
                   >
-                    앞면
+                    <img src=`/CardImg/card${idx+1}.png` alt="Your Image"></img>
                   </div>
                 ) : (
                   <div
