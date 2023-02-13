@@ -3,20 +3,19 @@ import { FaHandPaper } from "react-icons/fa";
 import { FaFire } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
-import { useSelector } from "react-redux";
 
 import styles from "./ChooseGame.module.css";
 
 function ChooseGame({ ChangeGame, host }) {
   // 유저가 방장인가? => 각 게임 아이콘 클릭 시 해당 게임 실행
   // 유저가 방장이 아닌가? => 게임은 방장이 시작할 수 있습니다! 안내창 출력
-  const userNo = useSelector((store) => store.userData.userNo);
+
+  console.log(host)
 
   return (
     <div className={styles.container}>
-      {host === userNo ? (
+      {host === true ? (
         <>
-          {" "}
           <div className={styles.IconText} onClick={ChangeGame} id="imagetheme">
             <FaHandPaper className={styles.NoClick} />
             <div className={styles.gameName}>이미지 게임</div>
