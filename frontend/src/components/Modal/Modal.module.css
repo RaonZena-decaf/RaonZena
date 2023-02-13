@@ -67,14 +67,14 @@
 .ModalOpen {
   opacity: 1;
   animation: FadeIn .3s ease-in;
-  z-index: 3;
+  z-index: 10;
 }
 
 .ModalClose {
   opacity: 0;
   pointer-events: none;
   animation: FadeOut .3s ease-out;
-  z-index: 3;
+  z-index: 10;
 }
 
 .ModalSlideIn {

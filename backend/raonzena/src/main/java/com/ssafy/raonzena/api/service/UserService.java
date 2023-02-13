@@ -13,5 +13,6 @@ public interface UserService {
     //user level
     int level(long userNo);
 
+    // userNo 로그아웃
     void logout(long userNo);
 }

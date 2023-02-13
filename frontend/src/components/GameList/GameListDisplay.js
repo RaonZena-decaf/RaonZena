@@ -18,6 +18,7 @@ const GameRoomsDisplay = ({ gameRoomList, loading }) => {
             // image_src="/GameThumbnail/1.png"
             headcount={gameRoomInfo.headcount}
             key={idx}
+            password={gameRoomInfo.password}
             roomNo={gameRoomInfo.roomNo}
           />
         );

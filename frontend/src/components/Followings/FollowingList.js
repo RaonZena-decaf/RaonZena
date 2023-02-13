@@ -11,6 +11,8 @@ export default function FollowingList() {
   const baseUrl = useSelector((store) => store.baseUrl);
   const nowUserNo = useSelector((store) => store.userData.userNo);
   const user = useSelector((store) => store.userData);
+
+
   const [followUserNo, setFollowUserNo] = useState(1);
   const getlist = () => {
     if (nowUserNo) {

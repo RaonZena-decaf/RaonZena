@@ -11,6 +11,12 @@
   flex-direction: column;
 }
 
+@media (max-width: 700px) {
+  .background {
+    height: 95vh;
+  }
+}
+
 
 .background2 {
   background-color: #353839;

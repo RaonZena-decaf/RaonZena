@@ -31,6 +31,9 @@ function ProfilePageInfo({
   const [followBtn, setFollowBtn] = useState();
   const [userInfo, setUserInfo] = useState({});
   const feedLength = feedList.length;
+
+
+
   //모달 표시를 위한 함수
   const [modalOn, setModalOn] = useState(false);
   const openModal = () => {
@@ -40,8 +43,7 @@ function ProfilePageInfo({
   //모달을 닫는 함수
   const closeModal = () => {
     setModalOn(false);
-  };
-  
+  };  
 
   async function callUserInfo() {
     axios({
@@ -83,7 +85,9 @@ function ProfilePageInfo({
         Headers:{"Content-Type": 'application/json'}
       })
         .then((res) => {
-          dispatch(modifyMyFollowingList([...myFollowings, user_no]))
+          const newfollowing = myFollowings.slice()
+          newfollowing.push(user_no)
+          dispatch(modifyMyFollowingList(newfollowing))
         })
         .catch((error) => console.log(error));
     } else {
@@ -93,7 +97,8 @@ function ProfilePageInfo({
       })
         .then((res) => {
           const filtered = myFollowings.filter((eliment) => eliment !== user_no)
-          dispatch(modifyMyFollowingList([filtered]))
+          console.log(filtered)
+          dispatch(modifyMyFollowingList(filtered))
         })
         .catch((error) => console.log(error));
     }

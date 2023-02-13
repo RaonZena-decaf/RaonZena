@@ -26,16 +26,10 @@ import static com.ssafy.raonzena.db.entity.QBoard.board;
  * 유저 프로필 모델 관련 디비 쿼리 생성을 위한 구현 정의.
  */
 @Repository
-public class ProfileRepositorySupport { //implements ProfileRepository
-
-    // private final JPAQueryFactory query;
-    // public ProfileRepositorySupport(JPAQueryFactory query) {
-    //     this.query = query;
-    // }
+public class ProfileRepositorySupport {
 
     @Autowired
     private JPAQueryFactory query;
-
 
     //userNo를 팔로우 하는 사람들
     public List<FollowFollowingtRes> findFollowerByUserNo (long userNo){
@@ -64,7 +58,6 @@ public class ProfileRepositorySupport { //implements ProfileRepository
                 )).fetch();
     }
 
-//    @Override
     public List<UserProfileRes> selectProfiles(Map<String, Object> conditions) {
         // 유저 아이디 키워드와 함께 조회
         return query

@@ -47,7 +47,7 @@ function Landing() {
     setModalOn(false);
   };
 
-  //로그인 여부에 따른 라우터 변경
+  // 로그인 여부에 따른 라우터 변경
   const navigate = useNavigate();
   const loginCheck = () => {
     if (isLogin) {
@@ -103,13 +103,20 @@ function Landing() {
       }
     }
     firstpage.addEventListener("wheel", handleWheel3, { passive: false });
-
   }, []);
   //무작위 난수 생성
   function randomNum(min, max) {
     var randNum = Math.floor(Math.random() * (max - min + 1)) + min;
     return randNum;
   }
+
+  //클릭 시 내려가는 함수
+  const scrollDown = () => {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <>
@@ -132,27 +139,41 @@ function Landing() {
             <div className={styles.Main}>RaonZena</div>
             <div className={styles.Main2}>Connect Us, Connect Times</div>
             <div className={styles.Sub} onClick={loginCheck}>
-              Click To Start
-            </div>
-            <div
-              className={styles.arrow}
-              onClick={() => {
-                window.scrollBy({
-                  top: window.innerHeight,
-                  behavior: "smooth",
-                });
-              }}
-            >
-              ▼
+              Press Start
+             </div>
+            <div className={styles.arrow} onClick={scrollDown}>
+              About <br></br>▼
             </div>
           </div>
+        </div>
+        <div
+          className={styles.leftarrow}
+          onClick={() => {
+            const guidepage = document.querySelector("#guidepage");
+            guidepage.scrollBy({
+              left: -window.innerWidth * 0.83,
+              behavior: "smooth",
+            });
+          }}
+        >
+          ◀
+        </div>
+        <div
+          className={styles.rightarrow}
+          onClick={() => {
+            const guidepage = document.querySelector("#guidepage");
+            guidepage.scrollBy({
+              left: window.innerWidth * 0.83,
+              behavior: "smooth",
+            });
+          }}
+        >
+          ▶
         </div>
         <div className={styles.background3} id="guidepage">
           <div className={styles.background2} id="firstpage">
             <p id={styles.serviceintro}>서비스 소개</p>
-            <p className={styles.title} id={styles.pinkcolor}>
-              우리들을 잇다, 즐거움을 잇다
-            </p>
+            <p className={styles.title}>우리들을 잇다, 즐거움을 잇다</p>
             <p className={styles.subtitle}>화상을 통해 만드는 이어짐</p>
             <div className={styles.maintextcontainer}>
               <div className={styles.maintext2}>

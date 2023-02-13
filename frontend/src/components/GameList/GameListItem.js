@@ -18,7 +18,7 @@ const Item = (props) => {
       },
     });
   };
-
+  console.log(props)
   const [users, setUsers] = useState(0);
   const baseUrl = useSelector((store) => store.baseUrl);
 
@@ -28,6 +28,7 @@ const Item = (props) => {
       url: `${baseUrl}games/${props.roomNo}/join`,
     })
       .then((res) => {
+        console.log(res)
         setUsers(res.data);
       })
       .catch((error) => console.log(error));

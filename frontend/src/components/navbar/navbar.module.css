@@ -155,8 +155,10 @@
   bottom: -100vh;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  transform: translateY(100vh);
+  height: 110vh;
+  transform: translateY(110vh);
+  animation-fill-mode: forwards;
+
 }
 
 .wave2 {
@@ -165,8 +167,10 @@
   bottom: -100vh;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  transform: translateY(100vh);
+  height: 110vh;
+  transform: translateY(110vh);
+  animation-fill-mode: forwards;
+
 }
 
 .wave3 {
@@ -175,11 +179,13 @@
   bottom: -100vh;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  transform: translateY(100vh);
+  height: 120vh;
+  transform: translateY(120vh);
   display: flex;
   justify-content: center;
   align-items: center;
+  animation-fill-mode: forwards;
+  text-align: center;
 }
 
 .wash1 {
@@ -200,57 +206,57 @@
 
 @keyframes wash {
   0% {
-    transform: translateY(100vh);
+    transform: translateY(110vh);
   }
   50% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
   100% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
 }
 @keyframes wash1-1 {
   10% {
-    transform: translateY(100vh);
+    transform: translateY(110vh);
   }
   60% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
   100% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
 }
 @keyframes wash2 {
   20% {
-    transform: translateY(100vh);
+    transform: translateY(110vh);
   }
   70% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
   100% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
 }
 @keyframes wash2-2 {
   30% {
-    transform: translateY(100vh);
+    transform: translateY(110vh);
   }
   80% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
   100% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
 }
 @keyframes wash3 {
   40% {
-    transform: translateY(100vh);
+    transform: translateY(120vh);
   }
   90% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
   100% {
-    transform: translateY(-9vh);
+    transform: translateY(-3vh);
   }
 }
 

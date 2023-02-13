@@ -6,6 +6,8 @@ import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
 import com.ssafy.raonzena.api.response.*;
 import com.ssafy.raonzena.api.service.GameService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 @RestController
 public class GameController {
 
+    private final Logger logger = LogManager.getLogger(GameController.class);
+
     @Autowired
     private GameService gameService;
 
@@ -32,24 +36,11 @@ public class GameController {
         return ResponseEntity.ok("Success");
     }
 
-    // 게임 점수 저장
     @PostMapping("/liveScore")
     public ResponseEntity<?> gameScoreSave(@RequestBody GameScoreReq gameScoreReq){
+        logger.info("게임 점수 저장");
         gameService.saveGameScore(gameScoreReq);
         return ResponseEntity.ok("Success");
-    }
-
-    // 캐치마인드 그림 송신
-    @PostMapping("/{roomNo}/catchMind")
-    public ResponseEntity<?> paintingSave(@PathVariable long roomNo, @RequestBody String painting){
-        gameService.savePainting(painting,roomNo);
-        return ResponseEntity.ok("Success");
-    }
-
-    // 캐치마인드 그림 수신
-    @GetMapping("/{roomNo}/catchMind")
-    public ResponseEntity<?> paintingDetails(@PathVariable long roomNo){
-        return ResponseEntity.ok(gameService.findPainting(roomNo));
     }
 
     //게임데이터 (인생역전 제외)
@@ -93,13 +84,13 @@ public class GameController {
 
     @GetMapping("/liveScore/{roomNo}")
     public ResponseEntity<GameScoreRes> gameScoreList(@PathVariable long roomNo){
-        // 게임데이터 조회
+        logger.info("게임데이터 조회");
         return ResponseEntity.ok(gameService.findGameScore(roomNo));
     }
 
     @GetMapping("/{roomNo}/join")
     public ResponseEntity<?> headCountDetails(@PathVariable long roomNo){
-        // 방에 참여중인 인원수 조회
+        logger.info("방에 참여중인 인원수 조회");
         if (gameService.findActiveHeadCount(roomNo)>-1){
             return ResponseEntity.ok(gameService.findActiveHeadCount(roomNo));
         }
@@ -109,16 +100,15 @@ public class GameController {
 
     @PutMapping("/{roomNo}/join")
     public ResponseEntity<?> headCountSave(@PathVariable long roomNo, @RequestBody Map<String, Integer> request){
-        // 참여인원수 저장
+        logger.info("방에 참여중인 인원수 저장");
         gameService.saveActiveHeadCount(roomNo,request.get("headCount"));
         return ResponseEntity.ok("Success");
     }
 
     @GetMapping("/{roomNo}")
     public ResponseEntity<List<UserRes>> userList(@PathVariable long roomNo){
-        // 방에 참여중인 유저 조회
+        logger.info("방에 참여중인 유저 조회");
         if (gameService.findActiveHeadCount(roomNo)>-1){
-            System.out.println("123456486");
             return ResponseEntity.ok(gameService.findGameUser(roomNo));
         }
         // 방이 없으면 noContent 반환

@@ -207,37 +207,48 @@ function MainRoom(props) {
   const onbeforeunload = (event) => {
     leaveSession();
   };
+  const [headcount, setHeadCount] = useState(0)
   useEffect(() => {
+    console.log("길이", subscribes.length)
     const data = {
-      headCount: subscribes.length,
+      headCount: subscribes.length + 1,
     };
     axios({
       method: "put",
-      url: `${baseUrl}games/${props.roomNo}/join`,
+      url: `${baseUrl}games/${state.roomNo}/join`,
       data: data,
     })
       .then((res) => {
-        console.log(res);
+        console.log("된건가?",res);
+        setHeadCount(subscribes.length)
       })
       .catch((error) => console.log(error));
   }, [subscribes]);
 
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
-    console.log(subscribes.length)
+    console.log("길이", subscribes.length)
     return () => {
-      if (subscribes.length < 1) {
-        axios({
-          method: "delete",
-          url: `${baseUrl}live/${state.roomNo}`,
-        })
+      console.log("길이2", subscribes.length)
+      axios({
+        method: "get",
+        url: `${baseUrl}games/${state.roomNo}/join`,
+      })
         .then((res) => {
-          console.log(res);
+          if (res.data === 1) {
+            axios({
+              method: "delete",
+              url: `${baseUrl}live/${state.roomNo}`,
+            })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((error) => console.log(error));
+          }
         })
         .catch((error) => console.log(error));
+        window.removeEventListener("beforeunload", onbeforeunload);
       }
-      window.removeEventListener("beforeunload", onbeforeunload);
-    };
   }, []);
 
   // 세션 종료
@@ -249,7 +260,6 @@ function MainRoom(props) {
 
     // Empty all properties...
     setSession(undefined);
-    setSubscribes([]);
     setroomId("None");
     setUserName("User");
     navigate("/live");
