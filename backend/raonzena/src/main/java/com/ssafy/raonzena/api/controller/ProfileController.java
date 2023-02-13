@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://i8a507.p.ssafy.io/")
 @RestController
 @RequestMapping("/api/v1/profile")
 public class ProfileController {
