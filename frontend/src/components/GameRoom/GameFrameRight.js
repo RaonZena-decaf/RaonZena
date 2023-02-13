@@ -3,7 +3,7 @@ import styles from "./GameFrameRight.module.css";
 
 import UserVideoComponent from "../camera/UserVideoComponent";
 
-function GameFrameRight({ startHandler, start, setResult, openvidu, subscribes }) {
+function GameFrameRight({ startHandler, start, setResult, host, publisher, subscribes, roomNo}) {
   const peopleList = [1, 2, 3, 4, 5, 6];
   const [answer, setAnswer] = useState("");
   const answerOnchange = (e) => {

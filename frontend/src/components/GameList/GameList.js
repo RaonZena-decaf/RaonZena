@@ -1,13 +1,13 @@
 import styles from "./GameList.module.css";
 import { useLayoutEffect, useState } from "react";
 import axios from "axios";
-import GameRoomsDisplay from "./GameListDisplay";
+import GameListDisplay from "./GameListDisplay";
 import { Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FaCommentDots } from "react-icons/fa";
 
-export default function GameRoom({ searchWord }) {
+export default function GameList({ searchWord }) {
   const user = useSelector((store) => store.userData);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [loading, setLoading] = useState(false);
@@ -95,7 +95,7 @@ export default function GameRoom({ searchWord }) {
     <div>
       {gameRoomList.length > 0 ? (
         <div>
-          <GameRoomsDisplay gameRoomList={curGameRoomList} loading={loading} />
+          <GameListDisplay gameRoomList={curGameRoomList} loading={loading} />
           <div>
             <Pagination
               className={styles.PaginationWhite}
