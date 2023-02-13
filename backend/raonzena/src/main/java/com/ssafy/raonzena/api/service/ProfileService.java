@@ -18,7 +18,7 @@ import java.util.Map;
 public interface ProfileService {
 
     // 유저 팔로우 하기
-    boolean follow(long followNo, long userNo); //////세션정보 필요/////
+    boolean follow(long followNo, long userNo);
 
     //팔로워 리스트
     List<FollowFollowingtRes> follower(long userNo);
@@ -36,7 +36,7 @@ public interface ProfileService {
     List<BoardRes> feedList(long userNo);
 
     // 유저 언팔로우 하기
-    boolean unfollow(long followNo, long userNo); //////세션정보 필요/////
+    boolean unfollow(long followNo, long userNo);
 
     // 팔로우 여부 조회
     Follow isFollowed(long follower, long followee);
