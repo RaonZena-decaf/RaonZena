@@ -52,10 +52,10 @@ public class LiveRepositorySupport  {
                 .fetch();
     }
 
-    public List<LiveRoomInfoRes> selectFollowingRooms(long userNo) {
+    public List<RoomInfo> selectFollowingRooms(long userNo) {
         // 팔로잉 유저들이 호스트로 있는 방 조회
         return query
-                .select(Projections.fields(LiveRoomInfoRes.class,
+                .select(Projections.fields(RoomInfo.class,
                                 roomInfo.roomNo,
                                 roomInfo.roomTitle,
                                 roomInfo.host,
