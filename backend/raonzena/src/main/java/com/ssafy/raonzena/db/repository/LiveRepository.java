@@ -14,5 +14,6 @@ import java.util.Map;
  */
 public interface LiveRepository extends JpaRepository<RoomInfo, Long> {
 
+    //roomNo로 방정보 찾기
     RoomInfo findByRoomNo(long roomNo);
 }

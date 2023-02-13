@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.entity.QRoomInfo;
 import com.ssafy.raonzena.db.entity.RoomInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,10 +24,8 @@ import static com.ssafy.raonzena.db.entity.QUser.user;
 @Repository //스프링 빈으로 등록
 public class LiveRepositorySupport  {
 
-    private final JPAQueryFactory query;
-    public LiveRepositorySupport(JPAQueryFactory query) {
-        this.query = query;
-    }
+    @Autowired
+    private JPAQueryFactory query;
 
     //패스워드 확인
     public String password(long roomNo){
@@ -36,7 +35,6 @@ public class LiveRepositorySupport  {
                 .where(roomInfo.roomNo.eq(roomNo))
                 .fetchOne();
     }
-
 
     public List<RoomInfo> selectRooms(Map<String, Object> conditions){
         // 현재 실행중인 방 키워드와 함께 조회
@@ -54,8 +52,7 @@ public class LiveRepositorySupport  {
                 .fetch();
     }
 
-
-    public List<LiveRoomInfoRes> selectFollowingRooms(long sessionUserNo) { //////////세션 정보에서 유저넘버 가져오면 바꿔야 할 부분///////////
+    public List<LiveRoomInfoRes> selectFollowingRooms(long userNo) {
         // 팔로잉 유저들이 호스트로 있는 방 조회
         return query
                 .select(Projections.fields(LiveRoomInfoRes.class,
@@ -69,11 +66,11 @@ public class LiveRepositorySupport  {
                 ).from(roomInfo)
                  .join(follow)
                  .on(roomInfo.host.userNo.eq(follow.followee))
-                 .where(follow.follower.eq(sessionUserNo))
+                 .where(follow.follower.eq(userNo))
                  .fetch();
     }
 
-    public boolean isAccessible(long roomNo, int sessionHeadCount) { //////////세션 정보에서 인원수 가져오면 바꿔야 할 부분///////////
+    public boolean isAccessible(long roomNo, int headCount) {
         // 현재 게임에 참여하고 있는 인원 수 조회 후 게임에 참여할 수 있는지 반환
 
         // 설정된 게임방 최대 인원 수
@@ -84,7 +81,7 @@ public class LiveRepositorySupport  {
                 .fetchOne();
 
         // 유저가 게임에 참가할 수 있으면 true
-        if(sessionHeadCount + 1 <= limitHeadCount ) return true;
+        if(headCount + 1 <= limitHeadCount ) return true;
 
         // 유저가 게임에 참가할 수 없으면 false
         return false;

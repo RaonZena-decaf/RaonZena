@@ -3,11 +3,14 @@ package com.ssafy.raonzena.api.controller;
 import com.ssafy.raonzena.api.request.PasswordReq;
 import com.ssafy.raonzena.api.request.RoomReq;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
+import com.ssafy.raonzena.api.service.GameService;
 import com.ssafy.raonzena.api.service.LiveService;
 import com.ssafy.raonzena.api.service.RoomService;
 import com.ssafy.raonzena.api.service.UserService;
 import com.ssafy.raonzena.db.entity.User;
 import io.openvidu.java.client.OpenVidu;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +27,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 public class LiveController {
 
+    private final Logger logger = LogManager.getLogger(LiveController.class);
+
     @Autowired
     private LiveService liveService;
 
@@ -32,6 +37,9 @@ public class LiveController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private GameService gameService;
 
     //openvidu_url
     @Value("https://i8a507.p.ssafy.io:8443")  //https://i8a507.p.ssafy.io:3478
@@ -79,7 +87,7 @@ public class LiveController {
 
     @GetMapping
     protected ResponseEntity<List<LiveRoomInfoRes>> liveRoomsList(@RequestParam(required = false) String keyword){
-        // 현재 실행중인 게임방 조회
+        logger.info("현재 실행중인 게임방 조회");
         Map<String, Object> conditions = new HashMap<String, Object>();
         if (keyword != null) {
             // 검색 키워가 존재하면 keyword map에 저장
@@ -91,41 +99,51 @@ public class LiveController {
 
     @GetMapping("followingRoom")
     protected ResponseEntity<List<LiveRoomInfoRes>> followingRoomsList(HttpSession session){
-        // 팔로잉 유저들의 방 조회
+        logger.info("팔로잉 유저들의 방 조회");
         //session에서 userNo 받음
         long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+        logger.info("userNo : "+userNo);
         return ResponseEntity.ok(liveService.findFollowingRooms(userNo));
     }
 
     @GetMapping("/{roomNo}")
     protected ResponseEntity<?> liveRoomAccess(@PathVariable long roomNo){
+        logger.info("방 접속");
+
+        // 방에 접속해 있는 인원수 조회
+        int headCount = gameService.findActiveHeadCount(roomNo);
+
         // 게임 접속이 가능하면 ok 반환
-        if(liveService.isAccessible(roomNo,2)){ /////////세션정보 필요//////////
-            return ResponseEntity.ok().build();
+        if(liveService.isAccessible(roomNo,headCount)){
+            return ResponseEntity.ok("Success");
         } else {
-            // 게임 접속 불가능하면 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
-            return ResponseEntity.internalServerError().build();
+            // 게임 접속 불가능하면 Unavailable 반환
+            return ResponseEntity.ok("Unavailable");
         }
     }
 
     @GetMapping("/{followNo}/onoff")
     protected ResponseEntity<?> followingsOnOff(@PathVariable long followNo){
+        logger.info("팔로워들 현재 상태 조회");
+
         if(liveService.onoff(followNo)){
-            // online일 경우 ok 반환
-            return ResponseEntity.ok().build();
+            // online일 경우 online 반환
+            return ResponseEntity.ok("online");
         }else{
-            // offline일 경우 noContent 반환
-            return ResponseEntity.noContent().build();
+            // offline일 경우 offline 반환
+            return ResponseEntity.ok("offline");
         }
     }
 
     @DeleteMapping("/{roomNo}")
     protected ResponseEntity<?> roomRemove(@PathVariable long roomNo){
+        logger.info("방 삭제");
+
         if(liveService.removeRoom(roomNo)){
             // 방 정상 삭제 시
-            return ResponseEntity.ok("success");
+            return ResponseEntity.ok("Success");
         }else{
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("Failure");
         }
     }
 }

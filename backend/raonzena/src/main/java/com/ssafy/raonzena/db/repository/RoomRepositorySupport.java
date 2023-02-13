@@ -23,7 +23,7 @@ public class RoomRepositorySupport {
     private EntityManager em;
 
 
-    public LiveRoomInfoRes insertRoom(RoomReq roomReq, User sessionUser, String imageName) {////////////////세션정보에서 유저 가져오기 필요//////////
+    public LiveRoomInfoRes insertRoom(RoomReq roomReq, User user, String imageName) {
         // 게임방 생성
         System.out.println(roomReq);
         RoomInfo roomInfo = new RoomInfo();
@@ -31,14 +31,9 @@ public class RoomRepositorySupport {
         roomInfo.setHeadcount(roomReq.getHeadcount());
         roomInfo.setPassword(roomReq.getPassword());
         roomInfo.setImageName(imageName);
-        roomInfo.setHost(sessionUser); //////세션정보에서 가져오기/////////
+        roomInfo.setHost(user);
         em.persist(roomInfo);
 
         return new LiveRoomInfoRes(roomInfo.getRoomNo(), roomInfo.getRoomTitle(), roomInfo.getHost(), roomInfo.getHeadcount(), roomInfo.getPassword(),roomInfo.getCreateDtm(),roomInfo.getImageName());
     }
-//    public long dd(long userNo){
-//        return em.createQuery("select r.roomNo from RoomInfo r where host = :userNo", RoomInfo.class)
-//                .setParameter("userNo",userNo)
-//                .getFirstResult();
-//    }
 }
