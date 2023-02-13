@@ -10,6 +10,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +35,19 @@ public class LiveServiceImpl implements LiveService {
     @Override
     public List<LiveRoomInfoRes> findRooms(Map<String, Object> conditions){
         // 현재 실행중인 방 조회
-        return liveRepositorySupport.selectRooms(conditions);
+        List<LiveRoomInfoRes> liveRoomInfoRes = new ArrayList<>();
+
+        List<RoomInfo> liveRooms = liveRepositorySupport.selectRooms(conditions);
+        for (RoomInfo liveRoom : liveRooms){
+            if(liveRoom.getPassword()!=null){
+                // 비밀번호가 존재할 경우
+                liveRoom.setPassword("True");
+            }else{
+                liveRoom.setPassword("False");
+            }
+            liveRoomInfoRes.add(new LiveRoomInfoRes(liveRoom));
+        }
+        return liveRoomInfoRes;
     }
 
     @Override

@@ -29,10 +29,10 @@ public class LiveRepositorySupport  {
     }
 
 
-    public List<LiveRoomInfoRes> selectRooms(Map<String, Object> conditions){
+    public List<RoomInfo> selectRooms(Map<String, Object> conditions){
         // 현재 실행중인 방 키워드와 함께 조회
         return query
-                .select(Projections.fields(LiveRoomInfoRes.class,
+                .select(Projections.fields(RoomInfo.class,
                         roomInfo.roomNo,
                         roomInfo.roomTitle,
                         roomInfo.host,
