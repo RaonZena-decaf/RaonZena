@@ -13,7 +13,7 @@ function GameFrameRight({
   roomNo,
   openvidu,
   setStart,
-  end
+  end,
 }) {
   const [answer, setAnswer] = useState("");
   const answerOnchange = (e) => {
@@ -47,7 +47,10 @@ function GameFrameRight({
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        {openvidu.videoList.map((sub, idx) => {
+        <div className={styles[videoFrame()]}>
+          <UserVideoComponent streamManager={publisher} />
+        </div>
+        {subscribes.map((sub, idx) => {
           return (
             <div className={styles[videoFrame()]}>
               <UserVideoComponent key={idx} streamManager={sub} />
