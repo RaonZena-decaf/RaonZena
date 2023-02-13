@@ -3,7 +3,15 @@ import styles from "./CharacterQuiz.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function CharacterQuiz({ start, result, setResult, openvidu, host, setEnd, setStart }) {
+function CharacterQuiz({
+  start,
+  result,
+  setResult,
+  openvidu,
+  host,
+  setEnd,
+  setStart,
+}) {
   const timeLimit = 3;
 
   const [step, setStep] = useState(0);
@@ -37,22 +45,22 @@ function CharacterQuiz({ start, result, setResult, openvidu, host, setEnd, setSt
 
   useEffect(() => {
     dataAxios();
+// 시그널을 한번만 작동시키기 위한 방법
+    if (openvidu.session) {
+      openvidu.session.on("signal:TrueAnswer", (event) => {
+        const data = JSON.parse(event.data);
+        setIsAnswerShown(true);
+      });
+      openvidu.session.on("signal:SeedNumber", (event) => {
+        const data = JSON.parse(event.data);
+        setCharacterimg(data);
+      });
+      openvidu.session.on("signal:GameRestart", () => {
+        setStep(0);
+        dataAxios();
+      });
+    }
   }, []);
-
-  if (openvidu.session) {
-    openvidu.session.on("signal:TrueAnswer", (event) => {
-      const data = JSON.parse(event.data);
-      setIsAnswerShown(true);
-    });
-    openvidu.session.on("signal:SeedNumber", (event) => {
-      const data = JSON.parse(event.data);
-      setCharacterimg(data);
-    });
-    openvidu.session.on("signal:GameRestart", () => {
-      setStep(0);
-      dataAxios();
-    });
-  }
 
   useEffect(() => {
     if (start && step <= characterimg.length - 1) {
@@ -72,7 +80,7 @@ function CharacterQuiz({ start, result, setResult, openvidu, host, setEnd, setSt
             setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
             setEnd(true);
-            setStart(false)
+            setStart(false);
           }, 1000);
         } else {
           setTimeout(() => {

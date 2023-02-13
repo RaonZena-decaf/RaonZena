@@ -1,10 +1,24 @@
-import React, { useState, useEffect, useRef, useReducer, dispatch } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+  dispatch,
+} from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 // import PhotoShoot from "./PhotoShoot";
 
-function ShoutInSilence({ start, result, setResult, host, openvidu, userList, closeMenu,}) {
+function ShoutInSilence({
+  start,
+  result,
+  setResult,
+  host,
+  openvidu,
+  userList,
+  closeMenu,
+}) {
   const timeLimit = 10; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
@@ -46,7 +60,7 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
 
   //axios로 정답 리스트 가져오는 부분
   function getAnswerList() {
-    if(host){
+    if (host) {
       axios({
         method: "get",
         url: `${baseUrl}games/gameType/3`,

@@ -187,11 +187,13 @@ function GameFrameLeft({
           )}
           {gamename === "catchmind" && (
             <Catchmind
-              start={start}
-              result={result}
-              setResult={setResult}
-              openvidu={openvidu}
-              host={host}
+            start={start}
+            result={result}
+            setResult={setResult}
+            openvidu={openvidu}
+            host={host}
+            setEnd={setEnd}
+            setStart={setStart}
             />
           )}
           {gamename === "talkingsilence" && (
