@@ -1,69 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" monitorInterval="5">
-    <!--공통 속성 설정 -->
+<Configuration>
+
+    <!-- 해당 설정파일에서 사용하는 프로퍼티-->
     <Properties>
-        <Property name="logFileName">log4jFile</Property>
-        <Property name="consoleLayout">[%d{yyyy-MM-dd HH:mm:ss}] [%-5p] [%c{1}:%L] - %m%n</Property>
-        <Property name="fileLayout">%d [%t] %-5level %c(%M:%L) - %m%n</Property>
+        <property name="LOGS_PATH">D:\test_logs</property>
     </Properties>
 
-    <!-- Log Appender 설정 -->
     <Appenders>
+        <!-- 콘솔 -->
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="${consoleLayout}" />
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %-5level %logger{35} - %msg%n" />
         </Console>
-        <!--ConsoleAppender, RollingFileAppneder -->
-        <RollingFile name="file"
-                     fileName="logs/${logFileName}.log"
-                     filePattern="logs/${logFileName}.%d{yyyy-MM-dd-hh}.log">
-            <PatternLayout pattern="${fileLayout}" />
+
+        <!-- 파일 -->
+        <RollingFile name ="RollingFile">
+            <FileName>${LOGS_PATH}/log4j2.log</FileName>
+            <FilePattern>${LOGS_PATH}/log4j2.%d{yyyy-MM-dd}.%i.log.gz</FilePattern>
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
+            </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy
-                        modulate="true"
-                        interval="1" /><!-- 시간별 로그 파일 생성-->
+                <SizeBasedTriggeringPolicy size="100MB"/>
+                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
             </Policies>
-            <DefaultRolloverStrategy max="5" fileIndex="min" > <!-- 롤링 파일 5개 까지 생성 -->
-                <Delete basePath="/logs" maxDepth="3">
-                    <IfLastModified age="10d" />
-                </Delete>
-            </DefaultRolloverStrategy>
         </RollingFile>
-
-
-        <RollingFile name="daily_error"
-                     fileName="logs/error/error.log"
-                     filePattern="logs/error/error.%d{yyyy-MM-dd}.log">
-            <PatternLayout pattern="${fileLayout}" />
-            <!--LevelRangeFilter필터를 사용할때에 단일 level의 필터만 허용한다. -->
-            <LevelRangeFilter minLevel="WARN" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="20 MB" />
-            </Policies>
-            <DefaultRolloverstrategy>
-                <Delete basePath="/logs" maxDepth="3">
-                    <IfLastModified age="10d" />
-                </Delete>
-            </DefaultRolloverstrategy>
-        </RollingFile>
-
-
     </Appenders>
 
-    <!--TRACE > DEBUG > INFO > WARN > ERROR > FATAL -->
-    <!--Log가 찍힐 대상 설정.-->
     <Loggers>
-        <!-- 스프링 프레임워크에서 찍는건 level을 info로 설정 -->
-        <logger name="org.springframework" level="info" additivity="false" >
+        <!-- FATAL, ERROR, WARN, INFO, DEBUG, TRACE -->
+        <Root level="INFO">
             <AppenderRef ref="console" />
-            <AppenderRef ref="file" />
-        </logger>
-
-        <!-- rolling file에는 debug, console에는 info 분리하여 처리 가능하다. -->
-        <logger name="kr.pe.study.logforjava2" level="warn" additivity="true" >
-            <AppenderRef ref="daily_error" />
-        </logger>
-
-        <!-- ROOT logger-->
-        <Root level="info"></Root>
+            <AppenderRef ref="RollingFile" />
+        </Root>
     </Loggers>
 </Configuration>
