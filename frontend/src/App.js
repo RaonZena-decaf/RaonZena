@@ -15,13 +15,16 @@ import useCookies from "react-cookie/cjs/useCookies";
 
 function App() {
   //쿠키삭제
-  const [cookies, setCooke, removeCookie] = useCookies(["TIARA"])
+  const [cookies, setCooke, removeCookie] = useCookies(["TIARA"]);
   useEffect(() => {
     window.addEventListener("beforeunload", (e) => {
-      e.preventDefault()
-      removeCookie()
-    })
-  })
+      e.preventDefault();
+      removeCookie();
+    });
+    return () => {
+      window.removeEventListener("beforeunload", removeCookie())
+    }
+  },[]);
 
   return (
     <Router>
