@@ -31,7 +31,8 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
           return (
             <div
               id={`사진${user.videos[0].id}`}
-              className={styles.photoshootlayoutbox}
+              className={styles.photoshootlayoutbox}  
+              key={user}
             ></div>
           );
         })}
