@@ -22,7 +22,7 @@ function Create() {
   const navigate = useNavigate();
   const baseUrl = useSelector((store) => store.baseUrl);
   const [roomname, setRoomname] = useState("");
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState();
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [peoplenum, setPeopleNum] = useState("2");
@@ -75,7 +75,7 @@ function Create() {
     if (roomname === "") {
       alert("방 제목을 입력해 주세요");
     } else {
-      if (!disabled && password === "") {
+      if (!disabled && password === null) {
         alert("비밀번호를 입력해 주세요");
       } else {
         const data = {

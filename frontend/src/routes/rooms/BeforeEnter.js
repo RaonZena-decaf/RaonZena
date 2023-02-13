@@ -63,7 +63,7 @@ function BeforeEnter() {
               },
             });
           } else {
-            console.alert("비밀번호가 잘못되었습니다");
+            alert("비밀번호가 잘못되었습니다");
           }
         })
         .catch((error) => {
