@@ -43,7 +43,6 @@
 }
 
 .front {
-  background-image: url("/CardImg/card${idx + 1}.png");
   background-size: cover;
 }
 
