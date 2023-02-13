@@ -1,12 +1,15 @@
 import { LottoList } from "./LottoList";
 import React, { useState, useEffect } from "react";
 import styles from "./Lotto.module.css";
-import _ from "lodash";
+import _, { lastIndexOf } from "lodash";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { data, string } from "@tensorflow/tfjs";
+import { store } from "../../app/store";
 
 function Lotto({ start, result, openvidu, host }) {
   const baseUrl = useSelector((store) => store.baseUrl);
+  const userinfo = useSelector((store) => store.userData);
   const [isclicked, setisclick] = useState(false);
   const [clickedlist, setclickedlist] = useState([]);
   const [cardlist, setCardlist] = useState([]);
@@ -22,20 +25,18 @@ function Lotto({ start, result, openvidu, host }) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       setclickedlist((prev) => [...prev, data.clicked]);
+      console.log("여기다!!!!!!!!!!!!!!!!!!");
+      console.log("User ID: ", event.from.connectionId);
     });
   }
 
   openvidu.session.on("signal:SeedNumber", (event) => {
-    const num = JSON.parse(event.data);
-    console.log("받은거", typeof num, num);
-    console.log(baseUrl);
+    const encodedRandomNo = encodeURIComponent(event.data);
     axios({
       method: "GET",
-      url: `${baseUrl}games/gameType/chanceGame`,
-      data: num,
+      url: `${baseUrl}games/gameType/chanceGame?randomNo=${encodedRandomNo}`,
     })
       .then((res) => {
-        console.log(res.data);
         setCardlist(res.data);
       })
       .catch((error) => console.log(error));
@@ -45,6 +46,7 @@ function Lotto({ start, result, openvidu, host }) {
     if (!host) {
       const num = _.sampleSize(_.range(1, 9), 8);
 
+      console.log("데이터 보내는 곳", num);
       openvidu.session.signal({
         data: JSON.stringify(num),
         type: "SeedNumber",
@@ -64,6 +66,10 @@ function Lotto({ start, result, openvidu, host }) {
         type: "TrueAnswer",
       });
       setisclick(true);
+      console.log("여기다!!!!!!!!!!!!!!!!!!!!!!!!");
+      console.log(e.target.id);
+      // setUserName(data);
+      // console.log("User Name: ", userName);
     }
   };
   return (
@@ -74,17 +80,21 @@ function Lotto({ start, result, openvidu, host }) {
           return (
             <div key={idx} className={styles.flip}>
               <div className={styles.card}>
-                {!clickedlist.includes(lotto) ? (
+                {!clickedlist.includes(lotto.chanceId) ? (
                   <div
                     className={styles.front}
                     onClick={handleclick}
-                    id={lotto}
+                    id={lotto.chanceId}
                   >
                     앞면
                   </div>
                 ) : (
-                  <div className={styles.back} onClick={handleclick} id={lotto}>
-                    {lotto}
+                  <div
+                    className={styles.back}
+                    onClick={handleclick}
+                    id={lotto.chanceId}
+                  >
+                    {lotto.item}
                   </div>
                 )}
               </div>
@@ -97,17 +107,21 @@ function Lotto({ start, result, openvidu, host }) {
           return (
             <div key={idx} className={styles.flip}>
               <div className={styles.card}>
-                {!clickedlist.includes(lotto) ? (
+                {!clickedlist.includes(lotto.chanceId) ? (
                   <div
                     className={styles.front}
                     onClick={handleclick}
-                    id={lotto}
+                    id={lotto.chanceId}
                   >
                     앞면
                   </div>
                 ) : (
-                  <div className={styles.back} onClick={handleclick} id={lotto}>
-                    {lotto}
+                  <div
+                    className={styles.back}
+                    onClick={handleclick}
+                    id={lotto.chanceId}
+                  >
+                    {lotto.item}
                   </div>
                 )}
               </div>

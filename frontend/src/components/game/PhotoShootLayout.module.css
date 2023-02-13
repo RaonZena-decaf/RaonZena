@@ -1,0 +1,43 @@
+.photoFrame {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+  margin-right: 2rem;
+  width: 40vw;
+  height: auto;
+  aspect-ratio: 1.35/1;
+  padding: 1rem;
+}
+
+.photoshootlayoutmaintextcontainer {
+  display: flex;;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: auto;
+  height: auto;
+}
+
+.photoshootlayoutbox {
+  background-size:cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
+  aspect-ratio: 1/1;
+  width: 30%;
+  margin-bottom: 1rem;
+}
+
+.photoshootlayoutLogo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.photoshootlayoutfont {
+  font-size: 3rem;
+  color: white;
+  margin-left: 1rem;
+  font-weight: bold;
+}

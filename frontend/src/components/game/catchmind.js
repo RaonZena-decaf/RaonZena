@@ -21,15 +21,15 @@ function Catchmind({ start, result, setResult, openvidu }) {
       })
       .catch((error) => console.log("following List 에러: ", error));
   }, []);
-  
+
   useEffect(() => {
     const audio = new Audio();
     audio.src = "../music/The Trapezist.mp3";
     audio.play();
     return () => {
       audio.pause();
-    }
-  },[]);
+    };
+  }, []);
 
   useEffect(() => {
     if (openvidu.session) {
@@ -122,18 +122,18 @@ function Catchmind({ start, result, setResult, openvidu }) {
       } else {
         button.style.background = content;
       }
-      button.style.color = "white";
-      button.style.display = "inline-block";
-      button.style.textShadow =
-        "1px 0 black, 0 1px black, 1px 0 black, 0 -1px gray";
-      button.style.lineHeight = "40px";
-      button.style.textAlign = "center";
-      button.style.width = "50px";
-      button.style.height = "50px";
-      button.style.borderRadius = "25px";
-      button.style.border = "4px solid rgba(129, 101, 101, 0.151)";
-      button.style.boxShadow = "1px 2px 2px gray";
-      button.style.marginBottom = "10px";
+      // button.style.color = "white";
+      // button.style.display = "inline-block";
+      // button.style.textShadow =
+      //   "1px 0 black, 0 1px black, 1px 0 black, 0 -1px gray";
+      // button.style.lineHeight = "40px";
+      // button.style.textAlign = "center";
+      // button.style.width = "50px";
+      // button.style.height = "50px";
+      // button.style.borderRadius = "25px";
+      // button.style.border = "4px solid rgba(129, 101, 101, 0.151)";
+      // button.style.boxShadow = "1px 2px 2px gray";
+      // button.style.marginBottom = "10px";
 
       button.onclick = () => {
         ctx.strokeStyle = content;
@@ -143,6 +143,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, width, height);
   }, []);
+
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(5);
   const [step, setStep] = useState(0);
@@ -151,7 +152,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
-        }, 100);
+        }, 1000);
         return () => clearInterval(intervalId);
       }
       if (timeRemaining === 0 && !isAnswerShown) {
@@ -164,9 +165,9 @@ function Catchmind({ start, result, setResult, openvidu }) {
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(5);
             setStep((prev) => (prev += 1));
-          }, 100);
+          }, 1000);
         }
       }
     }
@@ -194,17 +195,17 @@ function Catchmind({ start, result, setResult, openvidu }) {
     <div>
       <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
-        <span className="red">red</span>
-        <span className="yellow">yellow</span>
-        <span className="orange">orange</span>
-        <span className="green">green</span>
-        <span className="blue">blue</span>
-        <span className="navy">navy</span>
-        <span className="purple">purple</span>
-        <span className="black">black</span>
-        <span className="white">white</span>
-        <span className="clear">clear</span>
-        <span className="fill">fill</span>
+        <span className={`${style.buttonColor} red`}>red</span>
+        <span className={`${style.buttonColor} yellow`}>yellow</span>
+        <span className={`${style.buttonColor} orange`}>orange</span>
+        <span className={`${style.buttonColor} green`}>green</span>
+        <span className={`${style.buttonColor} blue`}>blue</span>
+        <span className={`${style.buttonColor} navy`}>navy</span>
+        <span className={`${style.buttonColor} purple`}>purple</span>
+        <span className={`${style.buttonColor} black`}>black</span>
+        <span className={`${style.buttonColor} white`}>white</span>
+        <span className={`${style.buttonBlack} clear`}>clear</span>
+        <span className={`${style.buttonBlack} fill`}>fill</span>
       </div>
     </div>
   );

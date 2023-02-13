@@ -6,24 +6,78 @@ import GameFrameProgress from "./GameFrameProgress";
 import Catchmind from "../game/catchmind";
 import ShoutInSilence from "../game/ShoutInSilence";
 import Seeking from "../game/Seeking";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
-  const [peopleList, setPeopleList] = useState([
-    { user: "임길현", points: 90, img: "../profile/profileimg.png" },
-    { user: "김찬빈", points: 80, img: "../profile/profileimg.png" },
-    { user: "최지연", points: 70, img: "../profile/profileimg.png" },
-    { user: "윤수희", points: 60, img: "../profile/profileimg.png" },
-    { user: "김민소", points: 50, img: "../profile/profileimg.png" },
-    { user: "홍영민", points: 40, img: "../profile/profileimg.png" },
+function GameFrameLeft({ start,
+  result,
+  gamename,
+  setResult,
+  openvidu,
+  host,
+  roomNo,
+}) {
+  const baseUrl = useSelector((store) => store.baseUrl);
+  const [userList, setUserList] = useState([{
+    "userNo": 1,
+    "userId": "123456",
+    "userName": "홍영민",
+    "exp": 0,
+    "level": 1,
+    "userImage": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+},
+{
+    "userNo": 2,
+    "userId": "123456",
+    "userName": "윤수희",
+    "exp": 0,
+    "level": 1,
+    "userImage": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+},
+{
+    "userNo": 3,
+    "userId": "123456",
+    "userName": "최지연",
+    "exp": 0,
+    "level": 1,
+    "userImage": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+    },
+    {
+      "userNo": 2,
+      "userId": "123456",
+      "userName": "윤수희",
+      "exp": 0,
+      "level": 1,
+      "userImage": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+  },
+
   ]);
 
-  //   useEffect(() => {
-  //     //현재 방에 있는 사람들 리스트 불러오는 redis
-  //     //그 리스트를 peoplelist에 할당
-  //     //const peoplelist = 받아온리스트
-  //   }, [peopleList]);
+  //현재 방에 있는 사람들 리스트 불러오는 redis
 
-  peopleList.sort(function (a, b) {
+  // const getUserList = () => {
+  //   axios({
+  //     method: "get",
+  //     url: `${baseUrl}games/${roomNo}`,
+  //   })
+  //     .then((res) => {
+  //       console.log("게임 프레임 Left 참여자 정보 출력 =>", res.data);
+  //       setUserList(res.data);
+  //     })
+  //     .catch((error) =>
+  //       console.log("게임 프레임 Left 참여자 정보 출력 에러 =>", error)
+  //     );
+  // };
+
+  // useEffect(() => {
+  //   getUserList();
+  // }, []);
+
+  // useEffect(() => {
+  //   getUserList();
+  // }, [openvidu.subscribe]);
+  
+  userList.sort(function (a, b) {
     return b.points - a.points;
   });
   return (
@@ -62,6 +116,8 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
               result={result}
               setResult={setResult}
               openvidu={openvidu}
+              host={host}
+              userList={userList}
             />
           )}
           {gamename === "personquiz" && (
@@ -83,27 +139,27 @@ function GameFrameLeft({ start, result, gamename, setResult, openvidu, host }) {
         </div>
         <div className={styles.progressframe}>
           <div>
-            {peopleList.slice(0, 3).map((people, idx) => {
+            {userList.slice(0, 3).map((user, idx) => {
               return (
                 <div key={idx} className={styles.score}>
                   <div className={styles.score2}>
-                    <img alt="img" src={people.img} className={styles.img} />
-                    <span className={styles.font2}>{people.user}</span>
+                    <img alt="img" src={user.userImage} className={styles.img} />
+                    <span className={styles.font2}>{user.userName}</span>
                   </div>
-                  <GameFrameProgress people={people} />
+                  <GameFrameProgress user={user} />
                 </div>
               );
             })}
           </div>
           <div>
-            {peopleList.slice(3, 6).map((people, idx) => {
+            {userList.slice(3, 6).map((user, idx) => {
               return (
                 <div key={idx} className={styles.score}>
                   <div className={styles.score2}>
-                    <img alt="img" src={people.img} className={styles.img} />
-                    <span className={styles.font2}>{people.user}</span>
+                    <img alt="img" src={user.userImage} className={styles.img} />
+                    <span className={styles.font2}>{user.userName}</span>
                   </div>
-                  <GameFrameProgress people={people} />
+                  <GameFrameProgress user={user} />
                 </div>
               );
             })}

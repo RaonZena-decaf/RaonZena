@@ -1,29 +1,28 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useReducer, dispatch } from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { AnswerList } from "./ShoutInSilenceList";
+// import PhotoShoot from "./PhotoShoot";
 
-export default function ShoutInSilence({
-  start,
-  result,
-  setResult,
-  host,
-  openvidu,
-}) {
-  const timeLimit = 5;
+function ShoutInSilence({ start, result, setResult, host, openvidu, userList, closeMenu,}) {
+  const timeLimit = 10; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(timeLimit);
-  const [isCorrect, setIsCorrect] = useState(false); // 정답 유무
-  const [showAnswer, setShowAnswer] = useState(false);
   const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
   const videoRef = useRef(null);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(3);
-  const [gameStart, setGameStart] = useState(start);
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+  const [answerList, setAnswerList] = useState([]);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setTimeout(() => {}, 300);
+  };
 
   // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
   if (openvidu.session) {
@@ -46,81 +45,81 @@ export default function ShoutInSilence({
   };
 
   //axios로 정답 리스트 가져오는 부분
-  const [answerList, setAnswerList] = useState([]);
   function getAnswerList() {
     axios({
       method: "get",
-      url: `${baseUrl}games/gameType/2`,
+      url: `${baseUrl}games/gameType/3`,
     })
       .then((res) => {
-        console.log(res);
+        console.log("고요속의 외침 정답 가져온 전체 결과 =>", res.data);
         setAnswerList(res.data);
       })
       .catch((error) => console.log(error));
   }
 
-  //타이머 설정
-  useEffect(() => {
-    if (gameStart) {
-      const countdown = setInterval(() => {
-        if (parseInt(seconds) > 0) {
-          setSeconds(parseInt(seconds) - 1);
-        }
-        if (parseInt(seconds) === 0) {
-          if (parseInt(minutes) === 0) {
-            clearInterval(countdown);
-          } else {
-            setMinutes(parseInt(minutes) - 1);
-            setSeconds(59);
-          }
-        }
-      }, 1000);
-      return () => clearInterval(countdown);
-    }
-  }, [gameStart, minutes, seconds]);
-
   // 정답 체크 기능
   useEffect(() => {
-    if (gameStart && step <= AnswerList.length - 1) {
+    if (start && step <= answerList.length - 1) {
+      // 시간이 남았는데 정답을 못맞춘 경우
       if (timeRemaining > 0 && !isAnswerShown) {
+        //
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
-        }, 100);
+        }, 1000);
         return () => clearInterval(intervalId);
       }
+      // 제한 시간이 끝난 후 정답을 못맞춘 경우
       if (timeRemaining === 0 && !isAnswerShown) {
         setIsAnswerShown(true);
       }
+
+      //정답을 맞춘 경우
       if (isAnswerShown) {
-        if (step === AnswerList.length - 1) {
+        //마지막 문제인 경우
+        if (step === answerList.length - 1) {
           setIsAnswerShown(true);
+          // 더 할 것인지 아닌지 확인
+
+          // 모달 띄우기
+          setShowModal(true);
           return;
         } else {
-          setTimeout(() => {
+          const timeoutId = setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
+          return () => clearTimeout(timeoutId);
         }
       }
     }
-  }, [gameStart, timeRemaining, isAnswerShown]);
+  }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
-    if (result !== "") {
-      if (result === AnswerList[step].answer) {
-        console.log("정답");
-        const data = {
-          correct: openvidu.userName,
-        };
-        openvidu.session.signal({
-          data: JSON.stringify(data),
-          type: "TrueAnswer",
-        });
-        setResult("");
-      } else {
-        console.log("오답");
-        setResult("");
+    if (host === false) {
+      if (result !== "") {
+        //정답 맞춘 로직
+        if (result === answerList[step].answer) {
+          console.log("정답");
+          // setModalShow(true);
+          const data = {
+            correct: openvidu.userName,
+          };
+          openvidu.session.signal({
+            data: JSON.stringify(data),
+            type: "TrueAnswer",
+          });
+          setResult("");
+        }
+        //틀린 로직
+        else {
+          console.log("오답");
+          setResult("");
+          document.getElementById("wrongMassage").style.display = "block";
+          setTimeout(function () {
+            document.getElementById("wrongMassage").style.display = "none";
+          }, 200);
+        }
       }
     }
   }, [result]);
@@ -130,43 +129,144 @@ export default function ShoutInSilence({
     video.addVideoElement(videoRef.current);
   }, []);
 
-  if (true) {
-    return (
-      <div>
-        <div>
-          {/* <div className={styles.questionNo}>
-            {AnswerList[step].question_no} / {AnswerList.length}
-          </div> */}
-          {/* <div className={styles.AnswerFont}>
-            문제 : {AnswerList[step].answer}
-          </div> */}
-        </div>
+  // useEffect(() => {
+  //   if (videoRef.current) {
+  //     const video = openvidu.publisher;
+  //     video.addVideoElement(videoRef.current);
+  //   }
+  // }, [videoRef.current]);
+
+  // 모달창 노출 여부 state
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  // const showModal = () => {
+  //   setModalOpen(true);
+  // };
+
+  useEffect(() => {
+    getAnswerList();
+  }, []);
+
+  // if (step < answerList.length) {
+  //   return (
+  //     <div>
+  //       {host ? (
+  //         <div>
+  //           <div className={styles.webcamCapture}>
+  //             {videoRef.current !== undefined ? (<video autoPlay={true} ref={videoRef} width="80%" />) : null}
+  //             <div className={styles.Container}>
+  //               <span className={styles.questionNo}>
+  //                 {step + 1} / {answerList.length}
+  //               </span>
+  //               <span className={styles.TimeLimit}>
+  //                 {" "}
+  //                 {minutes} :{" "}
+  //                 {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+  //               </span>
+  //               {answerList.length > 0 ? (
+  //                 <span className={styles.AnswerFont}>
+  //                   정답 : {answerList[step].answer}
+  //                 </span>
+  //               ) : null}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       ) : (
+  //         <div>
+  //           <div id="wrongMassage" className={styles.wrongMassage}>
+  //             틀렸습니다
+  //           </div>
+  //             <div className={styles.webcamCapture}>
+  //             {videoRef.current !== undefined ? (<video autoPlay={true} ref={videoRef} width="80%" />) : null}
+  //             <div className={styles.Container}>
+  //               <span className={styles.questionNo}>
+  //                 {step + 1} / {answerList.length}
+  //               </span>
+  //               <span className={styles.TimeLimit}>
+  //                 {" "}
+  //                 {minutes} :{" "}
+  //                 {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+  //               </span>
+  //               {answerList.length > 0 ? (
+  //                 <span className={styles.AnswerFont}>
+  //                   정답 :{" "}
+  //                   {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
+  //                 </span>
+  //               ) : null}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // }
+  // else {
+  //   return (<div>
+  //     {showModal && (
+  //       <div className="modal">
+  //         <div className="modal-content">
+  //           <PhotoShoot closeMenu={closeMenu} userList={userList}/>
+  //         </div>
+  //       </div>
+  //     )}
+  //   </div>)
+  // }
+
+  return (
+    <div>
+      {host ? (
         <div>
           <div className={styles.webcamCapture}>
-            <video ref={videoRef} />
-            <div className={styles.TimeLimit}>
-              <p>문제 : {AnswerList[step].answer}</p>
-              <p> </p>
-              제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
-              <span></span>
+            {videoRef.current !== undefined ? (
+              <video autoPlay={true} ref={videoRef} width="80%" />
+            ) : null}
+            <div className={styles.Container}>
+              <span className={styles.questionNo}>
+                {step + 1} / {answerList.length}
+              </span>
+              <span className={styles.TimeLimit}>
+                {" "}
+                {minutes} :{" "}
+                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+              </span>
+              {answerList.length > 0 ? (
+                <span className={styles.AnswerFont}>
+                  정답 : {answerList[step].answer}
+                </span>
+              ) : null}
             </div>
           </div>
         </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.background}>
+      ) : (
         <div>
-          제한 시간 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+          <div id="wrongMassage" className={styles.wrongMassage}>
+            틀렸습니다
+          </div>
+          <div className={styles.webcamCapture}>
+            {videoRef.current !== undefined ? (
+              <video autoPlay={true} ref={videoRef} width="80%" />
+            ) : null}
+            <div className={styles.Container}>
+              <span className={styles.questionNo}>
+                {step + 1} / {answerList.length}
+              </span>
+              <span className={styles.TimeLimit}>
+                {" "}
+                {minutes} :{" "}
+                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+              </span>
+              {answerList.length > 0 ? (
+                <span className={styles.AnswerFont}>
+                  정답 :{" "}
+                  {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
+                </span>
+              ) : null}
+            </div>
+          </div>
         </div>
-
-        <div>
-          번호: {AnswerList[step].question_no} / {AnswerList.length}
-        </div>
-
-        <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
+export default React.memo(ShoutInSilence);

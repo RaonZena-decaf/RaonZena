@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./GameFrameRight.module.css";
-import SampleVideo from "../camera/SampleVideo";
 
-function GameFrameRight({ startHandler, start, setResult, host }) {
+import UserVideoComponent from "../camera/UserVideoComponent";
+
+function GameFrameRight({ startHandler, start, setResult, host, publisher, subscribes, roomNo}) {
   const peopleList = [1, 2, 3, 4, 5, 6];
   const [answer, setAnswer] = useState("");
   const answerOnchange = (e) => {
@@ -33,12 +34,11 @@ function GameFrameRight({ startHandler, start, setResult, host }) {
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        {peopleList.map((people, idx) => {
+        {subscribes.map((sub, idx) => {
           return (
-            <div key={idx} className={styles[videoFrame()]}>
-              <SampleVideo />
-            </div>
-          );
+          <div className={styles[videoFrame()]}>
+          <UserVideoComponent key={idx} streamManager={sub}/>;
+          </div>)
         })}
       </div>
       <div className={styles.submit}>

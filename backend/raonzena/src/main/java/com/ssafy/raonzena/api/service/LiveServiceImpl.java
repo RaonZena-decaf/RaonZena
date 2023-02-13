@@ -1,15 +1,22 @@
 package com.ssafy.raonzena.api.service;
 
+
+import com.ssafy.raonzena.api.controller.LiveController;
+import com.ssafy.raonzena.api.request.PasswordReq;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.entity.RoomInfo;
 import com.ssafy.raonzena.db.repository.LiveRepository;
 import com.ssafy.raonzena.db.repository.LiveRepositorySupport;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +27,7 @@ import java.util.Map;
 @Service
 @Transactional
 public class LiveServiceImpl implements LiveService {
-
+    
     @Autowired
     LiveRepositorySupport liveRepositorySupport;
 
@@ -31,9 +38,30 @@ public class LiveServiceImpl implements LiveService {
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
+    public String passwordCheck(PasswordReq passwordReq) {
+        String password = liveRepositorySupport.password(passwordReq.getRoomNo());
+        if(password != null && password.equals(passwordReq.getInputPassword())){
+            return "SUCCESS";
+        }
+        return "FAIL";
+    }
+
+    @Override
     public List<LiveRoomInfoRes> findRooms(Map<String, Object> conditions){
         // 현재 실행중인 방 조회
-        return liveRepositorySupport.selectRooms(conditions);
+        List<LiveRoomInfoRes> liveRoomInfoRes = new ArrayList<>();
+
+        List<RoomInfo> liveRooms = liveRepositorySupport.selectRooms(conditions);
+        for (RoomInfo liveRoom : liveRooms){
+            if(liveRoom.getPassword()!=null){
+                // 비밀번호가 존재할 경우
+                liveRoom.setPassword("True");
+            }else{
+                liveRoom.setPassword("False");
+            }
+            liveRoomInfoRes.add(new LiveRoomInfoRes(liveRoom));
+        }
+        return liveRoomInfoRes;
     }
 
     @Override
@@ -43,9 +71,9 @@ public class LiveServiceImpl implements LiveService {
     }
 
     @Override
-    public boolean isAccessible(long roomNo, int sessionHeadCount) { /////////세션정보 필요//////////
+    public boolean isAccessible(long roomNo, int headCount) {
         // 유저 게임 참가 가능 여부 조회
-        return liveRepositorySupport.isAccessible(roomNo,sessionHeadCount);
+        return liveRepositorySupport.isAccessible(roomNo,headCount);
     }
 
     @Override

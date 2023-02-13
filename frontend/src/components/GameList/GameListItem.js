@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./GameList.module.css";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Item = (props) => {
   const navigate = useNavigate();
-  console.log("게임 리스트 아이템 프롭 내용", props.headcount);
 
   const navigateToGameRoom = () => {
     navigate(`/beforeroom/${props.roomNo}`, {
@@ -12,15 +13,27 @@ const Item = (props) => {
         roomNo: props.roomNo,
         headcount: props.headcount,
         roomTitle: props.title,
-        users: props.users,
+        users: users,
+        password: props.password
       },
     });
   };
 
-  // const navigateToGameRoom = () => {
-  //   navigate(`/beforeroom/${props.roomNo}`);
-  // };
+  const [users, setUsers] = useState(0);
+  const baseUrl = useSelector((store) => store.baseUrl);
 
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `${baseUrl}games/${props.roomNo}/join`,
+    })
+      .then((res) => {
+        console.log(res)
+        setUsers(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+  
   return (
     <div className={styles.card}>
       <img
@@ -33,7 +46,7 @@ const Item = (props) => {
         {props.title}
       </p>
       <p className={styles.UserCount}>
-        {props.users} / {props.headcount}
+        {users} / {props.headcount}
       </p>
     </div>
   );

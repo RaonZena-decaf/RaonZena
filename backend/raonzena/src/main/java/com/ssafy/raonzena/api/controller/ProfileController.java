@@ -13,6 +13,8 @@ import com.ssafy.raonzena.api.service.UserService;
 import com.ssafy.raonzena.db.entity.Board;
 import com.ssafy.raonzena.db.entity.Follow;
 import com.ssafy.raonzena.db.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +27,18 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/profile")
 public class ProfileController {
+
+    private final Logger logger = LogManager.getLogger(ProfileController.class);
+
     @Autowired
     ProfileService profileService;
 
     @Autowired
     UserService userService;
 
-    // 팔로우 하기
     @PostMapping
     protected ResponseEntity<?> follow(@RequestBody FollowReq followReq, HttpSession session){
+        logger.info("팔로우 하기");
 
         //session에서 userNo 받음
         long userNo = Long.parseLong(session.getAttribute("userNo").toString());
@@ -41,10 +46,10 @@ public class ProfileController {
 
         // 팔로우 성공시 ok 반환
         if(profileService.follow(followReq.getFollowNo(), user.getUserNo())){
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Success");
         } else {
-            // 팔로우 실패 시 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
-            return ResponseEntity.internalServerError().build();
+            // 팔로우 실패 시 Failure 반환
+            return ResponseEntity.ok("Failure");
         }
     }
 
@@ -65,7 +70,8 @@ public class ProfileController {
 
     @GetMapping
     protected ResponseEntity<List<UserProfileRes>> profilesList(@RequestParam(required = false) String keyword){
-        // 유저 프로필 조회
+        logger.info("유저 프로필 조회");
+
         Map<String, Object> conditions = new HashMap<String, Object>();
         if (keyword != null) {
             // 아이디 검색 키워드가 존재하면 keyword map에 저장
@@ -75,27 +81,12 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.findProfiles(conditions));
     }
 
-
     //피드리스트
     @GetMapping("{userNo}/feedList")
     public ResponseEntity<List<BoardRes>> feedList(@PathVariable long userNo){
         return ResponseEntity.ok(profileService.feedList(userNo));
     }
 
-    @DeleteMapping("{followNo}")
-    protected ResponseEntity<?> unfollow(@PathVariable long followNo, HttpSession session) {
-        //session에서 userNo 받음
-        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
-        User user = userService.selectUser(userNo);
-
-        // 언팔로우 성공시 ok 반환
-        if (profileService.unfollow(followNo, user.getUserNo())) {
-            return ResponseEntity.ok().build();
-        } else {
-            // 언팔로우 실패 시 일단 500 에러 /////////////////////실패시 반환할 값 어떻게 할건지//////////
-            return ResponseEntity.internalServerError().build();
-        }
-    }
     //피드 디테일
     @GetMapping("/feed/{feedNo}")
     public ResponseEntity<BoardRes> feedDetail(@PathVariable long feedNo){
@@ -115,26 +106,26 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.followingCnt(userNo));
     }
 
+    @GetMapping("/{followNo}/status")
+    public ResponseEntity<?> followStatus(@PathVariable long followNo, HttpSession session){
+        logger.info("팔로우 상태 확인");
+
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+
+        if(profileService.isFollowed(userNo,followNo)!=null){
+            // 팔로우가 되어있을 경우
+            return ResponseEntity.ok("isFollowed");
+        }else{
+            // 팔로우가 안되어있을 경우
+            return ResponseEntity.ok("isNotFollowed");
+        }
+    }
+
     //경험치 와 레벨 업데이트
     @PutMapping("/expToLevelModify")
     public ResponseEntity<?> expToLevelModify(@RequestBody ExpReq expReq){
         profileService.expToLevelModify(expReq);
         return ResponseEntity.ok().build();
-
-    }
-
-    // 팔로우 상태 확인
-    @GetMapping("/{followNo}/status")
-    public ResponseEntity<?> followStatus(@PathVariable long followNo, HttpSession session){
-
-        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
-
-        if(profileService.isFollowed(userNo,followNo)!=null){
-            return ResponseEntity.ok("isFollowed");
-        }else{
-            return ResponseEntity.ok("isNotFollowed");
-        }
-
     }
 
     //피드 삭제하기
@@ -142,6 +133,23 @@ public class ProfileController {
     public ResponseEntity<?> feedDelete(@PathVariable long boardNo){
         profileService.feedDelete(boardNo);
         return ResponseEntity.ok().body("success");
+    }
+
+    @DeleteMapping("{followNo}")
+    protected ResponseEntity<?> unfollow(@PathVariable long followNo, HttpSession session) {
+        logger.info("언팔로우하기");
+
+        //session에서 userNo 받음
+        long userNo = Long.parseLong(session.getAttribute("userNo").toString());
+        User user = userService.selectUser(userNo);
+
+        // 언팔로우 성공시 ok 반환
+        if (profileService.unfollow(followNo, user.getUserNo())) {
+            return ResponseEntity.ok("Success");
+        } else {
+            // 언팔로우 실패 시 Failure 반환
+            return ResponseEntity.ok("Failure");
+        }
     }
 
 }
