@@ -13,6 +13,12 @@ import ScrollToTop from "./components/ScrollToTop";
 import BeforeRoom from "./routes/rooms/BeforeEnter";
 
 function App() {
+  //쿠키삭제
+  function deleteCookie(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.kakao.com; path=/;";
+  }
+  deleteCookie("TIARA");
+
   return (
     <Router>
       <ScrollToTop />
