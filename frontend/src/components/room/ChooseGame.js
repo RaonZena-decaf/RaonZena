@@ -17,10 +17,6 @@ function ChooseGame({ ChangeGame }) {
         <FaHandPaper className={styles.NoClick} />
         <div className={styles.gameName}>이미지 게임</div>
       </div>
-      <div className={styles.IconText} onClick={ChangeGame} id="objectfast">
-        <FaSketch className={styles.NoClick} />
-        <div className={styles.gameName}>방 안의 보물찾기</div>
-      </div>
       <div className={styles.IconText} onClick={ChangeGame} id="catchmind">
         <FaPalette className={styles.NoClick} />
         <div className={styles.gameName}>캐치 마인드</div>

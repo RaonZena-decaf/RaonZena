@@ -1,5 +1,3 @@
-@import url("https://webfontworld.github.io/gmarket/GmarketSans.css");
-
 .modalcontainer {
   /* padding-right: 4rem; */
   display: flex;
@@ -20,10 +18,9 @@
   color: white;
   font-size: 5rem;
   z-index: 3;
-  font-family: "GmarketSans";
 }
 
-.modalcontainer::-webkit-scrollbar {
+.modalcontainer::-webkit-scrollbar{
   display: none;
 }
 
@@ -69,23 +66,23 @@
 
 .ModalOpen {
   opacity: 1;
-  animation: FadeIn 0.3s ease-in;
-  z-index: 3;
+  animation: FadeIn .3s ease-in;
+  z-index: 10;
 }
 
 .ModalClose {
   opacity: 0;
   pointer-events: none;
-  animation: FadeOut 0.3s ease-out;
-  z-index: 3;
+  animation: FadeOut .3s ease-out;
+  z-index: 10;
 }
 
 .ModalSlideIn {
-  animation: SlideIn 0.3s ease-in;
+  animation: SlideIn .3s ease-in;
 }
 
 .ModalSlideOut {
-  animation: SlideOut 0.3s ease-out;
+  animation: SlideOut .3s ease-out;
 }
 
 @keyframes FadeIn {
@@ -93,7 +90,7 @@
     opacity: 0;
   }
   100% {
-    opacity: 1;
+      opacity: 1;
   }
 }
 
@@ -101,7 +98,7 @@
   0% {
     opacity: 1;
   }
-  100% {
+  100%{
     opacity: 0;
   }
 }
@@ -148,15 +145,17 @@
   cursor: pointer;
 }
 
+
 .highlight {
   color: #f400b0;
 }
 
-.zindex {
+.zindex{
   position: relative;
 }
 
 /* ============================================= Searchmodal 용==================================================== */
+
 
 .searchforms {
   position: relative;
@@ -192,11 +191,11 @@
   background-color: #353839;
 }
 
-.searchBody {
+.searchBody{
   margin-top: 3rem;
 }
 
-.spacebetween {
+.spacebetween{
   justify-content: start;
   padding: 3rem;
 }
@@ -215,8 +214,8 @@
   border-radius: 50%;
   aspect-ratio: 1/1;
   border: solid 0.4rem transparent;
-  background-image: linear-gradient(#fff, #fff),
-    linear-gradient(to right, #8f00ff 0%, #f400b0 100%);
+  background-image: linear-gradient(#fff, #fff), 
+  linear-gradient(to right, #8f00ff 0%,  #f400b0 100%);
   background-origin: border-box;
   background-clip: content-box, border-box;
 }
@@ -229,13 +228,13 @@
   white-space: nowrap;
   gap: 1rem;
 }
-.FollowingsInfo:hover {
+.FollowingsInfo:hover{
   color: #f400b0;
   cursor: pointer;
   animation: changecolor 0.3s ease;
 }
 
-.noResult {
+.noResult{
   font-size: 3rem;
   text-align: center;
 }
@@ -249,7 +248,7 @@
   }
 }
 
-.searchResultInfo {
+.searchResultInfo{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -257,12 +256,12 @@
   margin-top: 2rem;
 }
 
-.followBtn {
+.followBtn{
   margin-left: 2rem;
   font-size: 3rem;
 }
 
-.followBtn:hover {
+.followBtn:hover{
   color: #f400b0;
   cursor: pointer;
   animation: changecolor 0.3s ease;
