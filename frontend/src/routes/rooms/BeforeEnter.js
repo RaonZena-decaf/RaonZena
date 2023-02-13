@@ -58,8 +58,8 @@ function BeforeEnter() {
               state: {
                 mic,
                 camera,
-                roomNo: res.data.roomNo,
-                roomTitle: res.data.roomTitle,
+                roomNo: state.roomNo,
+                roomTitle: state.roomTitle,
                 host: false,
               },
             });
