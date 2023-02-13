@@ -1,10 +1,11 @@
 import { useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styles from "./ChattingForm.module.css";
 
-function ChattingForm({messageList}) {
+function ChattingForm({ messageList }) {
   const chattingLog = useRef();
   useEffect(() => {
-        scrollToBottom();
+    scrollToBottom();
   }, [messageList]);
 
   function scrollToBottom() {
@@ -15,16 +16,28 @@ function ChattingForm({messageList}) {
     }, 20);
   }
 
-  return (
+  const userName = useSelector((store) => store.userData.userName);
+  // console.log(publisher.videos[0].id)
 
+  return (
     <div className={styles.container} ref={chattingLog}>
       <div className={styles.innercontainer}>
-        {messageList.map(({nickname, message}, idx) => {
-          return ( 
-            <div key={idx} className={styles.text}>
-              <div className={styles.user}>{nickname}</div> <div className={styles.chatbox}>{message}</div>
-            </div>
-          )
+        {messageList.map(({ nickname, message }, idx) => {
+          return (
+            <>
+              {'2643637927' === nickname ? (
+                <div key={idx} className={styles.text}>
+                  <div className={styles.chatbox2}>{message}</div>
+                  <div className={styles.user2}>{nickname}</div>{" "}
+                </div>
+              ) : (
+                <div key={idx} className={styles.text}>
+                  <div className={styles.user}>{nickname}</div>{" "}
+                  <div className={styles.chatbox}>{message}</div>
+                </div>
+              )}
+            </>
+          );
         })}
       </div>
     </div>
