@@ -4,8 +4,13 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 function CharacterQuiz({ start, result, setResult, openvidu }) {
+  const timeLimit = 3;
+
   const [step, setStep] = useState(0);
   const baseUrl = useSelector((store) => store.baseUrl);
+  const [minutes, setMinutes] = useState(0);
+  const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
 
   const [characterimg, setCharacterimg] = useState({});
 
@@ -28,8 +33,6 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
       setIsAnswerShown(true);
     });
   }
-  const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(3);
 
   useEffect(() => {
     if (start && step <= characterimg.length - 1) {
@@ -46,13 +49,13 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
         if (step === characterimg.length - 1) {
           setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
         }
@@ -110,10 +113,20 @@ function CharacterQuiz({ start, result, setResult, openvidu }) {
     audio.play();
     return () => {
       audio.pause();
-    }
-  },[]);
+    };
+  }, []);
   return (
     <div className={styles.background}>
+      <div className={styles.Container}>
+        <span className={styles.questionNo}>
+          {step + 1} / {characterimg.length}
+        </span>
+        <span className={styles.TimeLimit}>
+          {" "}
+          {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+        </span>
+      </div>
+
       {start ? (
         step === characterimg.length ? (
           <div className={styles.result}>

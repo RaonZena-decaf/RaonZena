@@ -5,6 +5,7 @@
   list-style: none;
   box-sizing: border-box;
   font-family: Pretendard;
+  position: relative;
 }
 .container {
   display: flex;
@@ -63,10 +64,11 @@
   -webkit-animation: fadeout 5s; /* Safari and Chrome */
   -o-animation: fadeout 5s; /* Opera */
   animation-fill-mode: forwards;
-
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 @keyframes fadeout {
   from {
