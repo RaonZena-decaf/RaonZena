@@ -41,46 +41,21 @@ public class LiveController {
     @Autowired
     private GameService gameService;
 
-    //openvidu_url
-    @Value("https://i8a507.p.ssafy.io:8443")  //https://i8a507.p.ssafy.io:3478
-    private String OPENVIDU_URL;
-
-    //시크릿 키
-    @Value("RAONZENA")
-    private String OPENVIDU_SECRET;
-
-    private OpenVidu openvidu;
-
-    @PostConstruct
-    public void init() {
-        this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
-    }
-
-    //방 관리
-    // Collection to pair session names and OpenVidu Session objects
-    private Map<Long, Integer> mapSessions = new ConcurrentHashMap<>(); //Map<roomId,참가자수>
-
     @PostMapping("/room")
     protected ResponseEntity<?> roomAdd(@RequestBody RoomReq roomReq, HttpSession session){
+        logger.info("방 생성");
         //session에서 userNo 받음
         long userNo = Long.parseLong(session.getAttribute("userNo").toString());
         User user = userService.selectUser(userNo);
-
-        //1.room 정보 db에 저장
+        //room 정보 db에 저장
         LiveRoomInfoRes liveRoomInfoRes = roomService.addRoom(roomReq, user);
 
-
-        //방 map에 저장 (roomId 와 참가자수 1명)
-        this.mapSessions.put(liveRoomInfoRes.getRoomNo(),1);
-
-
-        // 게임방 생성
         return ResponseEntity.ok(liveRoomInfoRes);
-
-
     }
-    @PostMapping("/passwordCheck") //방비밀번호 확인
+    @PostMapping("/passwordCheck")
     public ResponseEntity<?> passwordCheck(@RequestBody PasswordReq passwordReq){
+        logger.info("방 비밀번호 확인");
+
         return ResponseEntity.ok(liveService.passwordCheck(passwordReq));
     }
 
