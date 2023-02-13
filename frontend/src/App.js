@@ -21,10 +21,9 @@ function App() {
       e.preventDefault();
       removeCookie();
     });
-    return () => {
-      window.removeEventListener("beforeunload", removeCookie())
-    }
-  },[]);
+    return window.removeEventListener("beforeunload", removeCookie())
+    
+  }, []);
 
   return (
     <Router>
