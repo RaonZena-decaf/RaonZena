@@ -22,6 +22,7 @@ function MenuBar({
   toggleDevice,
   ChangeGame,
   TotalUsers,
+  host
 }) {
   // 방 유저 정보를 axios 정보로 받아와서 리스트로 저장 => 참가자 드롭업 하부 컴포넌트로 삽입
   const [videoEnabled, setVideoEnabled] = useState(camera);
@@ -126,6 +127,7 @@ function MenuBar({
               exitaction={exitaction}
               ChangeGame={ChangeGame}
               TotalUsers={TotalUsers}
+              host={host}
             />
           )}
         </Transition>

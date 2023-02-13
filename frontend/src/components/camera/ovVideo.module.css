@@ -1,11 +1,6 @@
 .webcamCapture {
-  width: 90%;
-  height: 70%;
-  aspect-ratio: auto 1/1;
-  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
   position: relative;
 }
 
@@ -14,7 +9,7 @@
   justify-content: flex-end;
   font-size: 1.5rem;
   position: absolute;
-  bottom: 3%;
+  bottom: 0;
   right: 1%;
   color: black;
   text-shadow: -2px 0 #ffff, 0 2px #ffff, 2px 0 #ffff, 0 -2px #ffff;

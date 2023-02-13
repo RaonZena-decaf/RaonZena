@@ -4,7 +4,6 @@ import styles from "./GameFrameRight.module.css";
 import UserVideoComponent from "../camera/UserVideoComponent";
 
 function GameFrameRight({ startHandler, start, setResult, host, publisher, subscribes, roomNo}) {
-  const peopleList = [1, 2, 3, 4, 5, 6];
   const [answer, setAnswer] = useState("");
   const answerOnchange = (e) => {
     setAnswer(e.target.value);
@@ -20,13 +19,13 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
   };
 
   const videoFrame = () => {
-    if (peopleList.length === 1) {
+    if (subscribes.length === 1) {
       return "videoFrame";
-    } else if (peopleList.length === 2) {
+    } else if (subscribes.length === 2) {
       return "videoFrame2";
-    } else if (peopleList.length <= 4) {
+    } else if (subscribes.length <= 4) {
       return "videoFrame3";
-    } else if (5 <= peopleList.length) {
+    } else if (5 <= subscribes.length) {
       return "videoFrame4";
     }
   };
@@ -37,7 +36,7 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
         {subscribes.map((sub, idx) => {
           return (
           <div className={styles[videoFrame()]}>
-          <UserVideoComponent key={idx} streamManager={sub}/>;
+          <UserVideoComponent key={idx} streamManager={sub}/>
           </div>)
         })}
       </div>
