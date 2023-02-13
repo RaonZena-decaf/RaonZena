@@ -71,11 +71,51 @@ function GameFrameLeft({
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       console.log(data.userNo);
-      if (data.gamename === "joker" && data.clicked >= 1 && data.clicked <= 8) {
+      if (data.gamename === "joker" && data.clicked === 1) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               return { ...user, exp: user.exp + (100 - user.exp) };
+            }
+            return user;
+          })
+        );
+      }
+      if (data.gamename === "joker" && data.clicked === 2) {
+        setUserList((prev) =>
+          prev.map((user) => {
+            if (user.userNo === data.userNo) {
+              return { ...user, exp: user.exp + 5 };
+            }
+            return user;
+          })
+        );
+      }
+      if (data.gamename === "joker" && data.clicked === 3) {
+        setUserList((prev) =>
+          prev.map((user) => {
+            if (user.userNo === data.userNo) {
+              return { ...user, exp: user.exp + 10 };
+            }
+            return user;
+          })
+        );
+      }
+      if (data.gamename === "joker" && data.clicked === 4) {
+        setUserList((prev) =>
+          prev.map((user) => {
+            if (user.userNo === data.userNo) {
+              return { ...user, exp: user.exp - 5 };
+            }
+            return user;
+          })
+        );
+      }
+      if (data.gamename === "joker" && data.clicked === 5) {
+        setUserList((prev) =>
+          prev.map((user) => {
+            if (user.userNo === data.userNo) {
+              return { ...user, exp: user.exp - 10 };
             }
             return user;
           })
