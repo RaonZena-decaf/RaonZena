@@ -22,7 +22,7 @@ function Create() {
   const navigate = useNavigate();
   const baseUrl = useSelector((store) => store.baseUrl);
   const [roomname, setRoomname] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(null);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [peoplenum, setPeopleNum] = useState("2");
