@@ -49,7 +49,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
           for (let i = 0; i < blobBin.length; i++) {
             array.push(blobBin.charCodeAt(i));
           }
-        );
+        });
         const data = {
           boardImageUrl: "",
           title: input.title,
