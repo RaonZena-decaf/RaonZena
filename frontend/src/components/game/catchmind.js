@@ -152,7 +152,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
-        }, 100);
+        }, 1000);
         return () => clearInterval(intervalId);
       }
       if (timeRemaining === 0 && !isAnswerShown) {
@@ -165,9 +165,9 @@ function Catchmind({ start, result, setResult, openvidu }) {
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(3);
+            setTimeRemaining(5);
             setStep((prev) => (prev += 1));
-          }, 100);
+          }, 1000);
         }
       }
     }
@@ -193,11 +193,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
   }, [result]);
   return (
     <div>
-      (isAnswerShown ? (
-      <div className={style.result}>
-        <h1>{QuizList[step].answer}</h1>
-      </div>
-      ) :<canvas id="canvas" ref={canvasRef}></canvas>)
+      <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
         <span className={`${style.buttonColor} red`}>red</span>
         <span className={`${style.buttonColor} yellow`}>yellow</span>
@@ -208,8 +204,8 @@ function Catchmind({ start, result, setResult, openvidu }) {
         <span className={`${style.buttonColor} purple`}>purple</span>
         <span className={`${style.buttonColor} black`}>black</span>
         <span className={`${style.buttonColor} white`}>white</span>
-        <span className={style.buttonBlack}>clear</span>
-        <span className={style.buttonBlack}>fill</span>
+        <span className={`${style.buttonBlack} clear`}>clear</span>
+        <span className={`${style.buttonBlack} fill`}>fill</span>
       </div>
     </div>
   );

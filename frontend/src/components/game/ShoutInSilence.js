@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useReducer, dispatch } from "react"
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import PhotoShoot from "./PhotoShoot";
+// import PhotoShoot from "./PhotoShoot";
 
 function ShoutInSilence({ start, result, setResult, host, openvidu, userList, closeMenu,}) {
   const timeLimit = 10; // 게임 제한 시간
