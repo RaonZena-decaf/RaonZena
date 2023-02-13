@@ -67,9 +67,9 @@ function Catchmind({
     };
   }, []);
   // 캐치마인드 그림 부부
-  const canvas = canvasRef.current;
-
+  
   useEffect(() => {
+    const canvas = canvasRef.current;
     if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         const data = JSON.parse(event.data);
