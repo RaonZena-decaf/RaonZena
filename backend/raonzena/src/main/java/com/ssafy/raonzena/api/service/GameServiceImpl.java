@@ -7,12 +7,15 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.ssafy.raonzena.api.controller.GameController;
 import com.ssafy.raonzena.api.request.BoardReq;
 import com.ssafy.raonzena.api.request.GameScoreReq;
 import com.ssafy.raonzena.api.response.*;
 import com.ssafy.raonzena.db.entity.*;
 import com.ssafy.raonzena.db.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -40,6 +43,8 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class GameServiceImpl implements GameService{
+
+    private final Logger logger = LogManager.getLogger(GameServiceImpl.class);
 
     @Autowired
     BoardRepository boardRepository;
@@ -197,6 +202,7 @@ public class GameServiceImpl implements GameService{
         if (!redisTemplate.opsForHash().entries(key).isEmpty()){
             // 저장하기 전에 key값에 들어있는 정보 삭제
             Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
+            logger.info("삭제할 hash값 : "+userData.toString());
             for (Map.Entry<Object, Object> userD : userData.entrySet()) {
                 redisTemplate.opsForHash().delete(key, userD.getKey());
             }
@@ -210,7 +216,7 @@ public class GameServiceImpl implements GameService{
             redisTemplate.opsForHash().put(key,userNo,userScore);
         }
 
-        System.out.println(redisTemplate.opsForHash().entries(key));
+        logger.info("redis 저장 : "+redisTemplate.opsForHash().entries(key));
     }
 
     @Override
@@ -229,7 +235,7 @@ public class GameServiceImpl implements GameService{
             userDataRes.add(userGameData);
         }
 
-        System.out.println(userDataRes.toString());
+        logger.info("게임데이터 : "+userDataRes.toString());
 
         return new GameScoreRes(roomNo,userDataRes);
     }
@@ -250,7 +256,7 @@ public class GameServiceImpl implements GameService{
         // 게임참여인원수 저장
         redisDrawTemplate.opsForValue().set(key, String.valueOf(headCount));
 
-        System.out.println(redisDrawTemplate.opsForValue().get(key));
+        logger.info("저장된 게임참여 인원수 : " + redisDrawTemplate.opsForValue().get(key));
     }
 
     @Override
@@ -268,28 +274,9 @@ public class GameServiceImpl implements GameService{
             userDataRes.add(new UserRes(user));
         }
 
-        System.out.println(userDataRes.toString());
+        logger.info("게임참여중인 유저 리스트 : "+ userDataRes.toString());
 
         return userDataRes;
     }
-
-
-    @Override
-    public void savePainting(String painting, long roomNo) {
-        String key = "roomNo"+ roomNo + "catchMind";
-
-        // 그림 문자열 redis에 저장
-        redisDrawTemplate.opsForValue().set(key, painting);
-
-        System.out.println(redisDrawTemplate.opsForValue().get(key));
-    }
-
-    @Override
-    public String findPainting(long roomNo) {
-        String key = "roomNo" + roomNo + "catchMind";
-
-        return redisDrawTemplate.opsForValue().get(key);
-    }
-
 
 }

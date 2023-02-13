@@ -6,7 +6,6 @@ import com.ssafy.raonzena.api.request.UserLoginReq;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
-import com.ssafy.raonzena.db.repository.UserRepositorySupport;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,9 +25,6 @@ public class UserServieImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    UserRepositorySupport userRepositorySupport;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
