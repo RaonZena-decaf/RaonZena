@@ -14,10 +14,10 @@
 
 .flip {
   width: 200px;
-  height: 260px;
+  height: 240px;
 
   position: relative;
-  perspective: 1100px;
+  /* perspective: 1100px; */
   margin: 2rem;
 }
 
