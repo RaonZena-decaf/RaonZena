@@ -39,7 +39,7 @@ function KakaoLogin() {
 
         setTimeout(() => {
           navigate("/live");
-        }, 1450);
+        }, 1500);
       })
       .catch((error) => {
         console.log(error);
@@ -57,15 +57,19 @@ function KakaoLogin() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.box1}>
-        <div className={styles.box3}>
-          <div className={styles.box1}>
-            <div className={styles.box2}>
-              <div className={styles.box1}></div>
-            </div>
-          </div>
-        </div>
+      <div className={styles.text}>
+        <span>L</span>
+        <span>o</span>
+        <span>a</span>
+        <span>d</span>
+        <span>i</span>
+        <span>n</span>
+        <span>g</span>
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
       </div>
+      <div className={styles.bar}></div>
     </div>
   );
 }

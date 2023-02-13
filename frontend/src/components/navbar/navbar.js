@@ -47,14 +47,18 @@ const Navbar = () => {
     }, 1000);
     dispatch(initMyFollowingList([]));
     setTimeout(() => {
-      setAnimation("");
       navigateToLanding();
+      setAnimation("");
     }, 1900);
   };
 
   // 페이지 이동을 위한 함수들
   const navigateToLanding = () => {
-    navigate("/");
+    if (nowContent.pathname === "/") {
+      window.location.replace('/')
+    } else {
+      navigate("/");
+    }
   };
   const navigateToLive = () => {
     navigate("/live");

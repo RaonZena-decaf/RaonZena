@@ -24,6 +24,11 @@
   margin-bottom: 3rem;
   gap: 1rem;
   cursor: pointer;
+  transition: color .5s ease;
+}
+
+.background2:hover{
+    color: #f400b0;
 }
 
 .img {
