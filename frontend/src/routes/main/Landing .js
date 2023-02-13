@@ -13,26 +13,26 @@ import GameGuide from "../../components/landing/GameGuide";
 
 function Landing() {
   //로그인 함수
-  // const user = useSelector((store) => store.userData);
+  const user = useSelector((store) => store.userData);
 
-  // const loginConfigure = () => {
-  //   if (user.userNo === "") {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // };
-  // const isLogin = loginConfigure();
+  const loginConfigure = () => {
+    if (user.userNo === "") {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  const isLogin = loginConfigure();
 
-  // const redirectUrl = useSelector((store) => store.redirectUrl);
-  // const Login = () => {
-  //   const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
-  //   const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
-  //   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
-  //   if (typeof window !== "undefined") {
-  //     window.location.href = KAKAO_AUTH_URL;
-  //   }
-  // };
+  const redirectUrl = useSelector((store) => store.redirectUrl);
+  const Login = () => {
+    const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
+    const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
+    if (typeof window !== "undefined") {
+      window.location.href = KAKAO_AUTH_URL;
+    }
+  };
 
   //모달 표시를 위한 함수 및 변수
   const [modalOn, setModalOn] = useState(false);
@@ -47,15 +47,15 @@ function Landing() {
     setModalOn(false);
   };
 
-  //로그인 여부에 따른 라우터 변경
-  // const navigate = useNavigate();
-  // const loginCheck = () => {
-  //   if (isLogin) {
-  //     navigate("/live");
-  //   } else {
-  //     Login();
-  //   }
-  // };
+  // 로그인 여부에 따른 라우터 변경
+  const navigate = useNavigate();
+  const loginCheck = () => {
+    if (isLogin) {
+      navigate("/live");
+    } else {
+      Login();
+    }
+  };
 
   //스크롤 이벤트 감지
 
@@ -138,11 +138,11 @@ function Landing() {
             />
             <div className={styles.Main}>RaonZena</div>
             <div className={styles.Main2}>Connect Us, Connect Times</div>
-            <div className={styles.Sub} onClick={scrollDown}>
-              Click To Start
-            </div>
+            <div className={styles.Sub} onClick={loginCheck}>
+              Press Start
+             </div>
             <div className={styles.arrow} onClick={scrollDown}>
-              ▼
+              About <br></br>▼
             </div>
           </div>
         </div>

@@ -1,12 +1,14 @@
 import styles from "./PhotoShootDiary.module.css";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import axios from "axios";
 
 function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
   // redux에 저장된 유저 정보에서 레벨에 따라 option 렌더링이 달라져야 함
   const baseUrl = useSelector((store) => store.baseUrl);
+  const title = useRef();
+  const content = useRef();
 
   const frameSelect = (e) => {
     setPhotoFrame(e.target.value);
@@ -22,13 +24,17 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
   };
 
   //피드에 저장하는 axios 통신
-  //const userNo = useSelector((store) => store.userData.userNo);
-  const userNo = 5;
+  const userNo = useSelector((store) => store.userData.userNo);
   async function save() {
-    let question = window.confirm("사진을 저장하겠습니까?");
-    if (question === true) {
-      const formData = new FormData();
-      // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
+    if (input.title === "") {
+      title.current.focus();
+    } else if (input.content === "") {
+      content.current.focus();
+    } else {
+      let question = window.confirm("사진을 저장하겠습니까?");
+      if (question === true) {
+        const formData = new FormData();
+        // 화상 쪽 div를 선택하고 이미지 url을 제작, 이후 axios 통신을 통해 자신의 프로필에 저장
 
       // 사진 영역을 촬영하는 함수
       await html2canvas(document.querySelector("#사진촬영완료"), {
@@ -43,41 +49,38 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
           for (let i = 0; i < blobBin.length; i++) {
             array.push(blobBin.charCodeAt(i));
           }
-          const blob = new Blob([new Uint8Array(array)], { type: "image/png" });
-          const file = new File([blob], `${day}.png`, { type: "image/png" });
-          formData.append("file", file);
-        }
-      );
-      const data = {
-        boardImageUrl: "",
-        title: input.title,
-        content: input.content,
-        firstUser: 0,
-        secondUser: 0,
-        thirdUser: 0,
-        userNo: userNo,
-      };
-      formData.append(
-        "boardReq",
-        new Blob([JSON.stringify(data)], { type: "application/json" })
-      );
+        );
+        const data = {
+          boardImageUrl: "",
+          title: input.title,
+          content: input.content,
+          firstUser: 0,
+          secondUser: 0,
+          thirdUser: 0,
+          userNo: userNo,
+        };
+        formData.append(
+          "boardReq",
+          new Blob([JSON.stringify(data)], { type: "application/json" })
+        );
 
-      axios({
-        url: `${baseUrl}games/feed`,
-        method: "POST",
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-        .then((res) => {
-          alert("사진이 저장되었습니다.");
-          closeMenu()
+        axios({
+          url: `${baseUrl}games/feed`,
+          method: "POST",
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" },
         })
-        .catch((error) => {
-          alert("저장에 실패하였습니다. 다시 시도해 주세요.");
-          closeMenu()
-        });
-    } else {
-      alert("취소하였습니다.");
+          .then((res) => {
+            alert("사진이 저장되었습니다.");
+            closeMenu();
+          })
+          .catch((error) => {
+            alert("저장에 실패하였습니다. 다시 시도해 주세요.");
+            closeMenu();
+          });
+      } else {
+        alert("취소하였습니다.");
+      }
     }
   }
 
@@ -103,6 +106,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
         name="title"
         placeholder="제목을 입력해 주세요"
         onChange={onChange}
+        ref={title}
       ></input>
       <textarea
         className={styles.photoshootdiarytextarea}
@@ -110,6 +114,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
         placeholder="간단한 기록을 남겨보세요(300자 이내)"
         onChange={onChange}
         maxLength={300}
+        ref={content}
       ></textarea>
       <div className={styles.photoshootdiaryflex3}>
         <button className={styles.photoshootdiarybutton} onClick={save}>
