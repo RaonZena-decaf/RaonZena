@@ -15,10 +15,9 @@
 }
 
 .flip {
-  /* width: 200px;
-  height: 22px; */
-  height: 100%;
-  aspect-ratio: unset;
+  width: 200px;
+  height: 230px;
+
   position: relative;
   /* perspective: 1100px; */
   margin: 2rem;
