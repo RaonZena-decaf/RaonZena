@@ -32,6 +32,7 @@ function Lotto({ start, result, openvidu, host }) {
 
   openvidu.session.on("signal:SeedNumber", (event) => {
     const encodedRandomNo = encodeURIComponent(event.data);
+
     axios({
       method: "GET",
       url: `${baseUrl}games/gameType/chanceGame?randomNo=${encodedRandomNo}`,
@@ -43,7 +44,7 @@ function Lotto({ start, result, openvidu, host }) {
   });
 
   useEffect(() => {
-    if (!host) {
+    if (host) {
       const num = _.sampleSize(_.range(1, 9), 8);
 
       console.log("데이터 보내는 곳", num);

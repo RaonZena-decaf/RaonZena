@@ -16,7 +16,6 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
       );
     }
   }, []);
-
   return (
     <div
       className={styles.photoFrame}
