@@ -21,7 +21,6 @@ function BeforeEnter() {
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState((state.password === "True"? false : true));
   const baseUrl = useSelector((store) => store.baseUrl);
-  console.log("왜안뜸?,",state.password, disabled)
   const navigate = useNavigate();
   // 이전 페이지로 돌아가기
   const backOnClick = () => {

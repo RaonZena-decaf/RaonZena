@@ -224,7 +224,8 @@ function Catchmind({
       if (result === QuizList.answer) {
         console.log("정답");
         const data = {
-          correct: openvidu.userName,
+          userNo: openvidu.userNo,
+          score: 15
         };
         openvidu.session.signal({
           data: JSON.stringify(data),
