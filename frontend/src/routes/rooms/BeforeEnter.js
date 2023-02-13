@@ -19,7 +19,7 @@ function BeforeEnter() {
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [password, setPassword] = useState("");
-  const [disabled, setDisabled] = useState((state.password === true? false : true));
+  const [disabled, setDisabled] = useState((state.password === "True"? false : true));
   const baseUrl = useSelector((store) => store.baseUrl);
   console.log("왜안뜸?,",state.password, disabled)
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ function BeforeEnter() {
 
   // 세션 참가
   const joinSession = () => {
-    if (state.password === true) {
+    if (state.password === "True") {
       const data = {
         roomNo: state.roomNo,
         inputPassword: password,
