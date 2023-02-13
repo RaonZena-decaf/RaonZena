@@ -126,7 +126,6 @@ function BeforeEnter() {
                   onChange={passwordChange}
                   className={style.input}
                   disabled={disabled}
-                  type="number"
                 />
               </label>
               <button className={style.button} onClick={backOnClick}>
