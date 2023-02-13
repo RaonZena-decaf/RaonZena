@@ -71,10 +71,8 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
+            setEnd(true);
           }, 1000);
-          openvidu.session.signal({
-            type: "GameEnd",
-          });
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
@@ -87,12 +85,12 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
   }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
-    if (result !== "") {
+    if (result !== "" && step <= characterimg.length) {
       if (result === characterimg[step].answer) {
         console.log("정답");
         const data = {
           sender: openvidu.userName,
-          answer : result
+          answer: result,
         };
         openvidu.session.signal({
           data: JSON.stringify(data),
@@ -102,7 +100,7 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
       } else {
         const data = {
           sender: openvidu.userName,
-          answer : result
+          answer: result,
         };
         openvidu.session.signal({
           data: JSON.stringify(data),

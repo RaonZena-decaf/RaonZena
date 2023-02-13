@@ -17,6 +17,7 @@ function GameFrameLeft({
   openvidu,
   host,
   roomNo,
+  setEnd,
 }) {
   const baseUrl = useSelector((store) => store.baseUrl);
   const [userList, setUserList] = useState([
@@ -209,6 +210,7 @@ function GameFrameLeft({
               setResult={setResult}
               openvidu={openvidu}
               host={host}
+              setEnd={setEnd}
             />
           )}
           {gamename === "joker" && (

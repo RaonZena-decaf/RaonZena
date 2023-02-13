@@ -21,7 +21,7 @@ function MainRoom(props) {
   const [session, setSession] = useState(undefined);
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
-  const [userName, setUserName] = useState(user.userId);
+  const [userName, setUserName] = useState(user.userName);
   const [roomId, setroomId] = useState(state.roomNo.toString());
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
@@ -165,6 +165,7 @@ function MainRoom(props) {
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: true, // Whether to mirror your local video or not
                 streamId: userName, // 다른 것들과 구분하기 위한 변수값
+                host : state.host
               });
 
               // --- 6) Publish your stream ---

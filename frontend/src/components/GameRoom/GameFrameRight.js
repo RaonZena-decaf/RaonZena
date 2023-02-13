@@ -13,15 +13,14 @@ function GameFrameRight({
   roomNo,
   openvidu,
   setStart,
+  end
 }) {
   const [answer, setAnswer] = useState("");
-  const [end, setEnd] = useState(false);
   const answerOnchange = (e) => {
     setAnswer(e.target.value);
   };
   if (openvidu.session) {
     openvidu.session.on("signal:GameEnd", () => {
-      setEnd(true);
       setStart(false)
       console.log(end, start)
     });
