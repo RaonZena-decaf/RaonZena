@@ -25,7 +25,7 @@ function ChattingForm({ messageList }) {
         {messageList.map(({ nickname, message }, idx) => {
           return (
             <>
-              {'2643637927' === nickname ? (
+              {userName === nickname ? (
                 <div key={idx} className={styles.text}>
                   <div className={styles.chatbox2}>{message}</div>
                   <div className={styles.user2}>{nickname}</div>{" "}
