@@ -12,7 +12,8 @@ function Catchmind({
   setEnd,
   setStart,
 }) {
-  const timeLimit = 45;
+  // 만약 5개 짜리 리스트로 할꺼면 고요속의 외침으로 변경
+  const timeLimit = 10;
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -27,7 +28,7 @@ function Catchmind({
       })
         .then((res) => {
           console.log(res.data);
-          setQuizList(res.data);
+          setQuizList([res.data]);
           if (openvidu.session) {
             const data = JSON.stringify(res.data);
             console.log("게임 데이터", data);
@@ -110,7 +111,12 @@ function Catchmind({
     }
 
     function startPainting(event) {
-      painting = true;
+      if (host) {
+        painting = true;
+      }
+      else {
+        painting = false;
+      }
     }
 
     ctx.lineWidth = 3;
@@ -179,9 +185,10 @@ function Catchmind({
   }, []);
 
   const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(5);
+  const [timeRemaining, setTimeRemaining] = useState(10);
   const [step, setStep] = useState(0);
   useEffect(() => {
+    console.log("catchmind", start, step,)
     if (start && step <= QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
@@ -244,7 +251,7 @@ function Catchmind({
         </span>
         {host || isAnswerShown ? (
           <span className={styles.AnswerFont}>
-            정답 : {QuizList.answer}
+            제시어 : {QuizList.answer}
           </span>
         ) : null}
       </div>
