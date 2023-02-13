@@ -61,7 +61,7 @@ export default function FollowingsInGameListItem(props) {
         <div className={styles.HostTextInfo}>
           <span className={styles.LevelFont}>
             {" "}
-            LV {props.level} <br></br>
+            LV {props.host.level} <br></br>
             <span className={styles.userNameFont}>{props.host.userName}</span>
           </span>
         </div>
