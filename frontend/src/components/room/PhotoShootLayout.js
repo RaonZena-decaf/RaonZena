@@ -18,24 +18,23 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
   }, []);
 
   return (
-    <div className={styles.photoFrame} id="사진촬영완료">
+    <div
+      className={styles.photoFrame}
+      id="사진촬영완료"
+      style={{
+        backgroundImage: `url(${photoFrame})`,
+      }}
+    >
       <div className={styles.photoshootlayoutmaintextcontainer}>
         {TotalUsers.map((user) => {
           return (
             <div
               id={`사진${user.videos[0].id}`}
               className={styles.photoshootlayoutbox}
-              key={user}
             ></div>
           );
         })}
       </div>
-      <img
-        className={styles.photoFrameImg}
-        alt="프레임"
-        src={photoFrame}
-        crossOrigin="anonymous"
-      ></img>
     </div>
   );
 }
