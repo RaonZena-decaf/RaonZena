@@ -4,6 +4,8 @@ package com.ssafy.raonzena.api.controller;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.api.service.UserService;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
+    private final Logger logger = LogManager.getLogger(UserController.class);
+
     @Autowired
     UserService userService;
 
@@ -33,7 +37,6 @@ public class UserController {
 //        System.out.println(code.substring(1,code.length()-1));
         System.out.println(code);
         //authorizeCode : 카카오 서버로부터 받은 인가 코드
-//        return ResponseEntity.ok(userService.KaKaoLogin(code));
         UserRes userRes = userService.KaKaoLogin(code);
 
         // 세션 저장 (세션 ID, 사용자 정보)
@@ -44,7 +47,8 @@ public class UserController {
 
     @GetMapping("/logout")
     public void logout(HttpSession session){
-        System.out.println(session.getAttribute("userNo")+"삭제!!!");
+        logger.info("로그아웃");
+        logger.info(session.getAttribute("userNo")+"삭제");
 
         userService.logout(Long.parseLong(session.getAttribute("userNo").toString()));
 
