@@ -13,9 +13,9 @@ public interface LiveService {
     // 현재 실행중인 방 조회
     List<LiveRoomInfoRes> findRooms(Map<String, Object> conditions);
     // 팔로잉 유저들의 방 조회
-    List<LiveRoomInfoRes> findFollowingRooms(long sessionUserNo); /////////세션정보 필요//////////
+    List<LiveRoomInfoRes> findFollowingRooms(long UserNo);
     // 유저 게임 참가 가능 여부 조회
-    boolean isAccessible(long roomNo, int sessionHeadCount); /////////세션정보 필요//////////
+    boolean isAccessible(long roomNo, int headCount);
     // 팔로우 onoffline 확인
     boolean onoff(long followNo);
     // 방 삭제

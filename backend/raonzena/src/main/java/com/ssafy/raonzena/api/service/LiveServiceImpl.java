@@ -1,10 +1,13 @@
 package com.ssafy.raonzena.api.service;
 
+import com.ssafy.raonzena.api.controller.LiveController;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.entity.RoomInfo;
 import com.ssafy.raonzena.db.repository.LiveRepository;
 import com.ssafy.raonzena.db.repository.LiveRepositorySupport;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,7 @@ import java.util.Map;
 @Service
 @Transactional
 public class LiveServiceImpl implements LiveService {
-
+    
     @Autowired
     LiveRepositorySupport liveRepositorySupport;
 
@@ -57,9 +60,9 @@ public class LiveServiceImpl implements LiveService {
     }
 
     @Override
-    public boolean isAccessible(long roomNo, int sessionHeadCount) { /////////세션정보 필요//////////
+    public boolean isAccessible(long roomNo, int headCount) {
         // 유저 게임 참가 가능 여부 조회
-        return liveRepositorySupport.isAccessible(roomNo,sessionHeadCount);
+        return liveRepositorySupport.isAccessible(roomNo,headCount);
     }
 
     @Override
