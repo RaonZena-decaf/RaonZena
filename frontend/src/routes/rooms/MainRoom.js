@@ -308,6 +308,7 @@ function MainRoom(props) {
               host={host}
               publisher={publisher}
               subscribes={subscribes}
+              roomNo={state.roomNo}
             />
           )}
           <MenuBar
