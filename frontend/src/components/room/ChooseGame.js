@@ -14,8 +14,8 @@ function ChooseGame({ ChangeGame, host }) {
 
   return (
     <div className={styles.container}>
-      {host === true ? (
-        <>
+      {/* {host === true ? ( */}
+        {/* <> */}
           <div className={styles.IconText} onClick={ChangeGame} id="imagetheme">
             <FaHandPaper className={styles.NoClick} />
             <div className={styles.gameName}>이미지 게임</div>
@@ -40,10 +40,10 @@ function ChooseGame({ ChangeGame, host }) {
             <FaFire className={styles.NoClick} />
             <div className={styles.gameName}>역전의 한 방!</div>
           </div>
-        </>
+        {/* </>
       ) : (
         <div className={styles.noGame}> 게임은 방장만 시작할 수 있어요!</div>
-      )}
+      )} */}
     </div>
   );
 }
