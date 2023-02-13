@@ -1,4 +1,6 @@
 .background {
+  height: 50rem;
+  border-radius: 10px;
   background-color: #353839;
   margin: 0;
   padding: 0;
@@ -13,8 +15,8 @@
 }
 
 .flip {
-  width: 200px;
-  height: 222px;
+  /* width: 200px;
+  height: 22px; */
 
   position: relative;
   /* perspective: 1100px; */
