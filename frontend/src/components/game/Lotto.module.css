@@ -58,8 +58,12 @@
   background-position: center;
 }
 
-.front {
+/* .front {
   background-size: cover;
+} */
+
+.front {
+  background-size: 100% 100%;
 }
 
 .back {
