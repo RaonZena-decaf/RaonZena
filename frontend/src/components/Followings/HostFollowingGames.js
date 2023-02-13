@@ -10,7 +10,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
   const baseUrl = useSelector((store) => store.baseUrl);
   const nowUserNo = useSelector((store) => store.userData.userNo);
-  const navigate = useNavigate();
+  
   async function getlist() {
     if (nowUserNo) {
       await axios({
@@ -50,14 +50,24 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     console.log("Hostfollowings 컴포넌트 getList 결과", list);
   }, []);
   
-  // --------------------스웨거에서 확인한 데이터-------------------
-  // 유저 이름    userName={gameRoomInfo.host.userName}
-  // 유저 이미지  userImage={gameRoomInfo.host.userImageUrl}
-  // 유저 레벨    level={gameRoomInfo.host.level}
-  // 방 이름      roomTitle={gameRoomInfo.roomTitle}
-  // 최대 인원 수 headcount={gameRoomInfo.headcount}
-  // 비밀번호     password={gameRoomInfo.password}
-  // 방 썸네일    roomImage={gameRoomInfo.imageName}
+  // --------------------스웨거에서 확인한 데이터------------------
+
+  // "roomNo": 1040,
+  //   "roomTitle": "dd",
+  //   "host": {
+  //     "userNo": 1,
+  //     "userId": "sdf",
+  //     "userName": "adf",
+  //     "exp": 0,
+  //     "level": 1,
+  //     "createDtm": 1675759213000,
+  //     "userImageUrl": "adf"
+  //   },
+  //   "headcount": 5,
+  //   "password": 48,
+  //   "createDate": null,
+  //   "imageName": "/GameThumbnail/24.png"
+  
 
   return (
     <div className={styles.HostFollowingsList} id="scrollChange">
@@ -67,13 +77,13 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
             return (
               <Item
                 key={idx}
-                userName={gameRoomInfo.host.userName}
-                userImage={gameRoomInfo.host.userImageUrl}
-                level={gameRoomInfo.host.level}
-                roomTitle={gameRoomInfo.roomTitle}
+                roomNo={gameRoomInfo.roomNo}
+                host={gameRoomInfo.host}
                 headcount={gameRoomInfo.headcount}
                 password={gameRoomInfo.password}
                 roomImage={gameRoomInfo.imageName}
+                createDate={gameRoomInfo.createDate}
+                imageName={gameRoomInfo.imageName}
               />
             );
           })}
