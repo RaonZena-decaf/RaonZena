@@ -16,7 +16,7 @@
 
 .flip {
   width: 200px;
-  height: 190px;
+  height: 200px;
 
   position: relative;
   /* perspective: 1100px; */
@@ -49,6 +49,7 @@
 }
 
 .back {
+  background-size: cover;
   background: royalblue;
 }
 
