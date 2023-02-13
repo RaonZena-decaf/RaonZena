@@ -33,7 +33,8 @@ body {
   -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
-  user-select:none
+  user-select:none;
+  font-family: "GmarketSans";
 }
 
 /* 스크롤바 생략 */

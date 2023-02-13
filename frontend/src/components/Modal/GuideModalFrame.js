@@ -54,7 +54,7 @@ const GuideModalFrame = ({ show, closeModal, nowContent }) => {
   let slideAnimationClass = slide.join(" ");
 
   return (
-    <div className={styles[fadeAnimationClass]}>
+    <div className={`${styles[fadeAnimationClass]}  ${styles.zindex}`}>
       <div
         className={styles.gameGuide}
         id={styles.outside}
