@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import style from "./beforeenter.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/navbar/navbar";
 import VideoContainer from "../../components/camera/NoneVideo";
@@ -11,33 +12,76 @@ import {
   FaMicrophoneAlt,
   FaUser,
 } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 function BeforeEnter() {
   const { state } = useLocation();
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
+  const [password, setPassword] = useState("");
+  const [disabled, setDisabled] = useState(state.password === "true"? false : true);
+  const baseUrl = useSelector((store) => store.baseUrl);
+
   const navigate = useNavigate();
   // 이전 페이지로 돌아가기
   const backOnClick = () => {
     navigate(-1);
   };
+  const passwordChange = (event) => {
+    setPassword(event.target.value);
+  };
+  const passwordRef = useRef();
+
+  const labelFocus = () => {
+    if (disabled === true) {
+      passwordRef.current.focus();
+    }
+  };
+
   // 세션 참가
   const joinSession = () => {
-    navigate(`/room/${state.roomNo}`, {
-      state: {
-        mic,
-        camera,
+    if (state.password === "true") {
+      const data = {
         roomNo: state.roomNo,
-        roomTitle: state.roomTitle,
-        host: false,
-      },
-    });
+        inputPassword: password,
+      };
+      axios({
+        method: "post",
+        url: `${baseUrl}live/passwordCheck`,
+        data: data,
+        headers: { "Content-type": "application/json" },
+      })
+        .then((res) => {
+          if (res.data === "success") {
+            navigate(`/room/${res.data.roomNo}`, {
+              state: {
+                mic,
+                camera,
+                roomNo: res.data.roomNo,
+                roomTitle: res.data.roomTitle,
+                host: false,
+              },
+            });
+          } else {
+            console.alert("비밀번호가 잘못되었습니다");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      navigate(`/room/${state.roomNo}`, {
+        state: {
+          mic,
+          camera,
+          roomNo: state.roomNo,
+          roomTitle: state.roomTitle,
+          host: false,
+        },
+      });
+    }
   };
-  // useEffect(() => {
-  //   if (state.rootTitle === undefined && user.userId === undefined) {
-  //     navigate("/live");
-  //   }
-  // }, []);
+
   const micOnClick = () => {
     setMic((prev) => {
       return !prev;
@@ -60,9 +104,8 @@ function BeforeEnter() {
               </h2>
               <div>
                 <div className={style.textcont}>
-                  <FaUser className={style.highlight} /> 현재 ???{" "}
-                  {/* state.userCnt 현재 인원수 받아와야 함 */}
-                  {state.userCnt}
+                  <FaUser className={style.highlight} /> 현재
+                  {state.users}
                   /6 명이 방에 있습니다.
                 </div>
                 <div className={style.textcont}>
@@ -74,6 +117,18 @@ function BeforeEnter() {
                   하시기 바랍니다.
                 </div>
               </div>
+              <label className={style.tag} htmlFor="password">
+                비밀번호
+                <input
+                  placeholder="방 비밀번호를 입력하세요"
+                  id="password"
+                  value={password}
+                  onChange={passwordChange}
+                  className={style.input}
+                  disabled={disabled}
+                  type="number"
+                />
+              </label>
               <button className={style.button} onClick={backOnClick}>
                 나가기
               </button>
@@ -81,7 +136,7 @@ function BeforeEnter() {
 
             <div className={style.rightcontainer}>
               <div className={style.video}>
-                <VideoContainer mic={mic} camera={camera}/>
+                <VideoContainer mic={mic} camera={camera} />
               </div>
               <div className={style.accessory}>
                 {mic ? (

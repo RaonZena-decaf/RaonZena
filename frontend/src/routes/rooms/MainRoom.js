@@ -224,7 +224,7 @@ function MainRoom(props) {
 
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
-
+    console.log(subscribes.length)
     return () => {
       if (subscribes.length < 1) {
         axios({

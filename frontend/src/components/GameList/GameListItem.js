@@ -14,6 +14,7 @@ const Item = (props) => {
         headcount: props.headcount,
         roomTitle: props.title,
         users: users,
+        password: props.password
       },
     });
   };
