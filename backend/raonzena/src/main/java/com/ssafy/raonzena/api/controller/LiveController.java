@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@CrossOrigin(origins = "https://i8a507.p.ssafy.io/")
 @RequestMapping("/api/v1/live")
 @RestController
 public class LiveController {
