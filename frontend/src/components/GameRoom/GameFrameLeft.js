@@ -66,6 +66,7 @@ function GameFrameLeft({
         "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
     },
   ]);
+
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
@@ -74,14 +75,49 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp + 5 };
+              return { ...user, exp: user.exp + (100 - user.exp) };
             }
             return user;
           })
         );
       }
+      // if (data.gamename === "joker" && data.clicked >= 1 && data.clicked <= 8) {
+      //   setUserList((prev) =>
+      //     prev.map((user) => {
+      //       if (user.userNo === data.userNo) {
+      //         return { ...user, exp: user.exp + 5 };
+      //       }
+      //       return user;
+      //     })
+      //   );
+      // }
     });
   }, []);
+
+  // useEffect(() => {
+  //   openvidu.session.on("signal:TrueAnswer", (event) => {
+  //     const data = JSON.parse(event.data);
+  //     console.log(data.userNo);
+  //     if (data.gamename === "joker") {
+  //       let exp = 0;
+  //       if (data.clicked >= 1 && data.clicked <= 8) {
+  //         exp = 5;
+  //       } else if (data.clicked >= 7 && data.clicked <= 11) {
+  //         exp = 10;
+  //       } else if (data.clicked === 1) {
+  //         exp = ;
+  //       }
+  //       setUserList((prev) =>
+  //         prev.map((user) => {
+  //           if (user.userNo === data.userNo) {
+  //             return { ...user, exp: user.exp + exp };
+  //           }
+  //           return user;
+  //         })
+  //       );
+  //     }
+  //   });
+  // }, []);
 
   userList.sort(function (a, b) {
     return b.points - a.points;
