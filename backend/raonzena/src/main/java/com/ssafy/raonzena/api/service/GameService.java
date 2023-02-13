@@ -34,13 +34,8 @@ public interface GameService {
     // 게임 데이터 저장하기
     GameScoreRes findGameScore(long roomNo);
 
+    // 게임방에 참여중인 인원수 조회
     int findActiveHeadCount(long roomNo);
-
-    // 캐치마인드 그림 저장하기
-    void savePainting(String painting, long roomNo);
-
-    // 캐치마인드 그림 보내기
-    String findPainting(long roomNo);
 
     // 게임참여 인원수 저장
     void saveActiveHeadCount(long roomNo, int headCount);
