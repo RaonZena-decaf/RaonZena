@@ -45,7 +45,7 @@ function Seeking({ start, result, setResult, openvidu }) {
         requestAnimationFrame(loop);
       });
     }
-  }, [webcam]);
+  }, [webcam,start]);
 
   const loop = async () => {
     webcam.update();
