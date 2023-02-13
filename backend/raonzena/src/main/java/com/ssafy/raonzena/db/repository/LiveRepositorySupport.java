@@ -27,6 +27,15 @@ public class LiveRepositorySupport  {
     @Autowired
     private JPAQueryFactory query;
 
+    //패스워드 확인
+    public String password(long roomNo){
+        return query.
+                select(roomInfo.password)
+                .from(roomInfo)
+                .where(roomInfo.roomNo.eq(roomNo))
+                .fetchOne();
+    }
+
     public List<RoomInfo> selectRooms(Map<String, Object> conditions){
         // 현재 실행중인 방 키워드와 함께 조회
         return query

@@ -1,5 +1,6 @@
 package com.ssafy.raonzena.api.controller;
 
+import com.ssafy.raonzena.api.request.PasswordReq;
 import com.ssafy.raonzena.api.request.RoomReq;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.api.service.GameService;
@@ -78,6 +79,12 @@ public class LiveController {
 
 
     }
+    @PostMapping("/passwordCheck") //방비밀번호 확인
+    public ResponseEntity<?> passwordCheck(@RequestBody PasswordReq passwordReq){
+        return ResponseEntity.ok(liveService.passwordCheck(passwordReq));
+    }
+
+
     @GetMapping
     protected ResponseEntity<List<LiveRoomInfoRes>> liveRoomsList(@RequestParam(required = false) String keyword){
         logger.info("현재 실행중인 게임방 조회");

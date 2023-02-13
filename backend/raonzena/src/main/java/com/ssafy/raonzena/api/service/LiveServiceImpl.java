@@ -1,6 +1,8 @@
 package com.ssafy.raonzena.api.service;
 
+
 import com.ssafy.raonzena.api.controller.LiveController;
+import com.ssafy.raonzena.api.request.PasswordReq;
 import com.ssafy.raonzena.api.response.LiveRoomInfoRes;
 import com.ssafy.raonzena.db.entity.RoomInfo;
 import com.ssafy.raonzena.db.repository.LiveRepository;
@@ -34,6 +36,15 @@ public class LiveServiceImpl implements LiveService {
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
+    @Override
+    public String passwordCheck(PasswordReq passwordReq) {
+        String password = liveRepositorySupport.password(passwordReq.getRoomNo());
+        if(password != null && password.equals(passwordReq.getInputPassword())){
+            return "SUCCESS";
+        }
+        return "FAIL";
+    }
 
     @Override
     public List<LiveRoomInfoRes> findRooms(Map<String, Object> conditions){

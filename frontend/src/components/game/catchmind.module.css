@@ -9,3 +9,25 @@
     width:100%;
     height: 100%
 }
+
+.buttonBlack {
+    background-color: rgba(100,100,100,0.2);
+    font-size: 2rem;
+    margin: 1px;
+}
+.buttonColor {
+    color: white;
+    font-size: 2rem;
+    display: inline-block;
+    text-align: center;
+    height: 3rem;
+    width: 4rem;
+    border: solid rgba(129, 101, 101, 0.151);
+    margin: 1px;
+}
+.result {
+    display: flex;
+    align-items: center;
+    font-size: 3rem;
+  }
+  

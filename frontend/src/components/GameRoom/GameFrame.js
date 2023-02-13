@@ -3,7 +3,7 @@ import React, { useState, useEffect, publisher } from "react";
 import GameFrameLeft from "./GameFrameLeft";
 import GameFrameRight from "./GameFrameRight";
 
-function GameFrame({ gamename, openvidu, host, subscribes }) {
+function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
   const [start, setStart] = useState(false);
   const startHandler = () => {
     setStart(true);
@@ -60,6 +60,7 @@ function GameFrame({ gamename, openvidu, host, subscribes }) {
           gamename={gamename}
           openvidu={openvidu}
           host={host}
+          roomNo={roomNo}
         />
         <GameFrameRight
           start={start}
@@ -68,6 +69,7 @@ function GameFrame({ gamename, openvidu, host, subscribes }) {
           host={host}
           publisher={publisher}
           subscribes={subscribes}
+          roomNo={roomNo}
         />
       </div>
     </div>

@@ -1,28 +1,14 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useReducer,
-  dispatch,
-} from "react";
+import React, { useState, useEffect, useRef, useReducer, dispatch } from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+// import PhotoShoot from "./PhotoShoot";
 
-function ShoutInSilence({
-  start,
-  result,
-  setResult,
-  host,
-  openvidu,
-  peopleList,
-}) {
-  const timeLimit = 10;
+function ShoutInSilence({ start, result, setResult, host, openvidu, userList, closeMenu,}) {
+  const timeLimit = 10; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(timeLimit);
-  const [isWrong, setIsWrong] = useState(false); // 정답 유무
   const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
   const videoRef = useRef(null);
@@ -30,7 +16,7 @@ function ShoutInSilence({
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [answerList, setAnswerList] = useState([]);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -92,9 +78,10 @@ function ShoutInSilence({
         //마지막 문제인 경우
         if (step === answerList.length - 1) {
           setIsAnswerShown(true);
-
           // 더 할 것인지 아닌지 확인
 
+          // 모달 띄우기
+          setShowModal(true);
           return;
         } else {
           const timeoutId = setTimeout(() => {
@@ -142,24 +129,98 @@ function ShoutInSilence({
     video.addVideoElement(videoRef.current);
   }, []);
 
+  // useEffect(() => {
+  //   if (videoRef.current) {
+  //     const video = openvidu.publisher;
+  //     video.addVideoElement(videoRef.current);
+  //   }
+  // }, [videoRef.current]);
+
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
   // 모달창 노출
-  const showModal = () => {
-    setModalOpen(true);
-  };
+  // const showModal = () => {
+  //   setModalOpen(true);
+  // };
 
   useEffect(() => {
     getAnswerList();
   }, []);
+
+  // if (step < answerList.length) {
+  //   return (
+  //     <div>
+  //       {host ? (
+  //         <div>
+  //           <div className={styles.webcamCapture}>
+  //             {videoRef.current !== undefined ? (<video autoPlay={true} ref={videoRef} width="80%" />) : null}
+  //             <div className={styles.Container}>
+  //               <span className={styles.questionNo}>
+  //                 {step + 1} / {answerList.length}
+  //               </span>
+  //               <span className={styles.TimeLimit}>
+  //                 {" "}
+  //                 {minutes} :{" "}
+  //                 {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+  //               </span>
+  //               {answerList.length > 0 ? (
+  //                 <span className={styles.AnswerFont}>
+  //                   정답 : {answerList[step].answer}
+  //                 </span>
+  //               ) : null}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       ) : (
+  //         <div>
+  //           <div id="wrongMassage" className={styles.wrongMassage}>
+  //             틀렸습니다
+  //           </div>
+  //             <div className={styles.webcamCapture}>
+  //             {videoRef.current !== undefined ? (<video autoPlay={true} ref={videoRef} width="80%" />) : null}
+  //             <div className={styles.Container}>
+  //               <span className={styles.questionNo}>
+  //                 {step + 1} / {answerList.length}
+  //               </span>
+  //               <span className={styles.TimeLimit}>
+  //                 {" "}
+  //                 {minutes} :{" "}
+  //                 {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+  //               </span>
+  //               {answerList.length > 0 ? (
+  //                 <span className={styles.AnswerFont}>
+  //                   정답 :{" "}
+  //                   {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
+  //                 </span>
+  //               ) : null}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // }
+  // else {
+  //   return (<div>
+  //     {showModal && (
+  //       <div className="modal">
+  //         <div className="modal-content">
+  //           <PhotoShoot closeMenu={closeMenu} userList={userList}/>
+  //         </div>
+  //       </div>
+  //     )}
+  //   </div>)
+  // }
 
   return (
     <div>
       {host ? (
         <div>
           <div className={styles.webcamCapture}>
-            <video autoPlay={true} ref={videoRef} width="80%" />
+            {videoRef.current !== undefined ? (
+              <video autoPlay={true} ref={videoRef} width="80%" />
+            ) : null}
             <div className={styles.Container}>
               <span className={styles.questionNo}>
                 {step + 1} / {answerList.length}
@@ -183,7 +244,9 @@ function ShoutInSilence({
             틀렸습니다
           </div>
           <div className={styles.webcamCapture}>
-            <video autoPlay={true} ref={videoRef} width="80%" />
+            {videoRef.current !== undefined ? (
+              <video autoPlay={true} ref={videoRef} width="80%" />
+            ) : null}
             <div className={styles.Container}>
               <span className={styles.questionNo}>
                 {step + 1} / {answerList.length}

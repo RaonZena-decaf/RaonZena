@@ -14,6 +14,7 @@ const Item = (props) => {
         headcount: props.headcount,
         roomTitle: props.title,
         users: users,
+        password: props.password
       },
     });
   };
@@ -27,6 +28,7 @@ const Item = (props) => {
       url: `${baseUrl}games/${props.roomNo}/join`,
     })
       .then((res) => {
+        console.log(res)
         setUsers(res.data);
       })
       .catch((error) => console.log(error));

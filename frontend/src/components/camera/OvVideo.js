@@ -31,7 +31,6 @@ export default class OpenViduVideoComponent extends Component {
           height="100%"
           id={this.state.nickname}
         />
-        ;<span className={style.username}>{this.state.nickname}</span>
       </div>
     );
   }
