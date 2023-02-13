@@ -54,7 +54,7 @@ function BeforeEnter() {
       })
         .then((res) => {
           if (res.data === "Success") {
-            navigate(`/room/${res.data.roomNo}`, {
+            navigate(`/room/${state.roomNo}`, {
               state: {
                 mic,
                 camera,
