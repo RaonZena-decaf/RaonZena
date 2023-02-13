@@ -14,6 +14,7 @@ const RoomMenuFrame = ({
   exitaction,
   ChangeGame,
   TotalUsers,
+  host
 }) => {
   const animation = [
     show === "entering" ? "MenuOpen" : show === "exiting" ? "MenuClose" : null,
@@ -66,8 +67,9 @@ const RoomMenuFrame = ({
           className={`${styles[slideAnimationClass]} ${styles.menucontainer} ${styles[menuContent]}`}
           onClick={(e) => e.stopPropagation()}
         >
+          {host}
           {menuContent === "chooseGame" && (
-            <ChooseGame ChangeGame={ChangeGame} />
+            <ChooseGame ChangeGame={ChangeGame} host={host} />
           )}
           {menuContent === "chatSubject" && (
             <ChatingSubjectLoading
