@@ -78,10 +78,10 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
               <Item
                 key={idx}
                 roomNo={gameRoomInfo.roomNo}
+                roomTitle={gameRoomInfo.roomTitle}
                 host={gameRoomInfo.host}
                 headcount={gameRoomInfo.headcount}
                 password={gameRoomInfo.password}
-                roomImage={gameRoomInfo.imageName}
                 createDate={gameRoomInfo.createDate}
                 imageName={gameRoomInfo.imageName}
               />
