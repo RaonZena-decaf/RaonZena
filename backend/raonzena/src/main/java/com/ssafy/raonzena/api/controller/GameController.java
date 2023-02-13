@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "https://i8a507.p.ssafy.io/")
 @RequestMapping("/api/v1/games")
 @RestController
 public class GameController {
@@ -31,7 +31,7 @@ public class GameController {
 
     @PostMapping("/feed")
     public ResponseEntity<?> saveFeed(@RequestPart(value = "file",required = false) MultipartFile multipartFile, @RequestPart(value="boardReq") BoardReq boardReq){
-        System.out.println("check");
+        logger.info("프로필 피드에 저장");
         gameService.saveFeed(multipartFile,boardReq);
         return ResponseEntity.ok("Success");
     }
@@ -43,12 +43,14 @@ public class GameController {
         return ResponseEntity.ok("Success");
     }
 
-    //게임데이터 (인생역전 제외)
     @GetMapping("/gameType/{gameType}")
     public ResponseEntity<?> gameData(@PathVariable int gameType) {
+        logger.info("게임데이터(인생역전 제외");
         //- 1 : 채팅 주제
         //- 2 : 캐치마인드
         //- 3 : 고요속의 외침
+        //- 4 : 인물퀴즈
+
         if(gameType == 3){
             return ResponseEntity.ok(gameService.answerList());
         }
@@ -59,10 +61,9 @@ public class GameController {
         return ResponseEntity.ok(gameService.answer(gameType));
     }
 
-    //게임데이터 (인생역전)
     @GetMapping("/gameType/chanceGame")
     public ResponseEntity<List<ChanceRes>> chanceGameData(@RequestParam("randomNo") String randomNo){
-
+        logger.info("게임데이터(인생역전");
         String randomNums = randomNo.substring(1,randomNo.length()-1);
         ArrayList<Integer> randomData = new ArrayList<>(Arrays.stream(randomNums.split(","))
                 .map(Integer::parseInt)
@@ -71,15 +72,12 @@ public class GameController {
         return ResponseEntity.ok(gameService.chanceGameData(randomData));
     }
 
-
-    //테마 보여주기
     @GetMapping("/feed/frame")
     public ResponseEntity<List<ImageThemeRes>> getFrame(HttpSession session){
-        //session에서 userNo 받음
+        logger.info("테마 보여주기");
         long userNo = Long.parseLong(session.getAttribute("userNo").toString());
 
         return ResponseEntity.ok(gameService.getFrame(userNo));
-
     }
 
     @GetMapping("/liveScore/{roomNo}")
