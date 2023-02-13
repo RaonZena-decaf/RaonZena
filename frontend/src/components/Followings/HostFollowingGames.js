@@ -4,11 +4,13 @@ import Item from "./HostFollowingGamesItem";
 import styles from "./HostFollowingGames.module.css";
 import { useSelector } from "react-redux";
 import { FaUserTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const HostFollowings = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
   const baseUrl = useSelector((store) => store.baseUrl);
   const nowUserNo = useSelector((store) => store.userData.userNo);
+  const navigate = useNavigate();
   async function getlist() {
     if (nowUserNo) {
       await axios({
@@ -47,7 +49,7 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
     // 가로 스크롤링 이벤트
     console.log("Hostfollowings 컴포넌트 getList 결과", list);
   }, []);
-
+  
   // --------------------스웨거에서 확인한 데이터-------------------
   // 유저 이름    userName={gameRoomInfo.host.userName}
   // 유저 이미지  userImage={gameRoomInfo.host.userImageUrl}
