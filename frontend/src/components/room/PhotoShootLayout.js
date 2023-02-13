@@ -18,13 +18,13 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
   }, []);
 
   return (
-    <img
-      className={styles.photoFrame}
-      id="사진촬영완료"
-      alt="프레임"
-      src={`url(${photoFrame})`}
-      crossOrigin="anonymous"
-    >
+    <div className={styles.photoFrame} id="사진촬영완료">
+      <img
+        className={styles.photoFrameImg}
+        alt="프레임"
+        src={`url(${photoFrame})`}
+        crossOrigin="anonymous"
+      ></img>
       <div className={styles.photoshootlayoutmaintextcontainer}>
         {TotalUsers.map((user) => {
           return (
@@ -35,7 +35,7 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
           );
         })}
       </div>
-    </img>
+    </div>
   );
 }
 
