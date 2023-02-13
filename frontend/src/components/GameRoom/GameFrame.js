@@ -6,7 +6,7 @@ import GameFrameRight from "./GameFrameRight";
 function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
-  console.log("EndGame", end)
+  console.log("EndGame", end, start);
   const startHandler = () => {
     setStart(true);
     if (openvidu.session) {
@@ -21,9 +21,9 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
       setStart(true);
     });
     openvidu.session.on("signal:GameRestart", () => {
-      startHandler()
-      setEnd(false)
-    })
+      startHandler();
+      setEnd(false);
+    });
   }
   const [result, setResult] = useState("");
   const [gameTitle, setGameTitle] = useState("");
@@ -78,6 +78,7 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
           host={host}
           roomNo={roomNo}
           setEnd={setEnd}
+          setStart={setStart}
         />
         <GameFrameRight
           start={start}

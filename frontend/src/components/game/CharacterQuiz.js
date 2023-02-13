@@ -3,7 +3,7 @@ import styles from "./CharacterQuiz.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function CharacterQuiz({ start, result, setResult, openvidu, host, setEnd }) {
+function CharacterQuiz({ start, result, setResult, openvidu, host, setEnd, setStart }) {
   const timeLimit = 3;
 
   const [step, setStep] = useState(0);
@@ -72,6 +72,7 @@ function CharacterQuiz({ start, result, setResult, openvidu, host, setEnd }) {
             setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
             setEnd(true);
+            setStart(false)
           }, 1000);
         } else {
           setTimeout(() => {

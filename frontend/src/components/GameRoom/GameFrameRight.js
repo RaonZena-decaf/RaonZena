@@ -19,12 +19,6 @@ function GameFrameRight({
   const answerOnchange = (e) => {
     setAnswer(e.target.value);
   };
-  if (openvidu.session) {
-    openvidu.session.on("signal:GameEnd", () => {
-      setStart(false)
-      console.log(end, start)
-    });
-  }
   const answerOnclick = (e) => {
     e.preventDefault();
     if (answer !== "") {
