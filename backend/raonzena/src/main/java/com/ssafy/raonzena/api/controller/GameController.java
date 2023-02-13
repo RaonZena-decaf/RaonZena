@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "https://i8a507.p.ssafy.io/")
 @RequestMapping("/api/v1/games")
 @RestController
 public class GameController {
