@@ -21,15 +21,15 @@ function Catchmind({ start, result, setResult, openvidu }) {
       })
       .catch((error) => console.log("following List 에러: ", error));
   }, []);
-  
+
   useEffect(() => {
     const audio = new Audio();
     audio.src = "../music/The Trapezist.mp3";
     audio.play();
     return () => {
       audio.pause();
-    }
-  },[]);
+    };
+  }, []);
 
   useEffect(() => {
     if (openvidu.session) {
@@ -122,18 +122,18 @@ function Catchmind({ start, result, setResult, openvidu }) {
       } else {
         button.style.background = content;
       }
-      button.style.color = "white";
-      button.style.display = "inline-block";
-      button.style.textShadow =
-        "1px 0 black, 0 1px black, 1px 0 black, 0 -1px gray";
-      button.style.lineHeight = "40px";
-      button.style.textAlign = "center";
-      button.style.width = "50px";
-      button.style.height = "50px";
-      button.style.borderRadius = "25px";
-      button.style.border = "4px solid rgba(129, 101, 101, 0.151)";
-      button.style.boxShadow = "1px 2px 2px gray";
-      button.style.marginBottom = "10px";
+      // button.style.color = "white";
+      // button.style.display = "inline-block";
+      // button.style.textShadow =
+      //   "1px 0 black, 0 1px black, 1px 0 black, 0 -1px gray";
+      // button.style.lineHeight = "40px";
+      // button.style.textAlign = "center";
+      // button.style.width = "50px";
+      // button.style.height = "50px";
+      // button.style.borderRadius = "25px";
+      // button.style.border = "4px solid rgba(129, 101, 101, 0.151)";
+      // button.style.boxShadow = "1px 2px 2px gray";
+      // button.style.marginBottom = "10px";
 
       button.onclick = () => {
         ctx.strokeStyle = content;
@@ -193,17 +193,21 @@ function Catchmind({ start, result, setResult, openvidu }) {
   }, [result]);
   return (
     <div>
-      <canvas id="canvas" ref={canvasRef}></canvas>
+      (isAnswerShown ? (
+      <div className={style.result}>
+        <h1>{QuizList[step].answer}</h1>
+      </div>
+      ) :<canvas id="canvas" ref={canvasRef}></canvas>)
       <div id="palette" ref={paletteRef}>
-        <span className={`${style.container1} red`}>red</span>
-        <span className={`${style.container1} yellow`}>yellow</span>
-        <span className={`${style.container1} orange`}>orange</span>
-        <span className={`${style.container1} green`}>green</span>
-        <span className={`${style.container1} blue`}>blue</span>
-        <span className={`${style.container1} navy`}>navy</span>
-        <span className={`${style.container1} purple`}>purple</span>
-        <span className={`${style.container1} black`}>black</span>
-        <span className={`${style.container1} white`}>white</span>
+        <span className={`${style.buttonColor} red`}>red</span>
+        <span className={`${style.buttonColor} yellow`}>yellow</span>
+        <span className={`${style.buttonColor} orange`}>orange</span>
+        <span className={`${style.buttonColor} green`}>green</span>
+        <span className={`${style.buttonColor} blue`}>blue</span>
+        <span className={`${style.buttonColor} navy`}>navy</span>
+        <span className={`${style.buttonColor} purple`}>purple</span>
+        <span className={`${style.buttonColor} black`}>black</span>
+        <span className={`${style.buttonColor} white`}>white</span>
         <span className={style.buttonBlack}>clear</span>
         <span className={style.buttonBlack}>fill</span>
       </div>

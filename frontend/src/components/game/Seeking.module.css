@@ -1,0 +1,19 @@
+.background {
+  height: 50rem;
+  border-radius: 10px;
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  background-color: #353839;
+  overflow: hidden;
+}
+.img {
+  height: 100%;
+  aspect-ratio: unset;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+}
