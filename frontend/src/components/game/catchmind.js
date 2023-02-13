@@ -18,7 +18,7 @@ function Catchmind({
   const baseUrl = useSelector((store) => store.baseUrl);
   const [QuizList, setQuizList] = useState([]);
   const [lineColor, setLineColor] = useState("black");
-
+  console.log("출제 문제", QuizList)
   const dataAxios = () => {
     if (host) {
       axios({
@@ -214,7 +214,7 @@ function Catchmind({
 
   useEffect(() => {
     if (result !== "") {
-      if (result === QuizList[step].answer) {
+      if (result === QuizList.answer) {
         console.log("정답");
         const data = {
           correct: openvidu.userName,
@@ -244,7 +244,7 @@ function Catchmind({
         </span>
         {host || isAnswerShown ? (
           <span className={styles.AnswerFont}>
-            정답 : {QuizList[step].answer}
+            정답 : {QuizList.answer}
           </span>
         ) : null}
       </div>

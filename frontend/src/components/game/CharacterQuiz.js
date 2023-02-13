@@ -94,7 +94,7 @@ function CharacterQuiz({
   }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
-    if (result !== "" && step <= characterimg.length) {
+    if (result !== "" && step < characterimg.length) {
       if (result === characterimg[step].answer) {
         console.log("정답");
         const data = {
