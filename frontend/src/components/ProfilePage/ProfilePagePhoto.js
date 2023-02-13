@@ -32,7 +32,7 @@ function ProfilePagePhoto({ handleOpen, setNowContent,feedList }) {
                     setNowContent(photo);
                   }}
                 >
-                  <img src={photo.boardImageUrl} alt={photo.title} />
+                  <img className={styles.img} src={photo.boardImageUrl} alt={photo.title} />
                 </Item>
               </Grid>
             );
