@@ -54,7 +54,7 @@ function EntryDropUp({ show, setdrop, TotalUsers }) {
       url: `${baseUrl}games/${roomNo}`,
     })
       .then((res) => {
-        setUserList(res);
+        setUserList(res.data);
       })
       .catch((error) => console.log(error));
     //참가유저 리스트를 받아오는 axios 통신
