@@ -3,12 +3,26 @@ import styles from "./GameFrameRight.module.css";
 
 import UserVideoComponent from "../camera/UserVideoComponent";
 
-function GameFrameRight({ startHandler, start, setResult, host, publisher, subscribes, roomNo}) {
+function GameFrameRight({
+  startHandler,
+  start,
+  setResult,
+  host,
+  publisher,
+  subscribes,
+  roomNo,
+  openvidu,
+}) {
   const [answer, setAnswer] = useState("");
+  const [end, setEnd] = useState(false);
   const answerOnchange = (e) => {
     setAnswer(e.target.value);
   };
-
+  if (openvidu.session) {
+    openvidu.session.on("signal:GameEnd", () => {
+      setEnd(true);
+    });
+  }
   const answerOnclick = (e) => {
     e.preventDefault();
     if (answer !== "") {
@@ -17,7 +31,11 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
     }
     setAnswer("");
   };
-
+  const restart = () => {
+    openvidu.session.signal({
+      type: "GameRestart",
+    });
+  };
   const videoFrame = () => {
     if (subscribes.length === 1) {
       return "videoFrame";
@@ -35,9 +53,10 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
       <div className={styles.container}>
         {subscribes.map((sub, idx) => {
           return (
-          <div className={styles[videoFrame()]}>
-          <UserVideoComponent key={idx} streamManager={sub}/>
-          </div>)
+            <div className={styles[videoFrame()]}>
+              <UserVideoComponent key={idx} streamManager={sub} />
+            </div>
+          );
         })}
       </div>
       <div className={styles.submit}>
@@ -59,12 +78,16 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
           제출
         </button>
         {!start ? (
-          <button className={styles.button} onClick={startHandler}>
-            시작
-          </button>
-        ) : (
-          null
-        )}
+          end ? (
+            <div className={styles.button} onClick={restart}>
+              다시하기
+            </div>
+          ) : (
+            <button className={styles.button} onClick={startHandler}>
+              시작
+            </button>
+          )
+        ) : null}
       </div>
     </div>
   );

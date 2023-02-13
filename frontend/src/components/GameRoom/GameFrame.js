@@ -18,6 +18,9 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
     openvidu.session.on("signal:StartGame", () => {
       setStart(true);
     });
+    openvidu.session.on("signal:GameRestart", () => {
+      startHandler()
+    })
   }
   const [result, setResult] = useState("");
   const [gameTitle, setGameTitle] = useState("");
@@ -80,6 +83,8 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
           publisher={publisher}
           subscribes={subscribes}
           roomNo={roomNo}
+          openvidu={openvidu}
+          setStart={setStart}
         />
       </div>
     </div>
