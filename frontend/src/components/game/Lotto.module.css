@@ -14,7 +14,7 @@
 
 .flip {
   width: 200px;
-  height: 230px;
+  height: 225px;
 
   position: relative;
   /* perspective: 1100px; */
@@ -27,7 +27,6 @@
   position: relative;
   transition: 0.4s;
   transform-style: preserve-3d;
-  background-size: cover;
   /* padding: 2rem; */
 }
 
@@ -45,6 +44,7 @@
 
 .front {
   /* background-size: cover; */
+  object-fit: cover;
 }
 
 .back {
