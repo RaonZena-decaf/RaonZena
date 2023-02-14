@@ -102,8 +102,12 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              let newExp = user.exp + 5;
-              return { ...user, exp: newExp > 100 ? 100 : newExp };
+              // let newExp = user.exp + 5;
+              // return { ...user, exp: newExp > 100 ? 100 : newExp };
+              return {
+                ...user,
+                exp: user.exp + data.score > 100 ? 100 : user.exp + data.score,
+              };
             }
             return user;
           })
@@ -113,8 +117,12 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              let newExp = user.exp + 10;
-              return { ...user, exp: newExp > 100 ? 100 : newExp };
+              // let newExp = user.exp + 10;
+              // return { ...user, exp: newExp > 100 ? 100 : newExp };
+              return {
+                ...user,
+                exp: user.exp + data.score > 100 ? 100 : user.exp + data.score,
+              };
             }
             return user;
           })
@@ -124,8 +132,12 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              let newExp = user.exp - 5;
-              return { ...user, exp: newExp < 0 ? 0 : newExp };
+              // let newExp = user.exp - 5;
+              // return { ...user, exp: newExp < 0 ? 0 : newExp };
+              return {
+                ...user,
+                exp: user.exp + data.score < 0 ? 0 : user.exp + data.score,
+              };
             }
             return user;
           })
@@ -135,8 +147,12 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              let newExp = user.exp - 10;
-              return { ...user, exp: newExp < 0 ? 0 : newExp };
+              // let newExp = user.exp - 10;
+              // return { ...user, exp: newExp < 0 ? 0 : newExp };
+              return {
+                ...user,
+                exp: user.exp + data.score < 0 ? 0 : user.exp + data.score,
+              };
             }
             return user;
           })
@@ -156,7 +172,13 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp + data.score };
+              if (user.exp + data.score < 0) {
+                return { ...user, exp: 0 };
+              } else if (user.exp + data.score > 100) {
+                return { ...user, exp: 100 };
+              } else {
+                return { ...user, exp: user.exp + data.score };
+              }
             }
             return user;
           })
