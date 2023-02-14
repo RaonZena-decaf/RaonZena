@@ -22,7 +22,7 @@ function GameFrameLeft({
   setStart
 }) {
   const baseUrl = useSelector((store) => store.baseUrl);
-  const [gameScore, setGameScore] = useState([]);
+  const [newGameScore, setNewGameScore] = useState([]);
   const [userList, setUserList] = useState([
     {
       userNo: 1,
@@ -134,14 +134,15 @@ function GameFrameLeft({
   // }, [userList]);
 
   useEffect(()=>{
-    setGameScore(userList.map(user => [user.userNo, user.gameScore]));
+    setNewGameScore(userList.map(user => [user.userNo, user.gameScore]));
 
     axios({
       method: "POST",
       url: `${baseUrl}games/liveScore/`,
-      data: { roomNo: roomNo, userData: gameScore },
+      data: { roomNo: roomNo, userData: newGameScore },
     })
       .then((res) => {
+        console.log("dkdkdkdkd");
         console.log(res.data);
       })
       .catch((error) => console.log(error));
