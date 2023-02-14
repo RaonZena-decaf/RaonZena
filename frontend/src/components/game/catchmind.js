@@ -70,6 +70,8 @@ function Catchmind({
   }, []);
   // 캐치마인드 그림 부부
 
+
+
   useEffect(() => {
     const canvas = canvasRef.current;
     let lineColor = "black"
@@ -128,7 +130,7 @@ function Catchmind({
       }
     }
 
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     function onMouseMove(event) {
       
       const x = (event.clientX - canvas.offsetLeft) / 2.5;
@@ -201,6 +203,14 @@ function Catchmind({
   const [timeRemaining, setTimeRemaining] = useState(10);
   const [step, setStep] = useState(0);
   useEffect(() => {
+    const reset = () => {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      const height = canvas.height;
+      const width = canvas.width;
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+    }
     console.log("catchmind", start, step);
     if (start && step <= QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
