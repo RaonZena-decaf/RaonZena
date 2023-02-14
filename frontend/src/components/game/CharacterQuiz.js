@@ -45,7 +45,7 @@ function CharacterQuiz({
 
   useEffect(() => {
     dataAxios();
-// 시그널을 한번만 작동시키기 위한 방법
+    // 시그널을 한번만 작동시키기 위한 방법
     if (openvidu.session) {
       openvidu.session.on("signal:TrueAnswer", (event) => {
         const data = JSON.parse(event.data);

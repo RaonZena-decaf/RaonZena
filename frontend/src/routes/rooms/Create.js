@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import style from "./create.module.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar";
@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Loading from "../../components/room/MainLoading";
 
 // 물어볼거
 // 비밀번호 입력 칸 비밀번호 모습으로 감춰야 할까?
@@ -27,6 +28,7 @@ function Create() {
   const [camera, setCamera] = useState(true);
   const [peoplenum, setPeopleNum] = useState("2");
   const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // 방 제목과 비밀번호 input 처리 하는 곳
   const nameChange = (event) => {
@@ -68,7 +70,9 @@ function Create() {
   };
 
   const user = useSelector((store) => store.userData);
-
+  useEffect(() => {
+    setLoading(true);
+  }, []);
   // 방 만드는 axios 통신
   const createOnClick = (event) => {
     event.preventDefault();
@@ -97,7 +101,7 @@ function Create() {
                 camera,
                 roomNo: res.data.roomNo,
                 roomTitle: res.data.roomTitle,
-                host : true
+                host: true,
               },
             });
           })
@@ -112,116 +116,120 @@ function Create() {
   return (
     <>
       <Navbar />
-      <div className={style.background}>
-        <div className={style.container}>
-          <div className={style.innercontainer}>
-            <div className={style.leftcontainer}>
-              <h2 className={style.header}>
-                <span>방 생성 중</span>
-              </h2>
-              <form id="create" className={style.textcont}>
-                <ul className={style.ulTag}>
-                  <li>
-                    <label className={style.tag} htmlFor="title">
-                      방 제목
-                    </label>
-                    <input
-                      placeholder="방 제목을 입력하세요"
-                      id="title"
-                      value={roomname}
-                      onChange={nameChange}
-                      className={style.input}
-                    ></input>
-                  </li>
-
-                  <li onClick={labelFocus}>
-                    <label className={style.tag} htmlFor="password">
-                      비밀번호
+      {loading ? (
+        <div className={style.background}>
+          <div className={style.container}>
+            <div className={style.innercontainer}>
+              <div className={style.leftcontainer}>
+                <h2 className={style.header}>
+                  <span>방 생성 중</span>
+                </h2>
+                <form id="create" className={style.textcont}>
+                  <ul className={style.ulTag}>
+                    <li>
+                      <label className={style.tag} htmlFor="title">
+                        방 제목
+                      </label>
                       <input
-                        id="checkbox"
-                        className={style.checkbox}
-                        type="checkbox"
-                        name="color"
-                        value={disabled}
-                        onClick={disableOnClick}
-                        ref={passwordRef}
+                        placeholder="방 제목을 입력하세요"
+                        id="title"
+                        value={roomname}
+                        onChange={nameChange}
+                        className={style.input}
+                      ></input>
+                    </li>
+
+                    <li onClick={labelFocus}>
+                      <label className={style.tag} htmlFor="password">
+                        비밀번호
+                        <input
+                          id="checkbox"
+                          className={style.checkbox}
+                          type="checkbox"
+                          name="color"
+                          value={disabled}
+                          onClick={disableOnClick}
+                          ref={passwordRef}
+                        />
+                        <label htmlFor="checkbox" className={style.label} />
+                      </label>
+                      <input
+                        placeholder="방 비밀번호를 입력하세요"
+                        id="password"
+                        value={password}
+                        onChange={passwordChange}
+                        className={style.input}
+                        disabled={disabled}
+                        type="number"
                       />
-                      <label htmlFor="checkbox" className={style.label} />
-                    </label>
-                    <input
-                      placeholder="방 비밀번호를 입력하세요"
-                      id="password"
-                      value={password}
-                      onChange={passwordChange}
-                      className={style.input}
-                      disabled={disabled}
-                      type="number"
+                    </li>
+
+                    <li>
+                      <label className={style.tag}>인원 수</label>
+                      <select
+                        className={style.dropdown}
+                        name="peoplenum"
+                        onChange={peopleOnChange}
+                      >
+                        <option value="2">2명</option>
+                        <option value="3">3명</option>
+                        <option value="4">4명</option>
+                        <option value="5">5명</option>
+                        <option value="6">6명</option>
+                      </select>
+                    </li>
+                  </ul>
+                </form>
+                <button className={style.button} onClick={backOnClick}>
+                  취소
+                </button>
+              </div>
+
+              <div className={style.rightcontainer}>
+                <div className={style.video}>
+                  <VideoContainer mic={mic} camera={camera} />
+                </div>
+                <div className={style.accessory}>
+                  {mic ? (
+                    <FaMicrophoneAlt
+                      onClick={micOnClick}
+                      className={style.togglekey}
                     />
-                  </li>
+                  ) : (
+                    <FaMicrophoneAltSlash
+                      onClick={micOnClick}
+                      className={style.togglekey}
+                    />
+                  )}
 
-                  <li>
-                    <label className={style.tag}>인원 수</label>
-                    <select
-                      className={style.dropdown}
-                      name="peoplenum"
-                      onChange={peopleOnChange}
-                    >
-                      <option value="2">2명</option>
-                      <option value="3">3명</option>
-                      <option value="4">4명</option>
-                      <option value="5">5명</option>
-                      <option value="6">6명</option>
-                    </select>
-                  </li>
-                </ul>
-              </form>
-              <button className={style.button} onClick={backOnClick}>
-                취소
-              </button>
-            </div>
-
-            <div className={style.rightcontainer}>
-              <div className={style.video}>
-                <VideoContainer mic={mic} camera={camera}/>
+                  {camera ? (
+                    <FaVideo
+                      onClick={cameraOnClick}
+                      className={style.togglekey}
+                    />
+                  ) : (
+                    <FaVideoSlash
+                      onClick={cameraOnClick}
+                      className={style.togglekey}
+                    />
+                  )}
+                </div>
+                <button
+                  className={style.enter}
+                  type="submit"
+                  htmlform="create"
+                  onClick={createOnClick}
+                >
+                  생성
+                </button>
               </div>
-              <div className={style.accessory}>
-                {mic ? (
-                  <FaMicrophoneAlt
-                    onClick={micOnClick}
-                    className={style.togglekey}
-                  />
-                ) : (
-                  <FaMicrophoneAltSlash
-                    onClick={micOnClick}
-                    className={style.togglekey}
-                  />
-                )}
-
-                {camera ? (
-                  <FaVideo
-                    onClick={cameraOnClick}
-                    className={style.togglekey}
-                  />
-                ) : (
-                  <FaVideoSlash
-                    onClick={cameraOnClick}
-                    className={style.togglekey}
-                  />
-                )}
-              </div>
-              <button
-                className={style.enter}
-                type="submit"
-                htmlform="create"
-                onClick={createOnClick}
-              >
-                생성
-              </button>
             </div>
-          </div>
+          </div>{" "}
         </div>
-        <Footer />
-      </div>
+      ) : (
+        <Loading />
+      )}
+      <Footer />
     </>
   );
 }

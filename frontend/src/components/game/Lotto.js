@@ -23,29 +23,28 @@ function Lotto({ start, result, openvidu, host }) {
     };
   }, []);
 
-  if (openvidu.session) {
-    openvidu.session.on("signal:TrueAnswer", (event) => {
-      const data = JSON.parse(event.data);
-      setclickedlist((prev) => [...prev, data.clicked]);
-    });
-  }
-
-  openvidu.session.on("signal:SeedNumber", (event) => {
-    const encodedRandomNo = encodeURIComponent(event.data);
-
-    axios({
-      method: "GET",
-      url: `${baseUrl}games/gameType/chanceGame?randomNo=${encodedRandomNo}`,
-    })
-      .then((res) => {
-        setCardlist(res.data);
-      })
-      .catch((error) => console.log(error));
-  });
-
   useEffect(() => {
+    if (openvidu.session) {
+      openvidu.session.on("signal:TrueAnswer", (event) => {
+        const data = JSON.parse(event.data);
+        setclickedlist((prev) => [...prev, data.clicked]);
+      });
+    }
+
+    openvidu.session.on("signal:SeedNumber", (event) => {
+      const encodedRandomNo = encodeURIComponent(event.data);
+
+      axios({
+        method: "GET",
+        url: `${baseUrl}games/gameType/chanceGame?randomNo=${encodedRandomNo}`,
+      })
+        .then((res) => {
+          setCardlist(res.data);
+        })
+        .catch((error) => console.log(error));
+    });
     if (host) {
-      const num = _.sampleSize(_.range(1, 9), 8);
+      const num = _.sampleSize(_.range(1, 40), 8);
 
       console.log("데이터 보내는 곳", num);
       openvidu.session.signal({
@@ -94,6 +93,9 @@ function Lotto({ start, result, openvidu, host }) {
                     className={styles.back}
                     onClick={handleclick}
                     id={lotto.chanceId}
+                    style={{
+                      backgroundImage: `url(/CardImg/card9.png)`,
+                    }}
                   >
                     {lotto.item}
                   </div>
@@ -122,6 +124,9 @@ function Lotto({ start, result, openvidu, host }) {
                     className={styles.back}
                     onClick={handleclick}
                     id={lotto.chanceId}
+                    style={{
+                      backgroundImage: `url(/CardImg/card9.png)`,
+                    }}
                   >
                     {lotto.item}
                   </div>

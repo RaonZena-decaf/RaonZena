@@ -13,6 +13,7 @@ function Catchmind({
   setStart,
 }) {
   // 만약 5개 짜리 리스트로 할꺼면 고요속의 외침으로 변경
+  console.log("catchmind", start)
   const timeLimit = 10;
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
@@ -24,11 +25,11 @@ function Catchmind({
     if (host) {
       axios({
         method: "get",
-        url: `${baseUrl}games/gameType/2`,
+        url: `${baseUrl}games/gameType/3`,
       })
         .then((res) => {
           console.log(res.data);
-          setQuizList([res.data]);
+          setQuizList(res.data);
           if (openvidu.session) {
             const data = JSON.stringify(res.data);
             console.log("게임 데이터", data);
@@ -220,8 +221,8 @@ function Catchmind({
   }, [start, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
-    if (result !== "") {
-      if (result === QuizList.answer) {
+    if (result !== "" && step < QuizList.length) {
+      if (result === QuizList[step].answer) {
         console.log("정답");
         const data = {
           userNo: openvidu.userNo,
@@ -233,7 +234,14 @@ function Catchmind({
         });
         setResult("");
       } else {
-        console.log("오답");
+        const data = {
+          sender: openvidu.userName,
+          answer: result,
+        };
+        openvidu.session.signal({
+          data: JSON.stringify(data),
+          type: "WrongAnswer",
+        });
         setResult("");
       }
     }
@@ -250,23 +258,23 @@ function Catchmind({
         <span className={styles.TimeLimit}>
           {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
-        {host || isAnswerShown ? (
+        {(host || isAnswerShown ) && QuizList.length > 0 ? (
           <span className={styles.AnswerFont}>
-            제시어 : {QuizList.answer}
+            제시어 : {QuizList[step].answer}
           </span>
         ) : null}
       </div>
       <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
-        <span className={`${styles.buttonColor} red`}>red</span>
-        <span className={`${styles.buttonColor} yellow`}>yellow</span>
-        <span className={`${styles.buttonColor} orange`}>orange</span>
-        <span className={`${styles.buttonColor} green`}>green</span>
-        <span className={`${styles.buttonColor} blue`}>blue</span>
-        <span className={`${styles.buttonColor} navy`}>navy</span>
-        <span className={`${styles.buttonColor} purple`}>purple</span>
-        <span className={`${styles.buttonColor} black`}>black</span>
-        <span className={`${styles.buttonColor} white`}>white</span>
+        <span className={`${styles.buttonColor} red`}></span>
+        <span className={`${styles.buttonColor} yellow`}></span>
+        <span className={`${styles.buttonColor} orange`}></span>
+        <span className={`${styles.buttonColor} green`}></span>
+        <span className={`${styles.buttonColor} blue`}></span>
+        <span className={`${styles.buttonColor} navy`}></span>
+        <span className={`${styles.buttonColor} purple`}></span>
+        <span className={`${styles.buttonColor} black`}></span>
+        <span className={`${styles.buttonColor} white`}></span>
         <span className={`${styles.buttonBlack} clear`}>
           clear
         </span>
