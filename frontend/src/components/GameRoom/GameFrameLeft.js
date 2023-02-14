@@ -19,7 +19,7 @@ function GameFrameLeft({
   roomNo,
   setEnd,
   publisher,
-  setStart
+  setStart,
 }) {
   const baseUrl = useSelector((store) => store.baseUrl);
   const [newGameScore, setNewGameScore] = useState([]);
@@ -274,6 +274,7 @@ function GameFrameLeft({
               setResult={setResult}
               openvidu={openvidu}
               host={host}
+              setStart={setStart}
             />
           )}
           {gamename === "talkingsilence" && (
@@ -284,7 +285,7 @@ function GameFrameLeft({
               openvidu={openvidu}
               host={host}
               userList={userList}
-              publisher = {publisher}
+              publisher={publisher}
             />
           )}
           {gamename === "personquiz" && (
