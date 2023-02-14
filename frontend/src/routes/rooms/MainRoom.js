@@ -151,7 +151,7 @@ function MainRoom(props) {
         // --- 4) Connect to the session with a valid user token ---
         getToken().then((token) => {
           mySession
-            .connect(token, { clientData: userName })
+            .connect(token, { clientData: userName, host:host })
             .then(async () => {
               // --- 5) Get your own camera stream ---
               setSession(mySession);
