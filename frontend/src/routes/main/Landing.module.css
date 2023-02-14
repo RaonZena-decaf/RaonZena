@@ -37,7 +37,6 @@
   display: none;
 }
 
-
 .box1 {
   margin-top: 5%;
   margin-bottom: 5%;
@@ -100,7 +99,7 @@
   height: 100vh;
   display: flex;
   flex-wrap: wrap;
-  z-index: 2; 
+  z-index: 2;
   background-color: #1f2122;
   position: relative;
 }
@@ -267,32 +266,31 @@
   }
 }
 
-
-.leftarrow{
+.leftarrow {
   position: absolute;
   left: 5%;
   top: 75%;
   cursor: pointer;
   opacity: 0.5;
   font-size: 3rem;
-  transition: opacity .5s ease;
+  transition: opacity 0.5s ease;
 }
 
-.rightarrow{
+.rightarrow {
   position: absolute;
   right: 5%;
   top: 75%;
   cursor: pointer;
   opacity: 0.5;
   font-size: 3rem;
-  transition: opacity .5s ease;
-
+  transition: opacity 0.5s ease;
 }
 
-.rightarrow:hover{
+.rightarrow:hover {
   opacity: 1;
 }
 
-.leftarrow:hover{
+.leftarrow:hover {
   opacity: 1;
 }
+

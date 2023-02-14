@@ -105,7 +105,7 @@ const Navbar = () => {
   const [searchBar, setSearchBar] = useState(false);
   const activerouter4 = [searchBar === true ? "active" : null];
   const searchBarOpen = () => {
-    setSearchBar(true);
+    setSearchBar(!searchBar);
   };
 
   return (
