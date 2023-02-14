@@ -210,39 +210,32 @@ function Catchmind({
       ctx.fillRect(0, 0, width, height);
     };
 
-    if (start && step <= QuizList.length - 1) {
+    if (start && step < QuizList.length) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
         }, 1000);
         return () => clearInterval(intervalId);
-      }
-
-      if (timeRemaining === 0 && !isAnswerShown) {
-        setIsAnswerShown(true);
-      }
-
-      if (isAnswerShown) {
+      } else {
         if (step === QuizList.length - 1) {
-          setTimeout(() => {
-            setIsAnswerShown(false);
-            setTimeRemaining(timeLimit);
-            // setStep((prev) => (prev += 1));
-            setEnd(true);
-            setStart(false);
-          }, 1000);
+          setIsAnswerShown(true);
           reset();
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
             setStep((prev) => prev + 1);
+            reset();
           }, 1000);
-          reset();
         }
       }
     }
-  }, [start, timeRemaining, isAnswerShown]);
+    if (step >= QuizList.length) {
+      setIsAnswerShown(false);
+      setTimeRemaining(timeLimit);
+      setStart(false);
+    }
+  }, [start, step, timeRemaining, isAnswerShown]);
 
   // useEffect(() => {
   //   const reset = () => {
