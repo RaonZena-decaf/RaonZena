@@ -83,17 +83,18 @@ function Catchmind({
         };
       });
     }
+    const height = canvas.height;
+    const width = canvas.width;
+    
     const ctx = canvas.getContext("2d");
     canvas.style.margin = "10px 0px 0px 0px";
     canvas.style.border = "3px";
     canvas.style.cursor = "pointer";
-    canvas.style.height = "330px";
-    canvas.style.width = "780px";
+    canvas.style.height = height * 2 + 'px';
+    canvas.style.width = width * 2.5 + 'px';
     // canvas.style.borderImage = "linear-gradient(to right, #9D00F1 0%, #f400b0 100%)";
     // canvas.style.borderImageSlice = "2";
 
-    const height = canvas.height;
-    const width = canvas.width;
     document.querySelector(".clear").onclick = (e) => {
       e.preventDefault();
       ctx.fillStyle = "white";
@@ -129,8 +130,9 @@ function Catchmind({
 
     ctx.lineWidth = 3;
     function onMouseMove(event) {
-      const x = event.offsetX;
-      const y = event.offsetY;
+      
+      const x = (event.clientX - canvas.offsetLeft) / 2.5;
+      const y = (event.clientY - canvas.offsetTop) / 2
       if (!painting) {
         ctx.beginPath();
         ctx.moveTo(x, y);
