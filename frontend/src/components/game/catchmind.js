@@ -122,8 +122,8 @@ function Catchmind({
 
     ctx.lineWidth = 3;
     function onMouseMove(event) {
-      const x = event.offsetX;
-      const y = event.offsetY;
+      const x = event.clientX - canvas.offsetLeft;
+      const y = event.clientY - canvas.offsetTop;
       if (!painting) {
         ctx.beginPath();
         ctx.moveTo(x, y);
