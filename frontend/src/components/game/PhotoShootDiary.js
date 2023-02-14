@@ -89,6 +89,9 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
           onChange={frameSelect}
           defaultValue="/themeImg/0.jpg"
         >
+          <option value="보랏빛 바다" disabled hidden>
+            보랏빛 바다
+          </option>
           {frames.map((frame) => (
             <option value={frame.imageUrl}>{frame.imageName}</option>
           ))}
