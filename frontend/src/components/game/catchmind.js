@@ -210,7 +210,7 @@ function Catchmind({
       ctx.fillRect(0, 0, width, height);
     };
 
-    if (start && step < QuizList.length - 1) {
+    if (start && step < QuizList.length) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
@@ -221,19 +221,16 @@ function Catchmind({
         setIsAnswerShown(true);
       }
       if (isAnswerShown) {
-        if (step === QuizList.length - 1) {
+        setTimeout(() => {
           setIsAnswerShown(false);
           setTimeRemaining(timeLimit);
-          setEnd(true);
-          setStart(false);
-        } else {
-          setTimeout(() => {
-            setIsAnswerShown(false);
-            setTimeRemaining(timeLimit);
-            setStep((prev) => prev + 1);
-            reset();
-          }, 1000);
-        }
+          if (step === QuizList.length - 1) {
+            setEnd(true);
+          } else {
+            setStep((prev) => (prev += 1));
+          }
+          reset();
+        }, 1000);
       }
     }
   }, [start, timeRemaining, isAnswerShown, step]);
