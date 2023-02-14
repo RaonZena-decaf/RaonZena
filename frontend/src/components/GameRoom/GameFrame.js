@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import GameFrameLeft from "./GameFrameLeft";
 import GameFrameRight from "./GameFrameRight";
 
-function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
+function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
   console.log("EndGame", end, start);

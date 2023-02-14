@@ -121,8 +121,11 @@ function BeforeEnter() {
                     요청 메세지를 확인하여 주세요.
                   </div>
                   <div className={style.textcont}>
+                    화상이 완전히 출력된 이후에 <br /> 참여하시기 바랍니다.
+                  </div>
+                  <div className={style.textcont}>
                     만약 오류가 발생하였을 경우, <br /> 홈 화면으로 이동 후
-                    재접속 하시기 바랍니다.
+                    재접속하여 주세요.
                   </div>
                 </div>
                 <label className={style.tag} htmlFor="password">
