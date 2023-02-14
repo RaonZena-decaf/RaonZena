@@ -1,11 +1,25 @@
-import React, { useState, useEffect, useRef, useReducer, dispatch, } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+  dispatch,
+} from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-// import PhotoShoot from "./PhotoShoot";
+import GameOverModal from "./GameOverModal";
 
-function ShoutInSilence({ start, result, setResult, host, openvidu, userList, closeMenu, publisher}) {
-  const timeLimit = 10; // 게임 제한 시간
+function ShoutInSilence({
+  start,
+  result,
+  setResult,
+  host,
+  openvidu,
+  userList,
+  closeMenu,
+}) {
+  const timeLimit = 5; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -18,12 +32,19 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
   const [showAnswer, setShowAnswer] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [open, setOpen] = useState(false);
-  
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
     setTimeout(() => {}, 300);
   };
+
+  // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
+  if (openvidu.session) {
+    openvidu.session.on("signal:TrueAnswer", (event) => {
+      const data = JSON.parse(event.data);
+      setIsAnswerShown(true);
+    });
+  }
 
   const handleVideo = () => {
     const video = videoRef.current;
@@ -37,12 +58,17 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
     setAnswer("");
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   //axios로 정답 리스트 가져오는 부분
   function getAnswerList() {
-    if (host) {
+    if (true) {
       axios({
         method: "get",
-        url: `${baseUrl}games/gameType/3`,
+        // url: `${baseUrl}games/gameType/3`,
+        url: "http://localhost:8081/api/v1/games/gameType/3",
       })
         .then((res) => {
           console.log("고요속의 외침 정답 가져온 전체 결과 =>", res.data);
@@ -83,7 +109,6 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
           setIsAnswerShown(true);
           // 더 할 것인지 아닌지 확인
 
-          // 모달 띄우기
           setShowModal(true);
           return;
         } else {
@@ -105,9 +130,14 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
         if (result === answerList[step].answer) {
           console.log("정답");
           // setModalShow(true);
+          document.getElementById("correctMassage").style.display = "block";
+          setTimeout(function () {
+            document.getElementById("correctMassage").style.display = "none";
+          }, 200);
+
           const data = {
             userNo: openvidu.userNo,
-            score: 5
+            score: 5,
           };
           openvidu.session.signal({
             data: JSON.stringify(data),
@@ -133,14 +163,10 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
     video.addVideoElement(videoRef.current);
   }, []);
 
-  // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
-
   useEffect(() => {
     getAnswerList();
   }, []);
 
-  // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
@@ -158,57 +184,32 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
 
   return (
     <div>
-      {host ? (
-        <div>
-          <div className={styles.webcamCapture}>
-            {videoRef.current !== undefined ? (
-              <video autoPlay={true} ref={videoRef} width="80%" />
-            ) : null}
-            <div className={styles.Container}>
-              <span className={styles.questionNo}>
-                {step + 1} / {answerList.length}
-              </span>
-              <span className={styles.TimeLimit}>
-                {" "}
-                {minutes} :{" "}
-                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-              </span>
-              {answerList.length > 0 ? (
-                <span className={styles.AnswerFont}>
-                  정답 : {answerList[step].answer}
-                </span>
-              ) : null}
-            </div>
-          </div>
+      <div id="wrongMassage" className={styles.wrongMassage}>
+        틀렸습니다
+      </div>
+      <div id="correctMassage" className={styles.correctMassage}>
+        맞았습니다
+      </div>
+      <div className={styles.webcamCapture}>
+        {videoRef.current !== undefined ? (
+          <video autoPlay={true} ref={videoRef} width="80%" />
+        ) : null}
+        <div className={styles.Container}>
+          <span className={styles.questionNo}>
+            {step + 1} / {answerList.length}
+          </span>
+          <span className={styles.TimeLimit}>
+            {" "}
+            {minutes} :{" "}
+            {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+          </span>
+          {answerList.length > 0 ? (
+            <span className={styles.AnswerFont}>
+              정답 : {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
+            </span>
+          ) : null}
         </div>
-      ) : (
-        <div>
-          <div id="wrongMassage" className={styles.wrongMassage}>
-            틀렸습니다
-          </div>
-          <div className={styles.webcamCapture}>
-            {videoRef.current !== undefined ? (
-              <video autoPlay={true} ref={videoRef} width="80%" />
-            ) : null}
-            <div className={styles.Container}>
-              <span className={styles.questionNo}>
-                {step + 1} / {answerList.length}
-              </span>
-              <span className={styles.TimeLimit}>
-                {" "}
-                {minutes} :{" "}
-                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-              </span>
-              {answerList.length > 0 ? (
-                <span className={styles.AnswerFont}>
-                  정답 :{" "}
-                  {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
-                </span>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

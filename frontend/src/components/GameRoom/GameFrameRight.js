@@ -47,15 +47,19 @@ function GameFrameRight({
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        <div className={styles[videoFrame()]}>
-          <UserVideoComponent streamManager={publisher} />
-        </div>
         {subscribes.map((sub, idx) => {
-          return (
+          let subData = JSON.parse(sub.stream.connection.data);
+          if (subData.host) { // 방장인 경우
             <div className={styles[videoFrame()]}>
-              <UserVideoComponent key={idx} streamManager={sub} />
-            </div>
-          );
+          <UserVideoComponent key={idx} streamManager={sub} />
+        </div>
+          } else {
+            return (
+              <div className={styles[videoFrame()]}>
+                <UserVideoComponent key={idx} streamManager={sub} />
+              </div>
+            );
+          }
         })}
       </div>
       <div className={styles.submit}>
