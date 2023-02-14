@@ -210,7 +210,7 @@ function Catchmind({
       ctx.fillRect(0, 0, width, height);
     };
 
-    if (start && step < QuizList.length) {
+    if (start && step <= QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
@@ -227,6 +227,7 @@ function Catchmind({
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
+            setStep((prev) => (prev += 1));
             setEnd(true);
             setStart(false);
           }, 1000);
