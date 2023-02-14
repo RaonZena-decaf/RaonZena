@@ -92,10 +92,10 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
         <select
           className={styles.photoshootdiaryselect}
           onChange={frameSelect}
-          defaultValue="/themeImg/0.jpg"
+          defaultValue="프레임 선택"
         >
-          <option value="/themeImg/0.jpg">
-            보랏빛 바다
+          <option value="프레임 선택" disabled hidden>
+            프레임 선택
           </option>
           {frames.map((frame) => (
             <option value={frame.imageUrl}>{frame.imageName}</option>

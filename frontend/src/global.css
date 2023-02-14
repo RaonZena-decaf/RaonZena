@@ -35,6 +35,7 @@ body {
   -ms-user-select:none;
   user-select:none;
   font-family: "GmarketSans";
+  overflow-x: hidden;
 }
 
 /* 스크롤바 변경 */
