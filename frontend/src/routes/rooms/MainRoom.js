@@ -214,7 +214,9 @@ function MainRoom(props) {
     })
       .then((res) => {
         console.log('점수리스트 가져옴');
-        const gamseScores = res.data.userData.slice();
+        // res.data를 순회하면서 user=> [] 형태로 하나씩 push
+        const gamseScores = [] 
+        res.data.userData.map((user) => (gamseScores.push([user.userNo,user.gameScore])))
         gamseScores.push([user.userNo, 0]);
         console.log(gamseScores)
         axios({
