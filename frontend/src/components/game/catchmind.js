@@ -198,6 +198,7 @@ function Catchmind({
 
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(10);
+
   const [step, setStep] = useState(0);
   useEffect(() => {
     const reset = () => {
@@ -209,7 +210,7 @@ function Catchmind({
       ctx.fillRect(0, 0, width, height);
     };
     console.log("catchmind", start, step);
-    if (start && step < QuizList.length - 1) {
+    if (start && step <= QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
@@ -220,29 +221,67 @@ function Catchmind({
         setIsAnswerShown(true);
       }
       if (isAnswerShown) {
-        if (step === QuizList.length - 1) {
-          setTimeout(() => {
-            setIsAnswerShown(false);
-            setTimeRemaining(timeLimit);
-            // setStep((prev) => (prev += 1));
-            setEnd(true);
-            setStart(false);
-          }, 1000);
+        if (step === QuizList.length) {
+          setIsAnswerShown(false);
+          setTimeRemaining(timeLimit);
+          setEnd(true);
+          setStart(false);
           reset();
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
-            setStep((prev) => (prev += 1));
+            setStep((prev) => prev + 1);
+            reset();
           }, 1000);
-          reset();
         }
       }
-    } else if (start && step === QuizList.length) {
-      setEnd(true);
-      setStart(false);
     }
-  }, [start, timeRemaining, isAnswerShown, step, QuizList.length]);
+  }, [start, timeRemaining, isAnswerShown, step]);
+  // useEffect(() => {
+  //   const reset = () => {
+  //     const canvas = canvasRef.current;
+  //     const ctx = canvas.getContext("2d");
+  //     const height = canvas.height;
+  //     const width = canvas.width;
+  //     ctx.fillStyle = "white";
+  //     ctx.fillRect(0, 0, width, height);
+  //   };
+  //   console.log("catchmind", start, step);
+  //   if (start && step < QuizList.length - 1) {
+  //     if (timeRemaining > 0 && !isAnswerShown) {
+  //       const intervalId = setInterval(() => {
+  //         setTimeRemaining(timeRemaining - 1);
+  //       }, 1000);
+  //       return () => clearInterval(intervalId);
+  //     }
+  //     if (timeRemaining === 0 && !isAnswerShown) {
+  //       setIsAnswerShown(true);
+  //     }
+  //     if (isAnswerShown) {
+  //       if (step === QuizList.length - 1) {
+  //         setTimeout(() => {
+  //           setIsAnswerShown(false);
+  //           setTimeRemaining(timeLimit);
+  //           // setStep((prev) => (prev += 1));
+  //           setEnd(true);
+  //           setStart(false);
+  //         }, 1000);
+  //         reset();
+  //       } else {
+  //         setTimeout(() => {
+  //           setIsAnswerShown(false);
+  //           setTimeRemaining(timeLimit);
+  //           setStep((prev) => (prev += 1));
+  //         }, 1000);
+  //         reset();
+  //       }
+  //     }
+  //   } else if (start && step === QuizList.length) {
+  //     setEnd(true);
+  //     setStart(false);
+  //   }
+  // }, [start, timeRemaining, isAnswerShown, step, QuizList.length]);
 
   useEffect(() => {
     if (result !== "" && step < QuizList.length) {
