@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import SearchModalFrame from "../../components/Modal/SearchModalFrame";
+import Tooltip from "../../components/navbar/ToolTip";
 
 const LivePage = () => {
   const { state } = useLocation();
@@ -61,7 +62,12 @@ const LivePage = () => {
                   {`Your`}
                   <b id={styles.pinkcolor}> Followings</b>
                 </div>
-                <FaSearch className={styles.followSearch} onClick={openModal} />
+                <Tooltip message={"유저 검색"}>
+                  <FaSearch
+                    className={styles.followSearch}
+                    onClick={openModal}
+                  />
+                </Tooltip>
               </div>
               <FollowingList />
             </div>

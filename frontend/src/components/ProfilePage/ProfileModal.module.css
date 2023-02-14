@@ -83,3 +83,7 @@
     transform: translateY(-2%);
   }
 }
+
+.notScroll{
+  overflow: hidden;
+}
