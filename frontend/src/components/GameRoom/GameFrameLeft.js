@@ -19,8 +19,10 @@ function GameFrameLeft({
   roomNo,
   setEnd,
   publisher,
-  setStart
+  setStart,
+  subscribes
 }) {
+  console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [userList, setUserList] = useState([
     {
@@ -263,7 +265,8 @@ function GameFrameLeft({
               openvidu={openvidu}
               host={host}
               userList={userList}
-              publisher = {publisher}
+              publisher={publisher}
+              subscribes = {subscribes}
             />
           )}
           {gamename === "personquiz" && (
