@@ -88,7 +88,8 @@ function Catchmind({
     canvas.style.cursor = "pointer";
     const height = canvas.height;
     const width = canvas.width;
-    document.querySelector(".clear").onclick = () => {
+    document.querySelector(".clear").onclick = (e) => {
+      console.log("clear",e)
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, width, height);
     };

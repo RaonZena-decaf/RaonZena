@@ -225,6 +225,9 @@ function GameFrameLeft({
               result={result}
               setResult={setResult}
               openvidu={openvidu}
+              host={host}
+              setEnd={setEnd}
+              setStart={setStart}
             />
           )}
 
@@ -234,6 +237,9 @@ function GameFrameLeft({
               result={result}
               setResult={setResult}
               openvidu={openvidu}
+              host={host}
+              setEnd={setEnd}
+              setStart={setStart}
             />
           )}
           {gamename === "catchmind" && (
