@@ -22,8 +22,11 @@
     text-align: center;
     height: 3rem;
     width: 4rem;
-    border: solid rgba(129, 101, 101, 0.151);
+    /* border: solid rgba(129, 101, 101, 0.151); */
     margin: 1px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 .result {
     display: flex;
