@@ -69,6 +69,7 @@
 .back {
   background-size: cover;
   background: royalblue;
+  text-align: center;
 }
 
 .card:hover {
