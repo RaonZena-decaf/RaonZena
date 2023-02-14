@@ -192,24 +192,7 @@ function MainRoom(props) {
               // });
 
               //현재 유저 점수를 받은 후, 자신의 점수를 0점으로 하여 저장
-              axios({
-                method: "Get",
-                url: `${baseUrl}games/liveScore/${roomId}`,
-              })
-                .then((res) => {
-                  const gamseScores = res.data.userData.slice();
-                  gamseScores.push([user.userNo, 0]);
-                  axios({
-                    method: "post",
-                    url: `${baseUrl}games/liveScore`,
-                    data: { roomNo: roomId, userData: gamseScores },
-                  })
-                    .then((res) => {
-                      console.log(res.data);
-                    })
-                    .catch((error) => console.log(error));
-                })
-                .catch((error) => console.log(error));
+              
             })
             .catch((error) => {
               console.log(
@@ -224,6 +207,28 @@ function MainRoom(props) {
         console.log(error);
       });
   }, []);
+
+useEffect(()=>{axios({
+  method: "Get",
+  url: `${baseUrl}games/liveScore/${roomId}`,
+})
+  .then((res) => {
+    const gamseScores = res.data.userData.slice();
+    gamseScores.push([user.userNo, 0]);
+    axios({
+      method: "post",
+      url: `${baseUrl}games/liveScore`,
+      data: { roomNo: roomId, userData: gamseScores },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  })
+  .catch((error) => console.log(error));
+
+},[])
+
   // 끝
   const onbeforeunload = (event) => {
     leaveSession();
