@@ -225,7 +225,7 @@ function Catchmind({
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
-            setStep((prev) => prev + 1);
+            setStep(0);
             setEnd(true);
             setStart(false);
           }, 1000);
@@ -234,13 +234,16 @@ function Catchmind({
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
-            setStep((prev) => prev + 1);
+            setStep((prev) => (prev += 1));
           }, 1000);
           reset();
         }
       }
+    } else if (start && step >= QuizList.length) {
+      setStart(false);
+      setStep(0);
     }
-  }, [start, timeRemaining, isAnswerShown, step, QuizList.length]);
+  }, [start, timeRemaining, isAnswerShown, step]);
 
   // useEffect(() => {
   //   const reset = () => {
