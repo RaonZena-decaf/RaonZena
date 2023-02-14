@@ -25,9 +25,15 @@ function BeforeEnter() {
   );
   const [loading, setLoading] = useState(false);
   const baseUrl = useSelector((store) => store.baseUrl);
+  const userNo = useSelector((store) => store.userData.userNo);
   const navigate = useNavigate();
   useEffect(() => {
-    setLoading(true);
+    if(userNo === "") {
+      alert("로그인 후 이용 가능해요!")
+      navigate('/live')
+    } else {
+      setLoading(true);
+    }
   }, []);
   // 이전 페이지로 돌아가기
   const backOnClick = () => {
