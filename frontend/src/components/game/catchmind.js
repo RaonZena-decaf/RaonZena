@@ -169,7 +169,7 @@ function Catchmind({
       if (content === "clear" || content === "fill") {
         button.style.background = "rgba(100,100,100,0.2)";
       } else {
-        button.style.background = content;
+        button.style.backgroundImage = `url(../PaletteImg/${content}.png)`;
       }
       // button.style.color = "white";
       // button.style.display = "inline-block";
@@ -332,17 +332,17 @@ function Catchmind({
       </div>
       <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
-        <span className={`${styles.buttonColor} red`}></span>
-        <span className={`${styles.buttonColor} yellow`}></span>
-        <span className={`${styles.buttonColor} orange`}></span>
-        <span className={`${styles.buttonColor} green`}></span>
-        <span className={`${styles.buttonColor} blue`}></span>
-        <span className={`${styles.buttonColor} navy`}></span>
-        <span className={`${styles.buttonColor} purple`}></span>
-        <span className={`${styles.buttonColor} black`}></span>
-        <span className={`${styles.buttonColor} white`}></span>
-        <span className={`${styles.buttonBlack} clear`}>clear</span>
-        <span className={`${styles.buttonBlack} fill`}>fill</span>
+        <div className={`${styles.buttonColor} red`}></div>
+        <div className={`${styles.buttonColor} yellow`}></div>
+        <div className={`${styles.buttonColor} orange`}></div>
+        <div className={`${styles.buttonColor} green`}></div>
+        <div className={`${styles.buttonColor} blue`}></div>
+        <div className={`${styles.buttonColor} navy`}></div>
+        <div className={`${styles.buttonColor} purple`}></div>
+        <div className={`${styles.buttonColor} black`}></div>
+        <div className={`${styles.buttonColor} white`}></div>
+        <div className={`${styles.buttonBlack} clear`}>clear</div>
+        <div className={`${styles.buttonBlack} fill`}>fill</div>
       </div>
     </div>
   );
