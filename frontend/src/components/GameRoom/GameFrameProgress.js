@@ -15,7 +15,7 @@ function GameFrameProgress(props) {
           height: "100%",
           width: `${gameScore}%`,
           backgroundColor: "#a66cff",
-          transition: "width 0.5s",
+          transition: "width 0.5s ease",
         }}
       >
         <span className={styles.progressPercent}>{gameScore}%</span>
