@@ -1,5 +1,5 @@
 import styles from "./GameFrame.module.css";
-import React, { useState, useEffect, publisher } from "react";
+import React, { useState, useEffect } from "react";
 import GameFrameLeft from "./GameFrameLeft";
 import GameFrameRight from "./GameFrameRight";
 
@@ -8,6 +8,9 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
   const [end, setEnd] = useState(false);
   console.log("EndGame", end, start);
   const startHandler = () => {
+    // if (subscribes.lengh < 0 || !host) {
+    //   return
+    // }
     setStart(true);
     if (openvidu.session) {
       openvidu.session.signal({
@@ -16,15 +19,21 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
       });
     }
   };
-  if (openvidu.session) {
-    openvidu.session.on("signal:StartGame", () => {
-      setStart(true);
-    });
-    openvidu.session.on("signal:GameRestart", () => {
-      startHandler();
-      setEnd(false);
-    });
-  }
+  useEffect(() => {
+    if (openvidu.session) {
+      openvidu.session.on("signal:StartGame", () => {
+        setStart(true);
+      });
+      openvidu.session.on("signal:GameRestart", () => {
+        startHandler();
+        setEnd(false);
+      });
+      openvidu.session.on("signal:gameChange", (event) => {
+        setEnd(false);
+        setStart(false);
+      });
+    }
+  });
   const [result, setResult] = useState("");
   const [gameTitle, setGameTitle] = useState("");
 
@@ -85,7 +94,6 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
           startHandler={startHandler}
           setResult={setResult}
           host={host}
-          publisher={publisher}
           subscribes={subscribes}
           roomNo={roomNo}
           openvidu={openvidu}

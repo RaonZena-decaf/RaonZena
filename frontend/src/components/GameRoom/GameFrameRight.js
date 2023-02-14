@@ -8,7 +8,6 @@ function GameFrameRight({
   start,
   setResult,
   host,
-  publisher,
   subscribes,
   roomNo,
   openvidu,
@@ -43,10 +42,13 @@ function GameFrameRight({
       return "videoFrame4";
     }
   };
-
+  console.log("아무튼", openvidu.publisher)
   return (
     <div className={styles.background}>
       <div className={styles.container}>
+        <div className={styles[videoFrame()]}>
+          <UserVideoComponent streamManager={openvidu.publisher} />
+        </div>
         {subscribes.map((sub, idx) => {
           let subData = JSON.parse(sub.stream.connection.data);
           if (subData.host) { // 방장인 경우
