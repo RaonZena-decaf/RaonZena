@@ -88,7 +88,7 @@ function GameFrameLeft({
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       console.log(data.userNo);
-      if (data.gamename === "joker" && data.clicked === 1) {
+      if (data.gamename === "joker" && data.clicked == 1) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -98,7 +98,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 2) {
+      if (data.gamename === "joker" && data.clicked == 2) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -108,7 +108,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 3) {
+      if (data.gamename === "joker" && data.clicked == 3) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -118,7 +118,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 4) {
+      if (data.gamename === "joker" && data.clicked == 4) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -128,7 +128,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 5) {
+      if (data.gamename === "joker" && data.clicked == 5) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
