@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./navbar.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -29,6 +29,35 @@ const Navbar = () => {
   };
   const isLogin = loginConfigure();
 
+
+
+  // 페이지 이동을 위한 함수들
+  const navigateToLanding = () => {
+    if (nowContent.pathname === "/") {
+      window.location.replace('/')
+    } else {
+      navigate("/");
+    }
+  };
+  const navigateToLive = () => {
+    navigate("/live");
+  };
+
+  const navigateToProfile = () => {
+    navigate(`/profile/${user.userNo}`);
+  };
+
+  //로그인함수
+  const redirectUrl = useSelector((store) => store.redirectUrl);
+  const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
+  const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
+  const Login = () => {
+    if (typeof window !== "undefined") {
+      window.location.href = KAKAO_AUTH_URL;
+    }
+  };
+
   const dispatch = useDispatch();
   //로그아웃
   const [animation, setAnimation] = useState("");
@@ -50,33 +79,6 @@ const Navbar = () => {
       navigateToLanding();
       setAnimation("");
     }, 1900);
-  };
-
-  // 페이지 이동을 위한 함수들
-  const navigateToLanding = () => {
-    if (nowContent.pathname === "/") {
-      window.location.replace('/')
-    } else {
-      navigate("/");
-    }
-  };
-  const navigateToLive = () => {
-    navigate("/live");
-  };
-
-  const navigateToProfile = () => {
-    navigate(`/profile/${user.userNo}`);
-  };
-
-  //로그인함수
-  const redirectUrl = useSelector((store) => store.redirectUrl);
-  const Login = () => {
-    const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
-    const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
-    if (typeof window !== "undefined") {
-      window.location.href = KAKAO_AUTH_URL;
-    }
   };
 
   const navigateToCreateRoom = () => {

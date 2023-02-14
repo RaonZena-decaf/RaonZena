@@ -71,7 +71,7 @@
   font-size: 3rem;
 }
 
-button {
+.Cancel {
   background: #f400b0;
   border-radius: 10px;
   padding: 0.6rem;
@@ -115,6 +115,14 @@ button {
   background-clip: content-box, border-box;
 }
 .enter {
+  background: #f400b0;
+  border-radius: 10px;
+  padding: 0.6rem;
+  font-size: 1rem;
+  color: #ffffff;
+  font-size: 2rem;
+  margin-top: 1rem;
+  border: 0;
   width: 60%;
 }
 

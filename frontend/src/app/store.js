@@ -3,7 +3,7 @@ import {
   combineReducers,
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
+import sessionStorage from "redux-persist/es/storage/session";
 import { persistReducer } from "redux-persist";
 import userData from "./userData";
 import baseUrl from "./baseUrl";
@@ -12,7 +12,7 @@ import myFollowingList from "./myFollowingList";
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage : sessionStorage,
   whitelist: ["userData", "myFollowingList"],
 };
 
