@@ -67,8 +67,7 @@
 }
 
 .back {
-  background-size: cover;
-  background: royalblue;
+  background-size: 100% 100%;
   text-align: center;
 }
 
