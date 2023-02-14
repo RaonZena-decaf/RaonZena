@@ -13,6 +13,6 @@ public class GameScoreRes {
 
     private long roomNo;
 
-    private List<List<Long>> userData;
+    private List<userGameInfo> userData;
 
 }
