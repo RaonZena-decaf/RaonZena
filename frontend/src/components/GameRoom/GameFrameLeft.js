@@ -106,7 +106,7 @@ function GameFrameLeft({
               // return { ...user, exp: newExp > 100 ? 100 : newExp };
               return {
                 ...user,
-                exp: user.exp + 5 >= 100 ? 100 : user.exp + data.score,
+                exp: user.exp + 5 >= 100 ? 100 : user.exp + 5,
               };
             }
             return user;
@@ -121,7 +121,7 @@ function GameFrameLeft({
               // return { ...user, exp: newExp > 100 ? 100 : newExp };
               return {
                 ...user,
-                exp: user.exp + 10 >= 100 ? 100 : user.exp + data.score,
+                exp: user.exp + 10 >= 100 ? 100 : user.exp + 10,
               };
             }
             return user;
