@@ -258,7 +258,7 @@ function Catchmind({
         <span className={styles.TimeLimit}>
           {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
-        {(host || isAnswerShown ) && QuizList ? (
+        {(host || isAnswerShown ) && QuizList.length > 0 ? (
           <span className={styles.AnswerFont}>
             제시어 : {QuizList[step].answer}
           </span>
