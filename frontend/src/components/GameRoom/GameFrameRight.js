@@ -33,13 +33,13 @@ function GameFrameRight({
     });
   };
   const videoFrame = () => {
-    if (subscribes.length === 1) {
+    if (subscribes.length === 0) {
       return "videoFrame";
-    } else if (subscribes.length === 2) {
+    } else if (subscribes.length === 1) {
       return "videoFrame2";
-    } else if (subscribes.length <= 4) {
+    } else if (subscribes.length <= 3) {
       return "videoFrame3";
-    } else if (5 <= subscribes.length) {
+    } else if (4 <= subscribes.length) {
       return "videoFrame4";
     }
   };
