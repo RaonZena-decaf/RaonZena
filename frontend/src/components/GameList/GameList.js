@@ -15,9 +15,7 @@ export default function GameList({ searchWord }) {
   const [cardsPerPage] = useState(10);
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   const loginConfigure = () => {
     if (user.userNo === "") {
       return false;

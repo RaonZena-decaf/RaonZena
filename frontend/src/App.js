@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PageNotFound from "./routes/PageNotFound";
 import Auth from "./routes/main/Auth";
@@ -11,8 +11,20 @@ import Create from "./routes/rooms/Create";
 import ProfilePage from "./routes/main/ProfilePage";
 import ScrollToTop from "./components/ScrollToTop";
 import BeforeRoom from "./routes/rooms/BeforeEnter";
+import useCookies from "react-cookie/cjs/useCookies";
 
 function App() {
+  //쿠키삭제
+  const [cookies, setCooke, removeCookie] = useCookies(["TIARA"]);
+  useEffect(() => {
+    window.addEventListener("beforeunload", (e) => {
+      e.preventDefault();
+      removeCookie();
+    });
+    return window.removeEventListener("beforeunload", removeCookie())
+    
+  }, []);
+
   return (
     <Router>
       <ScrollToTop />

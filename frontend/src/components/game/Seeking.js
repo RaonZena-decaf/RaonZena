@@ -45,14 +45,15 @@ function Seeking({ start, result, setResult, openvidu }) {
         requestAnimationFrame(loop);
       });
     }
-  }, [webcam]);
+  }, [webcam,start]);
 
   const loop = async () => {
     webcam.update();
-    await predict();
-    requestAnimationFrame(loop);
+    if (start) {
+      await predict();
+      requestAnimationFrame(loop);
+    }
   };
-
   const predict = async () => {
     const prediction = await model.predict(webcam.canvas);
     let max = 0;
@@ -63,10 +64,11 @@ function Seeking({ start, result, setResult, openvidu }) {
         highlabel = prediction[i].className;
       }
     }
-    document.getElementById("label-container").childNode.innerHTML = highlabel;
+    setLabel(highlabel);
     if (highlabel === "rock") {
       const data = {
-        correct: openvidu.userName,
+        userNo: openvidu.userNo,
+        score : -5
       };
       openvidu.session.signal({
         data: JSON.stringify(data),
@@ -84,36 +86,9 @@ function Seeking({ start, result, setResult, openvidu }) {
     });
   }
   const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(3);
   const [fail, setfail] = useState(null);
   // 임시
-  const [QuizList, setQuizList] = useState([]);
-  useEffect(() => {
-    if (start && step <= QuizList.length - 1) {
-      if (timeRemaining > 0 && !isAnswerShown) {
-        const intervalId = setInterval(() => {
-          setTimeRemaining(timeRemaining - 1);
-        }, 1000);
-        return () => clearInterval(intervalId);
-      }
-      if (timeRemaining === 0 && !isAnswerShown) {
-        setIsAnswerShown(true);
-      }
-      if (isAnswerShown) {
-        if (step === QuizList.length - 1) {
-          setIsAnswerShown(true);
-          return;
-        } else {
-          setTimeout(() => {
-            setIsAnswerShown(false);
-            setTimeRemaining(3);
-            setStep((prev) => (prev += 1));
-          }, 1000);
-        }
-      }
-    }
-  }, [start, timeRemaining, isAnswerShown]);
-
+  
   useEffect(() => {
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
@@ -121,11 +96,12 @@ function Seeking({ start, result, setResult, openvidu }) {
 
   return isAnswerShown ? (
     <div className={styles.result}>
-      <h1>{fail}</h1>
+      <h1>당첨자 : {fail}</h1>
     </div>
   ) : (
     <div className={styles.background}>
       <div id="label-container">
+        {label}
         <div />
       </div>
       <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
