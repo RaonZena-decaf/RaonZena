@@ -4,7 +4,7 @@ import axios from "axios";
 import GameListDisplay from "./GameListDisplay";
 import { Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaCommentDots } from "react-icons/fa";
 
 export default function GameList({ searchWord }) {
@@ -13,8 +13,9 @@ export default function GameList({ searchWord }) {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(10);
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const loginConfigure = () => {
     if (user.userNo === "") {
@@ -28,47 +29,38 @@ export default function GameList({ searchWord }) {
   const [curGameRoomList, setCurGameRoomList] = useState([]);
 
   async function getList(Search) {
-    if (loginConfigure()) {
-      if (Search === null || "") {
-        await axios({
-          method: "GET",
-          url: `${baseUrl}live`,
+    if (Search === null || "") {
+      await axios({
+        method: "GET",
+        url: `${baseUrl}live`,
+      })
+        .then((res) => {
+          setGameRoomList(res.data);
+          // Get currCards
+          const newGameRoomLIst = res.data.slice(
+            indexOfFirstCard,
+            indexOfLastCard
+          );
+          setCurGameRoomList(newGameRoomLIst);
         })
-          .then((res) => {
-            setGameRoomList(res.data);
-            // Get currCards
-            const indexOfLastCard = currentPage * cardsPerPage;
-            const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-
-            const newGameRoomLIst = res.data.slice(
-              indexOfFirstCard,
-              indexOfLastCard
-            );
-            setCurGameRoomList(newGameRoomLIst);
-          })
-          .catch((error) => console.log(error));
-      } else {
-        await axios({
-          method: "get",
-          url: `${baseUrl}live`,
-          params: { keyword: Search },
-        })
-          .then((res) => {
-            setGameRoomList(res.data);
-            // Get currCards
-            const indexOfLastCard = currentPage * cardsPerPage;
-            const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-
-            const newGameRoomLIst = gameRoomList.slice(
-              indexOfFirstCard,
-              indexOfLastCard
-            );
-            setCurGameRoomList(newGameRoomLIst);
-          })
-          .catch((error) => console.log(error));
-      }
+        .catch((error) => console.log(error));
     } else {
-      navigate("/live");
+      await axios({
+        method: "get",
+        url: `${baseUrl}live`,
+        params: { keyword: Search },
+      })
+        .then((res) => {
+          setGameRoomList(res.data);
+          // Get currCards
+          const newGameRoomLIst = res.data.slice(
+            indexOfFirstCard,
+            indexOfLastCard
+          );
+          console.log(newGameRoomLIst)
+          setCurGameRoomList(newGameRoomLIst);
+        })
+        .catch((error) => console.log(error));
     }
   }
 
@@ -82,7 +74,7 @@ export default function GameList({ searchWord }) {
   };
 
   const navigateToCreateRoom = () => {
-    if (loginConfigure) {
+    if (loginConfigure === true) {
       navigate("/makeroom");
     } else {
       alert("Please Login");
