@@ -6,12 +6,10 @@ import { useEffect } from "react";
 
 function ProfileModal({ show, handleClose, nowContent, follower, following }) {
   useEffect(() => {
-    function handleWheel(e) {
-      e.preventDefault();
-    }
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    const body = document.getElementsByTagName("body")[0];
+    body.classList.add(styles.notScroll);
     return () => {
-      window.removeEventListener("wheel", handleWheel);
+      body.classList.remove(styles.notScroll);
     };
   }, []);
 
@@ -39,6 +37,13 @@ function ProfileModal({ show, handleClose, nowContent, follower, following }) {
         className={`${styles.modalContainer} ${styles[slide]}`}
         onClick={(e) => e.stopPropagation()}
       >
+        <button
+          id={styles.modalCloseBtn}
+          className={styles.catchMindGuide}
+          onClick={handleClose}
+        >
+          ✖
+        </button>
         {nowContent && (
           <ProfilePostDetail
             nowContent={nowContent}

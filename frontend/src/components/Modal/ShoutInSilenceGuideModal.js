@@ -20,21 +20,18 @@ function ShoutInSilenceGuideModal({ closeModal }) {
       <FaBell />
       <ol className={styles.modaltxt}>
         <li>
-          방장이 화면 하단의 게임 버튼을 클릭 후, 게임의 종류를 선택하면 게임이
-          시작됩니다.
+          방장에게 <span className={styles.boldHighlight}>키워드</span>가 주어집니다.
         </li>
         <li>
-          게임마다 다른 규칙이 적용되므로, 게임 규칙을 미리 숙지하시길 바랍니다.
+          출제자는 30초 동안 제시어에 대해 <span className={styles.boldHighlight}>음소거 상태</span>로 말을 합니다.
         </li>
-        <li>참가자들은 게임을 플레이하는 것으로 점수를 얻을 수 있습니다.</li>
+        <li>출제가가 말을 하는 동안, 나머지 사람들은 출제자의 입모양을 보고 제시어를 <span className={styles.boldHighlight}>추리</span>합니다.</li>
         <li>
-          방장은 임의로 게임을 중단할 수 있으며, 이 경우 점수는 유지됩니다.
+          정답란에 <span className={styles.boldHighlight}>가장 먼저 답을 제출</span>한 사람과 <span className={styles.boldHighlight}>출제자</span>가 <span className={styles.boldHighlight}>점수</span>를 획득합니다. 출제자도 다른 사람들이 맞추기 쉽도록 열심히 말해 봅시다!
         </li>
         <li>
-          누군가 100점이 되면 게임이 종료됩니다. 이후 자동으로 기념사진 촬영이
-          진행됩니다. 사진은 게임의 결과와 함께 저장됩니다.
+          제한 시간 동안 답을 맞춘 사람이 없으면, 아무도 점수를 얻지 못하고 다음문제로 넘어갑니다.
         </li>
-        <li>게임이 종료되면 점수가 초기화됩니다.</li>
       </ol>
     </>
   );

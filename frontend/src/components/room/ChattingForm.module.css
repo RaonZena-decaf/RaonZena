@@ -2,7 +2,9 @@
   height: 90vh;
   overflow: scroll;
   padding-bottom: 2rem;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 .container::-webkit-scrollbar {
   display: none;
@@ -56,7 +58,7 @@
 .chatbox2{
   position: relative;
   width: 67%;
-  background-color: #8f00ff;
+  background-color: #f400b0;
   margin-right: 5%;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -71,7 +73,7 @@
 	width: 0;
 	height: 0;
 	border: 1rem solid transparent;
-	border-left-color: #8f00ff;;
+	border-left-color: #f400b0;;
 	border-right: 0;
 	border-top: 0;
 	margin-top: -.5rem;
