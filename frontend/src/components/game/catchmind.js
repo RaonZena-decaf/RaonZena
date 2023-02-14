@@ -14,14 +14,13 @@ function Catchmind({
   setStart,
 }) {
   // 만약 5개 짜리 리스트로 할꺼면 고요속의 외침으로 변경
-  console.log("catchmind", start)
+  console.log("catchmind", start);
   const timeLimit = 10;
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [QuizList, setQuizList] = useState([]);
-  const [lineColor, setLineColor] = useState("black");
-  console.log("출제 문제", QuizList)
+  console.log("출제 문제", QuizList);
   const dataAxios = () => {
     if (host) {
       axios({
@@ -70,9 +69,10 @@ function Catchmind({
     };
   }, []);
   // 캐치마인드 그림 부부
-  
+
   useEffect(() => {
     const canvas = canvasRef.current;
+    let lineColor = "black"
     if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         const data = JSON.parse(event.data);
@@ -87,19 +87,21 @@ function Catchmind({
     canvas.style.margin = "10px 0px 0px 0px";
     canvas.style.border = "3px";
     canvas.style.cursor = "pointer";
-    canvas.style.height = "350px";
-    canvas.style.width = "760px";
+    canvas.style.height = "330px";
+    canvas.style.width = "780px";
     // canvas.style.borderImage = "linear-gradient(to right, #9D00F1 0%, #f400b0 100%)";
     // canvas.style.borderImageSlice = "2";
-  
+
     const height = canvas.height;
     const width = canvas.width;
-    document.querySelector(".clear").onclick = () => {
+    document.querySelector(".clear").onclick = (e) => {
+      e.preventDefault();
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, width, height);
     };
 
-    document.querySelector(".fill").onclick = () => {
+    document.querySelector(".fill").onclick = (e) => {
+      e.preventDefault();
       ctx.fillStyle = lineColor;
       ctx.fillRect(0, 0, width, height);
     };
@@ -120,8 +122,7 @@ function Catchmind({
     function startPainting(event) {
       if (host) {
         painting = true;
-      }
-      else {
+      } else {
         painting = false;
       }
     }
@@ -182,9 +183,12 @@ function Catchmind({
       // button.style.boxShadow = "1px 2px 2px gray";
       // button.style.marginBottom = "10px";
 
+      if (content === "clear" || content === "fill") {
+        return;
+      }
       button.onclick = () => {
         ctx.strokeStyle = content;
-        setLineColor(content);
+        lineColor = content
       };
     });
     ctx.fillStyle = "white";
@@ -195,7 +199,7 @@ function Catchmind({
   const [timeRemaining, setTimeRemaining] = useState(10);
   const [step, setStep] = useState(0);
   useEffect(() => {
-    console.log("catchmind", start, step,)
+    console.log("catchmind", start, step);
     if (start && step <= QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
@@ -232,7 +236,7 @@ function Catchmind({
         console.log("정답");
         const data = {
           userNo: openvidu.userNo,
-          score: 15
+          score: 15,
         };
         openvidu.session.signal({
           data: JSON.stringify(data),
@@ -264,7 +268,7 @@ function Catchmind({
         <span className={styles.TimeLimit}>
           {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
-        {(host || isAnswerShown ) && QuizList.length > 0 ? (
+        {(host || isAnswerShown) && QuizList.length > 0 ? (
           <span className={styles.AnswerFont}>
             제시어 : {QuizList[step].answer}
           </span>
@@ -281,12 +285,8 @@ function Catchmind({
         <span className={`${styles.buttonColor} purple`}></span>
         <span className={`${styles.buttonColor} black`}></span>
         <span className={`${styles.buttonColor} white`}></span>
-        <span className={`${styles.buttonBlack} clear`}>
-          clear
-        </span>
-        <span className={`${styles.buttonBlack} fill`} >
-          fill
-        </span>
+        <span className={`${styles.buttonBlack} clear`}>clear</span>
+        <span className={`${styles.buttonBlack} fill`}>fill</span>
       </div>
     </div>
   );
