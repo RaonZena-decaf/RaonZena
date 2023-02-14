@@ -212,7 +212,7 @@ function ShoutInSilence({
               let subData = JSON.parse(sub.stream.connection.data);
               if (subData.host) {
                 return (
-                  <div>
+                  <div className={styles.webcamCapture}>
                     <UserVideoComponent key={idx} streamManager={sub} />
                   </div>
                 );
