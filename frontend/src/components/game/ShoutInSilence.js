@@ -187,9 +187,9 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
             틀렸습니다
           </div>
           <div className={styles.webcamCapture}>
-            {videoRef.current !== undefined ? (
+            {/* {videoRef.current !== undefined ? (
               <video autoPlay={true} ref={videoRef} width="80%" />
-            ) : null}
+            ) : null} */}
             <div className={styles.Container}>
               <span className={styles.questionNo}>
                 {step + 1} / {answerList.length}

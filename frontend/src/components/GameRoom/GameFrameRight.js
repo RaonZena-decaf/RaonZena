@@ -7,6 +7,7 @@ function GameFrameRight({
   startHandler,
   start,
   setResult,
+  gamename,
   host,
   publisher,
   subscribes,
@@ -44,24 +45,49 @@ function GameFrameRight({
     }
   };
 
+  const SilenceVideoFrame = () => {
+    if (subscribes.length === 0) {
+      return "Host";
+    } else if (subscribes.length === 1) {
+      return "videoFrame2";
+    } else if (subscribes.length <= 3) {
+      return "videoFrame3";
+    } else if (4 <= subscribes.length) {
+      return "videoFrame4";
+    }
+  };
+
   return (
     <div className={styles.background}>
-      <div className={styles.container}>
-        {subscribes.map((sub, idx) => {
-          let subData = JSON.parse(sub.stream.connection.data);
-          if (subData.host) { // 방장인 경우
-            <div className={styles[videoFrame()]}>
-          <UserVideoComponent key={idx} streamManager={sub} />
-        </div>
-          } else {
+      {gamename === "talkingsilence" ? (
+        <div className={styles.container}>
+          <div className={styles[videoFrame()]}>
+            <UserVideoComponent streamManager={openvidu.publisher} />
+          </div>
+          {subscribes.map((sub, idx) => {
             return (
               <div className={styles[videoFrame()]}>
                 <UserVideoComponent key={idx} streamManager={sub} />
               </div>
             );
-          }
-        })}
-      </div>
+          })}
+        </div>
+      ) : (
+        // 고요속의 외침 아닌 경우
+        <div className={styles.container}>
+          <div className={styles[videoFrame()]}>
+            <UserVideoComponent streamManager={openvidu.publisher} />
+          </div>
+          {subscribes.map((sub, idx) => {
+            return (
+              <div className={styles[videoFrame()]}>
+                <UserVideoComponent key={idx} streamManager={sub} />
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       <div className={styles.submit}>
         <form id="answer" className={styles.answer}>
           <input
@@ -95,5 +121,4 @@ function GameFrameRight({
     </div>
   );
 }
-
 export default GameFrameRight;
