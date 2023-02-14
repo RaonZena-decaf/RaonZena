@@ -60,15 +60,30 @@ function BeforeEnter() {
       })
         .then((res) => {
           if (res.data === "Success") {
-            navigate(`/room/${state.roomNo}`, {
-              state: {
-                mic,
-                camera,
-                roomNo: state.roomNo,
-                roomTitle: state.roomTitle,
-                host: false,
-              },
-            });
+            axios({
+              method: "get",
+              url: `${baseUrl}games/${state.roomNo}/join`,
+              data: data,
+              headers: { "Content-type": "application/json" },
+            })
+              .then((res) => {
+                if (res.data < state.users) {
+                  navigate(`/room/${state.roomNo}`, {
+                    state: {
+                      mic,
+                      camera,
+                      roomNo: state.roomNo,
+                      roomTitle: state.roomTitle,
+                      host: false,
+                    },
+                  });
+                } else {
+                  alert("현재 방이 가득 찼습니다 나중에 시도해 주세요");
+                }
+              })
+              .catch((e) => {
+                console.log(e);
+              });
           } else {
             alert("비밀번호가 잘못되었습니다");
           }
