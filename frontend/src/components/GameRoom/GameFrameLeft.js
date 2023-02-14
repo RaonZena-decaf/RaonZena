@@ -102,8 +102,8 @@ function GameFrameLeft({
   // console.log(liveScoreData);
 
   axios({
-    method: "POST",
-    url: `${baseUrl}games/liveScore`,
+    method: "GET",
+    url: `${baseUrl}games/liveScore/${roomNo}`,
   })
     .then((res) => {
       console.log("으아아아아아아아아아아아아아아아악");
