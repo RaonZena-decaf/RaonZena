@@ -121,7 +121,7 @@ function Catchmind({
     }
 
     function startPainting(event) {
-      if (!host) {
+      if (host) {
         painting = true;
       } else {
         painting = false;
