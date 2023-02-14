@@ -46,6 +46,20 @@ function GameFrameRight({
     }
   };
 
+  // subscribe는 나 이외의 참가자라 0은 나 혼자만을 의미
+  const videoFrameNotHost = () => {
+    // if (subscribes.length === 0) {
+    //   return "videoFrame";
+    // }
+    if (subscribes.length === 0) {
+      return "videoFrame2";
+    } else if (subscribes.length <= 2) {
+      return "videoFrame3";
+    } else if (3 <= subscribes.length) {
+      return "videoFrame4";
+    }
+  };
+
   return (
     <div className={styles.background}>
       {gamename === "talkingsilence" ? (
@@ -53,9 +67,11 @@ function GameFrameRight({
           {/* <div className={styles[videoFrame()]}>
             <UserVideoComponent streamManager={openvidu.publisher} />
           </div> */}
-          <div className={styles[videoFrame()]}>
-            {!host ? <UserVideoComponent streamManager={openvidu.publisher} /> : null }
-          </div>
+          {!host ? (
+            <div className={styles[videoFrame2()]}>
+              <UserVideoComponent streamManager={openvidu.publisher} />
+            </div>
+          ) : null}
           {subscribes.map((sub, idx) => {
             let subData = JSON.parse(sub.stream.connection.data);
             if (!subData.host) {
