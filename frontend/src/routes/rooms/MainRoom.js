@@ -197,7 +197,7 @@ function MainRoom(props) {
                 url: `${baseUrl}games/liveScore/${roomId}`,
               })
                 .then((res) => {
-                  const gamseScores = res.data.slice();
+                  const gamseScores = res.data.userData.slice();
                   gamseScores.push([user.userNo, 0]);
                   axios({
                     method: "post",
