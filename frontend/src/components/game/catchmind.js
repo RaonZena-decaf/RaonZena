@@ -1,25 +1,62 @@
 import React, { useRef, useState, useEffect } from "react";
-import style from "../game/catchmind.module.css";
+import styles from "../game/catchmind.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function Catchmind({ start, result, setResult, openvidu }) {
+function Catchmind({
+  start,
+  result,
+  setResult,
+  openvidu,
+  host,
+  setEnd,
+  setStart,
+}) {
+  // 만약 5개 짜리 리스트로 할꺼면 고요속의 외침으로 변경
+  const timeLimit = 10;
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [QuizList, setQuizList] = useState([]);
-
-  useEffect(() => {
-    // 게임 데이터 통신
-    axios({
-      method: "get",
-      url: `${baseUrl}games/gameType/2`,
-    })
-      .then((res) => {
-        console.log(res.data);
-        setQuizList(res.data);
+  const [lineColor, setLineColor] = useState("black");
+  console.log("출제 문제", QuizList)
+  const dataAxios = () => {
+    if (host) {
+      axios({
+        method: "get",
+        url: `${baseUrl}games/gameType/2`,
       })
-      .catch((error) => console.log("following List 에러: ", error));
+        .then((res) => {
+          console.log(res.data);
+          setQuizList([res.data]);
+          if (openvidu.session) {
+            const data = JSON.stringify(res.data);
+            console.log("게임 데이터", data);
+            openvidu.session.signal({
+              data: data,
+              type: "SeedNumber",
+            });
+          }
+        })
+        .catch((error) => console.log("캐치마인드 문제 에러: ", error));
+    }
+  };
+  useEffect(() => {
+    dataAxios();
+    if (openvidu.session) {
+      openvidu.session.on("signal:TrueAnswer", (event) => {
+        const data = JSON.parse(event.data);
+        setIsAnswerShown(true);
+      });
+      openvidu.session.on("signal:SeedNumber", (event) => {
+        const data = JSON.parse(event.data);
+        setQuizList(data);
+      });
+      openvidu.session.on("signal:GameRestart", () => {
+        setStep(0);
+        dataAxios();
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -30,8 +67,10 @@ function Catchmind({ start, result, setResult, openvidu }) {
       audio.pause();
     };
   }, []);
-
+  // 캐치마인드 그림 부부
+  
   useEffect(() => {
+    const canvas = canvasRef.current;
     if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         const data = JSON.parse(event.data);
@@ -42,16 +81,22 @@ function Catchmind({ start, result, setResult, openvidu }) {
         };
       });
     }
-
-    const canvas = canvasRef.current;
-
     const ctx = canvas.getContext("2d");
-
     canvas.style.margin = "20px";
     canvas.style.border = "3px double";
     canvas.style.cursor = "pointer";
     const height = canvas.height;
     const width = canvas.width;
+    document.querySelector(".clear").onclick = () => {
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+    };
+
+    document.querySelector(".fill").onclick = () => {
+      ctx.fillStyle = lineColor;
+      ctx.fillRect(0, 0, width, height);
+    };
+
     let painting = false;
 
     function stopPainting(event) {
@@ -66,7 +111,12 @@ function Catchmind({ start, result, setResult, openvidu }) {
     }
 
     function startPainting(event) {
-      painting = true;
+      if (host) {
+        painting = true;
+      }
+      else {
+        painting = false;
+      }
     }
 
     ctx.lineWidth = 3;
@@ -89,15 +139,6 @@ function Catchmind({ start, result, setResult, openvidu }) {
       canvas.addEventListener("mouseleave", stopPainting);
     }
 
-    document.querySelector(".clear").onclick = () => {
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, width, height);
-    };
-
-    document.querySelector(".fill").onclick = () => {
-      ctx.fillStyle = lineColor;
-      ctx.fillRect(0, 0, width, height);
-    };
     const buttons = [
       "red",
       "orange",
@@ -111,7 +152,6 @@ function Catchmind({ start, result, setResult, openvidu }) {
       "clear",
       "fill",
     ];
-    let lineColor = "black";
 
     buttons.forEach((content) => {
       let button = document.querySelector(`.${content}`);
@@ -137,7 +177,7 @@ function Catchmind({ start, result, setResult, openvidu }) {
 
       button.onclick = () => {
         ctx.strokeStyle = content;
-        lineColor = content;
+        setLineColor(content);
       };
     });
     ctx.fillStyle = "white";
@@ -145,9 +185,10 @@ function Catchmind({ start, result, setResult, openvidu }) {
   }, []);
 
   const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(5);
+  const [timeRemaining, setTimeRemaining] = useState(10);
   const [step, setStep] = useState(0);
   useEffect(() => {
+    console.log("catchmind", start, step,)
     if (start && step <= QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
@@ -160,12 +201,17 @@ function Catchmind({ start, result, setResult, openvidu }) {
       }
       if (isAnswerShown) {
         if (step === QuizList.length - 1) {
-          setIsAnswerShown(true);
-          return;
+          setTimeout(() => {
+            setIsAnswerShown(false);
+            setTimeRemaining(timeLimit);
+            setStep((prev) => (prev += 1));
+            setEnd(true);
+            setStart(false);
+          }, 1000);
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
-            setTimeRemaining(5);
+            setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
         }
@@ -175,10 +221,11 @@ function Catchmind({ start, result, setResult, openvidu }) {
 
   useEffect(() => {
     if (result !== "") {
-      if (result === QuizList[step].person_answer) {
+      if (result === QuizList.answer) {
         console.log("정답");
         const data = {
-          correct: openvidu.userName,
+          userNo: openvidu.userNo,
+          score: 15
         };
         openvidu.session.signal({
           data: JSON.stringify(data),
@@ -191,21 +238,41 @@ function Catchmind({ start, result, setResult, openvidu }) {
       }
     }
   }, [result]);
+  // 시간초 관련 계산
+  const [minutes, setMinutes] = useState(0);
+
   return (
     <div>
+      <div className={styles.Container}>
+        <span className={styles.questionNo}>
+          {step + 1} / {QuizList.length}
+        </span>
+        <span className={styles.TimeLimit}>
+          {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+        </span>
+        {host || isAnswerShown ? (
+          <span className={styles.AnswerFont}>
+            제시어 : {QuizList.answer}
+          </span>
+        ) : null}
+      </div>
       <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
-        <span className={`${style.buttonColor} red`}>red</span>
-        <span className={`${style.buttonColor} yellow`}>yellow</span>
-        <span className={`${style.buttonColor} orange`}>orange</span>
-        <span className={`${style.buttonColor} green`}>green</span>
-        <span className={`${style.buttonColor} blue`}>blue</span>
-        <span className={`${style.buttonColor} navy`}>navy</span>
-        <span className={`${style.buttonColor} purple`}>purple</span>
-        <span className={`${style.buttonColor} black`}>black</span>
-        <span className={`${style.buttonColor} white`}>white</span>
-        <span className={`${style.buttonBlack} clear`}>clear</span>
-        <span className={`${style.buttonBlack} fill`}>fill</span>
+        <span className={`${styles.buttonColor} red`}>red</span>
+        <span className={`${styles.buttonColor} yellow`}>yellow</span>
+        <span className={`${styles.buttonColor} orange`}>orange</span>
+        <span className={`${styles.buttonColor} green`}>green</span>
+        <span className={`${styles.buttonColor} blue`}>blue</span>
+        <span className={`${styles.buttonColor} navy`}>navy</span>
+        <span className={`${styles.buttonColor} purple`}>purple</span>
+        <span className={`${styles.buttonColor} black`}>black</span>
+        <span className={`${styles.buttonColor} white`}>white</span>
+        <span className={`${styles.buttonBlack} clear`}>
+          clear
+        </span>
+        <span className={`${styles.buttonBlack} fill`} >
+          fill
+        </span>
       </div>
     </div>
   );

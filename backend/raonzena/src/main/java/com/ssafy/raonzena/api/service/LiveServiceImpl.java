@@ -67,7 +67,19 @@ public class LiveServiceImpl implements LiveService {
     @Override
     public List<LiveRoomInfoRes> findFollowingRooms(long userNo) {
         // 팔로잉 유저들의 방 조회
-        return liveRepositorySupport.selectFollowingRooms(userNo);
+        List<LiveRoomInfoRes> liveRoomInfoRes = new ArrayList<>();
+
+        List<RoomInfo> liveRooms = liveRepositorySupport.selectFollowingRooms(userNo);
+        for (RoomInfo liveRoom : liveRooms){
+            if(liveRoom.getPassword()!=null){
+                // 비밀번호가 존재할 경우
+                liveRoom.setPassword("True");
+            }else{
+                liveRoom.setPassword("False");
+            }
+            liveRoomInfoRes.add(new LiveRoomInfoRes(liveRoom));
+        }
+        return liveRoomInfoRes;
     }
 
     @Override

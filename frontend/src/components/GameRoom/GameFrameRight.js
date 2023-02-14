@@ -3,12 +3,22 @@ import styles from "./GameFrameRight.module.css";
 
 import UserVideoComponent from "../camera/UserVideoComponent";
 
-function GameFrameRight({ startHandler, start, setResult, host, publisher, subscribes, roomNo}) {
+function GameFrameRight({
+  startHandler,
+  start,
+  setResult,
+  host,
+  publisher,
+  subscribes,
+  roomNo,
+  openvidu,
+  setStart,
+  end,
+}) {
   const [answer, setAnswer] = useState("");
   const answerOnchange = (e) => {
     setAnswer(e.target.value);
   };
-
   const answerOnclick = (e) => {
     e.preventDefault();
     if (answer !== "") {
@@ -17,7 +27,11 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
     }
     setAnswer("");
   };
-
+  const restart = () => {
+    openvidu.session.signal({
+      type: "GameRestart",
+    });
+  };
   const videoFrame = () => {
     if (subscribes.length === 1) {
       return "videoFrame";
@@ -33,11 +47,15 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
   return (
     <div className={styles.background}>
       <div className={styles.container}>
+        <div className={styles[videoFrame()]}>
+          <UserVideoComponent streamManager={publisher} />
+        </div>
         {subscribes.map((sub, idx) => {
           return (
-          <div className={styles[videoFrame()]}>
-          <UserVideoComponent key={idx} streamManager={sub}/>
-          </div>)
+            <div className={styles[videoFrame()]}>
+              <UserVideoComponent key={idx} streamManager={sub} />
+            </div>
+          );
         })}
       </div>
       <div className={styles.submit}>
@@ -59,12 +77,16 @@ function GameFrameRight({ startHandler, start, setResult, host, publisher, subsc
           제출
         </button>
         {!start ? (
-          <button className={styles.button} onClick={startHandler}>
-            시작
-          </button>
-        ) : (
-          <button className={styles.button}>게임종료</button>
-        )}
+          end ? (
+            <button className={styles.button} onClick={restart}>
+              다시하기
+            </button>
+          ) : (
+            <button className={styles.button} onClick={startHandler}>
+              시작
+            </button>
+          )
+        ) : null}
       </div>
     </div>
   );

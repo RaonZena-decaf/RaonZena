@@ -3,7 +3,15 @@ import styles from "./CharacterQuiz.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-function CharacterQuiz({ start, result, setResult, openvidu, host }) {
+function CharacterQuiz({
+  start,
+  result,
+  setResult,
+  openvidu,
+  host,
+  setEnd,
+  setStart,
+}) {
   const timeLimit = 3;
 
   const [step, setStep] = useState(0);
@@ -13,8 +21,7 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
 
   const [characterimg, setCharacterimg] = useState({});
-  console.log(host);
-  useEffect(() => {
+  const dataAxios = () => {
     if (host) {
       axios({
         method: "GET",
@@ -24,7 +31,8 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
           setCharacterimg(res.data);
           console.log(res.data);
           if (openvidu.session) {
-            const data = JSON.parse(res.data);
+            const data = JSON.stringify(res.data);
+            console.log("게임 데이터", data);
             openvidu.session.signal({
               data: data,
               type: "SeedNumber",
@@ -33,40 +41,26 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
         })
         .catch((error) => console.log(error));
     }
-  }, []);
-
-  // useEffect(() => {
-  //   axios({
-  //     method: "GET",
-  //     url: `${baseUrl}games/gameType/4`,
-  //   })
-  //     .then((res) => {
-  //       setCharacterimg(res.data);
-  //       console.log(res.data);
-  //       console.log(setCharacterimg);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
+  };
 
   useEffect(() => {
-    if (host) {
-      openvidu.session.signal({
-        data: JSON.stringify(characterimg),
-        type: "charcterimg",
+    dataAxios();
+// 시그널을 한번만 작동시키기 위한 방법
+    if (openvidu.session) {
+      openvidu.session.on("signal:TrueAnswer", (event) => {
+        const data = JSON.parse(event.data);
+        setIsAnswerShown(true);
+      });
+      openvidu.session.on("signal:SeedNumber", (event) => {
+        const data = JSON.parse(event.data);
+        setCharacterimg(data);
+      });
+      openvidu.session.on("signal:GameRestart", () => {
+        setStep(0);
+        dataAxios();
       });
     }
   }, []);
-
-  if (openvidu.session) {
-    openvidu.session.on("signal:TrueAnswer", (event) => {
-      const data = JSON.parse(event.data);
-      setIsAnswerShown(true);
-    });
-    openvidu.session.on("signal:SeedNumber", (event) => {
-      const data = JSON.parse(event.data);
-      setCharacterimg(data);
-    });
-  }
 
   useEffect(() => {
     if (start && step <= characterimg.length - 1) {
@@ -85,6 +79,8 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
+            setEnd(true);
+            setStart(false);
           }, 1000);
         } else {
           setTimeout(() => {
@@ -97,38 +93,13 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
     }
   }, [start, timeRemaining, isAnswerShown]);
 
-  // useEffect(() => {
-  //   if (start && step <= characterimg.length - 1) {
-  //     if (timeRemaining > 0 && !isAnswerShown) {
-  //       const intervalId = setInterval(() => {
-  //         setTimeRemaining(timeRemaining - 1);
-  //       }, 500);
-  //       return () => clearInterval(intervalId);
-  //     }
-  //     if (timeRemaining === 0 && !isAnswerShown) {
-  //       setIsAnswerShown(true);
-  //     }
-  //     if (isAnswerShown) {
-  //       if (step === characterimg.length - 1) {
-  //         setIsAnswerShown(true);
-  //         return;
-  //       } else {
-  //         setTimeout(() => {
-  //           setIsAnswerShown(false);
-  //           setTimeRemaining(3);
-  //           setStep((prev) => (prev += 1));
-  //         }, 500);
-  //       }
-  //     }
-  //   }
-  // }, [start, timeRemaining, isAnswerShown]);
-
   useEffect(() => {
-    if (result !== "") {
+    if (result !== "" && step < characterimg.length) {
       if (result === characterimg[step].answer) {
         console.log("정답");
         const data = {
-          correct: openvidu.userName,
+          userNo: openvidu.userNo,
+          score: 5,
         };
         openvidu.session.signal({
           data: JSON.stringify(data),
@@ -136,11 +107,19 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
         });
         setResult("");
       } else {
-        console.log("오답");
+        const data = {
+          sender: openvidu.userName,
+          answer: result,
+        };
+        openvidu.session.signal({
+          data: JSON.stringify(data),
+          type: "WrongAnswer",
+        });
         setResult("");
       }
     }
   }, [result]);
+
   useEffect(() => {
     const audio = new Audio();
     audio.src = "../music/Girasol.mp3";
@@ -156,7 +135,6 @@ function CharacterQuiz({ start, result, setResult, openvidu, host }) {
           {step + 1} / {characterimg.length}
         </span>
         <span className={styles.TimeLimit}>
-          {" "}
           {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
       </div>

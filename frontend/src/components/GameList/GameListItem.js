@@ -6,6 +6,8 @@ import axios from "axios";
 
 const Item = (props) => {
   const navigate = useNavigate();
+  const [users, setUsers] = useState(0);
+  const baseUrl = useSelector((store) => store.baseUrl);
 
   const navigateToGameRoom = () => {
     navigate(`/beforeroom/${props.roomNo}`, {
