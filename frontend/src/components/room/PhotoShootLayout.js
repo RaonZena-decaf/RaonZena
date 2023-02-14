@@ -16,12 +16,14 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
       );
     }
   }, []);
+
+  console.log(photoFrame)
   return (
     <div
       className={styles.photoFrame}
       id="사진촬영완료"
       style={
-        photoFrame
+        photoFrame !== 1
           ? {
               backgroundImage: `url(${photoFrame})`,
             }

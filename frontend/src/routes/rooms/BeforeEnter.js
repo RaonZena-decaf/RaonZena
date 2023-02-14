@@ -126,7 +126,6 @@ function BeforeEnter() {
                   </div>
                 </div>
                 <label className={style.tag} htmlFor="password">
-                  비밀번호
                   <input
                     placeholder="방 비밀번호를 입력하세요"
                     id="password"
@@ -176,11 +175,11 @@ function BeforeEnter() {
               </div>
             </div>
           </div>
+          <Footer />
         </div>
       ) : (
         <Loading />
       )}
-      <Footer />
     </>
   );
 }
