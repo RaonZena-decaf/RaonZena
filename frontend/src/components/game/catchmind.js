@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "../game/catchmind.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { image } from "@tensorflow/tfjs-core";
 
 function Catchmind({
   start,
@@ -83,9 +84,14 @@ function Catchmind({
       });
     }
     const ctx = canvas.getContext("2d");
-    canvas.style.margin = "20px";
-    canvas.style.border = "3px double";
+    canvas.style.margin = "10px 0px 0px 0px";
+    canvas.style.border = "3px";
     canvas.style.cursor = "pointer";
+    canvas.style.height = "350px";
+    canvas.style.width = "760px";
+    // canvas.style.borderImage = "linear-gradient(to right, #9D00F1 0%, #f400b0 100%)";
+    // canvas.style.borderImageSlice = "2";
+  
     const height = canvas.height;
     const width = canvas.width;
     document.querySelector(".clear").onclick = () => {
