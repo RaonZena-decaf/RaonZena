@@ -68,7 +68,7 @@ function GameFrameRight({
             <UserVideoComponent streamManager={openvidu.publisher} />
           </div> */}
           {!host ? (
-            <div className={styles[videoFrame2()]}>
+            <div className={styles[videoFrameNotHost()]}>
               <UserVideoComponent streamManager={openvidu.publisher} />
             </div>
           ) : null}
