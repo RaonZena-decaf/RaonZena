@@ -20,7 +20,9 @@ function GameFrameLeft({
   setEnd,
   publisher,
   setStart,
+  subscribes
 }) {
+  console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [newGameScore, setNewGameScore] = useState([]);
   const [userList, setUserList] = useState([]);
@@ -240,6 +242,7 @@ function GameFrameLeft({
               host={host}
               userList={userList}
               publisher={publisher}
+              subscribes = {subscribes}
             />
           )}
           {gamename === "personquiz" && (
