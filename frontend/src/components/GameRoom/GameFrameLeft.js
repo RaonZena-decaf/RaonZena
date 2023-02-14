@@ -20,7 +20,7 @@ function GameFrameLeft({
   setEnd,
   publisher,
   setStart,
-  subscribes
+  subscribes,
 }) {
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -69,10 +69,10 @@ function GameFrameLeft({
         setUserList(res.data.userData);
       })
       .catch((error) => console.log(error));
-  }
-  useEffect(()=>{
-    axiosScore()
-  },[]);
+  };
+  useEffect(() => {
+    axiosScore();
+  }, []);
   // useEffect(() => {
   //   const sendLiveScore = async (roomNo, userList) => {
   //     const formattedList = userList.map((user) => ({
@@ -92,22 +92,27 @@ function GameFrameLeft({
   //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
   // }, [userList]);
   const SendScore = () => {
-    setNewGameScore(userList.map(user => ({ userNo: user.userNo, gameScore: user.gameScore })));
+    setNewGameScore(
+      userList.map((user) => ({
+        userNo: user.userNo,
+        gameScore: user.gameScore,
+      }))
+    );
     console.log(newGameScore);
     axios({
       method: "POST",
       url: `${baseUrl}games/liveScore/`,
       data: { roomNo: roomNo, userData: newGameScore },
     })
-    .then((res) => {
-      console.log("dkdkdkdkd");
-      console.log(res.data);
-      userList.sort(function (a, b) {
-        return b.points - a.points;
-      });
-    })
-    .catch((error) => console.log(error));
-  }
+      .then((res) => {
+        console.log("dkdkdkdkd");
+        console.log(res.data);
+        userList.sort(function (a, b) {
+          return b.points - a.points;
+        });
+      })
+      .catch((error) => console.log(error));
+  };
 
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
@@ -127,12 +132,11 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if (user.userNo === data.userNo) {
-                if(user.gameScore + 5 <= 0) {
-                  return {...user, gameScore:0};
-                } else if (user.gameScore + 5);      
-              }
+              if (user.gameScore + 5 <= 0) {
+                return { ...user, gameScore: 0 };
+              } else if (user.gameScore + 5);
             }
+
             return user;
           })
         );
@@ -141,12 +145,11 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if (user.userNo === data.userNo) {
-                if(user.gameScore + 10 <= 0) {
-                  return {...user, gameScore:0};
-                } else if (user.gameScore + 10);      
-              }
+              if (user.gameScore + 10 <= 0) {
+                return { ...user, gameScore: 0 };
+              } else if (user.gameScore + 10);
             }
+
             return user;
           })
         );
@@ -155,12 +158,11 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if (user.userNo === data.userNo) {
-                if(user.gameScore - 5 <= 0) {
-                  return {...user, gameScore:0};
-                } else if (user.gameScore - 5);      
-              }
+              if (user.gameScore - 5 <= 0) {
+                return { ...user, gameScore: 0 };
+              } else if (user.gameScore - 5);
             }
+
             return user;
           })
         );
@@ -169,9 +171,9 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if(user.gameScore - 10 <= 0) {
-                return {...user, gameScore:0};
-              } else if (user.gameScore - 10);      
+              if (user.gameScore - 10 <= 0) {
+                return { ...user, gameScore: 0 };
+              } else if (user.gameScore - 10);
             }
             return user;
           })
@@ -193,10 +195,9 @@ function GameFrameLeft({
           })
         );
       }
-      SendScore()
+      SendScore();
     });
   }, []);
-
 
   return (
     <div className={styles.leftcontainer}>
@@ -244,7 +245,7 @@ function GameFrameLeft({
               host={host}
               userList={userList}
               publisher={publisher}
-              subscribes = {subscribes}
+              subscribes={subscribes}
             />
           )}
           {gamename === "personquiz" && (
