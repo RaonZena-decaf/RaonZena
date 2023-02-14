@@ -94,6 +94,9 @@ function Lotto({ start, result, openvidu, host }) {
                     className={styles.back}
                     onClick={handleclick}
                     id={lotto.chanceId}
+                    style={{
+                      backgroundImage: `url(/CardImg/card${idx + 1}.png)`,
+                    }}
                   >
                     {lotto.item}
                   </div>
@@ -122,6 +125,9 @@ function Lotto({ start, result, openvidu, host }) {
                     className={styles.back}
                     onClick={handleclick}
                     id={lotto.chanceId}
+                    style={{
+                      backgroundImage: `url(/CardImg/card${idx + 1}.png)`,
+                    }}
                   >
                     {lotto.item}
                   </div>
