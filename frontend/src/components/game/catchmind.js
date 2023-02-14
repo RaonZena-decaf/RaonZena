@@ -266,15 +266,15 @@ function Catchmind({
       </div>
       <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
-        <span className={`${styles.buttonColor} red`}>red</span>
-        <span className={`${styles.buttonColor} yellow`}>yellow</span>
-        <span className={`${styles.buttonColor} orange`}>orange</span>
-        <span className={`${styles.buttonColor} green`}>green</span>
-        <span className={`${styles.buttonColor} blue`}>blue</span>
-        <span className={`${styles.buttonColor} navy`}>navy</span>
-        <span className={`${styles.buttonColor} purple`}>purple</span>
-        <span className={`${styles.buttonColor} black`}>black</span>
-        <span className={`${styles.buttonColor} white`}>white</span>
+        <span className={`${styles.buttonColor} red`}></span>
+        <span className={`${styles.buttonColor} yellow`}></span>
+        <span className={`${styles.buttonColor} orange`}></span>
+        <span className={`${styles.buttonColor} green`}></span>
+        <span className={`${styles.buttonColor} blue`}></span>
+        <span className={`${styles.buttonColor} navy`}></span>
+        <span className={`${styles.buttonColor} purple`}></span>
+        <span className={`${styles.buttonColor} black`}></span>
+        <span className={`${styles.buttonColor} white`}></span>
         <span className={`${styles.buttonBlack} clear`}>
           clear
         </span>
