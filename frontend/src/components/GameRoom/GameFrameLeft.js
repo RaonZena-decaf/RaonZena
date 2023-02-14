@@ -25,53 +25,7 @@ function GameFrameLeft({
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [newGameScore, setNewGameScore] = useState([]);
-  const [userList, setUserList] = useState([
-    {
-      userNo: 1,
-      userId: "123456",
-      userName: "홍영민",
-      exp: 50,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 2,
-      userId: "123456",
-      userName: "윤수희",
-      exp: 40,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 3,
-      userId: "123456",
-      userName: "최지연",
-      exp: 30,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 4,
-      userId: "123456",
-      userName: "윤수희",
-      exp: 20,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 7,
-      userId: "2657509460",
-      userName: "임길현",
-      exp: 0,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-  ]);
+  const [userList, setUserList] = useState([]);
   // 내일 확인 해 보자
   // const userListupdate = () => {
   //   axios({
@@ -139,6 +93,7 @@ function GameFrameLeft({
   // }, [userList]);
   const SendScore = () => {
     setNewGameScore(userList.map(user => [user.userNo, user.gameScore]));
+    console.log(newGameScore);
     axios({
       method: "POST",
       url: `${baseUrl}games/liveScore/`,
@@ -162,7 +117,7 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp + (100 - user.exp) };
+              return { ...user, gameScore: user.gameScore + (100 - user.gameScore) };
             }
             return user;
           })
@@ -174,7 +129,7 @@ function GameFrameLeft({
             if (user.userNo === data.userNo) {
               return {
                 ...user,
-                exp: user.exp + 5 >= 100 ? 100 : user.exp + 5,
+                gameScore: user.gameScore + 5 >= 100 ? 100 : user.gameScore + 5,
               };
             }
             return user;
@@ -187,7 +142,7 @@ function GameFrameLeft({
             if (user.userNo === data.userNo) {
               return {
                 ...user,
-                exp: user.exp + 10 >= 100 ? 100 : user.exp + 10,
+                gameScore: user.gameScore + 10 >= 100 ? 100 : user.gameScore + 10,
               };
             }
             return user;
@@ -200,7 +155,7 @@ function GameFrameLeft({
             if (user.userNo === data.userNo) {
               return {
                 ...user,
-                exp: user.exp - 5 <= 0 ? 0 : user.exp - 5,
+                gameScore: user.gameScore - 5 <= 0 ? 0 : user.gameScore - 5,
               };
             }
             return user;
@@ -213,7 +168,7 @@ function GameFrameLeft({
             if (user.userNo === data.userNo) {
               return {
                 ...user,
-                exp: user.exp - 10 <= 0 ? 0 : user.exp - 10,
+                gameScore: user.gameScore - 10 <= 0 ? 0 : user.gameScore - 10,
               };
             }
             return user;
@@ -224,12 +179,12 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if (user.exp + data.score <= 0) {
-                return { ...user, exp: 0 };
-              } else if (user.exp + data.score >= 100) {
-                return { ...user, exp: 100 };
+              if (user.gameScore + data.score <= 0) {
+                return { ...user, gameScore: 0 };
+              } else if (user.gameScore + data.score >= 100) {
+                return { ...user, gameScore: 100 };
               } else {
-                return { ...user, exp: user.exp + data.score };
+                return { ...user, gameScore: user.gameScore + data.score };
               }
             }
             return user;
