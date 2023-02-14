@@ -85,3 +85,7 @@
 .card:hover {
   cursor: pointer;
 }
+
+.img {
+  margin: 1.5rem;
+}
