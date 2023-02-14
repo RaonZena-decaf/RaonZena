@@ -1,15 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./Seeking.module.css";
-import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
 
 const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
-function Seeking({ start, result, setResult, openvidu }) {
-  const [step, setStep] = useState(0);
+function Seeking({
+  start,
+  result,
+  setResult,
+  openvidu,
+  host,
+  setEnd,
+  setStart,
+}) {
+  console.log("setend", setEnd);
   const [model, setModel] = useState(null);
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
-  const [label, setLabel] = useState(null);
+  const [label, setLabel] = useState("");
   const videoRef = useRef(null);
   useEffect(() => {
     const init = async () => {
@@ -33,7 +40,7 @@ function Seeking({ start, result, setResult, openvidu }) {
   }, []);
 
   useEffect(() => {
-    if (!model && !webcam) {
+    if (!model && !webcam && !start) {
       return;
     } else {
       const steps = new Promise((resolve, reject) => {
@@ -45,7 +52,7 @@ function Seeking({ start, result, setResult, openvidu }) {
         requestAnimationFrame(loop);
       });
     }
-  }, [webcam,start]);
+  }, [webcam, start]);
 
   const loop = async () => {
     webcam.update();
@@ -57,7 +64,7 @@ function Seeking({ start, result, setResult, openvidu }) {
   const predict = async () => {
     const prediction = await model.predict(webcam.canvas);
     let max = 0;
-    let highlabel = undefined;
+    let highlabel = "Default";
     for (let i = 0; i < maxPredictions; i++) {
       if (prediction[i].probability.toFixed(2) > max) {
         max = prediction[i].probability.toFixed(2);
@@ -65,10 +72,11 @@ function Seeking({ start, result, setResult, openvidu }) {
       }
     }
     setLabel(highlabel);
-    if (highlabel === "rock") {
+    console.log(start);
+    if (highlabel === "Rock" && start) {
       const data = {
         userNo: openvidu.userNo,
-        score : -5
+        score: -5,
       };
       openvidu.session.signal({
         data: JSON.stringify(data),
@@ -77,32 +85,38 @@ function Seeking({ start, result, setResult, openvidu }) {
     }
   };
 
-  if (openvidu.session) {
-    openvidu.session.on("signal:TrueAnswer", (event) => {
-      const data = JSON.parse(event.data);
-      setIsAnswerShown(true);
-      console.log(data);
-      setfail(data)
-    });
-  }
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [fail, setfail] = useState(null);
   // 임시
-  
+
   useEffect(() => {
+    openvidu.session.on("signal:TrueAnswer", (event) => {
+      const data = JSON.parse(event.data);
+      console.log("끝")
+      setIsAnswerShown(true);
+      setfail(data.userNo);
+      setEnd(true);
+      setStart(false);
+      console.log("dho dksajacna",start)
+    });
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
+    openvidu.session.on("signal:GameRestart", () => {
+      setEnd(false);
+      setIsAnswerShown(false)
+    });
   }, []);
 
-  return isAnswerShown ? (
-    <div className={styles.result}>
-      <h1>당첨자 : {fail}</h1>
-    </div>
-  ) : (
+  return (
     <div className={styles.background}>
       <div id="label-container">
         {label}
         <div />
+        {isAnswerShown ? (
+          <div className={styles.result}>
+            <h1>당첨자 : {fail}</h1>
+          </div>
+        ) : null}
       </div>
       <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
     </div>
