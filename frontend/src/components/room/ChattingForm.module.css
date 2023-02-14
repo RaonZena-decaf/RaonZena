@@ -2,7 +2,9 @@
   height: 90vh;
   overflow: scroll;
   padding-bottom: 2rem;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 .container::-webkit-scrollbar {
   display: none;

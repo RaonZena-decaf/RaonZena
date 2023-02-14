@@ -57,7 +57,6 @@ export default function GameList({ searchWord }) {
             indexOfFirstCard,
             indexOfLastCard
           );
-          console.log(newGameRoomLIst)
           setCurGameRoomList(newGameRoomLIst);
         })
         .catch((error) => console.log(error));

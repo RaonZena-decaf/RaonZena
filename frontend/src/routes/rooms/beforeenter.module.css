@@ -99,3 +99,24 @@
   color: #ffffff;
   border: none;
 }
+
+.input {
+  border: 0;
+  font-size: 14px;
+  width: 25rem;
+  background: #3e3e3e;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  color: white;
+}
+.input::placeholder {
+  text-align: start;
+  color: #cacaca;
+  font-size: 1.5rem;
+}
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
