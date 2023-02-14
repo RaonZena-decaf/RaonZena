@@ -15,7 +15,7 @@ function ProfileFollowerListDetail({ handleClose, follower }) {
       {follower.length === 0 ? (
         <NoFollow />
       ) : (
-        <div>
+        <div className={styles.scroll}>
           {follower.map((follower, userNo) => (
             <div
               key={userNo}

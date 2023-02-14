@@ -113,7 +113,7 @@
   transition: opacity 2s ease 0.4s, transform 0.8s ease;
   border-radius: 1rem;
   animation: flow 2s ease;
-  box-shadow: 0 0 50px #ffffff;
+  box-shadow: 0 0 60px #ffffff;
   scale: 0.8;
 }
 
@@ -123,7 +123,7 @@
     scale: 0.7;
   }
   50% {
-    opacity: 0.3;
+    opacity: 0.5;
     scale: 1;
   }
   100% {
