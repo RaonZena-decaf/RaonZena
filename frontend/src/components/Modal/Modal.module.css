@@ -291,6 +291,12 @@
   animation: changecolor 0.3s ease;
 }
 
+.boldHighlight {
+  color: #f400b0;
+  font-weight: bold;
+}
+
 .notScroll{
   overflow: hidden;
+
 }
