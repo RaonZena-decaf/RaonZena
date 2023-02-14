@@ -87,7 +87,7 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
         <select
           className={styles.photoshootdiaryselect}
           onChange={frameSelect}
-          defaultValue="프레임 선택"
+          defaultValue="/themeImg/0.jpg"
         >
           <option value="프레임 선택" disabled hidden>
             프레임 선택
