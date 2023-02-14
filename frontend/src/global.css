@@ -42,6 +42,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+button{
+  font-family: "GmarketSans";
+}
+
 :root {
   /* fonts */
   --font-noto-sans: "GmarketSans";
