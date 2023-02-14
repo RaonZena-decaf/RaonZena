@@ -151,7 +151,7 @@ function MainRoom(props) {
         // --- 4) Connect to the session with a valid user token ---
         getToken().then((token) => {
           mySession
-            .connect(token, { clientData: userName, host:host })
+            .connect(token, { clientData: userName, host: host })
             .then(async () => {
               // --- 5) Get your own camera stream ---
               setSession(mySession);
@@ -192,7 +192,6 @@ function MainRoom(props) {
               // });
 
               //현재 유저 점수를 받은 후, 자신의 점수를 0점으로 하여 저장
-              
             })
             .catch((error) => {
               console.log(
@@ -208,26 +207,28 @@ function MainRoom(props) {
       });
   }, []);
 
-useEffect(()=>{axios({
-  method: "Get",
-  url: `${baseUrl}games/liveScore/${roomId}`,
-})
-  .then((res) => {
-    const gamseScores = res.data.userData.slice();
-    gamseScores.push([user.userNo, 0]);
+  useEffect(() => {
     axios({
-      method: "post",
-      url: `${baseUrl}games/liveScore`,
-      data: { roomNo: roomId, userData: gamseScores },
+      method: "Get",
+      url: `${baseUrl}games/liveScore/${roomId}`,
     })
       .then((res) => {
-        console.log(res.data);
+        console.log('점수리스트 가져옴');
+        const gamseScores = res.data.userData.slice();
+        gamseScores.push([user.userNo, 0]);
+        axios({
+          method: "post",
+          url: `${baseUrl}games/liveScore`,
+          data: { roomNo: roomId, userData: gamseScores },
+        })
+          .then((res) => {
+            console.log('점수 저장됨');
+            console.log(res.data);
+          })
+          .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
-  })
-  .catch((error) => console.log(error));
-
-},[])
+  }, []);
 
   // 끝
   const onbeforeunload = (event) => {
