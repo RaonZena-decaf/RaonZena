@@ -18,7 +18,7 @@ function GameFrameLeft({
   host,
   roomNo,
   setEnd,
-  setStart,
+  publisher,
 }) {
   const baseUrl = useSelector((store) => store.baseUrl);
   const [userList, setUserList] = useState([
@@ -51,15 +51,6 @@ function GameFrameLeft({
     },
     {
       userNo: 4,
-      userId: "2657509460",
-      userName: "임길현",
-      exp: 0,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 5,
       userId: "123456",
       userName: "윤수희",
       exp: 20,
@@ -67,28 +58,22 @@ function GameFrameLeft({
       userImage:
         "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
     },
+    {
+      userNo: 7,
+      userId: "2657509460",
+      userName: "임길현",
+      exp: 0,
+      level: 1,
+      userImage:
+        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
+    },
   ]);
-  // 내일 확인 해 보자
-  // const userListupdate = () => {
-  //   axios({
-  //     method: "GET",
-  //     url: `${baseUrl}games/${roomNo}`,
-  //   })
-  //     .then((res) => {
-  //       setUserList(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
-  // useEffect (() => {
-  //   userListupdate()
-  // },[openvidu.subscribe])
+
   useEffect(() => {
-    // userListupdate()
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       console.log(data.userNo);
-      if (data.gamename === "joker" && data.clicked == 1) {
+      if (data.gamename === "joker" && data.clicked === 1) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -98,7 +83,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked == 2) {
+      if (data.gamename === "joker" && data.clicked === 2) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -113,7 +98,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked == 3) {
+      if (data.gamename === "joker" && data.clicked === 3) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -128,7 +113,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked == 4) {
+      if (data.gamename === "joker" && data.clicked === 4) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -143,7 +128,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked == 5) {
+      if (data.gamename === "joker" && data.clicked === 5) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -243,8 +228,6 @@ function GameFrameLeft({
               setResult={setResult}
               openvidu={openvidu}
               host={host}
-              setEnd={setEnd}
-              setStart={setStart}
             />
           )}
           {gamename === "talkingsilence" && (
@@ -255,6 +238,7 @@ function GameFrameLeft({
               openvidu={openvidu}
               host={host}
               userList={userList}
+              publisher = {publisher}
             />
           )}
           {gamename === "personquiz" && (
@@ -265,7 +249,6 @@ function GameFrameLeft({
               openvidu={openvidu}
               host={host}
               setEnd={setEnd}
-              setStart={setStart}
             />
           )}
           {gamename === "joker" && (
