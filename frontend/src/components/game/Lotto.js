@@ -73,7 +73,6 @@ function Lotto({ start, result, openvidu, host }) {
   };
   return (
     <div className={styles.background}>
-      <div className={styles.fadeoutbox}>시이이이이자아아아악하겠습니다!!!</div>
       <div className={styles.container}>
         {cardlist.slice(0, 4).map((lotto, idx) => {
           return (
