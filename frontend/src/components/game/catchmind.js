@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "../game/catchmind.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { image } from "@tensorflow/tfjs-core";
+import { FaFillDrip, FaRegTrashAlt } from "react-icons/fa";
 
 function Catchmind({
   start,
@@ -90,8 +90,8 @@ function Catchmind({
     canvas.style.margin = "10px 0px 0px 0px";
     canvas.style.border = "3px";
     canvas.style.cursor = "pointer";
-    canvas.style.height = height * 2 + "px";
-    canvas.style.width = width * 2.5 + "px";
+    canvas.style.height = height * 2.8 + "px";
+    canvas.style.width = width * 2.6 + "px";
     // canvas.style.borderImage = "linear-gradient(to right, #9D00F1 0%, #f400b0 100%)";
     // canvas.style.borderImageSlice = "2";
 
@@ -167,7 +167,7 @@ function Catchmind({
       button.style.cursor = "pointer";
 
       if (content === "clear" || content === "fill") {
-        button.style.background = "rgba(100,100,100,0.2)";
+        button.style.background = "";
       } else {
         button.style.backgroundImage = `url(../PaletteImg/${content}.png)`;
       }
@@ -313,33 +313,37 @@ function Catchmind({
   const [minutes, setMinutes] = useState(0);
 
   return (
-    <div>
+    <div className={styles.Background}>
       <div className={styles.Container}>
         <span className={styles.questionNo}>
-          {step + 1} / {QuizList.length}
+          단계 {step + 1} / {QuizList.length}
         </span>
         <span className={styles.TimeLimit}>
-          {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+          시간 {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
         {(host || isAnswerShown) && QuizList.length > 0 ? (
           <span className={styles.AnswerFont}>
-            제시어 : {QuizList[step].answer}
+            단어 : {QuizList[step].answer}
           </span>
         ) : null}
       </div>
-      <canvas id="canvas" ref={canvasRef}></canvas>
-      <div id="palette" ref={paletteRef}>
+      <canvas className={styles.canvas} id="canvas" ref={canvasRef}></canvas>
+      <div className={styles.palette} ref={paletteRef}>
         <div className={`${styles.buttonColor} red`}></div>
-        <div className={`${styles.buttonColor} yellow`}></div>
         <div className={`${styles.buttonColor} orange`}></div>
+        <div className={`${styles.buttonColor} yellow`}></div>
         <div className={`${styles.buttonColor} green`}></div>
         <div className={`${styles.buttonColor} blue`}></div>
         <div className={`${styles.buttonColor} navy`}></div>
         <div className={`${styles.buttonColor} purple`}></div>
         <div className={`${styles.buttonColor} black`}></div>
         <div className={`${styles.buttonColor} white`}></div>
-        <div className={`${styles.buttonBlack} clear`}>clear</div>
-        <div className={`${styles.buttonBlack} fill`}>fill</div>
+        <div className={`${styles.buttonBlack} clear`}>
+          <FaFillDrip /> <div className={styles.textWithIcon}>채우기</div>
+        </div>
+        <div className={`${styles.buttonBlack} fill`}>
+          <FaRegTrashAlt /> <div className={styles.textWithIcon}>비우기</div>
+        </div>
       </div>
     </div>
   );
