@@ -8,6 +8,9 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo }) {
   const [end, setEnd] = useState(false);
   console.log("EndGame", end, start);
   const startHandler = () => {
+    // if (subscribes.lengh < 0 || !host) {
+    //   return
+    // }
     setStart(true);
     if (openvidu.session) {
       openvidu.session.signal({
