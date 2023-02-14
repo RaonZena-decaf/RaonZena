@@ -8,30 +8,33 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .videoFrame {
-  margin-top: 15%;
   width: 80%;
+  margin: 2rem;
 }
 
 .videoFrame2 {
-  margin-top: 15%;
   width: 45%;
   height: fit-content;
+  margin: 1rem;
+
 }
 
 .videoFrame3 {
-  margin-top: 10%;
   width: 40%;
   height: fit-content;
+  margin: 1rem;
+
 }
 
 .videoFrame4 {
-  margin-top: 13%;
   width: 30%;
   height: fit-content;
+  margin: 1rem;
+
 }
 
 .submit {

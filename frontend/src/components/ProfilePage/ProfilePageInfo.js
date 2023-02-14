@@ -10,6 +10,7 @@ import { modifyMyFollowingList } from "../../app/myFollowingList";
 import ModalPortal from "../Modal/Portal";
 import SearchModalFrame from "../Modal/SearchModalFrame";
 import { Transition } from "react-transition-group";
+import Tooltip from "../navbar/ToolTip";
 
 function ProfilePageInfo({
   handleOpen,
@@ -32,8 +33,6 @@ function ProfilePageInfo({
   const [userInfo, setUserInfo] = useState({});
   const feedLength = feedList.length;
 
-
-
   //모달 표시를 위한 함수
   const [modalOn, setModalOn] = useState(false);
   const openModal = () => {
@@ -43,7 +42,7 @@ function ProfilePageInfo({
   //모달을 닫는 함수
   const closeModal = () => {
     setModalOn(false);
-  };  
+  };
 
   async function callUserInfo() {
     axios({
@@ -81,13 +80,13 @@ function ProfilePageInfo({
       axios({
         method: "POST",
         url: `${baseUrl}profile`,
-        data: {"followNo": user_no},
-        Headers:{"Content-Type": 'application/json'}
+        data: { followNo: user_no },
+        Headers: { "Content-Type": "application/json" },
       })
         .then((res) => {
-          const newfollowing = myFollowings.slice()
-          newfollowing.push(user_no)
-          dispatch(modifyMyFollowingList(newfollowing))
+          const newfollowing = myFollowings.slice();
+          newfollowing.push(user_no);
+          dispatch(modifyMyFollowingList(newfollowing));
         })
         .catch((error) => console.log(error));
     } else {
@@ -96,9 +95,11 @@ function ProfilePageInfo({
         url: `${baseUrl}profile/${user_no}`,
       })
         .then((res) => {
-          const filtered = myFollowings.filter((eliment) => eliment !== user_no)
-          console.log(filtered)
-          dispatch(modifyMyFollowingList(filtered))
+          const filtered = myFollowings.filter(
+            (eliment) => eliment !== user_no
+          );
+          console.log(filtered);
+          dispatch(modifyMyFollowingList(filtered));
         })
         .catch((error) => console.log(error));
     }
@@ -139,7 +140,9 @@ function ProfilePageInfo({
                   {followBtn ? "팔로우 중" : "팔로우"}
                 </button>
               )}
-          <FaSearch className={styles.search} onClick={openModal} />
+          <Tooltip message={"유저 검색"}>
+            <FaSearch className={styles.search} onClick={openModal} />
+          </Tooltip>
         </div>
         <div className={styles.background4}>
           <span className={styles.profileid3}>Exp</span>
@@ -165,12 +168,7 @@ function ProfilePageInfo({
       </div>
       <ModalPortal>
         <Transition unmountOnExit in={modalOn} timeout={500}>
-          {(state) => (
-            <SearchModalFrame
-              show={state}
-              closeModal={closeModal}
-            />
-          )}
+          {(state) => <SearchModalFrame show={state} closeModal={closeModal} />}
         </Transition>
       </ModalPortal>
     </div>

@@ -48,28 +48,30 @@
   border: 0;
   padding: 0.5rem 1rem 0.5rem 1rem;
   word-break: keep-all;
+  transition: background .5s ease;
 }
 
 .button:hover{
   cursor: pointer;
-  background-color: #cb0091;
+  background: #cb0091;
 }
 
 .exitbutton{
   color: white;
   align-self: center;
-  background-color: #f400b0;
+  background-color: crimson;
   padding: 1rem 1.2rem 1rem 1.2rem;
   font-size: 1.5rem;
   border-radius: 1rem;
   cursor: pointer;
   position: absolute;
   left: -5rem;
-  bottom: 5rem;
+  bottom: 6rem;
+  transition: background-color .5s ease;
 }
 
 .exitbutton:hover {
-  background-color: #cb0091;
+  background-color: rgb(177, 16, 48);
   color: white;
 }
 

@@ -20,13 +20,10 @@ const SearchModalFrame = ({ show, closeModal }) => {
   ];
 
   useEffect(() => {
-    function handleWheel(e) {
-      e.preventDefault();
-    }
-    window.addEventListener("wheel", handleWheel, { passive: false });
-
+    const body = document.getElementsByTagName("body")[0];
+    body.classList.add(styles.notScroll);
     return () => {
-      window.removeEventListener("wheel", handleWheel);
+      body.classList.remove(styles.notScroll);
     };
   }, []);
 

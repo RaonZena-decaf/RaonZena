@@ -20,7 +20,6 @@ const Item = (props) => {
       },
     });
   };
-
   useEffect(() => {
     axios({
       method: "get",
