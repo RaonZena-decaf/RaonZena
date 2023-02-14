@@ -102,18 +102,21 @@ function GameFrameLeft({
   // }, [userList]);
 
   // console.log(liveScoreData);
-
-  axios({
-    method: "GET",
-    url: `${baseUrl}games/liveScore/${roomNo}`,
-  })
-    .then((res) => {
-      console.log("으아아아아아아아아아아아아아아아악");
-      console.log(res.data); // Add code to execute here
-      setUserList(res.data.userData);
+  const axiosScore = () => {
+    axios({
+      method: "GET",
+      url: `${baseUrl}games/liveScore/${roomNo}`,
     })
-    .catch((error) => console.log(error));
-
+      .then((res) => {
+        console.log("으아아아아아아아아아아아아아아아악");
+        console.log(res.data); // Add code to execute here
+        setUserList(res.data.userData);
+      })
+      .catch((error) => console.log(error));
+  }
+  useEffect(()=>{
+    axiosScore()
+  },[]);
   // useEffect(() => {
   //   const sendLiveScore = async (roomNo, userList) => {
   //     const formattedList = userList.map((user) => ({
@@ -144,6 +147,7 @@ function GameFrameLeft({
       .then((res) => {
         console.log("dkdkdkdkd");
         console.log(res.data);
+        axiosScore()
       })
       .catch((error) => console.log(error));
   },[userList]);
