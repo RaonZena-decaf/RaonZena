@@ -29,7 +29,20 @@
   overflow: scroll;
 }
 
-.HostFollowingsList::-webkit-scrollbar{
+.HostFollowingsList::-webkit-scrollbar {
+  height: .8rem;
+}
+
+.HostFollowingsList::-webkit-scrollbar-thumb  {
+  background-color: #f400b0;
+  border-radius: 1rem;
+}
+
+.HostFollowingsList::-webkit-scrollbar-track  {
+  background-color:#222222;
+}
+
+.HostFollowingsList::-webkit-scrollbar-corner{
   display: none;
 }
 
