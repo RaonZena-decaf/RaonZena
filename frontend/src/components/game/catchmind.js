@@ -225,6 +225,7 @@ function Catchmind({
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
+            setStep((prev) => prev + 1);
             setEnd(true);
             setStart(false);
           }, 1000);
