@@ -27,12 +27,12 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
                 event.preventDefault();
                 if (event.deltaY > 0) {
                   scrollChange.scrollBy({
-                    left: 200,
+                    left: 420,
                     behavior: "smooth",
                   });
                 } else {
                   scrollChange.scrollBy({
-                    left: -200,
+                    left: -420,
                     behavior: "smooth",
                   });
                 }

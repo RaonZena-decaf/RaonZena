@@ -4,7 +4,7 @@
   justify-content: space-between;
   position: fixed;
   width: 83.4%;
-  padding: 2rem 8.3% 2rem 8.3%;
+  padding: 1.5rem 8.3% 1.5rem 8.3%;
   background-color: #1f2122;
   color: white;
   font-family: "GmarketSans";
@@ -76,9 +76,10 @@
   color: #f400b0;
 }
 
+
 .profileimg {
   border-radius: 50%;
-  width: 4rem;
+  width: 3.5rem;
   aspect-ratio: 1/1;
   cursor: pointer;
   border: solid 0.3rem transparent;
@@ -105,7 +106,11 @@
 }
 
 .logout {
+  margin: 0;
   font-size: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: crimson;
 }
 
@@ -127,10 +132,18 @@
 }
 
 .router {
-  font-weight: bold;
   margin: 0;
   font-size: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   transition: color 0.3s ease;
+}
+.routerName{
+  margin-top: .5rem;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .router:hover {
@@ -142,7 +155,7 @@
 .rightSide {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: 2rem;
 }

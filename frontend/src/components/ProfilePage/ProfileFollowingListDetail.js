@@ -11,11 +11,11 @@ function ProfileFollowingListDetail({ handleClose, following }) {
 
   return (
     <div className={styles.background}>
-      <span className={styles.text}>팔로잉 목록</span>
+      <div className={styles.text}>팔로잉 목록</div>
       {following.length === 0 ? (
         <NoFollow/>
       ) : (
-        <div>
+        <div className={styles.scroll}>
           {following.map((follower, userNo) => (
             <div
               key={userNo}

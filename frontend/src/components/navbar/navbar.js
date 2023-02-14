@@ -6,13 +6,12 @@ import {
   FaSearch,
   FaPowerOff,
   FaHome,
-  FaRegPlayCircle,
+  FaInfoCircle,
   FaClinicMedical,
 } from "react-icons/fa";
 import { initUserData } from "../../app/userData";
 import { initMyFollowingList } from "../../app/myFollowingList";
 import axios from "axios";
-import Tooltip from "./ToolTip";
 
 const Navbar = () => {
   //유저정보 가져오기
@@ -29,12 +28,10 @@ const Navbar = () => {
   };
   const isLogin = loginConfigure();
 
-
-
   // 페이지 이동을 위한 함수들
   const navigateToLanding = () => {
     if (nowContent.pathname === "/") {
-      window.location.replace('/')
+      window.location.replace("/");
     } else {
       navigate("/");
     }
@@ -108,7 +105,7 @@ const Navbar = () => {
   const [searchBar, setSearchBar] = useState(false);
   const activerouter4 = [searchBar === true ? "active" : null];
   const searchBarOpen = () => {
-    setSearchBar(true);
+    setSearchBar(!searchBar);
   };
 
   return (
@@ -118,46 +115,26 @@ const Navbar = () => {
         <p className={styles.LogoTitle}>RaonZena</p>
       </div>
       <div className={styles.rightSide}>
-        {isLogin ? (
-          <Tooltip message={"프로필"}>
-            <img
-              src={user.userImage}
-              alt="profileimg"
-              className={styles.profileimg}
-              onClick={navigateToProfile}
-            />
-          </Tooltip>
-        ) : null}
+        <div className={`${styles.router} ${styles[activerouter]}`}>
+          <FaInfoCircle onClick={navigateToLanding} />
+          <div className={styles.routerName}>소개</div>
+        </div>
 
-        <Tooltip message={"메인"}>
-          <FaHome
-            className={`${styles.router} ${styles[activerouter]}`}
-            onClick={navigateToLanding}
-          />
-        </Tooltip>
-
-        <Tooltip message={"라이브"}>
-          <FaRegPlayCircle
-            className={`${styles.router} ${styles[activerouter2]}`}
-            onClick={navigateToLive}
-          />
-        </Tooltip>
+        <div className={`${styles.router} ${styles[activerouter2]}`}>
+          <FaHome onClick={navigateToLive} />
+          <div className={styles.routerName}>홈</div>
+        </div>
 
         {isLogin ? (
-          <Tooltip message={"만들기"}>
-            <FaClinicMedical
-              className={`${styles.router} ${styles[activerouter3]}`}
-              onClick={navigateToCreateRoom}
-            />
-          </Tooltip>
+          <div className={`${styles.router} ${styles[activerouter3]}`}>
+            <FaClinicMedical onClick={navigateToCreateRoom} />
+            <div className={styles.routerName}>만들기</div>
+          </div>
         ) : null}
-        <Tooltip message={"검색"}>
-          <FaSearch
-            className={`${styles.router} ${styles[activerouter4]}`}
-            onClick={searchBarOpen}
-          />
-        </Tooltip>
-
+        <div className={`${styles.router} ${styles[activerouter4]}`}>
+          <FaSearch onClick={searchBarOpen} />
+          <div className={styles.routerName}>검색</div>
+        </div>
         {searchBar ? (
           <form onSubmit={enterSearch} className={styles.searchforms}>
             <input
@@ -172,9 +149,10 @@ const Navbar = () => {
           </form>
         ) : null}
         {isLogin ? (
-          <Tooltip message={"로그아웃"}>
-            <FaPowerOff className={styles.logout} onClick={logout} />
-          </Tooltip>
+          <div className={styles.logout}>
+            <FaPowerOff onClick={logout} />
+            <div className={styles.routerName}>로그아웃</div>
+          </div>
         ) : (
           <img
             className={styles.Login}
@@ -183,6 +161,17 @@ const Navbar = () => {
             alt="kakaologin"
           />
         )}
+        {isLogin ? (
+          <div className={styles.router}>
+            <img
+              src={user.userImage}
+              alt="profileimg"
+              className={styles.profileimg}
+              onClick={navigateToProfile}
+            />
+            <div className={styles.routerName}>프로필</div>
+          </div>
+        ) : null}
       </div>
       <div className={`${styles.wave} ${styles[`${animation}1`]}`}></div>
       <div className={`${styles.wave2} ${styles[`${animation}1-1`]}`}></div>

@@ -11,11 +11,27 @@
 
 .FollowingList {
   max-height: 40rem;
+  width: 100%;
   overflow: scroll;
   display: table-caption;
+  margin-top: 1rem;
 }
 
+
 .FollowingList::-webkit-scrollbar {
+  width: .8rem;
+}
+
+.FollowingList::-webkit-scrollbar-thumb  {
+  background-color: #f400b0;
+  border-radius: 1rem;
+}
+
+.FollowingList::-webkit-scrollbar-track  {
+  background-color:#222222;
+}
+
+.FollowingList::-webkit-scrollbar-corner{
   display: none;
 }
 
@@ -36,19 +52,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   gap: 1rem;
+  transition: color .3s ease;
 }
 .FollowingsInfo:hover{
   color: #f400b0;
   cursor: pointer;
   animation: changecolor 0.3s ease;
-}
-@keyframes changecolor {
-  0% {
-    color: white;
-  }
-  100% {
-    color: #f400b0;
-  }
 }
 
 .card {
