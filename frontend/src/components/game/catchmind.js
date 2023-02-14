@@ -148,6 +148,14 @@ function Catchmind({
       canvas.addEventListener("mouseleave", stopPainting);
     }
 
+    //호스트가 아니면 alert 출력
+    if (host === false) {
+      canvas.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("방장만 출제 가능합니다");
+      });
+    }
+
     const buttons = [
       "red",
       "orange",
@@ -318,7 +326,8 @@ function Catchmind({
           단계 {step + 1} / {QuizList.length}
         </span>
         <span className={styles.TimeLimit}>
-          시간 {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+          시간 {minutes} :{" "}
+          {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
         {(host || isAnswerShown) && QuizList.length > 0 ? (
           <span className={styles.AnswerFont}>
@@ -338,10 +347,10 @@ function Catchmind({
         <div className={`${styles.buttonColor} black`}></div>
         <div className={`${styles.buttonColor} white`}></div>
         <div className={`${styles.buttonBlack} clear`}>
-          <FaFillDrip /> <div className={styles.textWithIcon}>채우기</div>
+          <FaRegTrashAlt /> <div className={styles.textWithIcon}>비우기</div>
         </div>
         <div className={`${styles.buttonBlack} fill`}>
-          <FaRegTrashAlt /> <div className={styles.textWithIcon}>비우기</div>
+          <FaFillDrip /> <div className={styles.textWithIcon}>채우기</div>
         </div>
       </div>
     </div>
