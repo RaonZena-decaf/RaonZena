@@ -53,6 +53,9 @@ function GameFrameRight({
           {/* <div className={styles[videoFrame()]}>
             <UserVideoComponent streamManager={openvidu.publisher} />
           </div> */}
+          <div className={styles[videoFrame()]}>
+            {!host ? <UserVideoComponent streamManager={openvidu.publisher} /> : null }
+          </div>
           {subscribes.map((sub, idx) => {
             let subData = JSON.parse(sub.stream.connection.data);
             if (!subData.host) {
