@@ -212,6 +212,10 @@ function Catchmind({
 
     if (start && step < QuizList.length) {
       if (timeRemaining > 0 && !isAnswerShown) {
+        if (step === QuizList.length) {
+          return;
+        }
+
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
         }, 1000);
@@ -221,19 +225,25 @@ function Catchmind({
         setIsAnswerShown(true);
       }
       if (isAnswerShown) {
-        setTimeout(() => {
-          setIsAnswerShown(false);
-          setTimeRemaining(timeLimit);
-          if (step === QuizList.length - 1) {
+        if (step === QuizList.length) {
+          setTimeout(() => {
+            setIsAnswerShown(false);
+            setTimeRemaining(timeLimit);
+            setEnd(true);
             setStart(false);
-          } else {
-            setStep((prev) => prev + 1);
-          }
+          }, 1000);
           reset();
-        }, 1000);
+        } else {
+          setTimeout(() => {
+            setIsAnswerShown(false);
+            setTimeRemaining(timeLimit);
+            setStep((prev) => prev + 1);
+          }, 1000);
+          reset();
+        }
       }
     }
-  }, [start, timeRemaining, isAnswerShown, step]);
+  }, [start, step, timeRemaining, isAnswerShown]);
 
   // useEffect(() => {
   //   const reset = () => {
