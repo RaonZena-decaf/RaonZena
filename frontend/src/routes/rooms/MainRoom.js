@@ -165,7 +165,7 @@ function MainRoom(props) {
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
                 mirror: true, // Whether to mirror your local video or not
                 streamId: userName, // 다른 것들과 구분하기 위한 변수값
-                host : state.host
+                host: state.host,
               });
 
               // --- 6) Publish your stream ---
@@ -190,6 +190,26 @@ function MainRoom(props) {
               //   mainStreamManager: publisher,
               //   publisher: publisher,
               // });
+
+              //현재 유저 점수를 받은 후, 자신의 점수를 0점으로 하여 저장
+              axios({
+                method: "Get",
+                url: `${baseUrl}games/liveScore/${roomId}`,
+              })
+                .then((res) => {
+                  const gamseScores = res.data.slice();
+                  gamseScores.push([user.userNo, 0]);
+                  axios({
+                    method: "post",
+                    url: `${baseUrl}games/liveScore`,
+                    data: { roomNo: roomId, userData: gamseScores },
+                  })
+                    .then((res) => {
+                      console.log(res.data);
+                    })
+                    .catch((error) => console.log(error));
+                })
+                .catch((error) => console.log(error));
             })
             .catch((error) => {
               console.log(
@@ -208,9 +228,9 @@ function MainRoom(props) {
   const onbeforeunload = (event) => {
     leaveSession();
   };
-  const [headcount, setHeadCount] = useState(0)
+  const [headcount, setHeadCount] = useState(0);
   useEffect(() => {
-    console.log("길이", subscribes.length)
+    console.log("길이", subscribes.length);
     const data = {
       headCount: subscribes.length + 1,
     };
@@ -220,17 +240,17 @@ function MainRoom(props) {
       data: data,
     })
       .then((res) => {
-        console.log("된건가?",res);
-        setHeadCount(subscribes.length)
+        console.log("된건가?", res);
+        setHeadCount(subscribes.length);
       })
       .catch((error) => console.log(error));
   }, [subscribes]);
 
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
-    console.log("길이", subscribes.length)
+    console.log("길이", subscribes.length);
     return () => {
-      console.log("길이2", subscribes.length)
+      console.log("길이2", subscribes.length);
       axios({
         method: "get",
         url: `${baseUrl}games/${state.roomNo}/join`,
@@ -241,15 +261,15 @@ function MainRoom(props) {
               method: "delete",
               url: `${baseUrl}live/${state.roomNo}`,
             })
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((error) => console.log(error));
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((error) => console.log(error));
           }
         })
         .catch((error) => console.log(error));
-        window.removeEventListener("beforeunload", onbeforeunload);
-      }
+      window.removeEventListener("beforeunload", onbeforeunload);
+    };
   }, []);
 
   // 세션 종료
@@ -268,7 +288,13 @@ function MainRoom(props) {
 
   useEffect(() => {
     setVideoList({ ...subscribes, publisher });
-    setOpenvidu({ session, videoList, userName, publisher, userNo:user.userNo });
+    setOpenvidu({
+      session,
+      videoList,
+      userName,
+      publisher,
+      userNo: user.userNo,
+    });
   }, [session, publisher, userName, subscribes]);
   // 신호에 따른 화면 렌더링 변화
   const ChangeGame = (event) => {
