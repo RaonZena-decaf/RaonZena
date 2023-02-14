@@ -135,22 +135,22 @@ function GameFrameLeft({
   //   };
   //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
   // }, [userList]);
-
-  useEffect(()=>{
+  const SendScore = () => {
     setNewGameScore(userList.map(user => [user.userNo, user.gameScore]));
-
     axios({
       method: "POST",
       url: `${baseUrl}games/liveScore/`,
       data: { roomNo: roomNo, userData: newGameScore },
     })
-      .then((res) => {
-        console.log("dkdkdkdkd");
-        console.log(res.data);
-        axiosScore()
-      })
-      .catch((error) => console.log(error));
-  },[userList]);
+    .then((res) => {
+      console.log("dkdkdkdkd");
+      console.log(res.data);
+      userList.sort(function (a, b) {
+        return b.points - a.points;
+      });
+    })
+    .catch((error) => console.log(error));
+  }
 
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
@@ -234,12 +234,11 @@ function GameFrameLeft({
           })
         );
       }
+      SendScore()
     });
   }, []);
 
-  userList.sort(function (a, b) {
-    return b.points - a.points;
-  });
+
   return (
     <div className={styles.leftcontainer}>
       <div>
@@ -309,7 +308,7 @@ function GameFrameLeft({
         </div>
         <div className={styles.progressframe}>
           <div>
-            {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])}
+            {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
             {userList.slice(0, 3).map((user, idx) => {
               return (
                 <div key={idx} className={styles.score}>
