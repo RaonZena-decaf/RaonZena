@@ -51,18 +51,18 @@ function GameFrameLeft({
     },
     {
       userNo: 4,
-      userId: "123456",
-      userName: "윤수희",
-      exp: 20,
+      userId: "2657509460",
+      userName: "임길현",
+      exp: 0,
       level: 1,
       userImage:
         "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
     },
     {
-      userNo: 7,
-      userId: "2657509460",
-      userName: "임길현",
-      exp: 0,
+      userNo: 5,
+      userId: "123456",
+      userName: "윤수희",
+      exp: 20,
       level: 1,
       userImage:
         "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
@@ -102,7 +102,8 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp + 5 };
+              let newExp = user.exp + 5;
+              return { ...user, exp: newExp > 100 ? 100 : newExp };
             }
             return user;
           })
@@ -112,7 +113,8 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp + 10 };
+              let newExp = user.exp + 10;
+              return { ...user, exp: newExp > 100 ? 100 : newExp };
             }
             return user;
           })
@@ -122,7 +124,8 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp - 5 };
+              let newExp = user.exp - 5;
+              return { ...user, exp: newExp < 0 ? 0 : newExp };
             }
             return user;
           })
@@ -132,7 +135,8 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp - 10 };
+              let newExp = user.exp - 10;
+              return { ...user, exp: newExp < 0 ? 0 : newExp };
             }
             return user;
           })
