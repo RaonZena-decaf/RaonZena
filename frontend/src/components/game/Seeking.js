@@ -40,8 +40,9 @@ function Seeking({
   }, []);
 
   useEffect(() => {
+    console.log(start)
     if (!model && !webcam && !start) {
-      return;
+      return
     } else {
       const steps = new Promise((resolve, reject) => {
         webcam.setup();
@@ -56,12 +57,13 @@ function Seeking({
 
   const loop = async () => {
     webcam.update();
-    if (start) {
       await predict();
       requestAnimationFrame(loop);
-    }
   };
   const predict = async () => {
+    if (!start) {
+      return;
+    }
     const prediction = await model.predict(webcam.canvas);
     let max = 0;
     let highlabel = "Default";
@@ -82,6 +84,7 @@ function Seeking({
         data: JSON.stringify(data),
         type: "TrueAnswer",
       });
+      setStart(false)
     }
   };
 
@@ -105,12 +108,16 @@ function Seeking({
       setEnd(false);
       setIsAnswerShown(false)
     });
+    return () => {      
+      openvidu.session.off("signal:TrueAnswer");
+      openvidu.session.off("signal:GameRestart");
+    }
   }, []);
 
   return (
     <div className={styles.background}>
       <div id="label-container">
-        {label}
+        {label === "Rock"? label:null}
         <div />
         {isAnswerShown ? (
           <div className={styles.result}>

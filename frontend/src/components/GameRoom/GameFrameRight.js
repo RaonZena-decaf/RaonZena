@@ -9,7 +9,6 @@ function GameFrameRight({
   setResult,
   gamename,
   host,
-  publisher,
   subscribes,
   roomNo,
   openvidu,

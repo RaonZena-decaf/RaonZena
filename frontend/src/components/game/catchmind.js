@@ -169,7 +169,7 @@ function Catchmind({
       if (content === "clear" || content === "fill") {
         button.style.background = "rgba(100,100,100,0.2)";
       } else {
-        button.style.background = content;
+        button.style.backgroundImage = `url(../PaletteImg/${content}.png)`;
       }
       // button.style.color = "white";
       // button.style.display = "inline-block";
@@ -198,6 +198,7 @@ function Catchmind({
 
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(10);
+
   const [step, setStep] = useState(0);
   useEffect(() => {
     const reset = () => {
@@ -208,7 +209,7 @@ function Catchmind({
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, width, height);
     };
-    console.log("catchmind", start, step);
+
     if (start && step < QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
@@ -221,28 +222,66 @@ function Catchmind({
       }
       if (isAnswerShown) {
         if (step === QuizList.length - 1) {
-          setTimeout(() => {
-            setIsAnswerShown(false);
-            setTimeRemaining(timeLimit);
-            // setStep((prev) => (prev += 1));
-            setEnd(true);
-            setStart(false);
-          }, 1000);
-          reset();
+          setIsAnswerShown(false);
+          setTimeRemaining(timeLimit);
+          setEnd(true);
+          setStart(false);
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
-            setStep((prev) => (prev += 1));
+            setStep((prev) => prev + 1);
+            reset();
           }, 1000);
-          reset();
         }
       }
-    } else if (start && step === QuizList.length) {
-      setEnd(true);
-      setStart(false);
     }
-  }, [start, timeRemaining, isAnswerShown, step, QuizList.length]);
+  }, [start, timeRemaining, isAnswerShown, step]);
+
+  // useEffect(() => {
+  //   const reset = () => {
+  //     const canvas = canvasRef.current;
+  //     const ctx = canvas.getContext("2d");
+  //     const height = canvas.height;
+  //     const width = canvas.width;
+  //     ctx.fillStyle = "white";
+  //     ctx.fillRect(0, 0, width, height);
+  //   };
+  //   console.log("catchmind", start, step);
+  //   if (start && step < QuizList.length - 1) {
+  //     if (timeRemaining > 0 && !isAnswerShown) {
+  //       const intervalId = setInterval(() => {
+  //         setTimeRemaining(timeRemaining - 1);
+  //       }, 1000);
+  //       return () => clearInterval(intervalId);
+  //     }
+  //     if (timeRemaining === 0 && !isAnswerShown) {
+  //       setIsAnswerShown(true);
+  //     }
+  //     if (isAnswerShown) {
+  //       if (step === QuizList.length - 1) {
+  //         setTimeout(() => {
+  //           setIsAnswerShown(false);
+  //           setTimeRemaining(timeLimit);
+  //           // setStep((prev) => (prev += 1));
+  //           setEnd(true);
+  //           setStart(false);
+  //         }, 1000);
+  //         reset();
+  //       } else {
+  //         setTimeout(() => {
+  //           setIsAnswerShown(false);
+  //           setTimeRemaining(timeLimit);
+  //           setStep((prev) => (prev += 1));
+  //         }, 1000);
+  //         reset();
+  //       }
+  //     }
+  //   } else if (start && step === QuizList.length) {
+  //     setEnd(true);
+  //     setStart(false);
+  //   }
+  // }, [start, timeRemaining, isAnswerShown, step, QuizList.length]);
 
   useEffect(() => {
     if (result !== "" && step < QuizList.length) {
@@ -290,17 +329,17 @@ function Catchmind({
       </div>
       <canvas id="canvas" ref={canvasRef}></canvas>
       <div id="palette" ref={paletteRef}>
-        <span className={`${styles.buttonColor} red`}></span>
-        <span className={`${styles.buttonColor} yellow`}></span>
-        <span className={`${styles.buttonColor} orange`}></span>
-        <span className={`${styles.buttonColor} green`}></span>
-        <span className={`${styles.buttonColor} blue`}></span>
-        <span className={`${styles.buttonColor} navy`}></span>
-        <span className={`${styles.buttonColor} purple`}></span>
-        <span className={`${styles.buttonColor} black`}></span>
-        <span className={`${styles.buttonColor} white`}></span>
-        <span className={`${styles.buttonBlack} clear`}>clear</span>
-        <span className={`${styles.buttonBlack} fill`}>fill</span>
+        <div className={`${styles.buttonColor} red`}></div>
+        <div className={`${styles.buttonColor} yellow`}></div>
+        <div className={`${styles.buttonColor} orange`}></div>
+        <div className={`${styles.buttonColor} green`}></div>
+        <div className={`${styles.buttonColor} blue`}></div>
+        <div className={`${styles.buttonColor} navy`}></div>
+        <div className={`${styles.buttonColor} purple`}></div>
+        <div className={`${styles.buttonColor} black`}></div>
+        <div className={`${styles.buttonColor} white`}></div>
+        <div className={`${styles.buttonBlack} clear`}>clear</div>
+        <div className={`${styles.buttonBlack} fill`}>fill</div>
       </div>
     </div>
   );
