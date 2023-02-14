@@ -70,11 +70,9 @@ function Catchmind({
   }, []);
   // 캐치마인드 그림 부부
 
-
-
   useEffect(() => {
     const canvas = canvasRef.current;
-    let lineColor = "black"
+    let lineColor = "black";
     if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         const data = JSON.parse(event.data);
@@ -87,13 +85,13 @@ function Catchmind({
     }
     const height = canvas.height;
     const width = canvas.width;
-    
+
     const ctx = canvas.getContext("2d");
     canvas.style.margin = "10px 0px 0px 0px";
     canvas.style.border = "3px";
     canvas.style.cursor = "pointer";
-    canvas.style.height = height * 2 + 'px';
-    canvas.style.width = width * 2.5 + 'px';
+    canvas.style.height = height * 2 + "px";
+    canvas.style.width = width * 2.5 + "px";
     // canvas.style.borderImage = "linear-gradient(to right, #9D00F1 0%, #f400b0 100%)";
     // canvas.style.borderImageSlice = "2";
 
@@ -132,9 +130,8 @@ function Catchmind({
 
     ctx.lineWidth = 2;
     function onMouseMove(event) {
-      
       const x = (event.clientX - canvas.offsetLeft) / 2.5;
-      const y = (event.clientY - canvas.offsetTop) / 2
+      const y = (event.clientY - canvas.offsetTop) / 2;
       if (!painting) {
         ctx.beginPath();
         ctx.moveTo(x, y);
@@ -192,7 +189,7 @@ function Catchmind({
       }
       button.onclick = () => {
         ctx.strokeStyle = content;
-        lineColor = content
+        lineColor = content;
       };
     });
     ctx.fillStyle = "white";
@@ -210,9 +207,9 @@ function Catchmind({
       const width = canvas.width;
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, width, height);
-    }
+    };
     console.log("catchmind", start, step);
-    if (start && step <= QuizList.length - 1) {
+    if (start && step < QuizList.length - 1) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
@@ -231,12 +228,14 @@ function Catchmind({
             setEnd(true);
             setStart(false);
           }, 1000);
+          reset();
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
             setStep((prev) => (prev += 1));
           }, 1000);
+          reset();
         }
       }
     }
