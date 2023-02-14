@@ -37,6 +37,13 @@ function ProfileModal({ show, handleClose, nowContent, follower, following }) {
         className={`${styles.modalContainer} ${styles[slide]}`}
         onClick={(e) => e.stopPropagation()}
       >
+        <button
+          id={styles.modalCloseBtn}
+          className={styles.catchMindGuide}
+          onClick={handleClose}
+        >
+          ✖
+        </button>
         {nowContent && (
           <ProfilePostDetail
             nowContent={nowContent}

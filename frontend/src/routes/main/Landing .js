@@ -64,6 +64,7 @@ function Landing() {
     const guidepage = document.querySelector("#guidepage");
     const firstpage = document.querySelector("#firstpage");
 
+
     function handleWheel1(e) {
       e.preventDefault();
       if (e.deltaY > 0) {
