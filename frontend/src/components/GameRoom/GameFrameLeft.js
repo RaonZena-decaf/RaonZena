@@ -92,7 +92,7 @@ function GameFrameLeft({
   //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
   // }, [userList]);
   const SendScore = () => {
-    setNewGameScore(userList.map(user => [user.userNo, user.gameScore]));
+    setNewGameScore(userList.map(user => ({ userNo: user.userNo, gameScore: user.gameScore })));
     console.log(newGameScore);
     axios({
       method: "POST",
