@@ -87,5 +87,8 @@
 }
 
 .img {
-  margin: 1.5rem;
+  margin: 1rem;
+  font-size: 4rem;
+  word-break: keep-all;
+  text-align: center;
 }
