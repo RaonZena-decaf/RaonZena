@@ -24,6 +24,7 @@ function GameFrameLeft({
 }) {
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
+  const [newGameScore, setNewGameScore] = useState([]);
   const [userList, setUserList] = useState([
     {
       userNo: 1,
@@ -103,17 +104,21 @@ function GameFrameLeft({
   // }, [userList]);
 
   // console.log(liveScoreData);
-
-  axios({
-    method: "GET",
-    url: `${baseUrl}games/liveScore/${roomNo}`,
-  })
-    .then((res) => {
-      console.log("으아아아아아아아아아아아아아아아악");
-      console.log(res.data); // Add code to execute here
+  const axiosScore = () => {
+    axios({
+      method: "GET",
+      url: `${baseUrl}games/liveScore/${roomNo}`,
     })
-    .catch((error) => console.log(error));
-
+      .then((res) => {
+        console.log("으아아아아아아아아아아아아아아아악");
+        console.log(res.data); // Add code to execute here
+        setUserList(res.data.userData);
+      })
+      .catch((error) => console.log(error));
+  }
+  useEffect(()=>{
+    axiosScore()
+  },[]);
   // useEffect(() => {
   //   const sendLiveScore = async (roomNo, userList) => {
   //     const formattedList = userList.map((user) => ({
@@ -132,6 +137,22 @@ function GameFrameLeft({
   //   };
   //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
   // }, [userList]);
+  const SendScore = () => {
+    setNewGameScore(userList.map(user => [user.userNo, user.gameScore]));
+    axios({
+      method: "POST",
+      url: `${baseUrl}games/liveScore/`,
+      data: { roomNo: roomNo, userData: newGameScore },
+    })
+    .then((res) => {
+      console.log("dkdkdkdkd");
+      console.log(res.data);
+      userList.sort(function (a, b) {
+        return b.points - a.points;
+      });
+    })
+    .catch((error) => console.log(error));
+  }
 
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
@@ -215,12 +236,11 @@ function GameFrameLeft({
           })
         );
       }
+      SendScore()
     });
   }, []);
 
-  userList.sort(function (a, b) {
-    return b.points - a.points;
-  });
+
   return (
     <div className={styles.leftcontainer}>
       <div>
@@ -255,6 +275,7 @@ function GameFrameLeft({
               setResult={setResult}
               openvidu={openvidu}
               host={host}
+              setStart={setStart}
             />
           )}
           {gamename === "talkingsilence" && (
@@ -290,7 +311,7 @@ function GameFrameLeft({
         </div>
         <div className={styles.progressframe}>
           <div>
-            {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])}
+            {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
             {userList.slice(0, 3).map((user, idx) => {
               return (
                 <div key={idx} className={styles.score}>
