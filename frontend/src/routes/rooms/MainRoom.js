@@ -216,6 +216,7 @@ function MainRoom(props) {
         console.log('점수리스트 가져옴');
         const gamseScores = res.data.userData.slice();
         gamseScores.push([user.userNo, 0]);
+        console.log(gamseScores)
         axios({
           method: "post",
           url: `${baseUrl}games/liveScore`,
