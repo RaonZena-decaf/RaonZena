@@ -242,7 +242,7 @@ function Catchmind({
         }
       }
     }
-  }, [start, timeRemaining, isAnswerShown, step]);
+  }, [start, timeRemaining, isAnswerShown]);
 
   // useEffect(() => {
   //   const reset = () => {
