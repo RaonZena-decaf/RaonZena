@@ -83,3 +83,18 @@
     transform: translateY(-2%);
   }
 }
+
+.notScroll{
+  overflow: hidden;
+}
+
+#modalCloseBtn{
+  position: absolute;
+  top: 1rem;
+  right: .5rem;
+  border: none;
+  color: #f400b0;
+  background-color: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+}

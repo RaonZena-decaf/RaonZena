@@ -19,6 +19,7 @@ function GameFrameLeft({
   roomNo,
   setEnd,
   publisher,
+  setStart
 }) {
   const baseUrl = useSelector((store) => store.baseUrl);
   const [userList, setUserList] = useState([
@@ -68,6 +69,67 @@ function GameFrameLeft({
         "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
     },
   ]);
+  // 내일 확인 해 보자
+  // const userListupdate = () => {
+  //   axios({
+  //     method: "GET",
+  //     url: `${baseUrl}games/${roomNo}`,
+  //   })
+  //     .then((res) => {
+  //       setUserList(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
+  // useEffect (() => {
+  //   userListupdate()
+  // },[openvidu.subscribe])
+
+  // const [liveScoreData, setLiveScoreData] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.post(`${baseUrl}games/liveScore`);
+  //       setLiveScoreData(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [userList]);
+
+  // console.log(liveScoreData);
+
+  axios({
+    method: "GET",
+    url: `${baseUrl}games/liveScore/${roomNo}`,
+  })
+    .then((res) => {
+      console.log("으아아아아아아아아아아아아아아아악");
+      console.log(res.data); // Add code to execute here
+    })
+    .catch((error) => console.log(error));
+
+  // useEffect(() => {
+  //   const sendLiveScore = async (roomNo, userList) => {
+  //     const formattedList = userList.map((user) => ({
+  //       userNo: user[0],
+  //       exp: user[1],
+  //     }));
+  //     try {
+  //       await axios.post(`${baseUrl}games/liveScore`, {
+  //         roomNo,
+  //         userList: formattedList,
+  //       });
+  //       console.log("Live score sent successfully");
+  //     } catch (error) {
+  //       console.error("Error sending live score:", error);
+  //     }
+  //   };
+  //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
+  // }, [userList]);
 
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
@@ -87,11 +149,9 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              // let newExp = user.exp + 5;
-              // return { ...user, exp: newExp > 100 ? 100 : newExp };
               return {
                 ...user,
-                exp: user.exp + data.score >= 100 ? 100 : user.exp + data.score,
+                exp: user.exp + 5 >= 100 ? 100 : user.exp + 5,
               };
             }
             return user;
@@ -102,11 +162,9 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              // let newExp = user.exp + 10;
-              // return { ...user, exp: newExp > 100 ? 100 : newExp };
               return {
                 ...user,
-                exp: user.exp + data.score >= 100 ? 100 : user.exp + data.score,
+                exp: user.exp + 10 >= 100 ? 100 : user.exp + 10,
               };
             }
             return user;
@@ -117,11 +175,9 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              // let newExp = user.exp - 5;
-              // return { ...user, exp: newExp < 0 ? 0 : newExp };
               return {
                 ...user,
-                exp: user.exp + data.score <= 0 ? 0 : user.exp + data.score,
+                exp: user.exp - 5 <= 0 ? 0 : user.exp - 5,
               };
             }
             return user;
@@ -132,27 +188,15 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              // let newExp = user.exp - 10;
-              // return { ...user, exp: newExp < 0 ? 0 : newExp };
               return {
                 ...user,
-                exp: user.exp + data.score <= 0 ? 0 : user.exp + data.score,
+                exp: user.exp - 10 <= 0 ? 0 : user.exp - 10,
               };
             }
             return user;
           })
         );
       }
-      // if (data.gamename === "joker" && data.clicked >= 1 && data.clicked <= 8) {
-      //   setUserList((prev) =>
-      //     prev.map((user) => {
-      //       if (user.userNo === data.userNo) {
-      //         return { ...user, exp: user.exp + 5 };
-      //       }
-      //       return user;
-      //     })
-      //   );
-      // }
       if (data.gamename !== "joker") {
         setUserList((prev) =>
           prev.map((user) => {
@@ -172,31 +216,6 @@ function GameFrameLeft({
     });
   }, []);
 
-  // useEffect(() => {
-  //   openvidu.session.on("signal:TrueAnswer", (event) => {
-  //     const data = JSON.parse(event.data);
-  //     console.log(data.userNo);
-  //     if (data.gamename === "joker") {
-  //       let exp = 0;
-  //       if (data.clicked >= 1 && data.clicked <= 8) {
-  //         exp = 5;
-  //       } else if (data.clicked >= 7 && data.clicked <= 11) {
-  //         exp = 10;
-  //       } else if (data.clicked === 1) {
-  //         exp = ;
-  //       }
-  //       setUserList((prev) =>
-  //         prev.map((user) => {
-  //           if (user.userNo === data.userNo) {
-  //             return { ...user, exp: user.exp + exp };
-  //           }
-  //           return user;
-  //         })
-  //       );
-  //     }
-  //   });
-  // }, []);
-
   userList.sort(function (a, b) {
     return b.points - a.points;
   });
@@ -210,6 +229,9 @@ function GameFrameLeft({
               result={result}
               setResult={setResult}
               openvidu={openvidu}
+              host={host}
+              setEnd={setEnd}
+              setStart={setStart}
             />
           )}
 
@@ -219,6 +241,9 @@ function GameFrameLeft({
               result={result}
               setResult={setResult}
               openvidu={openvidu}
+              host={host}
+              setEnd={setEnd}
+              setStart={setStart}
             />
           )}
           {gamename === "catchmind" && (

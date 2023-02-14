@@ -3,7 +3,6 @@
   width: 40vw;
   height: auto;
   aspect-ratio: 1.35/1 auto;
-  position: relative;
   overflow: hidden;
 }
 .photoFrameImg {
@@ -18,7 +17,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   width: auto;
   height: auto;
 }
@@ -31,5 +30,6 @@
   aspect-ratio: 1/1;
   width: 30%;
   margin: 1rem;
+  margin-top: 3rem;
 }
 

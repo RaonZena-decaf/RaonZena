@@ -16,13 +16,19 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
       );
     }
   }, []);
+
+  console.log(photoFrame)
   return (
     <div
       className={styles.photoFrame}
       id="사진촬영완료"
-      style={{
-        backgroundImage: `url(${photoFrame})`,
-      }}
+      style={
+        photoFrame !== 1
+          ? {
+              backgroundImage: `url(${photoFrame})`,
+            }
+          : { backgroundImage: "/themeImg/0.jpg" }
+      }
     >
       <div className={styles.photoshootlayoutmaintextcontainer}>
         {TotalUsers.map((user) => {
