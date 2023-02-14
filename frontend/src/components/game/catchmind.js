@@ -209,7 +209,7 @@ function Catchmind({
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, width, height);
     };
-    console.log("catchmind", start, step);
+
     if (start && step < QuizList.length) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
@@ -221,27 +221,17 @@ function Catchmind({
         setIsAnswerShown(true);
       }
       if (isAnswerShown) {
-        if (step === QuizList.length - 1) {
-          setTimeout(() => {
-            setIsAnswerShown(false);
-            setTimeRemaining(timeLimit);
-            setStep(0);
-            setEnd(true);
+        setTimeout(() => {
+          setIsAnswerShown(false);
+          setTimeRemaining(timeLimit);
+          if (step === QuizList.length - 1) {
             setStart(false);
-          }, 1000);
+          } else {
+            setStep((prev) => prev + 1);
+          }
           reset();
-        } else {
-          setTimeout(() => {
-            setIsAnswerShown(false);
-            setTimeRemaining(timeLimit);
-            setStep((prev) => (prev += 1));
-          }, 1000);
-          reset();
-        }
+        }, 1000);
       }
-    } else if (start && step >= QuizList.length) {
-      setStart(false);
-      setStep(0);
     }
   }, [start, timeRemaining, isAnswerShown, step]);
 
