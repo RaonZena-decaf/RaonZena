@@ -22,6 +22,7 @@ function GameFrameLeft({
   setStart
 }) {
   const baseUrl = useSelector((store) => store.baseUrl);
+  const [gameScore, setGameScore] = useState([]);
   const [userList, setUserList] = useState([
     {
       userNo: 1,
@@ -131,6 +132,20 @@ function GameFrameLeft({
   //   };
   //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
   // }, [userList]);
+
+  useEffect(()=>{
+    setGameScore(userList.map(user => [user.userNo, user.gameScore]));
+
+    axios({
+      method: "POST",
+      url: `${baseUrl}games/liveScore/`,
+      data: { roomNo: roomNo, userData: gameScore },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  },[userList]);
 
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
