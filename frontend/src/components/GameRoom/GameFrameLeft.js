@@ -109,6 +109,7 @@ function GameFrameLeft({
     .then((res) => {
       console.log("으아아아아아아아아아아아아아아아악");
       console.log(res.data); // Add code to execute here
+      setUserList(res.data.userData);
     })
     .catch((error) => console.log(error));
 
