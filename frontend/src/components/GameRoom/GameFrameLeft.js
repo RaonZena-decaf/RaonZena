@@ -117,7 +117,7 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, gameScore: user.gameScore + (100 - user.gameScore) };
+              return { ...user, gameScore: 100 };
             }
             return user;
           })
@@ -127,10 +127,11 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                gameScore: user.gameScore + 5 >= 100 ? 100 : user.gameScore + 5,
-              };
+              if (user.userNo === data.userNo) {
+                if(user.gameScore + 5 <= 0) {
+                  return {...user, gameScore:0};
+                } else if (user.gameScore + 5);      
+              }
             }
             return user;
           })
@@ -140,10 +141,11 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                gameScore: user.gameScore + 10 >= 100 ? 100 : user.gameScore + 10,
-              };
+              if (user.userNo === data.userNo) {
+                if(user.gameScore + 10 <= 0) {
+                  return {...user, gameScore:0};
+                } else if (user.gameScore + 10);      
+              }
             }
             return user;
           })
@@ -153,10 +155,11 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                gameScore: user.gameScore - 5 <= 0 ? 0 : user.gameScore - 5,
-              };
+              if (user.userNo === data.userNo) {
+                if(user.gameScore - 5 <= 0) {
+                  return {...user, gameScore:0};
+                } else if (user.gameScore - 5);      
+              }
             }
             return user;
           })
@@ -166,10 +169,9 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                gameScore: user.gameScore - 10 <= 0 ? 0 : user.gameScore - 10,
-              };
+              if(user.gameScore - 10 <= 0) {
+                return {...user, gameScore:0};
+              } else if (user.gameScore - 10);      
             }
             return user;
           })
