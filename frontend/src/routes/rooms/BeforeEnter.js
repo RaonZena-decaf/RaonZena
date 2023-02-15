@@ -28,9 +28,9 @@ function BeforeEnter() {
   const userNo = useSelector((store) => store.userData.userNo);
   const navigate = useNavigate();
   useEffect(() => {
-    if(userNo === "") {
-      alert("로그인 후 이용 가능해요!")
-      navigate('/live')
+    if (userNo === "") {
+      alert("로그인 후 이용 가능해요!");
+      navigate("/live");
     } else {
       setLoading(true);
     }
@@ -127,16 +127,18 @@ function BeforeEnter() {
                     재접속하여 주세요.
                   </div>
                 </div>
-                <label className={style.tag} htmlFor="password">
-                  <input
-                    placeholder="방 비밀번호를 입력하세요"
-                    id="password"
-                    value={password}
-                    onChange={passwordChange}
-                    className={style.input}
-                    disabled={disabled}
-                  />
-                </label>
+                {password ? (
+                  <label className={style.tag} htmlFor="password">
+                    <input
+                      placeholder="방 비밀번호를 입력하세요"
+                      id="password"
+                      value={password}
+                      onChange={passwordChange}
+                      className={style.input}
+                      disabled={disabled}
+                    />
+                  </label>
+                ) : null}
                 <button className={style.button} onClick={backOnClick}>
                   나가기
                 </button>
