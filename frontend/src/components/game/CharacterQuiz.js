@@ -127,9 +127,9 @@ function CharacterQuiz({
     };
   }, []);
   return (
-    <div id="wrongMassage" className={styles.wrongMassage}>
-      틀렸습니다
-      <div className={styles.background}>
+    <div className={styles.background}>
+      <div id="wrongMassage" className={styles.wrongMassage}>
+        틀렸습니다
         <div className={styles.Container}>
           <span className={styles.questionNo}>
             {step + 1} / {characterimg.length}
