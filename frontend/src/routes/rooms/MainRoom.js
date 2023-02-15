@@ -373,6 +373,8 @@ function MainRoom(props) {
               setNewGameScore={setNewGameScore}
               userList={userList}
               setUserList={setUserList}
+              mic={state.mic}
+              toggleDevice={toggleDevice}
             />
           )}
           <MenuBar
