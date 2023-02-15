@@ -18,18 +18,51 @@ function GameFrameLeft({
   host,
   roomNo,
   setEnd,
+  publisher,
   setStart,
   subscribes,
   newGameScore,
   setNewGameScore,
-  // userList,
+  userList,
   setUserList,
   mic,
-  toggleDevice,
+  toggleDevice
 }) {
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
 
+  // 내일 확인 해 보자
+  // const userListupdate = () => {
+  //   axios({
+  //     method: "GET",
+  //     url: `${baseUrl}games/${roomNo}`,
+  //   })
+  //     .then((res) => {
+  //       setUserList(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
+  // useEffect (() => {
+  //   userListupdate()
+  // },[openvidu.subscribe])
+
+  // const [liveScoreData, setLiveScoreData] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.post(`${baseUrl}games/liveScore`);
+  //       setLiveScoreData(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [userList]);
+
+  // console.log(liveScoreData);
   const axiosScore = () => {
     axios({
       method: "GET",
@@ -45,7 +78,24 @@ function GameFrameLeft({
   useEffect(() => {
     axiosScore();
   }, []);
-
+  // useEffect(() => {
+  //   const sendLiveScore = async (roomNo, userList) => {
+  //     const formattedList = userList.map((user) => ({
+  //       userNo: user[0],
+  //       exp: user[1],
+  //     }));
+  //     try {
+  //       await axios.post(`${baseUrl}games/liveScore`, {
+  //         roomNo,
+  //         userList: formattedList,
+  //       });
+  //       console.log("Live score sent successfully");
+  //     } catch (error) {
+  //       console.error("Error sending live score:", error);
+  //     }
+  //   };
+  //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
+  // }, [userList]);
   const SendScore = () => {
     setNewGameScore(
       userList.map((user) => ({
@@ -230,24 +280,41 @@ function GameFrameLeft({
             />
           )}
         </div>
-        <div className={styles.background}>
-          <div className={styles.progressframe}>
-              {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
-              {userList.map((user, idx) => {
-                return (
-                  <div key={idx} className={styles.score}>
-                    <div className={styles.score2Left}>
-                      <img
-                        alt="img"
-                        src={user.userImage}
-                        className={styles.img}
-                      />
-                      <span className={styles.font2}>{user.userName}</span>
-                    </div>
-                    <GameFrameProgress user={user} />
+        <div className={styles.progressframe}>
+          <div>
+            {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
+            {userList.slice(0, 3).map((user, idx) => {
+              return (
+                <div key={idx} className={styles.score}>
+                  <div className={styles.score2}>
+                    <img
+                      alt="img"
+                      src={user.userImage}
+                      className={styles.img}
+                    />
+                    <span className={styles.font2}>{user.userName}</span>
                   </div>
-                );
-              })}
+                  <GameFrameProgress user={user} />
+                </div>
+              );
+            })}
+          </div>
+          <div>
+            {userList.slice(3, 6).map((user, idx) => {
+              return (
+                <div key={idx} className={styles.score}>
+                  <div className={styles.score2}>
+                    <img
+                      alt="img"
+                      src={user.userImage}
+                      className={styles.img}
+                    />
+                    <span className={styles.font2}>{user.userName}</span>
+                  </div>
+                  <GameFrameProgress user={user} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
