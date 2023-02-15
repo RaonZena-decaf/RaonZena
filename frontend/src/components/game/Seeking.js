@@ -5,10 +5,7 @@ import * as tmImage from "@teachablemachine/image";
 const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
 function Seeking({
   start,
-  result,
-  setResult,
   openvidu,
-  host,
   setEnd,
   setStart,
 }) {
@@ -17,7 +14,9 @@ function Seeking({
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
   const [label, setLabel] = useState("");
+  const gamestop = useRef(false)
   const videoRef = useRef(null);
+  const animationRef = useRef(null);
   useEffect(() => {
     const init = async () => {
       const modelURL = URL + "model.json";
@@ -40,9 +39,9 @@ function Seeking({
   }, []);
 
   useEffect(() => {
-    console.log(start)
-    if (!model && !webcam && !start) {
-      return
+    console.log(start);
+    if (!model || !webcam || gamestop.current) {
+      return;
     } else {
       const steps = new Promise((resolve, reject) => {
         webcam.setup();
@@ -50,18 +49,23 @@ function Seeking({
       });
       steps.then(() => {
         webcam.play();
-        requestAnimationFrame(loop);
+        animationRef.current = requestAnimationFrame(loop)
       });
     }
-  }, [webcam, start]);
-
+  }, [start]);
   const loop = async () => {
+    if (gamestop.current || !start) {
+      return;
+    }
     webcam.update();
-      await predict();
-      requestAnimationFrame(loop);
+    await predict();
+    if (!gamestop.current) {
+      animationRef.current = requestAnimationFrame(loop)
+    }
   };
   const predict = async () => {
     if (!start) {
+      console.log("방지", start);
       return;
     }
     const prediction = await model.predict(webcam.canvas);
@@ -74,8 +78,10 @@ function Seeking({
       }
     }
     setLabel(highlabel);
-    console.log(start);
-    if (highlabel === "Rock" && start) {
+    if (highlabel === "Rock" && !gamestop.current) {
+      console.log("high")
+      gamestop.current = true
+      console.log("멈춰", gamestop.current);
       const data = {
         userNo: openvidu.userNo,
         score: -5,
@@ -84,10 +90,13 @@ function Seeking({
         data: JSON.stringify(data),
         type: "TrueAnswer",
       });
-      setStart(false)
+      setStart(false);
+      cancelAnimationFrame(animationRef.current)
     }
   };
-
+  useEffect(() => {
+    setStart(false);
+  }, [start, gamestop]);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [fail, setfail] = useState(null);
   // 임시
@@ -95,29 +104,30 @@ function Seeking({
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
-      console.log("끝")
+      console.log("끝");
       setIsAnswerShown(true);
       setfail(data.userNo);
       setEnd(true);
       setStart(false);
-      console.log("dho dksajacna",start)
+      console.log("dho dksajacna", start);
     });
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
     openvidu.session.on("signal:GameRestart", () => {
       setEnd(false);
-      setIsAnswerShown(false)
+      gamestop.current = false
+      setIsAnswerShown(false);
     });
-    return () => {      
+    return () => {
       openvidu.session.off("signal:TrueAnswer");
       openvidu.session.off("signal:GameRestart");
-    }
+    };
   }, []);
 
   return (
     <div className={styles.background}>
       <div id="label-container">
-        {label === "Rock"? label:null}
+        {label === "Rock" ? label : null}
         <div />
         {isAnswerShown ? (
           <div className={styles.result}>
@@ -125,32 +135,9 @@ function Seeking({
           </div>
         ) : null}
       </div>
-      <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
+      <video autoPlay={true} ref={videoRef} width="90%" height="90%" />
     </div>
   );
 }
 
 export default Seeking;
-
-// <div>
-//   <div className={styles.webcamCapture}>
-//     <video ref={videoRef} width="80%" />
-//     <div className={styles.Container}>
-//       <span className={styles.TimeLimit}>
-//         {" "}
-//         {minutes} :{" "}
-//         {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-//       </span>
-//       <span className={styles.AnswerFont}>
-//         {AnswerList[step].answer}
-//       </span>
-//     </div>
-//   </div>
-// </div>
-// {/* <Transition unmountOnExit in={open} timeout={500}>
-//   {(state) => <GameAnswerModal show={state} handleOpen={handleOpen} />}
-// </Transition>
-// {modalOpen ? { showModal } : {}} */}
-// </div>
-// );
-// }

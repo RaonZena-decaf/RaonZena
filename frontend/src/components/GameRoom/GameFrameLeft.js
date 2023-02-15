@@ -21,11 +21,14 @@ function GameFrameLeft({
   publisher,
   setStart,
   subscribes,
+  newGameScore,
+  setNewGameScore,
+  userList,
+  setUserList,
 }) {
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
-  const [newGameScore, setNewGameScore] = useState([]);
-  const [userList, setUserList] = useState([]);
+
   // 내일 확인 해 보자
   // const userListupdate = () => {
   //   axios({
@@ -118,7 +121,10 @@ function GameFrameLeft({
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       console.log(data.userNo);
-      if (data.gamename === "joker" && data.clicked === 1) {
+      console.log(data.gamename);
+      console.log(data.clicked);
+      console.log(typeof data.clicked);
+      if (data.gamename === "joker" && data.clicked === "1") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
@@ -134,7 +140,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 2) {
+      if (data.gamename === "joker" && data.clicked === "2") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
@@ -154,7 +160,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 3) {
+      if (data.gamename === "joker" && data.clicked === "3") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
@@ -174,7 +180,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 4) {
+      if (data.gamename === "joker" && data.clicked === "4") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
@@ -194,7 +200,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 5) {
+      if (data.gamename === "joker" && data.clicked === "5") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>

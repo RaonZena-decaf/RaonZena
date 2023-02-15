@@ -3,7 +3,17 @@ import React, { useState, useEffect } from "react";
 import GameFrameLeft from "./GameFrameLeft";
 import GameFrameRight from "./GameFrameRight";
 
-function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
+function GameFrame({
+  gamename,
+  openvidu,
+  host,
+  subscribes,
+  roomNo,
+  newGameScore,
+  setNewGameScore,
+  userList,
+  setUserList,
+}) {
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
   console.log("EndGame", end, start);
@@ -80,6 +90,10 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
           setEnd={setEnd}
           setStart={setStart}
           subscribes={subscribes}
+          newGameScore={newGameScore}
+          setNewGameScore={setNewGameScore}
+          userList={userList}
+          setUserList={setUserList}
         />
         <GameFrameRight
           start={start}

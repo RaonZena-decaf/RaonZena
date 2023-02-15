@@ -127,13 +127,13 @@
   animation-fill-mode: forwards;
   z-index: 1;
   position: absolute;
-  bottom: 17%;
+  bottom: 39.5%;
   left: 51%;
   display: none;
 }
 
 .correctMassage {
-  color: green;
+  color: #00ff7f;
   /* padding: 10px; */
   font-size: 3rem;
   animation: fadeout 2s;
@@ -143,11 +143,19 @@
   animation-fill-mode: forwards;
   z-index: 1;
   position: absolute;
-  bottom: 17%;
+  bottom: 39.5%;
   left: 51%;
   display: none;
 }
 
 .hidden {
   display: none;
+}
+
+.mute{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
 }
