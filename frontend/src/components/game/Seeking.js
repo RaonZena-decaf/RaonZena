@@ -5,10 +5,7 @@ import * as tmImage from "@teachablemachine/image";
 const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
 function Seeking({
   start,
-  result,
-  setResult,
   openvidu,
-  host,
   setEnd,
   setStart,
 }) {
@@ -17,8 +14,9 @@ function Seeking({
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
   const [label, setLabel] = useState("");
-  const [gamestop, setGameStop] = useState(false);
+  const gamestop = useRef(false)
   const videoRef = useRef(null);
+  const animationRef = useRef(null);
   useEffect(() => {
     const init = async () => {
       const modelURL = URL + "model.json";
@@ -42,7 +40,7 @@ function Seeking({
 
   useEffect(() => {
     console.log(start);
-    if (!model || !webcam || gamestop) {
+    if (!model || !webcam || gamestop.current) {
       return;
     } else {
       const steps = new Promise((resolve, reject) => {
@@ -51,21 +49,18 @@ function Seeking({
       });
       steps.then(() => {
         webcam.play();
-        requestAnimationFrame(loop);
+        animationRef.current = requestAnimationFrame(loop)
       });
     }
   }, [start]);
   const loop = async () => {
-    if (gamestop || !start) {
+    if (gamestop.current || !start) {
       return;
     }
     webcam.update();
-    if (gamestop) {
-      return;
-    } else {
-      await predict();
-      requestAnimationFrame(loop);
-      return;
+    await predict();
+    if (!gamestop.current) {
+      animationRef.current = requestAnimationFrame(loop)
     }
   };
   const predict = async () => {
@@ -83,10 +78,10 @@ function Seeking({
       }
     }
     setLabel(highlabel);
-    if (highlabel === "Rock" && !gamestop) {
+    if (highlabel === "Rock" && !gamestop.current) {
       console.log("high")
-      setTimeout(setGameStop(true), 3000);
-      console.log("멈춰", gamestop);
+      gamestop.current = true
+      console.log("멈춰", gamestop.current);
       const data = {
         userNo: openvidu.userNo,
         score: -5,
@@ -96,8 +91,7 @@ function Seeking({
         type: "TrueAnswer",
       });
       setStart(false);
-      console.log(start);
-      return;
+      cancelAnimationFrame(animationRef.current)
     }
   };
   useEffect(() => {
@@ -121,6 +115,7 @@ function Seeking({
     video.addVideoElement(videoRef.current);
     openvidu.session.on("signal:GameRestart", () => {
       setEnd(false);
+      gamestop.current = false
       setIsAnswerShown(false);
     });
     return () => {
@@ -140,32 +135,9 @@ function Seeking({
           </div>
         ) : null}
       </div>
-      <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
+      <video autoPlay={true} ref={videoRef} width="90%" height="90%" />
     </div>
   );
 }
 
 export default Seeking;
-
-// <div>
-//   <div className={styles.webcamCapture}>
-//     <video ref={videoRef} width="80%" />
-//     <div className={styles.Container}>
-//       <span className={styles.TimeLimit}>
-//         {" "}
-//         {minutes} :{" "}
-//         {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-//       </span>
-//       <span className={styles.AnswerFont}>
-//         {AnswerList[step].answer}
-//       </span>
-//     </div>
-//   </div>
-// </div>
-// {/* <Transition unmountOnExit in={open} timeout={500}>
-//   {(state) => <GameAnswerModal show={state} handleOpen={handleOpen} />}
-// </Transition>
-// {modalOpen ? { showModal } : {}} */}
-// </div>
-// );
-// }
