@@ -135,7 +135,7 @@ function CharacterQuiz({
       <div className={styles.background}>
         <div className={styles.Container}>
           <span className={styles.questionNo}>
-            {step > characterimg.length ? step + 1 : step} /
+            {step > characterimg.length ? step : step + 1} /
             {characterimg.length}
           </span>
           <span className={styles.TimeLimit}>

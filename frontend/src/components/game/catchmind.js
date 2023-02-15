@@ -13,14 +13,11 @@ function Catchmind({
   setEnd,
   setStart,
 }) {
-  // 만약 5개 짜리 리스트로 할꺼면 고요속의 외침으로 변경
-  console.log("catchmind", start);
   const timeLimit = 10;
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [QuizList, setQuizList] = useState([]);
-  console.log("출제 문제", QuizList);
   const dataAxios = () => {
     if (host) {
       axios({
@@ -28,11 +25,9 @@ function Catchmind({
         url: `${baseUrl}games/gameType/3`,
       })
         .then((res) => {
-          console.log(res.data);
           setQuizList(res.data);
           if (openvidu.session) {
             const data = JSON.stringify(res.data);
-            console.log("게임 데이터", data);
             openvidu.session.signal({
               data: data,
               type: "SeedNumber",
@@ -179,18 +174,6 @@ function Catchmind({
       } else {
         button.style.backgroundImage = `url(../PaletteImg/${content}.png)`;
       }
-      // button.style.color = "white";
-      // button.style.display = "inline-block";
-      // button.style.textShadow =
-      //   "1px 0 black, 0 1px black, 1px 0 black, 0 -1px gray";
-      // button.style.lineHeight = "40px";
-      // button.style.textAlign = "center";
-      // button.style.width = "50px";
-      // button.style.height = "50px";
-      // button.style.borderRadius = "25px";
-      // button.style.border = "4px solid rgba(129, 101, 101, 0.151)";
-      // button.style.boxShadow = "1px 2px 2px gray";
-      // button.style.marginBottom = "10px";
 
       if (content === "clear" || content === "fill") {
         return;
