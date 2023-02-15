@@ -132,8 +132,8 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if (user.gameScore + 5 <= 0) {
-                return { ...user, gameScore: 0 };
+              if (user.gameScore + 5 >= 100) {
+                return { ...user, gameScore: 100 };
               } else if (user.gameScore + 5);
             }
 
@@ -145,8 +145,8 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if (user.gameScore + 10 <= 0) {
-                return { ...user, gameScore: 0 };
+              if (user.gameScore + 10 >= 100) {
+                return { ...user, gameScore: 100 };
               } else if (user.gameScore + 10);
             }
 
