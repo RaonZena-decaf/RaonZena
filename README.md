@@ -68,23 +68,21 @@
     Spring Security  
     Java 11  
     AWS EC2  
-    mysql  
+    mysql 8.0.31  
     redis 
     S3 
 
 ## 🖱Frontend
     Visual Studio Code  
-    React.js 17.0.2  
-    styled-components 5.3.0  
-    Material-UI  
-    redux-toolkit 1.6.1  
-    redux 4.1.0  
+    React.js 18.2.0  
+    redux 4.2.1   
+    redux-persist: 6.0.0
 
 ## 🖱Web RTC  
-    openvidu 2.19.0  
+    openvidu-browser: 2.25.0  
 
-## 🖱Pose  
-    Teachable Machine
+## 🖱ImageGame  
+    Teachable Machine 0.8.5
 
 ## 🖱CI/CD
     aws ec2
