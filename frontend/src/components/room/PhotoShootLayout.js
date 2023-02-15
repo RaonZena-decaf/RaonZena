@@ -5,7 +5,7 @@ import styles from "./PhotoShootLayout.module.css";
 function PhotoShootLayout({ photoFrame, TotalUsers }) {
   useLayoutEffect(() => {
     for (const user of TotalUsers) {
-      if (document.getElementById(`${user.videos[0].id}`)) {
+      if (user.videos[0] !== undefined) {
         html2canvas(document.getElementById(`${user.videos[0].id}`), {
           scrollX: 0,
           scrollY: -window.scrollY,
