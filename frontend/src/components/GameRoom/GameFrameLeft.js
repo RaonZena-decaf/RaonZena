@@ -120,19 +120,10 @@ function GameFrameLeft({
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
-      console.log(data.userNo);
-      console.log(data.gamename);
-      console.log(data.clicked);
-      console.log(typeof data.clicked);
       if (data.gamename === "joker" && data.clicked === "1") {
-        console.log("으아아아아아아아아아앙아ㅏㄱ");
-        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              console.log("으아아아아아앙아아아악");
-              console.log(user.gameScore);
-              console.log(user.gameScore - 10);
               return { ...user, gameScore: 100 };
             } else {
               return user;
@@ -141,75 +132,52 @@ function GameFrameLeft({
         );
       }
       if (data.gamename === "joker" && data.clicked === "2") {
-        console.log("으아아아아아아아아아앙아ㅏㄱ");
-        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore + 5 >= 100) {
-                console.log("으아아아아아앙아아아악");
-                console.log(user.gameScore);
-                console.log(user.gameScore - 10);
                 return { ...user, gameScore: 100 };
               } else {
                 return { ...user, gameScore: user.gameScore + 5 };
               }
             }
-
             return user;
           })
         );
       }
       if (data.gamename === "joker" && data.clicked === "3") {
-        console.log("으아아아아아아아아아앙아ㅏㄱ");
-        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore + 10 >= 100) {
-                console.log("으아아아아아앙아아아악");
-                console.log(user.gameScore);
-                console.log(user.gameScore - 10);
                 return { ...user, gameScore: 100 };
               } else {
                 return { ...user, gameScore: user.gameScore + 10 };
               }
             }
-
             return user;
           })
         );
       }
       if (data.gamename === "joker" && data.clicked === "4") {
-        console.log("으아아아아아아아아아앙아ㅏㄱ");
-        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore - 5 <= 0) {
-                console.log("으아아아아아앙아아아악");
-                console.log(user.gameScore);
-                console.log(user.gameScore - 10);
                 return { ...user, gameScore: 0 };
               } else {
                 return { ...user, gameScore: user.gameScore - 5 };
               }
             }
-
             return user;
           })
         );
       }
       if (data.gamename === "joker" && data.clicked === "5") {
-        console.log("으아아아아아아아아아앙아ㅏㄱ");
-        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore - 10 <= 0) {
-                console.log("으아아아아아앙아아아악");
-                console.log(user.gameScore);
-                console.log(user.gameScore - 10);
                 return { ...user, gameScore: 0 };
               } else {
                 return { ...user, gameScore: user.gameScore - 10 };
