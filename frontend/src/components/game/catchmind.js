@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "../game/catchmind.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { FaFillDrip, FaRegTrashAlt } from "react-icons/fa";
+import { FaFillDrip, FaRegTrashAlt, FaEraser } from "react-icons/fa";
 
 function Catchmind({
   start,
@@ -301,12 +301,14 @@ function Catchmind({
         <div className={`${styles.buttonColor} navy`}></div>
         <div className={`${styles.buttonColor} purple`}></div>
         <div className={`${styles.buttonColor} black`}></div>
-        <div className={`${styles.buttonColor} white`}></div>
         <div className={`${styles.buttonBlack} clear`}>
           <FaRegTrashAlt /> <div className={styles.textWithIcon}>비우기</div>
         </div>
         <div className={`${styles.buttonBlack} fill`}>
           <FaFillDrip /> <div className={styles.textWithIcon}>채우기</div>
+        </div>
+        <div className={`${styles.buttonBlack} white`}>
+          <FaEraser></FaEraser>
         </div>
       </div>
     </div>

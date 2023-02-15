@@ -10,9 +10,9 @@ const HostFollowingGames = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
   const baseUrl = useSelector((store) => store.baseUrl);
   const nowUserNo = useSelector((store) => store.userData.userNo);
-  
+
   async function getlist() {
-    if (nowUserNo) {
+    if (nowUserNo !== "") {
       await axios({
         method: "get",
         url: `${baseUrl}live/followingRoom`,
@@ -49,7 +49,7 @@ const HostFollowingGames = ({ HostFollowingsList, loading }) => {
     // 가로 스크롤링 이벤트
     console.log("Hostfollowings 컴포넌트 getList 결과", list);
   }, []);
-  
+
   // --------------------스웨거에서 확인한 데이터------------------
 
   // "roomNo": 1040,
@@ -67,7 +67,6 @@ const HostFollowingGames = ({ HostFollowingsList, loading }) => {
   //   "password": 48,
   //   "createDate": null,
   //   "imageName": "/GameThumbnail/24.png"
-  
 
   return (
     <div className={styles.HostFollowingsList} id="scrollChange">

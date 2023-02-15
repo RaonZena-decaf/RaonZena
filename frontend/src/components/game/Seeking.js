@@ -1,20 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./Seeking.module.css";
 import * as tmImage from "@teachablemachine/image";
+import { useSelector } from "react-redux";
 
 const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
-function Seeking({
-  start,
-  openvidu,
-  setEnd,
-  setStart,
-}) {
+function Seeking({ start, openvidu, setEnd, setStart }) {
   console.log("setend", setEnd);
   const [model, setModel] = useState(null);
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
   const [label, setLabel] = useState("");
-  const gamestop = useRef(false)
+  const userName = useSelector((store) => store.userData.userName);
+  const gamestop = useRef(false);
   const videoRef = useRef(null);
   const animationRef = useRef(null);
   useEffect(() => {
@@ -49,7 +46,7 @@ function Seeking({
       });
       steps.then(() => {
         webcam.play();
-        animationRef.current = requestAnimationFrame(loop)
+        animationRef.current = requestAnimationFrame(loop);
       });
     }
   }, [start]);
@@ -60,7 +57,7 @@ function Seeking({
     webcam.update();
     await predict();
     if (!gamestop.current) {
-      animationRef.current = requestAnimationFrame(loop)
+      animationRef.current = requestAnimationFrame(loop);
     }
   };
   const predict = async () => {
@@ -79,19 +76,20 @@ function Seeking({
     }
     setLabel(highlabel);
     if (highlabel === "Rock" && !gamestop.current) {
-      console.log("high")
-      gamestop.current = true
+      console.log("high");
+      gamestop.current = true;
       console.log("멈춰", gamestop.current);
       const data = {
         userNo: openvidu.userNo,
         score: -5,
+        username: userName,
       };
       openvidu.session.signal({
         data: JSON.stringify(data),
         type: "TrueAnswer",
       });
       setStart(false);
-      cancelAnimationFrame(animationRef.current)
+      cancelAnimationFrame(animationRef.current);
     }
   };
   useEffect(() => {
@@ -106,7 +104,7 @@ function Seeking({
       const data = JSON.parse(event.data);
       console.log("끝");
       setIsAnswerShown(true);
-      setfail(data.userNo);
+      setfail(data.username);
       setEnd(true);
       setStart(false);
       console.log("dho dksajacna", start);
@@ -115,7 +113,7 @@ function Seeking({
     video.addVideoElement(videoRef.current);
     openvidu.session.on("signal:GameRestart", () => {
       setEnd(false);
-      gamestop.current = false
+      gamestop.current = false;
       setIsAnswerShown(false);
     });
     return () => {
@@ -126,13 +124,14 @@ function Seeking({
 
   return (
     <div className={styles.background}>
-      <div id="label-container">
-        {label === "Rock" ? label : null}
-        <div />
+      <div id="label-container" className={styles.result}>
+        {label === "Rock" ? (
+          <div className={styles.animation}>탈락입니다!</div>
+        ) : null}
         {isAnswerShown ? (
-          <div className={styles.result}>
-            <h1>당첨자 : {fail}</h1>
-          </div>
+          <>
+            <div className={styles.animation}>탈락자 : {fail}</div>
+          </>
         ) : null}
       </div>
       <video autoPlay={true} ref={videoRef} width="90%" height="90%" />
