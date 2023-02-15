@@ -28,7 +28,6 @@ function GameFrameLeft({
   mic,
   toggleDevice,
 }) {
-  console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
   const axiosScore = () => {
     axios({
@@ -36,8 +35,6 @@ function GameFrameLeft({
       url: `${baseUrl}games/liveScore/${roomNo}`,
     })
       .then((res) => {
-        console.log("으아아아아아아아아아아아아아아아악");
-        console.log(res.data); // Add code to execute here
         setUserList(res.data.userData);
       })
       .catch((error) => console.log(error));
@@ -60,8 +57,6 @@ function GameFrameLeft({
       data: { roomNo: roomNo, userData: newGameScore },
     })
       .then((res) => {
-        console.log("dkdkdkdkd");
-        console.log(res.data);
         userList.sort(function (a, b) {
           return b.points - a.points;
         });
@@ -83,7 +78,11 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && "2" <= data.clicked <= "5") {
+      if (
+        data.gamename === "joker" &&
+        2 <= parseInt(data.clicked) &&
+        parseInt(data.clicked) <= 5
+      ) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -97,7 +96,11 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && "6" <= data.clicked <= "8") {
+      if (
+        data.gamename === "joker" &&
+        6 <= parseInt(data.clicked) &&
+        parseInt(data.clicked) <= 8
+      ) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -111,7 +114,11 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && "9" <= data.clicked <= "12") {
+      if (
+        data.gamename === "joker" &&
+        9 <= parseInt(data.clicked) &&
+        parseInt(data.clicked) <= 12
+      ) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -125,7 +132,11 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && "13" <= data.clicked <= "16") {
+      if (
+        data.gamename === "joker" &&
+        13 <= parseInt(data.clicked) &&
+        parseInt(data.clicked) <= 16
+      ) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -219,6 +230,7 @@ function GameFrameLeft({
               openvidu={openvidu}
               host={host}
               setEnd={setEnd}
+              setStart={setStart}
             />
           )}
           {gamename === "joker" && (
@@ -232,7 +244,6 @@ function GameFrameLeft({
         </div>
         <div className={styles.background}>
           <div className={styles.progressframe}>
-            {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
             {userList.map((user, idx) => {
               return (
                 <div key={idx} className={styles.score}>
