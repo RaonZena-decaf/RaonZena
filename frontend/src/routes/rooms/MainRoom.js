@@ -290,10 +290,12 @@ function MainRoom(props) {
       await session.disconnect();
     }
 
+    const myscore = userList.filter(attend => attend[0] === user.userNo)
+
     axios({
       method: "post",
       url: `${baseUrl}profile/expToLevelModify`,
-      data: { exp: newGameScore, userNo: user.userNo },
+      data: { exp: myscore[1], userNo: user.userNo },
     })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
