@@ -121,11 +121,11 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
         ref={content}
       ></textarea>
       <div className={styles.photoshootdiaryflex3}>
-        <button className={styles.photoshootdiarybutton} onClick={save}>
-          등록
-        </button>
         <button className={styles.photoshootdiarybutton2} onClick={closeMenu}>
           취소
+        </button>
+        <button className={styles.photoshootdiarybutton} onClick={save}>
+          등록
         </button>
       </div>
     </div>
