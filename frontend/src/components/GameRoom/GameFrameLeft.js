@@ -26,7 +26,7 @@ function GameFrameLeft({
   userList,
   setUserList,
   mic,
-  toggleDevice
+  toggleDevice,
 }) {
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -133,7 +133,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === "2") {
+      if (data.gamename === "joker" && "2" <= data.clicked <= "5") {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -147,7 +147,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === "3") {
+      if (data.gamename === "joker" && "6" <= data.clicked <= "8") {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -161,7 +161,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === "4") {
+      if (data.gamename === "joker" && "9" <= data.clicked <= "12") {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -175,7 +175,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === "5") {
+      if (data.gamename === "joker" && "13" <= data.clicked <= "16") {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
