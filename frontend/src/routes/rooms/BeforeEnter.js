@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import style from "./beforeenter.module.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/navbar/navbar";
@@ -17,12 +17,18 @@ import Loading from "../../components/room/MainLoading";
 
 function BeforeEnter() {
   const { state } = useLocation();
+  const params = useParams();
+  console.log(params);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [password, setPassword] = useState("");
-  const [disabled, setDisabled] = useState(
-    state.password === "True" ? false : true
-  );
+  const [disabled, setDisabled] = useState(() => {
+    if (state) {
+      return state.password === "True" ? false : true;
+    } else {
+      return false;
+    }
+  });
   const [loading, setLoading] = useState(false);
   const baseUrl = useSelector((store) => store.baseUrl);
   const userNo = useSelector((store) => store.userData.userNo);
@@ -47,7 +53,7 @@ function BeforeEnter() {
   const joinSession = () => {
     if (state.password === "True") {
       const data = {
-        roomNo: state.roomNo,
+        roomNo: params.id,
         inputPassword: password,
       };
       console.log(data);
@@ -59,11 +65,11 @@ function BeforeEnter() {
       })
         .then((res) => {
           if (res.data === "Success") {
-            navigate(`/room/${state.roomNo}`, {
+            navigate(`/room/${params.id}`, {
               state: {
                 mic,
                 camera,
-                roomNo: state.roomNo,
+                roomNo: params.id,
                 roomTitle: state.roomTitle,
                 host: false,
               },
@@ -76,11 +82,11 @@ function BeforeEnter() {
           console.log(error);
         });
     } else {
-      navigate(`/room/${state.roomNo}`, {
+      navigate(`/room/${params.id}`, {
         state: {
           mic,
           camera,
-          roomNo: state.roomNo,
+          roomNo: params.id,
           roomTitle: state.roomTitle,
           host: false,
         },
