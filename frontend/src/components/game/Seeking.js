@@ -17,6 +17,7 @@ function Seeking({
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
   const [label, setLabel] = useState("");
+  const [gamestop, setGameStop] = useState(false);
   const videoRef = useRef(null);
   useEffect(() => {
     const init = async () => {
@@ -40,9 +41,9 @@ function Seeking({
   }, []);
 
   useEffect(() => {
-    console.log(start)
-    if (!model && !webcam && !start) {
-      return
+    console.log(start);
+    if (!model || !webcam || gamestop) {
+      return;
     } else {
       const steps = new Promise((resolve, reject) => {
         webcam.setup();
@@ -53,15 +54,23 @@ function Seeking({
         requestAnimationFrame(loop);
       });
     }
-  }, [webcam, start]);
-
+  }, [webcam]);
   const loop = async () => {
+    if (gamestop || !start) {
+      return;
+    }
     webcam.update();
+    if (gamestop) {
+      return;
+    } else {
       await predict();
       requestAnimationFrame(loop);
+      return;
+    }
   };
   const predict = async () => {
     if (!start) {
+      console.log("방지", start);
       return;
     }
     const prediction = await model.predict(webcam.canvas);
@@ -74,8 +83,10 @@ function Seeking({
       }
     }
     setLabel(highlabel);
-    console.log(start);
-    if (highlabel === "Rock" && start) {
+    if (highlabel === "Rock" && !gamestop) {
+      console.log("high")
+      setTimeout(setGameStop(true), 3000);
+      console.log("멈춰", gamestop);
       const data = {
         userNo: openvidu.userNo,
         score: -5,
@@ -84,10 +95,14 @@ function Seeking({
         data: JSON.stringify(data),
         type: "TrueAnswer",
       });
-      setStart(false)
+      setStart(false);
+      console.log(start);
+      return;
     }
   };
-
+  // useEffect(() => {
+  //   setStart(false);
+  // }, [start, gamestop]);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [fail, setfail] = useState(null);
   // 임시
@@ -95,29 +110,30 @@ function Seeking({
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
-      console.log("끝")
+      console.log("끝");
       setIsAnswerShown(true);
       setfail(data.userNo);
       setEnd(true);
       setStart(false);
-      console.log("dho dksajacna",start)
+      console.log("dho dksajacna", start);
+      return;
     });
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
     openvidu.session.on("signal:GameRestart", () => {
       setEnd(false);
-      setIsAnswerShown(false)
+      setIsAnswerShown(false);
     });
-    return () => {      
+    return () => {
       openvidu.session.off("signal:TrueAnswer");
       openvidu.session.off("signal:GameRestart");
-    }
+    };
   }, []);
 
   return (
     <div className={styles.background}>
       <div id="label-container">
-        {label === "Rock"? label:null}
+        {label === "Rock" ? label : null}
         <div />
         {isAnswerShown ? (
           <div className={styles.result}>
