@@ -23,7 +23,7 @@ function GameFrameLeft({
   subscribes,
   newGameScore,
   setNewGameScore,
-  userList,
+  // userList,
   setUserList,
   mic,
   toggleDevice,
@@ -96,6 +96,38 @@ function GameFrameLeft({
   //   };
   //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
   // }, [userList]);
+
+  const userList = [{
+    userName: "진짜진짜귀여운최지연",
+    gameScore: "100",
+    userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+  }, {
+    userName: "김민소2",
+    gameScore: "100",
+    userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+    },
+    {
+      userName: "김민소3",
+      gameScore: "100",
+      userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+    },
+    {
+      userName: "김민소3",
+      gameScore: "100",
+      userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+    },
+    {
+      userName: "김민소3",
+      gameScore: "100",
+      userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+    },
+    // {
+    //   userName: "김민소3",
+    //   gameScore: "100",
+    //   userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
+    //   },
+  ]
+
   const SendScore = () => {
     setNewGameScore(
       userList.map((user) => ({
@@ -280,41 +312,24 @@ function GameFrameLeft({
             />
           )}
         </div>
-        <div className={styles.progressframe}>
-          <div>
-            {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
-            {userList.slice(0, 3).map((user, idx) => {
-              return (
-                <div key={idx} className={styles.score}>
-                  <div className={styles.score2}>
-                    <img
-                      alt="img"
-                      src={user.userImage}
-                      className={styles.img}
-                    />
-                    <span className={styles.font2}>{user.userName}</span>
+        <div className={styles.background}>
+          <div className={styles.progressframe}>
+              {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
+              {userList.map((user, idx) => {
+                return (
+                  <div key={idx} className={styles.score}>
+                    <div className={styles.score2Left}>
+                      <img
+                        alt="img"
+                        src={user.userImage}
+                        className={styles.img}
+                      />
+                      <span className={styles.font2}>{user.userName}</span>
+                    </div>
+                    <GameFrameProgress user={user} />
                   </div>
-                  <GameFrameProgress user={user} />
-                </div>
-              );
-            })}
-          </div>
-          <div>
-            {userList.slice(3, 6).map((user, idx) => {
-              return (
-                <div key={idx} className={styles.score}>
-                  <div className={styles.score2}>
-                    <img
-                      alt="img"
-                      src={user.userImage}
-                      className={styles.img}
-                    />
-                    <span className={styles.font2}>{user.userName}</span>
-                  </div>
-                  <GameFrameProgress user={user} />
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
       </div>
