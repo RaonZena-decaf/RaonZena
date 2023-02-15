@@ -121,7 +121,7 @@ function GameFrameLeft({
       console.log(data.gamename);
       console.log(data.clicked);
       console.log(typeof data.clicked);
-      if (data.gamename === "joker" && data.clicked === 1) {
+      if (data.gamename === "joker" && data.clicked === "1") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
@@ -137,7 +137,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 2) {
+      if (data.gamename === "joker" && data.clicked === "2") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
@@ -157,7 +157,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 3) {
+      if (data.gamename === "joker" && data.clicked === "3") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
@@ -177,7 +177,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 4) {
+      if (data.gamename === "joker" && data.clicked === "4") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
@@ -197,7 +197,7 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 5) {
+      if (data.gamename === "joker" && data.clicked === "5") {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
         setUserList((prev) =>
