@@ -268,7 +268,7 @@ function MainRoom(props) {
         data: { exp: myscore.gameScore, userNo: user.userNo },
       })
         .then((res) => 
-        console.log(res))
+        console.log(res)
         const lev = parseInt(myscore.gameScore / 100);
         const leftExp = myscore.gameScore % 100;
         dispatch(
@@ -276,7 +276,7 @@ function MainRoom(props) {
             ...user,
             exp: user.exp + leftExp,
             level: user.level + lev,
-          }))
+          })))
         .catch((error) => console.log(error));
       await session.disconnect();
     }
