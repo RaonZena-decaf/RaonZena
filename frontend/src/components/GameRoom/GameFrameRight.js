@@ -48,14 +48,13 @@ function GameFrameRight({
 
   // subscribe는 나 이외의 참가자라 0은 나 혼자만을 의미
   const videoFrameNotHost = () => {
-    // if (subscribes.length === 0) {
-    //   return "videoFrame";
-    // }
-    if (subscribes.length === 0) {
+    if (subscribes.length === 1) { 
+      return "videoFrame";
+    } else if (subscribes.length === 2) { 
       return "videoFrame2";
-    } else if (subscribes.length <= 2) {
+    } else if (subscribes.length <= 4) {
       return "videoFrame3";
-    } else if (3 <= subscribes.length) {
+    } else if (5 <= subscribes.length) {
       return "videoFrame4";
     }
   };
