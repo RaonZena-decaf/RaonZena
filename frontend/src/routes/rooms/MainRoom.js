@@ -263,9 +263,9 @@ function MainRoom(props) {
     }
 
     const myscore = userList.filter((attend) => attend.userNo === user.userNo);
-    console.log('저장되는 경험치'    )
+    console.log('저장되는 경험치')
     console.log(myscore.gameScore)
-    axios({
+    await axios({
       method: "PUT",
       url: `${baseUrl}profile/expToLevelModify`,
       data: { exp: myscore.gameScore, userNo: user.userNo },
