@@ -149,23 +149,28 @@ function ShoutInSilence({
 
   useEffect(() => {
     getAnswerList();
+    if (openvidu.session) {
+      openvidu.session.on("signal:TrueAnswer", (event) => {
+        const data = JSON.parse(event.data);
+        setIsAnswerShown(true);
+      });
+      openvidu.session.on("signal:SeedNumber", (event) => {
+        const data = JSON.parse(event.data);
+        setAnswerList(data);
+      });
+      openvidu.session.on("signal:GameRestart", () => {
+        setStep(0);
+        getAnswerList();
+      });
+    }
+    return () => {
+      openvidu.session.off("signal:TrueAnswer")
+      openvidu.session.off("signal:SeedNumber")
+      openvidu.session.off("signal:GameRestart")
+
+    }
   }, []);
 
-  // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
-  if (openvidu.session) {
-    openvidu.session.on("signal:TrueAnswer", (event) => {
-      const data = JSON.parse(event.data);
-      setIsAnswerShown(true);
-    });
-    openvidu.session.on("signal:SeedNumber", (event) => {
-      const data = JSON.parse(event.data);
-      setAnswerList(data);
-    });
-    openvidu.session.on("signal:GameRestart", () => {
-      setStep(0);
-      getAnswerList();
-    });
-  }
 
   return (
     <div>
