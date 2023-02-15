@@ -295,7 +295,7 @@ function MainRoom(props) {
     console.log(myscore)
 
     axios({
-      method: "post",
+      method: "PUT",
       url: `${baseUrl}profile/expToLevelModify`,
       data: { exp: myscore.gameScore, userNo: user.userNo },
     })
