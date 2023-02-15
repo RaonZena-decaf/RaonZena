@@ -152,7 +152,15 @@ function BeforeEnter() {
 
               <div className={style.rightcontainer}>
                 <div className={style.video}>
-                  <VideoContainer mic={mic} camera={camera} />
+                  {camera ? (
+                    <VideoContainer mic={mic} camera={camera} />
+                  ) : (
+                    <img
+                      src="../planet.png"
+                      alt="NoVideo"
+                      className={style.videoalt}
+                    />
+                  )}
                 </div>
                 <div className={style.accessory}>
                   {mic ? (
