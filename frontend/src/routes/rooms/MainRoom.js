@@ -44,12 +44,7 @@ function MainRoom(props) {
       prev.filter((stream) => stream.stream !== deletestream)
     );
   };
-  // // 임시 사용자 이름 랜덤으로 부여
-  // function getRandomInt(min, max) {
-  //   min = Math.ceil(min);
-  //   max = Math.floor(max);
-  //   return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-  // }
+
   const toggleDevice = async (mic, video) => {
     publisher.publishAudio(mic);
     publisher.publishVideo(video);
@@ -58,12 +53,11 @@ function MainRoom(props) {
     const OV = new OpenVidu();
     setOV(OV);
     // console 몇개 없애는 코드
-    // OV.enableProdMode()
+    OV.enableProdMode();
     const after = new Promise((resolve, reject) => {
       const mySession = OV.initSession();
       setTimeout(() => {
         resolve(mySession);
-        // setUserName(user.userName);
       }, 1000);
     });
     after
@@ -174,26 +168,8 @@ function MainRoom(props) {
 
               // --- 6) Publish your stream ---
               mySession.publish(publisher);
-              // Obtain the current video device in use
-              // const devices = await OV.getDevices();
-              // const videoDevices = devices.filter(
-              //   (device) => device.kind === "videoinput"
-              // );
-              // const currentVideoDeviceId = publisher.stream
-              //   .getMediaStream()
-              //   .getVideoTracks()[0]
-              //   .getSettings().deviceId;
-              // const currentVideoDevice = videoDevices.find(
-              //   (device) => device.deviceId === currentVideoDeviceId
-              // );
 
-              // Set the main video in the page to display our webcam and store our Publisher
               setPublisher(publisher);
-              // this.setState({
-              //   currentVideoDevice: currentVideoDevice,
-              //   mainStreamManager: publisher,
-              //   publisher: publisher,
-              // });
 
               //현재 유저 점수를 받은 후, 자신의 점수를 0점으로 하여 저장
             })
@@ -261,27 +237,17 @@ function MainRoom(props) {
 
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
-    console.log("길이", subscribes.length);
     return () => {
-      console.log("길이2", subscribes.length);
-      axios({
-        method: "get",
-        url: `${baseUrl}games/${state.roomNo}/join`,
-      })
-        .then((res) => {
-          if (res.data === 1) {
-            axios({
-              method: "delete",
-              url: `${baseUrl}live/${state.roomNo}`,
-            })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((error) => console.log(error));
-          }
+      if (host) {
+        axios({
+          method: "delete",
+          url: `${baseUrl}live/${state.roomNo}`,
         })
-        .catch((error) => console.log(error));
-      window.removeEventListener("beforeunload", onbeforeunload);
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => console.log(error));
+      }
     };
   }, []);
 
