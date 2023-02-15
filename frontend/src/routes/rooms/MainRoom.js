@@ -263,6 +263,7 @@ function MainRoom(props) {
         (attend) => attend.userNo === user.userNo
       );
       console.log("저장되는 경험치");
+      console.log(myscore)
       console.log(myscore.gameScore);
       await axios({
         method: "PUT",
