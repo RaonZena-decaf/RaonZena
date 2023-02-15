@@ -27,6 +27,8 @@ function MainRoom(props) {
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
   const [host, sestHost] = useState(state.host);
+  const [gameScore, setGameScore] = useState([]);
+  const [userList, setUserList] = useState([]);
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
@@ -151,7 +153,7 @@ function MainRoom(props) {
         // --- 4) Connect to the session with a valid user token ---
         getToken().then((token) => {
           mySession
-            .connect(token, { clientData: userName, host:host })
+            .connect(token, { clientData: userName, host: host })
             .then(async () => {
               // --- 5) Get your own camera stream ---
               setSession(mySession);
@@ -279,6 +281,14 @@ function MainRoom(props) {
       await session.disconnect();
     }
 
+    axios({
+      method: "post",
+      url: `${baseUrl}profile/expToLevelModify`,
+      data: { exp: gameScore, userNo: user.userNo },
+    })
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+
     // Empty all properties...
     setSession(undefined);
     setroomId("None");
@@ -346,6 +356,10 @@ function MainRoom(props) {
               publisher={publisher}
               subscribes={subscribes}
               roomNo={state.roomNo}
+              gameScore={gameScore}
+              setGameScore={setGameScore}
+              userList={userList}
+              setUserList={setUserList}
             />
           )}
           <MenuBar

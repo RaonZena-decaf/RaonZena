@@ -19,89 +19,14 @@ function GameFrameLeft({
   roomNo,
   setEnd,
   publisher,
-  setStart
+  setStart,
+  gameScore,
+  setGameScore,
+  userList,
+  setUserList,
 }) {
   const baseUrl = useSelector((store) => store.baseUrl);
-  const [gameScore, setGameScore] = useState([]);
-  const [userList, setUserList] = useState([
-    {
-      userNo: 1,
-      userId: "123456",
-      userName: "홍영민",
-      exp: 50,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 2,
-      userId: "123456",
-      userName: "윤수희",
-      exp: 40,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 3,
-      userId: "123456",
-      userName: "최지연",
-      exp: 30,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 4,
-      userId: "123456",
-      userName: "윤수희",
-      exp: 20,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 7,
-      userId: "2657509460",
-      userName: "임길현",
-      exp: 0,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-  ]);
-  // 내일 확인 해 보자
-  // const userListupdate = () => {
-  //   axios({
-  //     method: "GET",
-  //     url: `${baseUrl}games/${roomNo}`,
-  //   })
-  //     .then((res) => {
-  //       setUserList(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
-  // useEffect (() => {
-  //   userListupdate()
-  // },[openvidu.subscribe])
 
-  // const [liveScoreData, setLiveScoreData] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.post(`${baseUrl}games/liveScore`);
-  //       setLiveScoreData(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [userList]);
-
-  // console.log(liveScoreData);
 
   axios({
     method: "GET",
@@ -113,25 +38,6 @@ function GameFrameLeft({
       setUserList(res.data.userData);
     })
     .catch((error) => console.log(error));
-
-  // useEffect(() => {
-  //   const sendLiveScore = async (roomNo, userList) => {
-  //     const formattedList = userList.map((user) => ({
-  //       userNo: user[0],
-  //       exp: user[1],
-  //     }));
-  //     try {
-  //       await axios.post(`${baseUrl}games/liveScore`, {
-  //         roomNo,
-  //         userList: formattedList,
-  //       });
-  //       console.log("Live score sent successfully");
-  //     } catch (error) {
-  //       console.error("Error sending live score:", error);
-  //     }
-  //   };
-  //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
-  // }, [userList]);
 
   useEffect(()=>{
     setGameScore(userList.map(user => [user.userNo, user.gameScore]));
