@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { FaUserTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const HostFollowings = ({ HostFollowingsList, loading }) => {
+const HostFollowingGames = ({ HostFollowingsList, loading }) => {
   const [list, setList] = useState([]);
   const baseUrl = useSelector((store) => store.baseUrl);
   const nowUserNo = useSelector((store) => store.userData.userNo);
@@ -100,4 +100,4 @@ const HostFollowings = ({ HostFollowingsList, loading }) => {
   );
 };
 
-export default HostFollowings;
+export default HostFollowingGames;

@@ -9,7 +9,7 @@ import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import UserVideoComponent from "../camera/UserVideoComponent";
-// import PhotoShoot from "./PhotoShoot";
+
 
 function ShoutInSilence({
   start,
@@ -17,8 +17,6 @@ function ShoutInSilence({
   setResult,
   host,
   openvidu,
-  userList,
-  closeMenu,
   subscribes,
 }) {
 
@@ -37,24 +35,6 @@ function ShoutInSilence({
   const [showAnswer, setShowAnswer] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    setTimeout(() => {}, 300);
-  };
-
-  const handleVideo = () => {
-    const video = videoRef.current;
-  };
-
-  const answerOnclick = (e) => {
-    e.preventDefault();
-    if (answer !== "") {
-      console.log(answer);
-    }
-    setAnswer("");
-  };
 
   //axios로 정답 리스트 가져오는 부분
   function getAnswerList() {
@@ -123,7 +103,11 @@ function ShoutInSilence({
         //정답 맞춘 로직
         if (result === answerList[step].answer) {
           console.log("정답");
-          // setModalShow(true);
+          setResult("");
+          document.getElementById("correctMassage").style.display = "block";
+          setTimeout(function () {
+            document.getElementById("correctMassage").style.display = "none";
+          }, 200);
           const data = {
             userNo: openvidu.userNo,
             score: 5,
@@ -153,9 +137,6 @@ function ShoutInSilence({
       video.addVideoElement(videoRef.current);
     }
   }, []);
-
-  // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     getAnswerList();
@@ -205,15 +186,18 @@ function ShoutInSilence({
       ) : (
         <div>
           <div id="wrongMassage" className={styles.wrongMassage}>
-            틀렸습니다``
+            틀렸습니다
+            </div>
+            <div id="correctMassage" className={styles.correctMassage}>
+            정답입니다
           </div>
           <div className={styles.webcamCapture}>
             {subscribes.map((sub, idx) => {
               let subData = JSON.parse(sub.stream.connection.data);
               if (subData.host) {
                 return (
-                  <div className={styles.webcamCapture}>
-                    <UserVideoComponent key={idx} streamManager={sub} />
+                  <div className={styles.mute}>
+                    <UserVideoComponent key={idx} streamManager={sub} mic={false} width="80%" />
                   </div>
                 );
               } else {
