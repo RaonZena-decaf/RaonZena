@@ -15,6 +15,12 @@ function CameraComponent({ camera, mic }) {
       .catch((error) => {
         console.log("Error accessing camera:", error);
       });
+    return () => {
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => track.stop());
+      }
+    };
   }, []);
 
   // Cleanup resources
@@ -26,7 +32,7 @@ function CameraComponent({ camera, mic }) {
       }
     };
   }, [stream]);
-  
+
   useEffect(() => {
     videoRef.current.muted = !mic;
     if (camera) {
