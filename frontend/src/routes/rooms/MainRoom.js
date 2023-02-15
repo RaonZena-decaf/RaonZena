@@ -264,16 +264,16 @@ function MainRoom(props) {
       );
       console.log("저장되는 경험치");
       console.log(myscore)
-      console.log(myscore.gameScore);
+      console.log(myscore[0].gameScore);
       await axios({
         method: "PUT",
         url: `${baseUrl}profile/expToLevelModify`,
-        data: { exp: myscore.gameScore, userNo: user.userNo },
+        data: { exp: myscore[0].gameScore, userNo: user.userNo },
       })
         .then((res) => {
           console.log(res);
-          const lev = parseInt(myscore.gameScore / 100);
-          const leftExp = myscore.gameScore % 100;
+          const lev = parseInt(myscore[0].gameScore / 100);
+          const leftExp = myscore[0].gameScore % 100;
           dispatch(
             modifyUserData({
               ...user,
