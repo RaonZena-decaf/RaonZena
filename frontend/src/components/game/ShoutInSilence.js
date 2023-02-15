@@ -1,10 +1,29 @@
-import React, { useState, useEffect, useRef, useReducer, dispatch, } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+  dispatch,
+} from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import UserVideoComponent from "../camera/UserVideoComponent";
 // import PhotoShoot from "./PhotoShoot";
 
-function ShoutInSilence({ start, result, setResult, host, openvidu, userList, closeMenu, publisher}) {
+function ShoutInSilence({
+  start,
+  result,
+  setResult,
+  host,
+  openvidu,
+  userList,
+  closeMenu,
+  subscribes,
+}) {
+
+  console.log("ShoutInSilence의 subscribes 잘 들아옴? =>", subscribes);
+
   const timeLimit = 10; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
@@ -18,7 +37,7 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
   const [showAnswer, setShowAnswer] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [open, setOpen] = useState(false);
-  
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -107,7 +126,7 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
           // setModalShow(true);
           const data = {
             userNo: openvidu.userNo,
-            score: 5
+            score: 5,
           };
           openvidu.session.signal({
             data: JSON.stringify(data),
@@ -129,8 +148,10 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
   }, [result]);
 
   useEffect(() => {
-    const video = openvidu.publisher;
-    video.addVideoElement(videoRef.current);
+    if (host) { 
+      const video = openvidu.publisher;
+      video.addVideoElement(videoRef.current);
+    }
   }, []);
 
   // 모달창 노출 여부 state
@@ -184,12 +205,21 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
       ) : (
         <div>
           <div id="wrongMassage" className={styles.wrongMassage}>
-            틀렸습니다
+            틀렸습니다``
           </div>
           <div className={styles.webcamCapture}>
-            {/* {videoRef.current !== undefined ? (
-              <video autoPlay={true} ref={videoRef} width="80%" />
-            ) : null} */}
+            {subscribes.map((sub, idx) => {
+              let subData = JSON.parse(sub.stream.connection.data);
+              if (subData.host) {
+                return (
+                  <div className={styles.webcamCapture}>
+                    <UserVideoComponent key={idx} streamManager={sub} />
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
             <div className={styles.Container}>
               <span className={styles.questionNo}>
                 {step + 1} / {answerList.length}

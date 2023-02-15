@@ -26,6 +26,7 @@ function GameFrameLeft({
   userList,
   setUserList,
 }) {
+  console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
 
   // 내일 확인 해 보자
@@ -60,18 +61,21 @@ function GameFrameLeft({
   // }, [userList]);
 
   // console.log(liveScoreData);
-
-  axios({
-    method: "GET",
-    url: `${baseUrl}games/liveScore/${roomNo}`,
-  })
-    .then((res) => {
-      console.log("으아아아아아아아아아아아아아아아악");
-      console.log(res.data); // Add code to execute here
-      setUserList(res.data.userData);
+  const axiosScore = () => {
+    axios({
+      method: "GET",
+      url: `${baseUrl}games/liveScore/${roomNo}`,
     })
-    .catch((error) => console.log(error));
-
+      .then((res) => {
+        console.log("으아아아아아아아아아아아아아아아악");
+        console.log(res.data); // Add code to execute here
+        setUserList(res.data.userData);
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    axiosScore();
+  }, []);
   // useEffect(() => {
   //   const sendLiveScore = async (roomNo, userList) => {
   //     const formattedList = userList.map((user) => ({
@@ -90,83 +94,125 @@ function GameFrameLeft({
   //   };
   //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
   // }, [userList]);
-
-  useEffect(() => {
-    setGameScore(userList.map((user) => [user.userNo, user.gameScore]));
-
+  const SendScore = () => {
+    setNewGameScore(
+      userList.map((user) => ({
+        userNo: user.userNo,
+        gameScore: user.gameScore,
+      }))
+    );
+    console.log(newGameScore);
     axios({
       method: "POST",
       url: `${baseUrl}games/liveScore/`,
-      data: { roomNo: roomNo, userData: gameScore },
+      data: { roomNo: roomNo, userData: newGameScore },
     })
       .then((res) => {
+        console.log("dkdkdkdkd");
         console.log(res.data);
+        userList.sort(function (a, b) {
+          return b.points - a.points;
+        });
       })
       .catch((error) => console.log(error));
-  }, [userList]);
+  };
 
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       console.log(data.userNo);
       if (data.gamename === "joker" && data.clicked === 1) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp + (100 - user.exp) };
+              console.log("으아아아아아앙아아아악");
+              console.log(user.gameScore);
+              console.log(user.gameScore - 10);
+              return { ...user, gameScore: 100 };
+            } else {
+              return user;
             }
-            return user;
           })
         );
       }
       if (data.gamename === "joker" && data.clicked === 2) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                exp: user.exp + 5 >= 100 ? 100 : user.exp + 5,
-              };
+              if (user.gameScore + 5 >= 100) {
+                console.log("으아아아아아앙아아아악");
+                console.log(user.gameScore);
+                console.log(user.gameScore - 10);
+                return { ...user, gameScore: 100 };
+              } else {
+                return { ...user, gameScore: user.gameScore + 5 };
+              }
             }
+
             return user;
           })
         );
       }
       if (data.gamename === "joker" && data.clicked === 3) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                exp: user.exp + 10 >= 100 ? 100 : user.exp + 10,
-              };
+              if (user.gameScore + 10 >= 100) {
+                console.log("으아아아아아앙아아아악");
+                console.log(user.gameScore);
+                console.log(user.gameScore - 10);
+                return { ...user, gameScore: 100 };
+              } else {
+                return { ...user, gameScore: user.gameScore + 10 };
+              }
             }
+
             return user;
           })
         );
       }
       if (data.gamename === "joker" && data.clicked === 4) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                exp: user.exp - 5 <= 0 ? 0 : user.exp - 5,
-              };
+              if (user.gameScore - 5 <= 0) {
+                console.log("으아아아아아앙아아아악");
+                console.log(user.gameScore);
+                console.log(user.gameScore - 10);
+                return { ...user, gameScore: 0 };
+              } else {
+                return { ...user, gameScore: user.gameScore - 5 };
+              }
             }
+
             return user;
           })
         );
       }
       if (data.gamename === "joker" && data.clicked === 5) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                exp: user.exp - 10 <= 0 ? 0 : user.exp - 10,
-              };
+              if (user.gameScore - 10 <= 0) {
+                console.log("으아아아아아앙아아아악");
+                console.log(user.gameScore);
+                console.log(user.gameScore - 10);
+                return { ...user, gameScore: 0 };
+              } else {
+                return { ...user, gameScore: user.gameScore - 10 };
+              }
             }
+
             return user;
           })
         );
@@ -175,24 +221,22 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if (user.exp + data.score <= 0) {
-                return { ...user, exp: 0 };
-              } else if (user.exp + data.score >= 100) {
-                return { ...user, exp: 100 };
+              if (user.gameScore + data.score <= 0) {
+                return { ...user, gameScore: 0 };
+              } else if (user.gameScore + data.score >= 100) {
+                return { ...user, gameScore: 100 };
               } else {
-                return { ...user, exp: user.exp + data.score };
+                return { ...user, gameScore: user.gameScore + data.score };
               }
             }
             return user;
           })
         );
       }
+      SendScore();
     });
   }, []);
 
-  userList.sort(function (a, b) {
-    return b.points - a.points;
-  });
   return (
     <div className={styles.leftcontainer}>
       <div>
@@ -227,6 +271,7 @@ function GameFrameLeft({
               setResult={setResult}
               openvidu={openvidu}
               host={host}
+              setStart={setStart}
             />
           )}
           {gamename === "talkingsilence" && (
@@ -238,6 +283,7 @@ function GameFrameLeft({
               host={host}
               userList={userList}
               publisher={publisher}
+              subscribes={subscribes}
             />
           )}
           {gamename === "personquiz" && (
@@ -261,7 +307,7 @@ function GameFrameLeft({
         </div>
         <div className={styles.progressframe}>
           <div>
-            {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])}
+            {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
             {userList.slice(0, 3).map((user, idx) => {
               return (
                 <div key={idx} className={styles.score}>

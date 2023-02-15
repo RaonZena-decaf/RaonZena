@@ -194,24 +194,6 @@ function MainRoom(props) {
               // });
 
               //현재 유저 점수를 받은 후, 자신의 점수를 0점으로 하여 저장
-              axios({
-                method: "Get",
-                url: `${baseUrl}games/liveScore/${roomId}`,
-              })
-                .then((res) => {
-                  const gamseScores = res.data.userData.slice();
-                  gamseScores.push([user.userNo, 0]);
-                  axios({
-                    method: "post",
-                    url: `${baseUrl}games/liveScore`,
-                    data: { roomNo: roomId, userData: gamseScores },
-                  })
-                    .then((res) => {
-                      console.log(res.data);
-                    })
-                    .catch((error) => console.log(error));
-                })
-                .catch((error) => console.log(error));
             })
             .catch((error) => {
               console.log(
@@ -226,6 +208,33 @@ function MainRoom(props) {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    axios({
+      method: "Get",
+      url: `${baseUrl}games/liveScore/${roomId}`,
+    })
+      .then((res) => {
+        console.log('점수리스트 가져옴');
+        // res.data를 순회하면서 user=> [] 형태로 하나씩 push
+        const gamseScores = [] 
+        res.data.userData.map((user) => (gamseScores.push([user.userNo,user.gameScore])))
+        gamseScores.push([user.userNo, 0]);
+        console.log(gamseScores)
+        axios({
+          method: "post",
+          url: `${baseUrl}games/liveScore`,
+          data: { roomNo: roomId, userData: gamseScores },
+        })
+          .then((res) => {
+            console.log('점수 저장됨');
+            console.log(res.data);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   // 끝
   const onbeforeunload = (event) => {
     leaveSession();
