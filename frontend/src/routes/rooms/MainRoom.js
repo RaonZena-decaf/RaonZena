@@ -4,7 +4,7 @@ import MenuBar from "../../components/room/MenuBar";
 import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "../../components/camera/UserVideoComponent";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { modifyUserData } from "../../app/userData";
 
@@ -16,6 +16,8 @@ const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
 function MainRoom(props) {
+  const navigate = useNavigate();
+  const params = useParams();
   const { state } = useLocation();
   const user = useSelector((store) => store.userData);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -23,18 +25,17 @@ function MainRoom(props) {
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
   const [userName, setUserName] = useState(user.userName);
-  const [roomId, setroomId] = useState(state.roomNo.toString());
+  const [roomId, setroomId] = useState(params.roomId);
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
-  const [host, sestHost] = useState(state.host);
+  const [host, sestHost] = useState(state ? state.host : false);
   const [newGameScore, setNewGameScore] = useState([]);
   const [userList, setUserList] = useState([]);
   const dispatch = useDispatch();
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
-  const navigate = useNavigate();
   // 화면 랜더링 관련 함수
   const [gamename, setGameName] = useState("chatSubject");
 
@@ -50,6 +51,9 @@ function MainRoom(props) {
     publisher.publishVideo(video);
   };
   useEffect(() => {
+    if (!state) {
+      navigate(`/beforeroom/${params.roomId}`);
+    }
     const OV = new OpenVidu();
     setOV(OV);
     // console 몇개 없애는 코드
@@ -225,7 +229,7 @@ function MainRoom(props) {
     };
     axios({
       method: "put",
-      url: `${baseUrl}games/${state.roomNo}/join`,
+      url: `${baseUrl}games/${params.roomId}/join`,
       data: data,
     })
       .then((res) => {
@@ -241,7 +245,7 @@ function MainRoom(props) {
       if (host) {
         axios({
           method: "delete",
-          url: `${baseUrl}live/${state.roomNo}`,
+          url: `${baseUrl}live/${params.roomId}`,
         })
           .then((res) => {
             console.log(res);
@@ -267,13 +271,13 @@ function MainRoom(props) {
     })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
-    const lev = parseInt(myscore.gameScore/100) 
-    const leftExp = myscore.gameScore % 100
+    const lev = parseInt(myscore.gameScore / 100);
+    const leftExp = myscore.gameScore % 100;
     dispatch(
       modifyUserData({
         ...user,
-        exp : user.exp + leftExp,
-        level: user.level + lev
+        exp: user.exp + leftExp,
+        level: user.level + lev,
       })
     );
 
@@ -343,7 +347,7 @@ function MainRoom(props) {
               host={host}
               publisher={publisher}
               subscribes={subscribes}
-              roomNo={state.roomNo}
+              roomNo={params.roomId}
               newGameScore={newGameScore}
               setNewGameScore={setNewGameScore}
               userList={userList}
