@@ -259,28 +259,31 @@ function MainRoom(props) {
   const leaveSession = async function () {
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
     if (session) {
-      const myscore = userList.filter((attend) => attend.userNo === user.userNo);
-      console.log('저장되는 경험치')
-      console.log(myscore.gameScore)
+      const myscore = userList.filter(
+        (attend) => attend.userNo === user.userNo
+      );
+      console.log("저장되는 경험치");
+      console.log(myscore.gameScore);
       await axios({
         method: "PUT",
         url: `${baseUrl}profile/expToLevelModify`,
         data: { exp: myscore.gameScore, userNo: user.userNo },
       })
-        .then((res) => 
-        console.log(res)
-        const lev = parseInt(myscore.gameScore / 100);
-        const leftExp = myscore.gameScore % 100;
-        dispatch(
-          modifyUserData({
-            ...user,
-            exp: user.exp + leftExp,
-            level: user.level + lev,
-          })))
+        .then((res) => {
+          console.log(res);
+          const lev = parseInt(myscore.gameScore / 100);
+          const leftExp = myscore.gameScore % 100;
+          dispatch(
+            modifyUserData({
+              ...user,
+              exp: user.exp + leftExp,
+              level: user.level + lev,
+            })
+          );
+        })
         .catch((error) => console.log(error));
       await session.disconnect();
     }
-
 
     // Empty all properties...
     setSession(undefined);
