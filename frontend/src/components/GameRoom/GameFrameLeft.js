@@ -20,13 +20,46 @@ function GameFrameLeft({
   setEnd,
   publisher,
   setStart,
-  gameScore,
-  setGameScore,
+  subscribes,
+  newGameScore,
+  setNewGameScore,
   userList,
   setUserList,
 }) {
   const baseUrl = useSelector((store) => store.baseUrl);
 
+  // 내일 확인 해 보자
+  // const userListupdate = () => {
+  //   axios({
+  //     method: "GET",
+  //     url: `${baseUrl}games/${roomNo}`,
+  //   })
+  //     .then((res) => {
+  //       setUserList(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
+  // useEffect (() => {
+  //   userListupdate()
+  // },[openvidu.subscribe])
+
+  // const [liveScoreData, setLiveScoreData] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.post(`${baseUrl}games/liveScore`);
+  //       setLiveScoreData(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [userList]);
+
+  // console.log(liveScoreData);
 
   axios({
     method: "GET",
@@ -39,8 +72,27 @@ function GameFrameLeft({
     })
     .catch((error) => console.log(error));
 
-  useEffect(()=>{
-    setGameScore(userList.map(user => [user.userNo, user.gameScore]));
+  // useEffect(() => {
+  //   const sendLiveScore = async (roomNo, userList) => {
+  //     const formattedList = userList.map((user) => ({
+  //       userNo: user[0],
+  //       exp: user[1],
+  //     }));
+  //     try {
+  //       await axios.post(`${baseUrl}games/liveScore`, {
+  //         roomNo,
+  //         userList: formattedList,
+  //       });
+  //       console.log("Live score sent successfully");
+  //     } catch (error) {
+  //       console.error("Error sending live score:", error);
+  //     }
+  //   };
+  //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
+  // }, [userList]);
+
+  useEffect(() => {
+    setGameScore(userList.map((user) => [user.userNo, user.gameScore]));
 
     axios({
       method: "POST",
@@ -51,7 +103,7 @@ function GameFrameLeft({
         console.log(res.data);
       })
       .catch((error) => console.log(error));
-  },[userList]);
+  }, [userList]);
 
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
@@ -185,7 +237,7 @@ function GameFrameLeft({
               openvidu={openvidu}
               host={host}
               userList={userList}
-              publisher = {publisher}
+              publisher={publisher}
             />
           )}
           {gamename === "personquiz" && (

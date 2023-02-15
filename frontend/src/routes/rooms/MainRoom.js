@@ -27,7 +27,7 @@ function MainRoom(props) {
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
   const [host, sestHost] = useState(state.host);
-  const [gameScore, setGameScore] = useState([]);
+  const [newGameScore, setNewGameScore] = useState([]);
   const [userList, setUserList] = useState([]);
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
@@ -284,7 +284,7 @@ function MainRoom(props) {
     axios({
       method: "post",
       url: `${baseUrl}profile/expToLevelModify`,
-      data: { exp: gameScore, userNo: user.userNo },
+      data: { exp: newGameScore, userNo: user.userNo },
     })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
@@ -356,8 +356,8 @@ function MainRoom(props) {
               publisher={publisher}
               subscribes={subscribes}
               roomNo={state.roomNo}
-              gameScore={gameScore}
-              setGameScore={setGameScore}
+              newGameScore={newGameScore}
+              setNewGameScore={setNewGameScore}
               userList={userList}
               setUserList={setUserList}
             />

@@ -9,8 +9,8 @@ function GameFrame({
   host,
   subscribes,
   roomNo,
-  gameScore,
-  setGameScore,
+  newGameScore,
+  setNewGameScore,
   userList,
   setUserList,
 }) {
@@ -98,8 +98,9 @@ function GameFrame({
           roomNo={roomNo}
           setEnd={setEnd}
           setStart={setStart}
-          gameScore={gameScore}
-          setGameScore={setGameScore}
+          subscribes={subscribes}
+          newGameScore={newGameScore}
+          setNewGameScore={setNewGameScore}
           userList={userList}
           setUserList={setUserList}
         />
