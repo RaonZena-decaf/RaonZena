@@ -13,6 +13,8 @@ function GameFrame({
   setNewGameScore,
   userList,
   setUserList,
+  mic,
+  toggleDevice,
 }) {
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
@@ -98,6 +100,8 @@ function GameFrame({
           setNewGameScore={setNewGameScore}
           userList={userList}
           setUserList={setUserList}
+          mic={mic}
+          toggleDevice={toggleDevice}
         />
         <GameFrameRight
           start={start}

@@ -16,6 +16,7 @@
   align-items: center;
   gap: 0.5rem;
   transition: color 0.3s ease;
+  padding-left: 1rem;
 }
 
 .buttonBlack:hover {

@@ -5,7 +5,8 @@ import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "../../components/camera/UserVideoComponent";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { modifyUserData } from "../../app/userData";
 
 import axios from "axios";
 import Loading from "../../components/room/MainLoading";
@@ -29,6 +30,7 @@ function MainRoom(props) {
   const [host, sestHost] = useState(state.host);
   const [newGameScore, setNewGameScore] = useState([]);
   const [userList, setUserList] = useState([]);
+  const dispatch = useDispatch();
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
@@ -191,7 +193,6 @@ function MainRoom(props) {
       url: `${baseUrl}games/liveScore/${roomId}`,
     })
       .then((res) => {
-        console.log("점수리스트 가져옴");
         // res.data를 순회하면서 user=> [] 형태로 하나씩 push
         const gamseScores = [];
         res.data.userData.map((user) =>
@@ -205,7 +206,6 @@ function MainRoom(props) {
           data: { roomNo: roomId, userData: gamseScores },
         })
           .then((res) => {
-            console.log("점수 저장됨");
             console.log(res.data);
           })
           .catch((error) => console.log(error));
@@ -259,8 +259,6 @@ function MainRoom(props) {
     }
 
     const myscore = userList.filter((attend) => attend.userNo === user.userNo);
-    console.log("방에서 나갑니다.");
-    console.log(myscore);
 
     axios({
       method: "PUT",
@@ -269,6 +267,15 @@ function MainRoom(props) {
     })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
+    const lev = parseInt(myscore.gameScore/100) 
+    const leftExp = myscore.gameScore % 100
+    dispatch(
+      modifyUserData({
+        ...user,
+        exp : user.exp + leftExp,
+        level: user.level + lev
+      })
+    );
 
     // Empty all properties...
     setSession(undefined);
@@ -341,6 +348,8 @@ function MainRoom(props) {
               setNewGameScore={setNewGameScore}
               userList={userList}
               setUserList={setUserList}
+              mic={state.mic}
+              toggleDevice={toggleDevice}
             />
           )}
           <MenuBar

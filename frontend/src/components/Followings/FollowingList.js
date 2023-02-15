@@ -12,10 +12,9 @@ export default function FollowingList() {
   const nowUserNo = useSelector((store) => store.userData.userNo);
   const user = useSelector((store) => store.userData);
 
-
   const [followUserNo, setFollowUserNo] = useState(1);
   const getlist = () => {
-    if (nowUserNo) {
+    if (nowUserNo !== "") {
       axios({
         method: "get",
         url: `${baseUrl}profile/${nowUserNo}/following`,

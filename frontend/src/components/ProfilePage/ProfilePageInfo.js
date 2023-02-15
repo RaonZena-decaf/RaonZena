@@ -146,7 +146,7 @@ function ProfilePageInfo({
         </div>
         <div className={styles.background4}>
           <span className={styles.profileid3}>Exp</span>
-          <ProfileProgress exp={userInfo.exp} />
+          <ProfileProgress exp={parseInt(userInfo.exp/2)} />
         </div>
         <div>
           <span className={styles.profileid5}>{`기록 ${feedLength}`}</span>
