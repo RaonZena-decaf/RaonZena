@@ -26,22 +26,26 @@ function GameFrame({
       });
     }
   };
-  if (openvidu.session) {
-    openvidu.session.on("signal:StartGame", () => {
-      setStart(true);
-    });
-    openvidu.session.on("signal:GameRestart", () => {
-      startHandler();
-      setEnd(false);
-    });
-  }
+  useEffect( () => {
+    if (openvidu.session) {
+      openvidu.session.on("signal:StartGame", () => {
+        setStart(true);
+      });
+      openvidu.session.on("signal:GameRestart", () => {
+        startHandler();
+        setEnd(false);
+      });
+    }
+  })
   const [result, setResult] = useState("");
   const [gameTitle, setGameTitle] = useState("");
 
   useEffect(() => {
     setGameTitle(getGameTitle(gamename));
+    setStart(false)
+    setEnd(false);
   }, [gamename]);
-
+  
   const getGameTitle = (gamename) => {
     let tempTitle = "";
     switch (gamename) {
