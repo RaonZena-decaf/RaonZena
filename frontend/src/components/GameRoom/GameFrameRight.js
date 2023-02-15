@@ -126,11 +126,11 @@ function GameFrameRight({
         </button>
         {!start ? (
           end ? (
-            <button className={styles.button} onClick={restart}>
+            <button className={styles.button} onClick={restart} disabled={!host}>
               다시하기
             </button>
           ) : (
-            <button className={styles.button} onClick={startHandler}>
+            <button className={styles.button} onClick={startHandler} disabled={!host}>
               시작
             </button>
           )
