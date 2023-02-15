@@ -1,11 +1,14 @@
 .background {
-  height: 50rem;
+  height: 44rem;
   border-radius: 10px;
   object-fit: cover;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   background-color: #353839;
   overflow: hidden;
+  padding: 3rem;
+  position: relative;
 }
 .img {
   height: 100%;
@@ -13,7 +16,24 @@
 }
 
 .result {
+  position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   font-size: 3rem;
+  bottom: 0;
+}
+
+.animation {
+  animation: dropOut 0.5s ease-in;
+}
+
+@keyframes dropOut {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
