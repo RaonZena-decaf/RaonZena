@@ -1,3 +1,10 @@
+.background{
+  background-color: #353839;
+  min-height: 19.5rem;
+  height: fit-content;
+  border-radius: 1rem;
+}
+
 .leftcontainer{
   width: 50%;
 }
@@ -7,17 +14,21 @@
 }
 
 .progressframe {
-  background-color: #353839;
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
   border-radius: 1rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+  gap: 10%;
 }
 
 .score {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  width: 45%;
 }
 
 .score2 {
@@ -25,15 +36,29 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 2.5rem;
+}
+
+.score2Left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 20%;
+  gap: 1rem
 }
 
 .img {
   width: 3rem;
   height: 3rem;
-  /* padding: 1rem; */
+  border-radius: 50%;
+  border: solid 0.3rem transparent;
+  background-image: linear-gradient(#fff, #fff), 
+  linear-gradient(to right, #8f00ff 0%,  #ff00a8 100%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 }
 
 .font2 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
