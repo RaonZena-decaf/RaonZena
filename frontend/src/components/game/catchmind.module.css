@@ -22,6 +22,22 @@
   color: #f400b0;
 }
 
+.wrongMassage {
+  color: red;
+  /* padding: 10px; */
+  font-size: 3rem;
+  animation: fadeout 2s;
+  -moz-animation: fadeout 5s; /* Firefox */
+  -webkit-animation: fadeout 2s; /* Safari and Chrome */
+  -o-animation: fadeout 5s; /* Opera */
+  animation-fill-mode: forwards;
+  z-index: 1;
+  position: absolute;
+  bottom: 17%;
+  left: 51%;
+  display: none;
+}
+
 .textWithIcon {
   font-size: 1.2rem;
 }

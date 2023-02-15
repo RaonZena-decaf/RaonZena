@@ -107,14 +107,12 @@ function CharacterQuiz({
         });
         setResult("");
       } else {
-        const data = {
-          sender: openvidu.userName,
-          answer: result,
-        };
-        openvidu.session.signal({
-          data: JSON.stringify(data),
-          type: "WrongAnswer",
-        });
+        console.log("오답");
+        setResult("");
+        document.getElementById("wrongMassage").style.display = "block";
+        setTimeout(function () {
+          document.getElementById("wrongMassage").style.display = "none";
+        }, 200);
         setResult("");
       }
     }
@@ -138,7 +136,9 @@ function CharacterQuiz({
           {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
       </div>
-
+      <div id="wrongMassage" className={styles.wrongMassage}>
+        틀렸습니다
+      </div>
       {start ? (
         step === characterimg.length ? (
           <div className={styles.result}>

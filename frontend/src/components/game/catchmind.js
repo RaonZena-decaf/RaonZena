@@ -245,51 +245,6 @@ function Catchmind({
     }
   }, [start, step, timeRemaining, isAnswerShown]);
 
-  // useEffect(() => {
-  //   const reset = () => {
-  //     const canvas = canvasRef.current;
-  //     const ctx = canvas.getContext("2d");
-  //     const height = canvas.height;
-  //     const width = canvas.width;
-  //     ctx.fillStyle = "white";
-  //     ctx.fillRect(0, 0, width, height);
-  //   };
-  //   console.log("catchmind", start, step);
-  //   if (start && step < QuizList.length - 1) {
-  //     if (timeRemaining > 0 && !isAnswerShown) {
-  //       const intervalId = setInterval(() => {
-  //         setTimeRemaining(timeRemaining - 1);
-  //       }, 1000);
-  //       return () => clearInterval(intervalId);
-  //     }
-  //     if (timeRemaining === 0 && !isAnswerShown) {
-  //       setIsAnswerShown(true);
-  //     }
-  //     if (isAnswerShown) {
-  //       if (step === QuizList.length - 1) {
-  //         setTimeout(() => {
-  //           setIsAnswerShown(false);
-  //           setTimeRemaining(timeLimit);
-  //           // setStep((prev) => (prev += 1));
-  //           setEnd(true);
-  //           setStart(false);
-  //         }, 1000);
-  //         reset();
-  //       } else {
-  //         setTimeout(() => {
-  //           setIsAnswerShown(false);
-  //           setTimeRemaining(timeLimit);
-  //           setStep((prev) => (prev += 1));
-  //         }, 1000);
-  //         reset();
-  //       }
-  //     }
-  //   } else if (start && step === QuizList.length) {
-  //     setEnd(true);
-  //     setStart(false);
-  //   }
-  // }, [start, timeRemaining, isAnswerShown, step, QuizList.length]);
-
   useEffect(() => {
     if (result !== "" && step < QuizList.length) {
       if (result === QuizList[step].answer) {
@@ -304,14 +259,12 @@ function Catchmind({
         });
         setResult("");
       } else {
-        const data = {
-          sender: openvidu.userName,
-          answer: result,
-        };
-        openvidu.session.signal({
-          data: JSON.stringify(data),
-          type: "WrongAnswer",
-        });
+        console.log("오답");
+        setResult("");
+        document.getElementById("wrongMassage").style.display = "block";
+        setTimeout(function () {
+          document.getElementById("wrongMassage").style.display = "none";
+        }, 200);
         setResult("");
       }
     }
@@ -334,6 +287,9 @@ function Catchmind({
             단어 : {QuizList[step].answer}
           </span>
         ) : null}
+      </div>{" "}
+      <div id="wrongMassage" className={styles.wrongMassage}>
+        틀렸습니다
       </div>
       <canvas className={styles.canvas} id="canvas" ref={canvasRef}></canvas>
       <div className={styles.palette} ref={paletteRef}>
