@@ -53,6 +53,11 @@ function Catchmind({
         dataAxios();
       });
     }
+    return () => {
+      openvidu.session.off("signal:TrueAnswer")
+      openvidu.session.off("signal:SeedNumber")
+      openvidu.session.off("signal:GameRestart")
+    }
   }, []);
 
   useEffect(() => {
@@ -68,6 +73,7 @@ function Catchmind({
   useEffect(() => {
     const canvas = canvasRef.current;
     let lineColor = "black";
+
     if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         const data = JSON.parse(event.data);
