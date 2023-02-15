@@ -21,11 +21,21 @@ export default function FollowingList() {
         data: { userNo: nowUserNo },
       })
         .then((res) => {
-          setlist(res.data);
+          const followinglist = res.data.slice()
+          followinglist.map(following => (
+            axios({
+              method:"get",
+              url: `${baseUrl}profile/${following.userNo}/status`,
+            }).then((res)=> {
+              following = {...following, isOnline :res.data}
+            })
+            ))
+            setlist(followinglist)
         })
         .catch((error) => console.log("following List 에러: ", error, user));
     }
   };
+
 
   useEffect(() => {
     getlist();
