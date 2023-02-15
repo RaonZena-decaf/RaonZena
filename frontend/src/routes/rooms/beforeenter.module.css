@@ -13,7 +13,14 @@
     height: 95vh;
   }
 }
-
+.videoalt{
+  width: 69.5%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  overflow: hidden;
+}
 .container {
   position: relative;
   align-items: center;
