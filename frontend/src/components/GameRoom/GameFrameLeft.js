@@ -18,7 +18,6 @@ function GameFrameLeft({
   host,
   roomNo,
   setEnd,
-  publisher,
   setStart,
   subscribes,
   newGameScore,
@@ -31,38 +30,6 @@ function GameFrameLeft({
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
 
-  // 내일 확인 해 보자
-  // const userListupdate = () => {
-  //   axios({
-  //     method: "GET",
-  //     url: `${baseUrl}games/${roomNo}`,
-  //   })
-  //     .then((res) => {
-  //       setUserList(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
-  // useEffect (() => {
-  //   userListupdate()
-  // },[openvidu.subscribe])
-
-  // const [liveScoreData, setLiveScoreData] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.post(`${baseUrl}games/liveScore`);
-  //       setLiveScoreData(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [userList]);
-
-  // console.log(liveScoreData);
   const axiosScore = () => {
     axios({
       method: "GET",
@@ -78,55 +45,6 @@ function GameFrameLeft({
   useEffect(() => {
     axiosScore();
   }, []);
-  // useEffect(() => {
-  //   const sendLiveScore = async (roomNo, userList) => {
-  //     const formattedList = userList.map((user) => ({
-  //       userNo: user[0],
-  //       exp: user[1],
-  //     }));
-  //     try {
-  //       await axios.post(`${baseUrl}games/liveScore`, {
-  //         roomNo,
-  //         userList: formattedList,
-  //       });
-  //       console.log("Live score sent successfully");
-  //     } catch (error) {
-  //       console.error("Error sending live score:", error);
-  //     }
-  //   };
-  //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
-  // }, [userList]);
-
-  const userList = [{
-    userName: "진짜진짜귀여운최지연",
-    gameScore: "100",
-    userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
-  }, {
-    userName: "김민소2",
-    gameScore: "100",
-    userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
-    },
-    {
-      userName: "김민소3",
-      gameScore: "100",
-      userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
-    },
-    {
-      userName: "김민소3",
-      gameScore: "100",
-      userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
-    },
-    {
-      userName: "김민소3",
-      gameScore: "100",
-      userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
-    },
-    // {
-    //   userName: "김민소3",
-    //   gameScore: "100",
-    //   userImage :"http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg"
-    //   },
-  ]
 
   const SendScore = () => {
     setNewGameScore(

@@ -74,9 +74,6 @@ function GameFrameRight({
     <div className={styles.background}>
       {gamename === "talkingsilence" ? (
         <div className={styles.container}>
-          {/* <div className={styles[videoFrame()]}>
-            <UserVideoComponent streamManager={openvidu.publisher} />
-          </div> */}
           {!host ? (
             <div className={styles[videoFrameNotHost()]}>
               <UserVideoComponent streamManager={openvidu.publisher} />
