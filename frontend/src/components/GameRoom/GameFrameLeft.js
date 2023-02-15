@@ -121,6 +121,9 @@ function GameFrameLeft({
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
       console.log(data.userNo);
+      console.log(data.gamename);
+      console.log(data.clicked);
+      console.log(typeof data.clicked);
       if (data.gamename === "joker" && data.clicked === 1) {
         console.log("으아아아아아아아아아앙아ㅏㄱ");
         console.log("게임 정해져?");
