@@ -122,6 +122,9 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
+              console.log("으아아아아아앙아아아악");
+              console.log(user.gameScore);
+              console.log(user.gameScore - 10);
               return { ...user, gameScore: 100 };
             } else {
               return user;
@@ -134,6 +137,9 @@ function GameFrameLeft({
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore + 5 >= 100) {
+                console.log("으아아아아아앙아아아악");
+                console.log(user.gameScore);
+                console.log(user.gameScore - 10);
                 return { ...user, gameScore: 100 };
               } else {
                 return { ...user, gameScore: user.gameScore + 5 };
@@ -149,6 +155,9 @@ function GameFrameLeft({
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore + 10 >= 100) {
+                console.log("으아아아아아앙아아아악");
+                console.log(user.gameScore);
+                console.log(user.gameScore - 10);
                 return { ...user, gameScore: 100 };
               } else {
                 return { ...user, gameScore: user.gameScore + 10 };
@@ -164,6 +173,9 @@ function GameFrameLeft({
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore - 5 <= 0) {
+                console.log("으아아아아아앙아아아악");
+                console.log(user.gameScore);
+                console.log(user.gameScore - 10);
                 return { ...user, gameScore: 0 };
               } else {
                 return { ...user, gameScore: user.gameScore - 5 };
@@ -179,6 +191,9 @@ function GameFrameLeft({
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore - 10 <= 0) {
+                console.log("으아아아아아앙아아아악");
+                console.log(user.gameScore);
+                console.log(user.gameScore - 10);
                 return { ...user, gameScore: 0 };
               } else {
                 return { ...user, gameScore: user.gameScore - 10 };
