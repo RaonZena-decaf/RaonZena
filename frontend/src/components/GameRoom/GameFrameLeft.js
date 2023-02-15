@@ -119,6 +119,8 @@ function GameFrameLeft({
       const data = JSON.parse(event.data);
       console.log(data.userNo);
       if (data.gamename === "joker" && data.clicked === 1) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -132,7 +134,9 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 4) {
+      if (data.gamename === "joker" && data.clicked === 2) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -150,7 +154,9 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 4) {
+      if (data.gamename === "joker" && data.clicked === 3) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -169,6 +175,8 @@ function GameFrameLeft({
         );
       }
       if (data.gamename === "joker" && data.clicked === 4) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
@@ -186,7 +194,9 @@ function GameFrameLeft({
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 4) {
+      if (data.gamename === "joker" && data.clicked === 5) {
+        console.log("으아아아아아아아아아앙아ㅏㄱ");
+        console.log("게임 정해져?");
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
