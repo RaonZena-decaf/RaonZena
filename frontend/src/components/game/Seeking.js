@@ -10,6 +10,7 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
   const [label, setLabel] = useState("");
+  let box = [];
   const userName = useSelector((store) => store.userData.userName);
   const gamestop = useRef(false);
   const videoRef = useRef(null);
@@ -76,20 +77,24 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
     }
     setLabel(highlabel);
     if (highlabel === "Rock" && !gamestop.current) {
-      console.log("high");
-      gamestop.current = true;
-      console.log("멈춰", gamestop.current);
-      const data = {
-        userNo: openvidu.userNo,
-        score: -5,
-        username: userName,
-      };
-      openvidu.session.signal({
-        data: JSON.stringify(data),
-        type: "TrueAnswer",
-      });
-      setStart(false);
-      cancelAnimationFrame(animationRef.current);
+      box.push(highlabel);
+      if (box.length > 10) {
+        gamestop.current = true;
+        console.log("멈춰", gamestop.current);
+        const data = {
+          userNo: openvidu.userNo,
+          score: -5,
+          username: userName,
+        };
+        openvidu.session.signal({
+          data: JSON.stringify(data),
+          type: "TrueAnswer",
+        });
+        setStart(false);
+        cancelAnimationFrame(animationRef.current);
+      }
+    } else {
+      box = [];
     }
   };
   useEffect(() => {

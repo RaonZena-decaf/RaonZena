@@ -59,6 +59,16 @@ function GameFrameRight({
       return "videoFrame4";
     }
   };
+  const [disabled, setDisabled] = useState(false);
+  useEffect(() => {
+    if ((gamename === "catchmind" || gamename === "talkingsilence") && host) {
+      setDisabled(true);
+    } else if (gamename === "imagetheme") {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [gamename]);
 
   return (
     <div className={styles.background}>
@@ -107,6 +117,7 @@ function GameFrameRight({
             className={styles.chatting}
             type="text"
             placeholder="정답을 입력해 주세요"
+            disabled={disabled}
           ></input>
         </form>
         <button

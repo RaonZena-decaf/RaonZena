@@ -26,7 +26,7 @@ function GameFrameLeft({
   userList,
   setUserList,
   mic,
-  toggleDevice
+  toggleDevice,
 }) {
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);

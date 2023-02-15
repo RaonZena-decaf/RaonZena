@@ -28,7 +28,7 @@ function GameFrame({
       });
     }
   };
-  useEffect( () => {
+  useEffect(() => {
     if (openvidu.session) {
       openvidu.session.on("signal:StartGame", () => {
         setStart(true);
@@ -38,16 +38,16 @@ function GameFrame({
         setEnd(false);
       });
     }
-  })
+  });
   const [result, setResult] = useState("");
   const [gameTitle, setGameTitle] = useState("");
 
   useEffect(() => {
     setGameTitle(getGameTitle(gamename));
-    setStart(false)
+    setStart(false);
     setEnd(false);
   }, [gamename]);
-  
+
   const getGameTitle = (gamename) => {
     let tempTitle = "";
     switch (gamename) {
