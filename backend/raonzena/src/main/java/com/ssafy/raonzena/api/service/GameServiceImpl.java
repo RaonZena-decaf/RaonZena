@@ -225,14 +225,16 @@ public class GameServiceImpl implements GameService{
         Map<Object, Object> userData = redisTemplate.opsForHash().entries(key);
 
         // 전송할 user 점수 데이터
-        List<List<Long>> userDataRes = new ArrayList<>();
+        List<userGameInfo> userDataRes = new ArrayList<>();
 
         for (Map.Entry<Object, Object> userD : userData.entrySet()) {
             // 각 유저마다 점수 보내주기
-            List<Long> userGameData = new ArrayList<>();
-            userGameData.add(Long.valueOf(userD.getKey().toString()));
-            userGameData.add(Long.valueOf(userD.getValue().toString()));
-            userDataRes.add(userGameData);
+            long userNo = Long.valueOf(userD.getKey().toString());
+            int gameScore = Integer.parseInt((userD.getValue().toString()));
+            // 유저 정보 찾기
+            User user = userRepository.findByUserNo(userNo);
+
+            userDataRes.add(new userGameInfo(user.getUserNo(), user.getUserName(), user.getUserImageUrl(), gameScore));
         }
 
         logger.info("게임데이터 : "+userDataRes.toString());

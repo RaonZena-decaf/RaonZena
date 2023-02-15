@@ -79,7 +79,7 @@ public class ProfileServiceImpl implements ProfileService {
     //피드 리스트
     @Override
     public List<BoardRes> feedList(long userNo) {
-        List<Board> feed = boardRepository.findByUserNo(userNo);
+        List<Board> feed = boardRepository.findByUserNoOrderByCreateDtmDesc(userNo);
 
         return feed.stream().map(m -> new BoardRes(m.getBoardNo(), m.getBoardImageUrl(), m.getContent(), m.getTitle(), m.getUserNo(), m.getCreateDtm(), m.getFirstUser(), m.getSecondUser(), m.getThirdUser())).collect(Collectors.toList());
     }

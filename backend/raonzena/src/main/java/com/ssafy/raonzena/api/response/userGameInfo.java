@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameScoreRes {
+public class userGameInfo {
+    private long userNo;
 
-    private long roomNo;
+    private String userName;
 
-    private List<userGameInfo> userData;
+    private String userImage;
+
+    private int gameScore;
 
 }

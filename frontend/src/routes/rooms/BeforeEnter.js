@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import style from "./beforeenter.module.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/navbar/navbar";
@@ -17,17 +17,29 @@ import Loading from "../../components/room/MainLoading";
 
 function BeforeEnter() {
   const { state } = useLocation();
+  const params = useParams();
+  console.log(params);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [password, setPassword] = useState("");
-  const [disabled, setDisabled] = useState(
-    state.password === "True" ? false : true
-  );
+  const [disabled, setDisabled] = useState(() => {
+    if (state) {
+      return state.password === "True" ? false : true;
+    } else {
+      return false;
+    }
+  });
   const [loading, setLoading] = useState(false);
   const baseUrl = useSelector((store) => store.baseUrl);
+  const userNo = useSelector((store) => store.userData.userNo);
   const navigate = useNavigate();
   useEffect(() => {
-    setLoading(true);
+    if (userNo === "") {
+      alert("로그인 후 이용 가능해요!");
+      navigate("/live");
+    } else {
+      setLoading(true);
+    }
   }, []);
   // 이전 페이지로 돌아가기
   const backOnClick = () => {
@@ -36,19 +48,12 @@ function BeforeEnter() {
   const passwordChange = (event) => {
     setPassword(event.target.value);
   };
-  const passwordRef = useRef();
-
-  const labelFocus = () => {
-    if (disabled === true) {
-      passwordRef.current.focus();
-    }
-  };
 
   // 세션 참가
   const joinSession = () => {
     if (state.password === "True") {
       const data = {
-        roomNo: state.roomNo,
+        roomNo: params.id,
         inputPassword: password,
       };
       console.log(data);
@@ -60,30 +65,15 @@ function BeforeEnter() {
       })
         .then((res) => {
           if (res.data === "Success") {
-            axios({
-              method: "get",
-              url: `${baseUrl}games/${state.roomNo}/join`,
-              data: data,
-              headers: { "Content-type": "application/json" },
-            })
-              .then((res) => {
-                if (res.data < state.users) {
-                  navigate(`/room/${state.roomNo}`, {
-                    state: {
-                      mic,
-                      camera,
-                      roomNo: state.roomNo,
-                      roomTitle: state.roomTitle,
-                      host: false,
-                    },
-                  });
-                } else {
-                  alert("현재 방이 가득 찼습니다 나중에 시도해 주세요");
-                }
-              })
-              .catch((e) => {
-                console.log(e);
-              });
+            navigate(`/room/${params.id}`, {
+              state: {
+                mic,
+                camera,
+                roomNo: params.id,
+                roomTitle: state.roomTitle,
+                host: false,
+              },
+            });
           } else {
             alert("비밀번호가 잘못되었습니다");
           }
@@ -92,11 +82,11 @@ function BeforeEnter() {
           console.log(error);
         });
     } else {
-      navigate(`/room/${state.roomNo}`, {
+      navigate(`/room/${params.id}`, {
         state: {
           mic,
           camera,
-          roomNo: state.roomNo,
+          roomNo: params.id,
           roomTitle: state.roomTitle,
           host: false,
         },
@@ -136,20 +126,25 @@ function BeforeEnter() {
                     요청 메세지를 확인하여 주세요.
                   </div>
                   <div className={style.textcont}>
+                    화상이 완전히 출력된 이후에 <br /> 참여하시기 바랍니다.
+                  </div>
+                  <div className={style.textcont}>
                     만약 오류가 발생하였을 경우, <br /> 홈 화면으로 이동 후
-                    재접속 하시기 바랍니다.
+                    재접속하여 주세요.
                   </div>
                 </div>
-                <label className={style.tag} htmlFor="password">
-                  <input
-                    placeholder="방 비밀번호를 입력하세요"
-                    id="password"
-                    value={password}
-                    onChange={passwordChange}
-                    className={style.input}
-                    disabled={disabled}
-                  />
-                </label>
+                {password ? (
+                  <label className={style.tag} htmlFor="password">
+                    <input
+                      placeholder="방 비밀번호를 입력하세요"
+                      id="password"
+                      value={password}
+                      onChange={passwordChange}
+                      className={style.input}
+                      disabled={disabled}
+                    />
+                  </label>
+                ) : null}
                 <button className={style.button} onClick={backOnClick}>
                   나가기
                 </button>

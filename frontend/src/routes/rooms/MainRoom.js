@@ -4,8 +4,9 @@ import MenuBar from "../../components/room/MenuBar";
 import ChattingBar from "../../components/room/ChattingBar";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "../../components/camera/UserVideoComponent";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { modifyUserData } from "../../app/userData";
 
 import axios from "axios";
 import Loading from "../../components/room/MainLoading";
@@ -15,6 +16,8 @@ const OPENVIDU_SERVER_URL = "https://i8a507.p.ssafy.io:8443";
 const OPENVIDU_SERVER_SECRET = "RAONZENA";
 
 function MainRoom(props) {
+  const navigate = useNavigate();
+  const params = useParams();
   const { state } = useLocation();
   const user = useSelector((store) => store.userData);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -22,15 +25,17 @@ function MainRoom(props) {
   const [OV, setOV] = useState(undefined);
   const [subscribes, setSubscribes] = useState([]);
   const [userName, setUserName] = useState(user.userName);
-  const [roomId, setroomId] = useState(state.roomNo.toString());
+  const [roomId, setroomId] = useState(params.roomId);
   const [publisher, setPublisher] = useState(undefined);
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
-  const [host, sestHost] = useState(state.host);
+  const [host, sestHost] = useState(state ? state.host : false);
+  const [newGameScore, setNewGameScore] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const dispatch = useDispatch();
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
-  const navigate = useNavigate();
   // 화면 랜더링 관련 함수
   const [gamename, setGameName] = useState("chatSubject");
 
@@ -40,26 +45,23 @@ function MainRoom(props) {
       prev.filter((stream) => stream.stream !== deletestream)
     );
   };
-  // // 임시 사용자 이름 랜덤으로 부여
-  // function getRandomInt(min, max) {
-  //   min = Math.ceil(min);
-  //   max = Math.floor(max);
-  //   return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-  // }
+
   const toggleDevice = async (mic, video) => {
     publisher.publishAudio(mic);
     publisher.publishVideo(video);
   };
   useEffect(() => {
+    if (!state) {
+      navigate(`/beforeroom/${params.roomId}`);
+    }
     const OV = new OpenVidu();
     setOV(OV);
     // console 몇개 없애는 코드
-    // OV.enableProdMode()
+    OV.enableProdMode();
     const after = new Promise((resolve, reject) => {
       const mySession = OV.initSession();
       setTimeout(() => {
         resolve(mySession);
-        // setUserName(user.userName);
       }, 1000);
     });
     after
@@ -151,7 +153,7 @@ function MainRoom(props) {
         // --- 4) Connect to the session with a valid user token ---
         getToken().then((token) => {
           mySession
-            .connect(token, { clientData: userName, host:host })
+            .connect(token, { clientData: userName, host: host })
             .then(async () => {
               // --- 5) Get your own camera stream ---
               setSession(mySession);
@@ -163,53 +165,17 @@ function MainRoom(props) {
                 resolution: "640x480", // The resolution of your video
                 frameRate: 30, // The frame rate of your video
                 insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-                mirror: true, // Whether to mirror your local video or not
+                mirror: false, // Whether to mirror your local video or not
                 streamId: userName, // 다른 것들과 구분하기 위한 변수값
                 host: state.host,
               });
 
               // --- 6) Publish your stream ---
               mySession.publish(publisher);
-              // Obtain the current video device in use
-              // const devices = await OV.getDevices();
-              // const videoDevices = devices.filter(
-              //   (device) => device.kind === "videoinput"
-              // );
-              // const currentVideoDeviceId = publisher.stream
-              //   .getMediaStream()
-              //   .getVideoTracks()[0]
-              //   .getSettings().deviceId;
-              // const currentVideoDevice = videoDevices.find(
-              //   (device) => device.deviceId === currentVideoDeviceId
-              // );
 
-              // Set the main video in the page to display our webcam and store our Publisher
               setPublisher(publisher);
-              // this.setState({
-              //   currentVideoDevice: currentVideoDevice,
-              //   mainStreamManager: publisher,
-              //   publisher: publisher,
-              // });
 
               //현재 유저 점수를 받은 후, 자신의 점수를 0점으로 하여 저장
-              axios({
-                method: "Get",
-                url: `${baseUrl}games/liveScore/${roomId}`,
-              })
-                .then((res) => {
-                  const gamseScores = res.data.userData.slice();
-                  gamseScores.push([user.userNo, 0]);
-                  axios({
-                    method: "post",
-                    url: `${baseUrl}games/liveScore`,
-                    data: { roomNo: roomId, userData: gamseScores },
-                  })
-                    .then((res) => {
-                      console.log(res.data);
-                    })
-                    .catch((error) => console.log(error));
-                })
-                .catch((error) => console.log(error));
             })
             .catch((error) => {
               console.log(
@@ -224,6 +190,33 @@ function MainRoom(props) {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    axios({
+      method: "Get",
+      url: `${baseUrl}games/liveScore/${roomId}`,
+    })
+      .then((res) => {
+        // res.data를 순회하면서 user=> [] 형태로 하나씩 push
+        const gamseScores = [];
+        res.data.userData.map((user) =>
+          gamseScores.push([user.userNo, user.gameScore])
+        );
+        gamseScores.push([user.userNo, 0]);
+        console.log(gamseScores);
+        axios({
+          method: "post",
+          url: `${baseUrl}games/liveScore`,
+          data: { roomNo: roomId, userData: gamseScores },
+        })
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   // 끝
   const onbeforeunload = (event) => {
     leaveSession();
@@ -236,7 +229,7 @@ function MainRoom(props) {
     };
     axios({
       method: "put",
-      url: `${baseUrl}games/${state.roomNo}/join`,
+      url: `${baseUrl}games/${params.roomId}/join`,
       data: data,
     })
       .then((res) => {
@@ -248,27 +241,17 @@ function MainRoom(props) {
 
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
-    console.log("길이", subscribes.length);
     return () => {
-      console.log("길이2", subscribes.length);
-      axios({
-        method: "get",
-        url: `${baseUrl}games/${state.roomNo}/join`,
-      })
-        .then((res) => {
-          if (res.data === 1) {
-            axios({
-              method: "delete",
-              url: `${baseUrl}live/${state.roomNo}`,
-            })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((error) => console.log(error));
-          }
+      if (host) {
+        axios({
+          method: "delete",
+          url: `${baseUrl}live/${params.roomId}`,
         })
-        .catch((error) => console.log(error));
-      window.removeEventListener("beforeunload", onbeforeunload);
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => console.log(error));
+      }
     };
   }, []);
 
@@ -278,6 +261,25 @@ function MainRoom(props) {
     if (session) {
       await session.disconnect();
     }
+
+    const myscore = userList.filter((attend) => attend.userNo === user.userNo);
+
+    axios({
+      method: "PUT",
+      url: `${baseUrl}profile/expToLevelModify`,
+      data: { exp: myscore.gameScore, userNo: user.userNo },
+    })
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+    const lev = parseInt(myscore.gameScore / 100);
+    const leftExp = myscore.gameScore % 100;
+    dispatch(
+      modifyUserData({
+        ...user,
+        exp: user.exp + leftExp,
+        level: user.level + lev,
+      })
+    );
 
     // Empty all properties...
     setSession(undefined);
@@ -345,7 +347,13 @@ function MainRoom(props) {
               host={host}
               publisher={publisher}
               subscribes={subscribes}
-              roomNo={state.roomNo}
+              roomNo={params.roomId}
+              newGameScore={newGameScore}
+              setNewGameScore={setNewGameScore}
+              userList={userList}
+              setUserList={setUserList}
+              mic={state.mic}
+              toggleDevice={toggleDevice}
             />
           )}
           <MenuBar

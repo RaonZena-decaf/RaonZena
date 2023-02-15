@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "../game/catchmind.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { image } from "@tensorflow/tfjs-core";
+import { FaFillDrip, FaRegTrashAlt, FaEraser } from "react-icons/fa";
 
 function Catchmind({
   start,
@@ -13,14 +13,11 @@ function Catchmind({
   setEnd,
   setStart,
 }) {
-  // 만약 5개 짜리 리스트로 할꺼면 고요속의 외침으로 변경
-  console.log("catchmind", start);
   const timeLimit = 10;
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
   const [QuizList, setQuizList] = useState([]);
-  console.log("출제 문제", QuizList);
   const dataAxios = () => {
     if (host) {
       axios({
@@ -28,11 +25,9 @@ function Catchmind({
         url: `${baseUrl}games/gameType/3`,
       })
         .then((res) => {
-          console.log(res.data);
           setQuizList(res.data);
           if (openvidu.session) {
             const data = JSON.stringify(res.data);
-            console.log("게임 데이터", data);
             openvidu.session.signal({
               data: data,
               type: "SeedNumber",
@@ -72,7 +67,7 @@ function Catchmind({
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    let lineColor = "black"
+    let lineColor = "black";
     if (openvidu.session) {
       openvidu.session.on("signal:CanvasDraw", (event) => {
         const data = JSON.parse(event.data);
@@ -85,13 +80,13 @@ function Catchmind({
     }
     const height = canvas.height;
     const width = canvas.width;
-    
+
     const ctx = canvas.getContext("2d");
     canvas.style.margin = "10px 0px 0px 0px";
     canvas.style.border = "3px";
     canvas.style.cursor = "pointer";
-    canvas.style.height = height * 2 + 'px';
-    canvas.style.width = width * 2.5 + 'px';
+    canvas.style.height = height * 2.8 + "px";
+    canvas.style.width = width * 2.6 + "px";
     // canvas.style.borderImage = "linear-gradient(to right, #9D00F1 0%, #f400b0 100%)";
     // canvas.style.borderImageSlice = "2";
 
@@ -128,11 +123,10 @@ function Catchmind({
       }
     }
 
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     function onMouseMove(event) {
-      
       const x = (event.clientX - canvas.offsetLeft) / 2.5;
-      const y = (event.clientY - canvas.offsetTop) / 2
+      const y = (event.clientY - canvas.offsetTop) / 2;
       if (!painting) {
         ctx.beginPath();
         ctx.moveTo(x, y);
@@ -147,6 +141,14 @@ function Catchmind({
       canvas.addEventListener("mousedown", startPainting);
       canvas.addEventListener("mouseup", stopPainting);
       canvas.addEventListener("mouseleave", stopPainting);
+    }
+
+    //호스트가 아니면 alert 출력
+    if (host === false) {
+      canvas.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("방장만 출제 가능합니다");
+      });
     }
 
     const buttons = [
@@ -168,29 +170,17 @@ function Catchmind({
       button.style.cursor = "pointer";
 
       if (content === "clear" || content === "fill") {
-        button.style.background = "rgba(100,100,100,0.2)";
+        button.style.background = "";
       } else {
-        button.style.background = content;
+        button.style.backgroundImage = `url(../PaletteImg/${content}.png)`;
       }
-      // button.style.color = "white";
-      // button.style.display = "inline-block";
-      // button.style.textShadow =
-      //   "1px 0 black, 0 1px black, 1px 0 black, 0 -1px gray";
-      // button.style.lineHeight = "40px";
-      // button.style.textAlign = "center";
-      // button.style.width = "50px";
-      // button.style.height = "50px";
-      // button.style.borderRadius = "25px";
-      // button.style.border = "4px solid rgba(129, 101, 101, 0.151)";
-      // button.style.boxShadow = "1px 2px 2px gray";
-      // button.style.marginBottom = "10px";
 
       if (content === "clear" || content === "fill") {
         return;
       }
       button.onclick = () => {
         ctx.strokeStyle = content;
-        lineColor = content
+        lineColor = content;
       };
     });
     ctx.fillStyle = "white";
@@ -199,38 +189,44 @@ function Catchmind({
 
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(10);
+
   const [step, setStep] = useState(0);
   useEffect(() => {
-    console.log("catchmind", start, step);
-    if (start && step <= QuizList.length - 1) {
+    const reset = () => {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      const height = canvas.height;
+      const width = canvas.width;
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
+    };
+
+    if (start && step < QuizList.length) {
       if (timeRemaining > 0 && !isAnswerShown) {
         const intervalId = setInterval(() => {
           setTimeRemaining(timeRemaining - 1);
         }, 1000);
         return () => clearInterval(intervalId);
-      }
-      if (timeRemaining === 0 && !isAnswerShown) {
-        setIsAnswerShown(true);
-      }
-      if (isAnswerShown) {
+      } else {
         if (step === QuizList.length - 1) {
-          setTimeout(() => {
-            setIsAnswerShown(false);
-            setTimeRemaining(timeLimit);
-            setStep((prev) => (prev += 1));
-            setEnd(true);
-            setStart(false);
-          }, 1000);
+          setIsAnswerShown(true);
+          reset();
         } else {
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
-            setStep((prev) => (prev += 1));
+            setStep((prev) => prev + 1);
+            reset();
           }, 1000);
         }
       }
     }
-  }, [start, timeRemaining, isAnswerShown]);
+    if (step >= QuizList.length) {
+      setIsAnswerShown(false);
+      setTimeRemaining(timeLimit);
+      setStart(false);
+    }
+  }, [start, step, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
     if (result !== "" && step < QuizList.length) {
@@ -246,14 +242,12 @@ function Catchmind({
         });
         setResult("");
       } else {
-        const data = {
-          sender: openvidu.userName,
-          answer: result,
-        };
-        openvidu.session.signal({
-          data: JSON.stringify(data),
-          type: "WrongAnswer",
-        });
+        console.log("오답");
+        setResult("");
+        document.getElementById("wrongMassage").style.display = "block";
+        setTimeout(function () {
+          document.getElementById("wrongMassage").style.display = "none";
+        }, 200);
         setResult("");
       }
     }
@@ -262,33 +256,43 @@ function Catchmind({
   const [minutes, setMinutes] = useState(0);
 
   return (
-    <div>
+    <div className={styles.Background}>
       <div className={styles.Container}>
         <span className={styles.questionNo}>
-          {step + 1} / {QuizList.length}
+          단계 {step + 1} / {QuizList.length}
         </span>
         <span className={styles.TimeLimit}>
-          {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+          시간 {minutes} :{" "}
+          {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
         {(host || isAnswerShown) && QuizList.length > 0 ? (
           <span className={styles.AnswerFont}>
-            제시어 : {QuizList[step].answer}
+            단어 : {QuizList[step].answer}
           </span>
         ) : null}
+      </div>{" "}
+      <div id="wrongMassage" className={styles.wrongMassage}>
+        틀렸습니다
       </div>
-      <canvas id="canvas" ref={canvasRef}></canvas>
-      <div id="palette" ref={paletteRef}>
-        <span className={`${styles.buttonColor} red`}></span>
-        <span className={`${styles.buttonColor} yellow`}></span>
-        <span className={`${styles.buttonColor} orange`}></span>
-        <span className={`${styles.buttonColor} green`}></span>
-        <span className={`${styles.buttonColor} blue`}></span>
-        <span className={`${styles.buttonColor} navy`}></span>
-        <span className={`${styles.buttonColor} purple`}></span>
-        <span className={`${styles.buttonColor} black`}></span>
-        <span className={`${styles.buttonColor} white`}></span>
-        <span className={`${styles.buttonBlack} clear`}>clear</span>
-        <span className={`${styles.buttonBlack} fill`}>fill</span>
+      <canvas className={styles.canvas} id="canvas" ref={canvasRef}></canvas>
+      <div className={styles.palette} ref={paletteRef}>
+        <div className={`${styles.buttonColor} red`}></div>
+        <div className={`${styles.buttonColor} orange`}></div>
+        <div className={`${styles.buttonColor} yellow`}></div>
+        <div className={`${styles.buttonColor} green`}></div>
+        <div className={`${styles.buttonColor} blue`}></div>
+        <div className={`${styles.buttonColor} navy`}></div>
+        <div className={`${styles.buttonColor} purple`}></div>
+        <div className={`${styles.buttonColor} black`}></div>
+        <div className={`${styles.buttonBlack} clear`}>
+          <FaRegTrashAlt /> <div className={styles.textWithIcon}>비우기</div>
+        </div>
+        <div className={`${styles.buttonBlack} fill`}>
+          <FaFillDrip /> <div className={styles.textWithIcon}>채우기</div>
+        </div>
+        <div className={`${styles.buttonBlack} white`}>
+          <FaEraser></FaEraser>
+        </div>
       </div>
     </div>
   );

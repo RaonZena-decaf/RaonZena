@@ -8,7 +8,7 @@ import React, {
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import UserVideoComponent from "../camera/UserVideoComponent";
+import GameOverModal from "./GameOverModal";
 
 function ShoutInSilence({
   start,
@@ -16,32 +16,59 @@ function ShoutInSilence({
   setResult,
   host,
   openvidu,
-  subscribes,
-  mic,
-  toggleDevice,
-  setEnd,
-  setStart,
+  userList,
+  closeMenu,
 }) {
-  console.log("ShoutInSilence의 subscribes 잘 들아옴? =>", subscribes);
-
-  const timeLimit = 10; // 게임 제한 시간
+  const timeLimit = 5; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
   const [minutes, setMinutes] = useState(0);
+  const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
   const videoRef = useRef(null);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [answerList, setAnswerList] = useState([]);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [open, setOpen] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(mic);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setTimeout(() => {}, 300);
+  };
+
+  // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
+  if (openvidu.session) {
+    openvidu.session.on("signal:TrueAnswer", (event) => {
+      const data = JSON.parse(event.data);
+      setIsAnswerShown(true);
+    });
+  }
+
+  const handleVideo = () => {
+    const video = videoRef.current;
+  };
+
+  const answerOnclick = (e) => {
+    e.preventDefault();
+    if (answer !== "") {
+      console.log(answer);
+    }
+    setAnswer("");
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   //axios로 정답 리스트 가져오는 부분
   function getAnswerList() {
-    if (host) {
+    if (true) {
       axios({
         method: "get",
-        url: `${baseUrl}games/gameType/3`,
+        // url: `${baseUrl}games/gameType/3`,
+        url: "http://localhost:8081/api/v1/games/gameType/3",
       })
         .then((res) => {
           console.log("고요속의 외침 정답 가져온 전체 결과 =>", res.data);
@@ -58,14 +85,6 @@ function ShoutInSilence({
         .catch((error) => console.log(error));
     }
   }
-
-  useEffect(() => {
-    if (host) {
-      if (start)
-        toggleDevice(false, true); // 첫 인자는 음량, 두번째 인자는 비디오
-      else toggleDevice(true, true); // 첫 인자는 음량, 두번째 인자는 비디오
-    }
-  }, [start]);
 
   // 정답 체크 기능
   useEffect(() => {
@@ -88,11 +107,9 @@ function ShoutInSilence({
         //마지막 문제인 경우
         if (step === answerList.length - 1) {
           setIsAnswerShown(true);
+          // 더 할 것인지 아닌지 확인
 
-          //다시하기 버튼 활성화
-          setEnd(true);
-          setStart(false);
-
+          setShowModal(true);
           return;
         } else {
           const timeoutId = setTimeout(() => {
@@ -112,11 +129,12 @@ function ShoutInSilence({
         //정답 맞춘 로직
         if (result === answerList[step].answer) {
           console.log("정답");
-          setResult("");
+          // setModalShow(true);
           document.getElementById("correctMassage").style.display = "block";
           setTimeout(function () {
             document.getElementById("correctMassage").style.display = "none";
           }, 200);
+
           const data = {
             userNo: openvidu.userNo,
             score: 5,
@@ -141,17 +159,14 @@ function ShoutInSilence({
   }, [result]);
 
   useEffect(() => {
-    if (host) {
-      const video = openvidu.publisher;
-      video.addVideoElement(videoRef.current);
-    }
+    const video = openvidu.publisher;
+    video.addVideoElement(videoRef.current);
   }, []);
 
   useEffect(() => {
     getAnswerList();
   }, []);
 
-  // 세션 값이 있으면 해당 시그널(TrueAnswer)에 대한 밑에 있는 함수 실행
   if (openvidu.session) {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
@@ -169,73 +184,32 @@ function ShoutInSilence({
 
   return (
     <div>
-      {host ? (
-        <div>
-          <div className={styles.webcamCapture}>
-            {videoRef.current !== undefined ? (
-              <video autoPlay={true} ref={videoRef} width="80%" />
-            ) : null}
-            <div className={styles.Container}>
-              <span className={styles.questionNo}>
-                {step + 1} / {answerList.length}
-              </span>
-              <span className={styles.TimeLimit}>
-                {" "}
-                {minutes} :{" "}
-                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-              </span>
-              {answerList.length > 0 ? (
-                <span className={styles.AnswerFont}>
-                  정답 : {answerList[step].answer}
-                </span>
-              ) : null}
-            </div>
-          </div>
+      <div id="wrongMassage" className={styles.wrongMassage}>
+        틀렸습니다
+      </div>
+      <div id="correctMassage" className={styles.correctMassage}>
+        맞았습니다
+      </div>
+      <div className={styles.webcamCapture}>
+        {videoRef.current !== undefined ? (
+          <video autoPlay={true} ref={videoRef} width="80%" />
+        ) : null}
+        <div className={styles.Container}>
+          <span className={styles.questionNo}>
+            {step + 1} / {answerList.length}
+          </span>
+          <span className={styles.TimeLimit}>
+            {" "}
+            {minutes} :{" "}
+            {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+          </span>
+          {answerList.length > 0 ? (
+            <span className={styles.AnswerFont}>
+              정답 : {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
+            </span>
+          ) : null}
         </div>
-      ) : (
-        <div>
-          <div id="wrongMassage" className={styles.wrongMassage}>
-            틀렸습니다
-          </div>
-          <div id="correctMassage" className={styles.correctMassage}>
-            정답입니다
-          </div>
-          <div className={styles.webcamCapture}>
-            {subscribes.map((sub, idx) => {
-              let subData = JSON.parse(sub.stream.connection.data);
-              if (subData.host) {
-                return (
-                  <div className={styles.mute}>
-                    <UserVideoComponent
-                      key={idx}
-                      streamManager={sub}
-                      width="80%"
-                    />
-                  </div>
-                );
-              } else {
-                return null;
-              }
-            })}
-            <div className={styles.Container}>
-              <span className={styles.questionNo}>
-                {step + 1} / {answerList.length}
-              </span>
-              <span className={styles.TimeLimit}>
-                {" "}
-                {minutes} :{" "}
-                {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-              </span>
-              {answerList.length > 0 ? (
-                <span className={styles.AnswerFont}>
-                  정답 :{" "}
-                  {answerList[step].answer.replace(/[a-zA-Z0-9가-힣]/g, "O")}
-                </span>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

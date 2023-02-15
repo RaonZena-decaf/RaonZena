@@ -1,16 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./Seeking.module.css";
-import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
+import { useSelector } from "react-redux";
 
 const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
-function Seeking({ start, result, setResult, openvidu }) {
-  const [step, setStep] = useState(0);
+function Seeking({ start, openvidu, setEnd, setStart }) {
+  console.log("setend", setEnd);
   const [model, setModel] = useState(null);
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
-  const [label, setLabel] = useState(null);
+  const [label, setLabel] = useState("");
+  let box = [];
+  const userName = useSelector((store) => store.userData.userName);
+  const gamestop = useRef(false);
   const videoRef = useRef(null);
+  const animationRef = useRef(null);
   useEffect(() => {
     const init = async () => {
       const modelURL = URL + "model.json";
@@ -33,7 +37,8 @@ function Seeking({ start, result, setResult, openvidu }) {
   }, []);
 
   useEffect(() => {
-    if (!model && !webcam) {
+    console.log(start);
+    if (!model || !webcam || gamestop.current) {
       return;
     } else {
       const steps = new Promise((resolve, reject) => {
@@ -42,22 +47,28 @@ function Seeking({ start, result, setResult, openvidu }) {
       });
       steps.then(() => {
         webcam.play();
-        requestAnimationFrame(loop);
+        animationRef.current = requestAnimationFrame(loop);
       });
     }
-  }, [webcam,start]);
-
+  }, [start]);
   const loop = async () => {
+    if (gamestop.current || !start) {
+      return;
+    }
     webcam.update();
-    if (start) {
-      await predict();
-      requestAnimationFrame(loop);
+    await predict();
+    if (!gamestop.current) {
+      animationRef.current = requestAnimationFrame(loop);
     }
   };
   const predict = async () => {
+    if (!start) {
+      console.log("방지", start);
+      return;
+    }
     const prediction = await model.predict(webcam.canvas);
     let max = 0;
-    let highlabel = undefined;
+    let highlabel = "Default";
     for (let i = 0; i < maxPredictions; i++) {
       if (prediction[i].probability.toFixed(2) > max) {
         max = prediction[i].probability.toFixed(2);
@@ -65,71 +76,72 @@ function Seeking({ start, result, setResult, openvidu }) {
       }
     }
     setLabel(highlabel);
-    if (highlabel === "rock") {
-      const data = {
-        userNo: openvidu.userNo,
-        score : -5
-      };
-      openvidu.session.signal({
-        data: JSON.stringify(data),
-        type: "TrueAnswer",
-      });
+    if (highlabel === "Rock" && !gamestop.current) {
+      box.push(highlabel);
+      if (box.length > 10) {
+        gamestop.current = true;
+        console.log("멈춰", gamestop.current);
+        const data = {
+          userNo: openvidu.userNo,
+          score: -5,
+          username: userName,
+        };
+        openvidu.session.signal({
+          data: JSON.stringify(data),
+          type: "TrueAnswer",
+        });
+        setStart(false);
+        cancelAnimationFrame(animationRef.current);
+      }
+    } else {
+      box = [];
     }
   };
-
-  if (openvidu.session) {
-    openvidu.session.on("signal:TrueAnswer", (event) => {
-      const data = JSON.parse(event.data);
-      setIsAnswerShown(true);
-      console.log(data);
-      setfail(data)
-    });
-  }
+  useEffect(() => {
+    setStart(false);
+  }, [start, gamestop]);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [fail, setfail] = useState(null);
   // 임시
-  
+
   useEffect(() => {
+    openvidu.session.on("signal:TrueAnswer", (event) => {
+      const data = JSON.parse(event.data);
+      console.log("끝");
+      setIsAnswerShown(true);
+      setfail(data.username);
+      setEnd(true);
+      setStart(false);
+      console.log("dho dksajacna", start);
+    });
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
+    openvidu.session.on("signal:GameRestart", () => {
+      setEnd(false);
+      gamestop.current = false;
+      setIsAnswerShown(false);
+    });
+    return () => {
+      openvidu.session.off("signal:TrueAnswer");
+      openvidu.session.off("signal:GameRestart");
+    };
   }, []);
 
-  return isAnswerShown ? (
-    <div className={styles.result}>
-      <h1>당첨자 : {fail}</h1>
-    </div>
-  ) : (
+  return (
     <div className={styles.background}>
-      <div id="label-container">
-        {label}
-        <div />
+      <div id="label-container" className={styles.result}>
+        {label === "Rock" ? (
+          <div className={styles.animation}>탈락입니다!</div>
+        ) : null}
+        {isAnswerShown ? (
+          <>
+            <div className={styles.animation}>탈락자 : {fail}</div>
+          </>
+        ) : null}
       </div>
-      <video autoPlay={true} ref={videoRef} width="100%" height="100%" />
+      <video autoPlay={true} ref={videoRef} width="90%" height="90%" />
     </div>
   );
 }
 
 export default Seeking;
-
-// <div>
-//   <div className={styles.webcamCapture}>
-//     <video ref={videoRef} width="80%" />
-//     <div className={styles.Container}>
-//       <span className={styles.TimeLimit}>
-//         {" "}
-//         {minutes} :{" "}
-//         {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-//       </span>
-//       <span className={styles.AnswerFont}>
-//         {AnswerList[step].answer}
-//       </span>
-//     </div>
-//   </div>
-// </div>
-// {/* <Transition unmountOnExit in={open} timeout={500}>
-//   {(state) => <GameAnswerModal show={state} handleOpen={handleOpen} />}
-// </Transition>
-// {modalOpen ? { showModal } : {}} */}
-// </div>
-// );
-// }
