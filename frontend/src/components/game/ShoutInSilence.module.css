@@ -127,7 +127,7 @@
   animation-fill-mode: forwards;
   z-index: 1;
   position: absolute;
-  bottom: 39.5%;
+  bottom: 15%;
   left: 51%;
   display: none;
 }
@@ -143,7 +143,7 @@
   animation-fill-mode: forwards;
   z-index: 1;
   position: absolute;
-  bottom: 39.5%;
+  bottom: 15%;
   left: 51%;
   display: none;
 }
