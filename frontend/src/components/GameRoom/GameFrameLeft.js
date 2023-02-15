@@ -123,31 +123,36 @@ function GameFrameLeft({
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               return { ...user, gameScore: 100 };
+            } else {
+              return user;
             }
-            return user;
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 2) {
+      if (data.gamename === "joker" && data.clicked === 4) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore + 5 >= 100) {
                 return { ...user, gameScore: 100 };
-              } else if (user.gameScore + 5);
+              } else {
+                return { ...user, gameScore: user.gameScore + 5 };
+              }
             }
 
             return user;
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 3) {
+      if (data.gamename === "joker" && data.clicked === 4) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore + 10 >= 100) {
                 return { ...user, gameScore: 100 };
-              } else if (user.gameScore + 10);
+              } else {
+                return { ...user, gameScore: user.gameScore + 10 };
+              }
             }
 
             return user;
@@ -160,21 +165,26 @@ function GameFrameLeft({
             if (user.userNo === data.userNo) {
               if (user.gameScore - 5 <= 0) {
                 return { ...user, gameScore: 0 };
-              } else if (user.gameScore - 5);
+              } else {
+                return { ...user, gameScore: user.gameScore - 5 };
+              }
             }
 
             return user;
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 5) {
+      if (data.gamename === "joker" && data.clicked === 4) {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
               if (user.gameScore - 10 <= 0) {
                 return { ...user, gameScore: 0 };
-              } else if (user.gameScore - 10);
+              } else {
+                return { ...user, gameScore: user.gameScore - 10 };
+              }
             }
+
             return user;
           })
         );
