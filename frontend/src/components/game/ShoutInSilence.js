@@ -10,7 +10,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import UserVideoComponent from "../camera/UserVideoComponent";
 
-
 function ShoutInSilence({
   start,
   result,
@@ -18,23 +17,24 @@ function ShoutInSilence({
   host,
   openvidu,
   subscribes,
+  mic,
+  toggleDevice,
+  setEnd,
+  setStart,
 }) {
-
   console.log("ShoutInSilence의 subscribes 잘 들아옴? =>", subscribes);
 
   const timeLimit = 10; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
   const videoRef = useRef(null);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [answerList, setAnswerList] = useState([]);
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [open, setOpen] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(mic);
 
   //axios로 정답 리스트 가져오는 부분
   function getAnswerList() {
@@ -59,6 +59,14 @@ function ShoutInSilence({
     }
   }
 
+  useEffect(() => {
+    if (host) {
+      if (start)
+        toggleDevice(false, true); // 첫 인자는 음량, 두번째 인자는 비디오
+      else toggleDevice(true, true); // 첫 인자는 음량, 두번째 인자는 비디오
+    }
+  }, [start]);
+
   // 정답 체크 기능
   useEffect(() => {
     if (start && step <= answerList.length - 1) {
@@ -80,10 +88,11 @@ function ShoutInSilence({
         //마지막 문제인 경우
         if (step === answerList.length - 1) {
           setIsAnswerShown(true);
-          // 더 할 것인지 아닌지 확인
 
-          // 모달 띄우기
-          setShowModal(true);
+          //다시하기 버튼 활성화
+          setEnd(true);
+          setStart(false);
+
           return;
         } else {
           const timeoutId = setTimeout(() => {
@@ -132,7 +141,7 @@ function ShoutInSilence({
   }, [result]);
 
   useEffect(() => {
-    if (host) { 
+    if (host) {
       const video = openvidu.publisher;
       video.addVideoElement(videoRef.current);
     }
@@ -187,8 +196,8 @@ function ShoutInSilence({
         <div>
           <div id="wrongMassage" className={styles.wrongMassage}>
             틀렸습니다
-            </div>
-            <div id="correctMassage" className={styles.correctMassage}>
+          </div>
+          <div id="correctMassage" className={styles.correctMassage}>
             정답입니다
           </div>
           <div className={styles.webcamCapture}>
@@ -197,7 +206,11 @@ function ShoutInSilence({
               if (subData.host) {
                 return (
                   <div className={styles.mute}>
-                    <UserVideoComponent key={idx} streamManager={sub} mic={false} width="80%" />
+                    <UserVideoComponent
+                      key={idx}
+                      streamManager={sub}
+                      width="80%"
+                    />
                   </div>
                 );
               } else {
