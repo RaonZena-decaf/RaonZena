@@ -291,6 +291,8 @@ function MainRoom(props) {
     }
 
     const myscore = userList.filter(attend => attend[0] === user.userNo)
+    console.log('방에서 나갑니다.')
+    console.log(myscore)
 
     axios({
       method: "post",
