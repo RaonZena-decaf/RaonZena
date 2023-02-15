@@ -20,9 +20,9 @@ const FollowingListItem = (props) => {
         <p>{props.userName}</p>
       </div>
       <div>
-        {props.isOnline && (
+        {props.isOnline ==="online" ? (
           <img className={styles.OnlineSize} src="Online.svg" alt="Online" />
-        )}
+        ) : null}
       </div>
     </div>
   );
