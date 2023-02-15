@@ -51,7 +51,7 @@ function MainRoom(props) {
     const OV = new OpenVidu();
     setOV(OV);
     // console 몇개 없애는 코드
-    OV.enableProdMode()
+    OV.enableProdMode();
     const after = new Promise((resolve, reject) => {
       const mySession = OV.initSession();
       setTimeout(() => {
@@ -191,19 +191,21 @@ function MainRoom(props) {
       url: `${baseUrl}games/liveScore/${roomId}`,
     })
       .then((res) => {
-        console.log('점수리스트 가져옴');
+        console.log("점수리스트 가져옴");
         // res.data를 순회하면서 user=> [] 형태로 하나씩 push
-        const gamseScores = [] 
-        res.data.userData.map((user) => (gamseScores.push([user.userNo,user.gameScore])))
+        const gamseScores = [];
+        res.data.userData.map((user) =>
+          gamseScores.push([user.userNo, user.gameScore])
+        );
         gamseScores.push([user.userNo, 0]);
-        console.log(gamseScores)
+        console.log(gamseScores);
         axios({
           method: "post",
           url: `${baseUrl}games/liveScore`,
           data: { roomNo: roomId, userData: gamseScores },
         })
           .then((res) => {
-            console.log('점수 저장됨');
+            console.log("점수 저장됨");
             console.log(res.data);
           })
           .catch((error) => console.log(error));
@@ -235,27 +237,17 @@ function MainRoom(props) {
 
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
-    console.log("길이", subscribes.length);
     return () => {
-      console.log("길이2", subscribes.length);
-      axios({
-        method: "get",
-        url: `${baseUrl}games/${state.roomNo}/join`,
-      })
-        .then((res) => {
-          if (res.data === 1) {
-            axios({
-              method: "delete",
-              url: `${baseUrl}live/${state.roomNo}`,
-            })
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((error) => console.log(error));
-          }
+      if (host) {
+        axios({
+          method: "delete",
+          url: `${baseUrl}live/${state.roomNo}`,
         })
-        .catch((error) => console.log(error));
-      window.removeEventListener("beforeunload", onbeforeunload);
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => console.log(error));
+      }
     };
   }, []);
 
@@ -266,9 +258,9 @@ function MainRoom(props) {
       await session.disconnect();
     }
 
-    const myscore = userList.filter(attend => attend.userNo === user.userNo)
-    console.log('방에서 나갑니다.')
-    console.log(myscore)
+    const myscore = userList.filter((attend) => attend.userNo === user.userNo);
+    console.log("방에서 나갑니다.");
+    console.log(myscore);
 
     axios({
       method: "PUT",
