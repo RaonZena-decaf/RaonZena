@@ -21,11 +21,14 @@ function GameFrameLeft({
   publisher,
   setStart,
   subscribes,
+  newGameScore,
+  setNewGameScore,
+  userList,
+  setUserList,
 }) {
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
-  const [newGameScore, setNewGameScore] = useState([]);
-  const [userList, setUserList] = useState([]);
+
   // 내일 확인 해 보자
   // const userListupdate = () => {
   //   axios({

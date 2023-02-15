@@ -27,6 +27,8 @@ function MainRoom(props) {
   const [openvidu, setOpenvidu] = useState(undefined);
   const [videoList, setVideoList] = useState(undefined);
   const [host, sestHost] = useState(state.host);
+  const [newGameScore, setNewGameScore] = useState([]);
+  const [userList, setUserList] = useState([]);
   //채팅바 토글을 위한 함수
   const [openChatting, setOpenChatting] = useState(false);
   const toggleBar = () => setOpenChatting(!openChatting);
@@ -288,6 +290,14 @@ function MainRoom(props) {
       await session.disconnect();
     }
 
+    axios({
+      method: "post",
+      url: `${baseUrl}profile/expToLevelModify`,
+      data: { exp: newGameScore, userNo: user.userNo },
+    })
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+
     // Empty all properties...
     setSession(undefined);
     setroomId("None");
@@ -355,6 +365,10 @@ function MainRoom(props) {
               publisher={publisher}
               subscribes={subscribes}
               roomNo={state.roomNo}
+              newGameScore={newGameScore}
+              setNewGameScore={setNewGameScore}
+              userList={userList}
+              setUserList={setUserList}
             />
           )}
           <MenuBar
