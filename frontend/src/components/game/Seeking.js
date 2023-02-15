@@ -54,7 +54,7 @@ function Seeking({
         requestAnimationFrame(loop);
       });
     }
-  }, [webcam]);
+  }, [start]);
   const loop = async () => {
     if (gamestop || !start) {
       return;
@@ -100,9 +100,9 @@ function Seeking({
       return;
     }
   };
-  // useEffect(() => {
-  //   setStart(false);
-  // }, [start, gamestop]);
+  useEffect(() => {
+    setStart(false);
+  }, [start, gamestop]);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [fail, setfail] = useState(null);
   // 임시
@@ -116,7 +116,6 @@ function Seeking({
       setEnd(true);
       setStart(false);
       console.log("dho dksajacna", start);
-      return;
     });
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);
