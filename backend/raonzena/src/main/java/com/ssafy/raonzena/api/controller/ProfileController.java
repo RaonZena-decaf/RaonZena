@@ -133,6 +133,8 @@ public class ProfileController {
     @PutMapping("/expToLevelModify")
     public ResponseEntity<?> expToLevelModify(@RequestBody ExpReq expReq){
         logger.info("경험치와 레벨 갱신");
+        logger.info(expReq.getExp());
+        logger.info(expReq.getUserNo());
 
         profileService.expToLevelModify(expReq);
 
