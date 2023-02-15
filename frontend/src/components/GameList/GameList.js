@@ -73,7 +73,7 @@ export default function GameList({ searchWord }) {
   };
 
   const navigateToCreateRoom = () => {
-    if (loginConfigure === true) {
+    if (loginConfigure() === true) {
       navigate("/makeroom");
     } else {
       alert("Please Login");
