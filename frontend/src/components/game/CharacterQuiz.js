@@ -129,15 +129,15 @@ function CharacterQuiz({
   return (
     <div className={styles.background}>
       <div className={styles.Container}>
+        <div id="wrongMassage" className={styles.wrongMassage}>
+          틀렸습니다
+        </div>
         <span className={styles.questionNo}>
           {step + 1} / {characterimg.length}
         </span>
         <span className={styles.TimeLimit}>
           {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
-      </div>
-      <div id="wrongMassage" className={styles.wrongMassage}>
-        틀렸습니다
       </div>
       {start ? (
         step === characterimg.length ? (

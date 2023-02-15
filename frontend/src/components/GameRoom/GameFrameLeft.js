@@ -25,6 +25,8 @@ function GameFrameLeft({
   setNewGameScore,
   userList,
   setUserList,
+  mic,
+  toggleDevice
 }) {
   console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -284,9 +286,11 @@ function GameFrameLeft({
               setResult={setResult}
               openvidu={openvidu}
               host={host}
-              userList={userList}
-              publisher={publisher}
               subscribes={subscribes}
+              mic={mic}
+              toggleDevice={toggleDevice}
+              setEnd={setEnd}
+              setStart={setStart}
             />
           )}
           {gamename === "personquiz" && (
