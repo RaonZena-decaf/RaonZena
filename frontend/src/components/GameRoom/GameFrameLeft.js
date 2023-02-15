@@ -22,7 +22,7 @@ function GameFrameLeft({
   subscribes,
   newGameScore,
   setNewGameScore,
-  userList,
+  // userList,
   setUserList,
   mic,
   toggleDevice,
@@ -230,40 +230,24 @@ function GameFrameLeft({
             />
           )}
         </div>
-        <div className={styles.progressframe}>
-          <div>
-            {userList.slice(0, 3).map((user, idx) => {
-              return (
-                <div key={idx} className={styles.score}>
-                  <div className={styles.score2}>
-                    <img
-                      alt="img"
-                      src={user.userImage}
-                      className={styles.img}
-                    />
-                    <span className={styles.font2}>{user.userName}</span>
+        <div className={styles.background}>
+          <div className={styles.progressframe}>
+              {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
+              {userList.map((user, idx) => {
+                return (
+                  <div key={idx} className={styles.score}>
+                    <div className={styles.score2Left}>
+                      <img
+                        alt="img"
+                        src={user.userImage}
+                        className={styles.img}
+                      />
+                      <span className={styles.font2}>{user.userName}</span>
+                    </div>
+                    <GameFrameProgress user={user} />
                   </div>
-                  <GameFrameProgress user={user} />
-                </div>
-              );
-            })}
-          </div>
-          <div>
-            {userList.slice(3, 6).map((user, idx) => {
-              return (
-                <div key={idx} className={styles.score}>
-                  <div className={styles.score2}>
-                    <img
-                      alt="img"
-                      src={user.userImage}
-                      className={styles.img}
-                    />
-                    <span className={styles.font2}>{user.userName}</span>
-                  </div>
-                  <GameFrameProgress user={user} />
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
       </div>
