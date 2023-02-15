@@ -146,23 +146,10 @@ function CharacterQuiz({
           </div>
         ) : isAnswerShown ? (
           <div className={styles.result}>
-            <h1>{characterimg[step].answer}</h1>
+            <h1>인물퀴즈 시작합니다!!!</h1>
           </div>
-        ) : (
-          characterimg &&
-          characterimg[step] && (
-            <img
-              alt="img"
-              src={characterimg[step].imageUrl}
-              className={styles.img}
-            />
-          )
-        )
-      ) : (
-        <div className={styles.result}>
-          <h1>인물퀴즈 시작합니다!!!</h1>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 

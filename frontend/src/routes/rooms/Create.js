@@ -14,11 +14,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Loading from "../../components/room/MainLoading";
 
-// 물어볼거
-// 비밀번호 입력 칸 비밀번호 모습으로 감춰야 할까?
-// 수정할 부분
-// 1. input 길이들 좀 더 반응형으로 2. 화상 관련 입력 값 주의 3. 마이크, 화상 가릴 경우의 axios 4. 방 만들기 시 axios 통신? 다음 이동공간 6. 사람수 버튼에서 이상한 화상 있긴 함 확인 필요
-
 function Create() {
   const navigate = useNavigate();
   const baseUrl = useSelector((store) => store.baseUrl);

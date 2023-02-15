@@ -42,13 +42,6 @@ function BeforeEnter() {
   const passwordChange = (event) => {
     setPassword(event.target.value);
   };
-  const passwordRef = useRef();
-
-  const labelFocus = () => {
-    if (disabled === true) {
-      passwordRef.current.focus();
-    }
-  };
 
   // 세션 참가
   const joinSession = () => {
