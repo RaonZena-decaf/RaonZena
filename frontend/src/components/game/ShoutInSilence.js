@@ -1,41 +1,40 @@
-import React, { useState, useEffect, useRef, useReducer, dispatch, } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useReducer,
+  dispatch,
+} from "react";
 import styles from "../game/ShoutInSilence.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-// import PhotoShoot from "./PhotoShoot";
+import UserVideoComponent from "../camera/UserVideoComponent";
 
-function ShoutInSilence({ start, result, setResult, host, openvidu, userList, closeMenu, publisher}) {
+function ShoutInSilence({
+  start,
+  result,
+  setResult,
+  host,
+  openvidu,
+  subscribes,
+  mic,
+  toggleDevice,
+  setEnd,
+  setStart,
+}) {
+  console.log("ShoutInSilence의 subscribes 잘 들아옴? =>", subscribes);
+
   const timeLimit = 10; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  const [answer, setAnswer] = useState("");
   const baseUrl = useSelector((store) => store.baseUrl);
   const videoRef = useRef(null);
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [answerList, setAnswerList] = useState([]);
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [open, setOpen] = useState(false);
-  
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    setTimeout(() => {}, 300);
-  };
-
-  const handleVideo = () => {
-    const video = videoRef.current;
-  };
-
-  const answerOnclick = (e) => {
-    e.preventDefault();
-    if (answer !== "") {
-      console.log(answer);
-    }
-    setAnswer("");
-  };
+  const [audioEnabled, setAudioEnabled] = useState(mic);
 
   //axios로 정답 리스트 가져오는 부분
   function getAnswerList() {
@@ -60,6 +59,14 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
     }
   }
 
+  useEffect(() => {
+    if (host) {
+      if (start)
+        toggleDevice(false, true); // 첫 인자는 음량, 두번째 인자는 비디오
+      else toggleDevice(true, true); // 첫 인자는 음량, 두번째 인자는 비디오
+    }
+  }, [start]);
+
   // 정답 체크 기능
   useEffect(() => {
     if (start && step <= answerList.length - 1) {
@@ -81,10 +88,11 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
         //마지막 문제인 경우
         if (step === answerList.length - 1) {
           setIsAnswerShown(true);
-          // 더 할 것인지 아닌지 확인
 
-          // 모달 띄우기
-          setShowModal(true);
+          //다시하기 버튼 활성화
+          setEnd(true);
+          setStart(false);
+
           return;
         } else {
           const timeoutId = setTimeout(() => {
@@ -104,10 +112,14 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
         //정답 맞춘 로직
         if (result === answerList[step].answer) {
           console.log("정답");
-          // setModalShow(true);
+          setResult("");
+          document.getElementById("correctMassage").style.display = "block";
+          setTimeout(function () {
+            document.getElementById("correctMassage").style.display = "none";
+          }, 200);
           const data = {
             userNo: openvidu.userNo,
-            score: 5
+            score: 5,
           };
           openvidu.session.signal({
             data: JSON.stringify(data),
@@ -129,12 +141,11 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
   }, [result]);
 
   useEffect(() => {
-    const video = openvidu.publisher;
-    video.addVideoElement(videoRef.current);
+    if (host) {
+      const video = openvidu.publisher;
+      video.addVideoElement(videoRef.current);
+    }
   }, []);
-
-  // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     getAnswerList();
@@ -186,10 +197,26 @@ function ShoutInSilence({ start, result, setResult, host, openvidu, userList, cl
           <div id="wrongMassage" className={styles.wrongMassage}>
             틀렸습니다
           </div>
+          <div id="correctMassage" className={styles.correctMassage}>
+            정답입니다
+          </div>
           <div className={styles.webcamCapture}>
-            {/* {videoRef.current !== undefined ? (
-              <video autoPlay={true} ref={videoRef} width="80%" />
-            ) : null} */}
+            {subscribes.map((sub, idx) => {
+              let subData = JSON.parse(sub.stream.connection.data);
+              if (subData.host) {
+                return (
+                  <div className={styles.mute}>
+                    <UserVideoComponent
+                      key={idx}
+                      streamManager={sub}
+                      width="80%"
+                    />
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
             <div className={styles.Container}>
               <span className={styles.questionNo}>
                 {step + 1} / {answerList.length}

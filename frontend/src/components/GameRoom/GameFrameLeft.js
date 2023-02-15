@@ -19,56 +19,18 @@ function GameFrameLeft({
   roomNo,
   setEnd,
   publisher,
-  setStart
+  setStart,
+  subscribes,
+  newGameScore,
+  setNewGameScore,
+  userList,
+  setUserList,
+  mic,
+  toggleDevice
 }) {
+  console.log("GameFrameLeft의 subscribes => ", subscribes);
   const baseUrl = useSelector((store) => store.baseUrl);
-  const [userList, setUserList] = useState([
-    {
-      userNo: 1,
-      userId: "123456",
-      userName: "홍영민",
-      exp: 50,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 2,
-      userId: "123456",
-      userName: "윤수희",
-      exp: 40,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 3,
-      userId: "123456",
-      userName: "최지연",
-      exp: 30,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 4,
-      userId: "123456",
-      userName: "윤수희",
-      exp: 20,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-    {
-      userNo: 7,
-      userId: "2657509460",
-      userName: "임길현",
-      exp: 0,
-      level: 1,
-      userImage:
-        "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
-    },
-  ]);
+
   // 내일 확인 해 보자
   // const userListupdate = () => {
   //   axios({
@@ -101,18 +63,21 @@ function GameFrameLeft({
   // }, [userList]);
 
   // console.log(liveScoreData);
-
-  axios({
-    method: "GET",
-    url: `${baseUrl}games/liveScore/${roomNo}`,
-  })
-    .then((res) => {
-      console.log("으아아아아아아아아아아아아아아아악");
-      console.log(res.data); // Add code to execute here
-      setUserList(res.data.userData);
+  const axiosScore = () => {
+    axios({
+      method: "GET",
+      url: `${baseUrl}games/liveScore/${roomNo}`,
     })
-    .catch((error) => console.log(error));
-
+      .then((res) => {
+        console.log("으아아아아아아아아아아아아아아아악");
+        console.log(res.data); // Add code to execute here
+        setUserList(res.data.userData);
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    axiosScore();
+  }, []);
   // useEffect(() => {
   //   const sendLiveScore = async (roomNo, userList) => {
   //     const formattedList = userList.map((user) => ({
@@ -131,69 +96,96 @@ function GameFrameLeft({
   //   };
   //   sendLiveScore(roomNo, userList); // Call the sendLiveScore function here
   // }, [userList]);
+  const SendScore = () => {
+    setNewGameScore(
+      userList.map((user) => ({
+        userNo: user.userNo,
+        gameScore: user.gameScore,
+      }))
+    );
+    console.log(newGameScore);
+    axios({
+      method: "POST",
+      url: `${baseUrl}games/liveScore/`,
+      data: { roomNo: roomNo, userData: newGameScore },
+    })
+      .then((res) => {
+        console.log("dkdkdkdkd");
+        console.log(res.data);
+        userList.sort(function (a, b) {
+          return b.points - a.points;
+        });
+      })
+      .catch((error) => console.log(error));
+  };
 
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
-      console.log(data.userNo);
-      if (data.gamename === "joker" && data.clicked === 1) {
+      if (data.gamename === "joker" && data.clicked === "1") {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return { ...user, exp: user.exp + (100 - user.exp) };
+              return { ...user, gameScore: 100 };
+            } else {
+              return user;
+            }
+          })
+        );
+      }
+      if (data.gamename === "joker" && data.clicked === "2") {
+        setUserList((prev) =>
+          prev.map((user) => {
+            if (user.userNo === data.userNo) {
+              if (user.gameScore + 5 >= 100) {
+                return { ...user, gameScore: 100 };
+              } else {
+                return { ...user, gameScore: user.gameScore + 5 };
+              }
             }
             return user;
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 2) {
+      if (data.gamename === "joker" && data.clicked === "3") {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                exp: user.exp + 5 >= 100 ? 100 : user.exp + 5,
-              };
+              if (user.gameScore + 10 >= 100) {
+                return { ...user, gameScore: 100 };
+              } else {
+                return { ...user, gameScore: user.gameScore + 10 };
+              }
             }
             return user;
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 3) {
+      if (data.gamename === "joker" && data.clicked === "4") {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                exp: user.exp + 10 >= 100 ? 100 : user.exp + 10,
-              };
+              if (user.gameScore - 5 <= 0) {
+                return { ...user, gameScore: 0 };
+              } else {
+                return { ...user, gameScore: user.gameScore - 5 };
+              }
             }
             return user;
           })
         );
       }
-      if (data.gamename === "joker" && data.clicked === 4) {
+      if (data.gamename === "joker" && data.clicked === "5") {
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                exp: user.exp - 5 <= 0 ? 0 : user.exp - 5,
-              };
+              if (user.gameScore - 10 <= 0) {
+                return { ...user, gameScore: 0 };
+              } else {
+                return { ...user, gameScore: user.gameScore - 10 };
+              }
             }
-            return user;
-          })
-        );
-      }
-      if (data.gamename === "joker" && data.clicked === 5) {
-        setUserList((prev) =>
-          prev.map((user) => {
-            if (user.userNo === data.userNo) {
-              return {
-                ...user,
-                exp: user.exp - 10 <= 0 ? 0 : user.exp - 10,
-              };
-            }
+
             return user;
           })
         );
@@ -202,24 +194,22 @@ function GameFrameLeft({
         setUserList((prev) =>
           prev.map((user) => {
             if (user.userNo === data.userNo) {
-              if (user.exp + data.score <= 0) {
-                return { ...user, exp: 0 };
-              } else if (user.exp + data.score >= 100) {
-                return { ...user, exp: 100 };
+              if (user.gameScore + data.score <= 0) {
+                return { ...user, gameScore: 0 };
+              } else if (user.gameScore + data.score >= 100) {
+                return { ...user, gameScore: 100 };
               } else {
-                return { ...user, exp: user.exp + data.score };
+                return { ...user, gameScore: user.gameScore + data.score };
               }
             }
             return user;
           })
         );
       }
+      SendScore();
     });
   }, []);
 
-  userList.sort(function (a, b) {
-    return b.points - a.points;
-  });
   return (
     <div className={styles.leftcontainer}>
       <div>
@@ -254,6 +244,7 @@ function GameFrameLeft({
               setResult={setResult}
               openvidu={openvidu}
               host={host}
+              setStart={setStart}
             />
           )}
           {gamename === "talkingsilence" && (
@@ -263,8 +254,11 @@ function GameFrameLeft({
               setResult={setResult}
               openvidu={openvidu}
               host={host}
-              userList={userList}
-              publisher = {publisher}
+              subscribes={subscribes}
+              mic={mic}
+              toggleDevice={toggleDevice}
+              setEnd={setEnd}
+              setStart={setStart}
             />
           )}
           {gamename === "personquiz" && (
@@ -288,7 +282,7 @@ function GameFrameLeft({
         </div>
         <div className={styles.progressframe}>
           <div>
-            {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])}
+            {/* {console.log("업데이트 하기 후 유저 리스트!!!", userList[4])} */}
             {userList.slice(0, 3).map((user, idx) => {
               return (
                 <div key={idx} className={styles.score}>

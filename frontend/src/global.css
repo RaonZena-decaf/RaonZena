@@ -1,4 +1,4 @@
-@import url('https://webfontworld.github.io/gmarket/GmarketSans.css');
+@import url("https://webfontworld.github.io/gmarket/GmarketSans.css");
 
 @media (max-width: 1024px) {
   html {
@@ -30,29 +30,20 @@
 body {
   margin: 0;
   line-height: normal;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   font-family: "GmarketSans";
   overflow-x: hidden;
 }
 
 /* 스크롤바 변경 */
 body::-webkit-scrollbar {
-  width: .8rem;
+  display: none;
 }
 
-body::-webkit-scrollbar-thumb  {
-  background-color: #f400b0;
-  border-radius: 1rem;
-}
-
-body::-webkit-scrollbar-track  {
-  background-color:#1f2122;
-}
-
-button{
+button {
   font-family: "GmarketSans";
 }
 

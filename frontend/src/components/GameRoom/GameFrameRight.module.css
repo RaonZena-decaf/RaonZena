@@ -54,7 +54,8 @@
   border: 0;
   word-break: keep-all;
   height: 100%;
-  width: 10%;
+  width: fit-content;
+  padding: 1rem;
 }
 
 .chatting {

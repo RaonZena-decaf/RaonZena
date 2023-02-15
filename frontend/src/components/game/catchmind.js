@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styles from "../game/catchmind.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { image } from "@tensorflow/tfjs-core";
+import { FaFillDrip, FaRegTrashAlt, FaEraser } from "react-icons/fa";
 
 function Catchmind({
   start,
@@ -90,8 +90,8 @@ function Catchmind({
     canvas.style.margin = "10px 0px 0px 0px";
     canvas.style.border = "3px";
     canvas.style.cursor = "pointer";
-    canvas.style.height = height * 2 + "px";
-    canvas.style.width = width * 2.5 + "px";
+    canvas.style.height = height * 2.8 + "px";
+    canvas.style.width = width * 2.6 + "px";
     // canvas.style.borderImage = "linear-gradient(to right, #9D00F1 0%, #f400b0 100%)";
     // canvas.style.borderImageSlice = "2";
 
@@ -148,6 +148,14 @@ function Catchmind({
       canvas.addEventListener("mouseleave", stopPainting);
     }
 
+    //호스트가 아니면 alert 출력
+    if (host === false) {
+      canvas.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("방장만 출제 가능합니다");
+      });
+    }
+
     const buttons = [
       "red",
       "orange",
@@ -167,7 +175,7 @@ function Catchmind({
       button.style.cursor = "pointer";
 
       if (content === "clear" || content === "fill") {
-        button.style.background = "rgba(100,100,100,0.2)";
+        button.style.background = "";
       } else {
         button.style.backgroundImage = `url(../PaletteImg/${content}.png)`;
       }
@@ -216,69 +224,26 @@ function Catchmind({
           setTimeRemaining(timeRemaining - 1);
         }, 1000);
         return () => clearInterval(intervalId);
-      }
-      if (timeRemaining === 0 && !isAnswerShown) {
-        setIsAnswerShown(true);
-      }
-      if (isAnswerShown) {
-        setTimeout(() => {
-          setIsAnswerShown(false);
-          setTimeRemaining(timeLimit);
-          if (step === QuizList.length - 1) {
-            setEnd(true);
-          } else {
-            setStep((prev) => (prev += 1));
-          }
+      } else {
+        if (step === QuizList.length - 1) {
+          setIsAnswerShown(true);
           reset();
-        }, 1000);
+        } else {
+          setTimeout(() => {
+            setIsAnswerShown(false);
+            setTimeRemaining(timeLimit);
+            setStep((prev) => prev + 1);
+            reset();
+          }, 1000);
+        }
       }
     }
-  }, [start, timeRemaining, isAnswerShown, step]);
-
-  // useEffect(() => {
-  //   const reset = () => {
-  //     const canvas = canvasRef.current;
-  //     const ctx = canvas.getContext("2d");
-  //     const height = canvas.height;
-  //     const width = canvas.width;
-  //     ctx.fillStyle = "white";
-  //     ctx.fillRect(0, 0, width, height);
-  //   };
-  //   console.log("catchmind", start, step);
-  //   if (start && step < QuizList.length - 1) {
-  //     if (timeRemaining > 0 && !isAnswerShown) {
-  //       const intervalId = setInterval(() => {
-  //         setTimeRemaining(timeRemaining - 1);
-  //       }, 1000);
-  //       return () => clearInterval(intervalId);
-  //     }
-  //     if (timeRemaining === 0 && !isAnswerShown) {
-  //       setIsAnswerShown(true);
-  //     }
-  //     if (isAnswerShown) {
-  //       if (step === QuizList.length - 1) {
-  //         setTimeout(() => {
-  //           setIsAnswerShown(false);
-  //           setTimeRemaining(timeLimit);
-  //           // setStep((prev) => (prev += 1));
-  //           setEnd(true);
-  //           setStart(false);
-  //         }, 1000);
-  //         reset();
-  //       } else {
-  //         setTimeout(() => {
-  //           setIsAnswerShown(false);
-  //           setTimeRemaining(timeLimit);
-  //           setStep((prev) => (prev += 1));
-  //         }, 1000);
-  //         reset();
-  //       }
-  //     }
-  //   } else if (start && step === QuizList.length) {
-  //     setEnd(true);
-  //     setStart(false);
-  //   }
-  // }, [start, timeRemaining, isAnswerShown, step, QuizList.length]);
+    if (step >= QuizList.length) {
+      setIsAnswerShown(false);
+      setTimeRemaining(timeLimit);
+      setStart(false);
+    }
+  }, [start, step, timeRemaining, isAnswerShown]);
 
   useEffect(() => {
     if (result !== "" && step < QuizList.length) {
@@ -294,14 +259,12 @@ function Catchmind({
         });
         setResult("");
       } else {
-        const data = {
-          sender: openvidu.userName,
-          answer: result,
-        };
-        openvidu.session.signal({
-          data: JSON.stringify(data),
-          type: "WrongAnswer",
-        });
+        console.log("오답");
+        setResult("");
+        document.getElementById("wrongMassage").style.display = "block";
+        setTimeout(function () {
+          document.getElementById("wrongMassage").style.display = "none";
+        }, 200);
         setResult("");
       }
     }
@@ -310,33 +273,43 @@ function Catchmind({
   const [minutes, setMinutes] = useState(0);
 
   return (
-    <div>
+    <div className={styles.Background}>
       <div className={styles.Container}>
         <span className={styles.questionNo}>
-          {step + 1} / {QuizList.length}
+          단계 {step + 1} / {QuizList.length}
         </span>
         <span className={styles.TimeLimit}>
-          {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+          시간 {minutes} :{" "}
+          {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
         </span>
         {(host || isAnswerShown) && QuizList.length > 0 ? (
           <span className={styles.AnswerFont}>
-            제시어 : {QuizList[step].answer}
+            단어 : {QuizList[step].answer}
           </span>
         ) : null}
+      </div>{" "}
+      <div id="wrongMassage" className={styles.wrongMassage}>
+        틀렸습니다
       </div>
-      <canvas id="canvas" ref={canvasRef}></canvas>
-      <div id="palette" ref={paletteRef}>
+      <canvas className={styles.canvas} id="canvas" ref={canvasRef}></canvas>
+      <div className={styles.palette} ref={paletteRef}>
         <div className={`${styles.buttonColor} red`}></div>
-        <div className={`${styles.buttonColor} yellow`}></div>
         <div className={`${styles.buttonColor} orange`}></div>
+        <div className={`${styles.buttonColor} yellow`}></div>
         <div className={`${styles.buttonColor} green`}></div>
         <div className={`${styles.buttonColor} blue`}></div>
         <div className={`${styles.buttonColor} navy`}></div>
         <div className={`${styles.buttonColor} purple`}></div>
         <div className={`${styles.buttonColor} black`}></div>
-        <div className={`${styles.buttonColor} white`}></div>
-        <div className={`${styles.buttonBlack} clear`}>clear</div>
-        <div className={`${styles.buttonBlack} fill`}>fill</div>
+        <div className={`${styles.buttonBlack} clear`}>
+          <FaRegTrashAlt /> <div className={styles.textWithIcon}>비우기</div>
+        </div>
+        <div className={`${styles.buttonBlack} fill`}>
+          <FaFillDrip /> <div className={styles.textWithIcon}>채우기</div>
+        </div>
+        <div className={`${styles.buttonBlack} white`}>
+          <FaEraser></FaEraser>
+        </div>
       </div>
     </div>
   );

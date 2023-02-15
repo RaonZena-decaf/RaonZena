@@ -75,6 +75,7 @@ function CharacterQuiz({
       }
       if (isAnswerShown) {
         if (step === characterimg.length - 1) {
+          console.log(start, "마지막", step)
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
@@ -107,15 +108,12 @@ function CharacterQuiz({
         });
         setResult("");
       } else {
-        const data = {
-          sender: openvidu.userName,
-          answer: result,
-        };
-        openvidu.session.signal({
-          data: JSON.stringify(data),
-          type: "WrongAnswer",
-        });
+        console.log("오답");
         setResult("");
+        document.getElementById("wrongMassage").style.display = "block";
+        setTimeout(function () {
+          document.getElementById("wrongMassage").style.display = "none";
+        }, 200);
       }
     }
   }, [result]);
@@ -129,40 +127,46 @@ function CharacterQuiz({
     };
   }, []);
   return (
-    <div className={styles.background}>
-      <div className={styles.Container}>
-        <span className={styles.questionNo}>
-          {step + 1} / {characterimg.length}
-        </span>
-        <span className={styles.TimeLimit}>
-          {minutes} : {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
-        </span>
+    <div>
+      <div id = "wrongMassage" className={styles.wrongMassage}>
+        틀렸습니다{" "}
       </div>
 
-      {start ? (
-        step === characterimg.length ? (
-          <div className={styles.result}>
-            <h1>인물퀴즈 끝!!!</h1>
-          </div>
-        ) : isAnswerShown ? (
-          <div className={styles.result}>
-            <h1>{characterimg[step].answer}</h1>
-          </div>
-        ) : (
-          characterimg &&
-          characterimg[step] && (
-            <img
-              alt="img"
-              src={characterimg[step].imageUrl}
-              className={styles.img}
-            />
-          )
-        )
-      ) : (
-        <div className={styles.result}>
-          <h1>인물퀴즈 시작합니다!!!</h1>
+      <div className={styles.background}>
+        <div className={styles.Container}>
+          <span className={styles.questionNo}>
+            {step + 1} / {characterimg.length}
+          </span>
+          <span className={styles.TimeLimit}>
+            {minutes} :{" "}
+            {timeRemaining < 10 ? `0${timeRemaining}` : timeRemaining}
+          </span>
         </div>
-      )}
+        {start ? (
+          step === characterimg.length ? (
+            <div className={styles.result}>
+              <h1>인물퀴즈 끝!!!</h1>
+            </div>
+          ) : isAnswerShown ? (
+            <div className={styles.result}>
+              <h1>{characterimg[step].answer}</h1>
+            </div>
+          ) : (
+            characterimg &&
+            characterimg[step] && (
+              <img
+                alt="img"
+                src={characterimg[step].imageUrl}
+                className={styles.img}
+              />
+            )
+          )
+        ) : (
+          <div className={styles.result}>
+            <h1>인물퀴즈 시작합니다!!!</h1>
+          </div>
+        )}
+      </div>
     </div>
   );
 

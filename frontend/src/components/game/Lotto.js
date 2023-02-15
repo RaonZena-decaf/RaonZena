@@ -127,7 +127,7 @@ function Lotto({ start, result, openvidu, host }) {
                       backgroundImage: `url(/CardImg/card9.png)`,
                     }}
                   >
-                    {lotto.item}
+                    <div className={styles.img}>{lotto.item}</div>
                   </div>
                 )}
               </div>

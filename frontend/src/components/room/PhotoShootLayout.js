@@ -5,19 +5,22 @@ import styles from "./PhotoShootLayout.module.css";
 function PhotoShootLayout({ photoFrame, TotalUsers }) {
   useLayoutEffect(() => {
     for (const user of TotalUsers) {
-      html2canvas(document.getElementById(`${user.videos[0].id}`)).then(
-        (canvas) => {
-          // 이미지 url을 얻는다
-          const dataUrl = canvas.toDataURL("image/png");
-          //css 텍스트로 입력
-          const facePhoto = document.getElementById(`사진${user.videos[0].id}`);
-          facePhoto.style.cssText = `background-image : url('${dataUrl}')`;
-        }
-      );
+      html2canvas(document.getElementById(`${user.videos[0].id}`), {
+        scrollX: 0,
+        scrollY: -window.scrollY,
+        windowWidth: document.documentElement.offsetWidth,
+        windowHeight: document.documentElement.offsetHeight,
+      }).then((canvas) => {
+        // 이미지 url을 얻는다
+        const dataUrl = canvas.toDataURL("image/png");
+        //css 텍스트로 입력
+        const facePhoto = document.getElementById(`사진${user.videos[0].id}`);
+        facePhoto.style.cssText = `background-image : url('${dataUrl}')`;
+      });
     }
   }, []);
 
-  console.log(photoFrame)
+  console.log(photoFrame);
   return (
     <div
       className={styles.photoFrame}

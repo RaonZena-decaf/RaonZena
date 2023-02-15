@@ -3,14 +3,23 @@ import React, { useState, useEffect } from "react";
 import GameFrameLeft from "./GameFrameLeft";
 import GameFrameRight from "./GameFrameRight";
 
-function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
+function GameFrame({
+  gamename,
+  openvidu,
+  host,
+  subscribes,
+  roomNo,
+  newGameScore,
+  setNewGameScore,
+  userList,
+  setUserList,
+  mic,
+  toggleDevice,
+}) {
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
   console.log("EndGame", end, start);
   const startHandler = () => {
-    // if (subscribes.lengh < 0 || !host) {
-    //   return
-    // }
     setStart(true);
     if (openvidu.session) {
       openvidu.session.signal({
@@ -19,7 +28,7 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
       });
     }
   };
-  useEffect(() => {
+  useEffect( () => {
     if (openvidu.session) {
       openvidu.session.on("signal:StartGame", () => {
         setStart(true);
@@ -28,19 +37,17 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
         startHandler();
         setEnd(false);
       });
-      openvidu.session.on("signal:gameChange", (event) => {
-        setEnd(false);
-        setStart(false);
-      });
     }
-  });
+  })
   const [result, setResult] = useState("");
   const [gameTitle, setGameTitle] = useState("");
 
   useEffect(() => {
     setGameTitle(getGameTitle(gamename));
+    setStart(false)
+    setEnd(false);
   }, [gamename]);
-
+  
   const getGameTitle = (gamename) => {
     let tempTitle = "";
     switch (gamename) {
@@ -88,11 +95,19 @@ function GameFrame({ gamename, openvidu, host, subscribes, roomNo, userName}) {
           roomNo={roomNo}
           setEnd={setEnd}
           setStart={setStart}
+          subscribes={subscribes}
+          newGameScore={newGameScore}
+          setNewGameScore={setNewGameScore}
+          userList={userList}
+          setUserList={setUserList}
+          mic={mic}
+          toggleDevice={toggleDevice}
         />
         <GameFrameRight
           start={start}
           startHandler={startHandler}
           setResult={setResult}
+          gamename={gamename}
           host={host}
           subscribes={subscribes}
           roomNo={roomNo}
