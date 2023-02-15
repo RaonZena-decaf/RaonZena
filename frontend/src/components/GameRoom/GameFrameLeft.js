@@ -22,7 +22,7 @@ function GameFrameLeft({
   subscribes,
   newGameScore,
   setNewGameScore,
-  // userList,
+  userList,
   setUserList,
   mic,
   toggleDevice,
