@@ -50,9 +50,11 @@ function GameFrameRight({
 
   // 고요속의 외침 전용 videoFrame
   const videoFrameNotHost = () => {
-    if (subscribes.length === 1) { // 나 1명, 방장 1
+    if (subscribes.length === 1) {
+      // 나 1명, 방장 1
       return "videoFrame";
-    } else if (subscribes.length === 2) { // 나, 방장, 게스트1
+    } else if (subscribes.length === 2) {
+      // 나, 방장, 게스트1
       return "videoFrame2";
     } else if (subscribes.length <= 4) {
       return "videoFrame3";
@@ -73,25 +75,24 @@ function GameFrameRight({
 
   return (
     <div className={styles.background}>
-    {gamename === "talkingsilence" ? (
-      <div className={styles.container}>
-        {!host ? (
-          <div className={styles[videoFrameNotHost()]}>
-            <UserVideoComponent streamManager={openvidu.publisher} />
-          </div>
-        ) : null}
-        {subscribes.map((sub, idx) => {
-          let subData = JSON.parse(sub.stream.connection.data);
-          if (!subData.host) {
-            return (
-              <div className={styles[videoFrameNotHost()]}>
-                <UserVideoComponent key={idx} streamManager={sub} />
-              </div>
-            );
-          }
-        })}
-      </div>
-
+      {gamename === "talkingsilence" ? (
+        <div className={styles.container}>
+          {!host ? (
+            <div className={styles[videoFrameNotHost()]}>
+              <UserVideoComponent streamManager={openvidu.publisher} />
+            </div>
+          ) : null}
+          {subscribes.map((sub, idx) => {
+            let subData = JSON.parse(sub.stream.connection.data);
+            if (!subData.host) {
+              return (
+                <div className={styles[videoFrameNotHost()]} key={idx}>
+                  <UserVideoComponent key={idx} streamManager={sub} />
+                </div>
+              );
+            }
+          })}
+        </div>
       ) : (
         // 고요속의 외침이 아니거나 고요속의 외침에서 방장인 경우
         <div className={styles.container}>
@@ -100,7 +101,7 @@ function GameFrameRight({
           </div>
           {subscribes.map((sub, idx) => {
             return (
-              <div className={styles[videoFrame()]}>
+              <div className={styles[videoFrame()]} key={idx}>
                 <UserVideoComponent key={idx} streamManager={sub} />
               </div>
             );
