@@ -131,6 +131,7 @@ function Create() {
                         value={roomname}
                         onChange={nameChange}
                         className={style.input}
+                        maxLength="50"
                       ></input>
                     </li>
 
@@ -149,7 +150,7 @@ function Create() {
                         <label htmlFor="checkbox" className={style.label} />
                       </label>
                       <input
-                        placeholder="방 비밀번호를 입력하세요"
+                        placeholder="숫자를 입력하세요"
                         id="password"
                         value={password}
                         onChange={passwordChange}

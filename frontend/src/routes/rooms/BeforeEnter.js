@@ -34,11 +34,8 @@ function BeforeEnter() {
   const userNo = useSelector((store) => store.userData.userNo);
   const navigate = useNavigate();
   useEffect(() => {
-    if (userNo === "") {
-      alert("로그인 후 이용 가능해요!");
+    if (!state) {
       navigate("/live");
-    } else {
-      setLoading(true);
     }
   }, []);
   // 이전 페이지로 돌아가기
@@ -118,8 +115,7 @@ function BeforeEnter() {
                 <div>
                   <div className={style.textcont}>
                     <FaUser className={style.highlight} /> 현재
-                    {state.users}
-                    /6 명이 방에 있습니다.
+                    {state.users}/{state.headcount} 명이 방에 있습니다.
                   </div>
                   <div className={style.textcont}>
                     카메라와 마이크 권한을 요청합니다. <br />
@@ -136,7 +132,7 @@ function BeforeEnter() {
                 {password ? (
                   <label className={style.tag} htmlFor="password">
                     <input
-                      placeholder="방 비밀번호를 입력하세요"
+                      placeholder="방 비밀번호를 입력해주세요(숫자)"
                       id="password"
                       value={password}
                       onChange={passwordChange}
