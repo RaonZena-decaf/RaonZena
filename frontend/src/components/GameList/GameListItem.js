@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styles from "./GameList.module.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { FaUser } from "react-icons/fa";
+
 
 const Item = (props) => {
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ const Item = (props) => {
         {props.title}
       </p>
       <p className={styles.UserCount}>
-        {users} / {props.headcount}
+        <FaUser/> {users} / {props.headcount}
       </p>
     </div>
   );
