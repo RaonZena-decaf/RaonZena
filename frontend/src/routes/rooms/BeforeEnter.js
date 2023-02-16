@@ -64,7 +64,7 @@ function BeforeEnter() {
           if (res.data === "Success") {
             axios({
               method: "get",
-              url: `${baseUrl}live/games/${params.id}/join`,
+              url: `${baseUrl}games/${params.id}/join`,
               headers: { "Content-type": "application/json" },
             }).then((res) => {
               if (res.data < state.headcount) {
