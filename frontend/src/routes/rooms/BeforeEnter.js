@@ -20,7 +20,7 @@ function BeforeEnter() {
   const params = useParams();
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(state? state.password? state.password : "" : "");
   const [disabled, setDisabled] = useState(() => {
     if (state) {
       return state.password === "True" ? false : true;
