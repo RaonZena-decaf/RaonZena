@@ -132,7 +132,7 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
     <div className={styles.background}>
       <div id="label-container" className={styles.result}>
         {label === "Rock" ? (
-          <div className={styles.animation}>탈락입니다!</div>
+          <div className={styles.animation}>탈락위기!</div>
         ) : null}
         {isAnswerShown ? (
           <>

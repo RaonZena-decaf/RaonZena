@@ -13,7 +13,7 @@ function Catchmind({
   setEnd,
   setStart,
 }) {
-  const timeLimit = 10;
+  const timeLimit = 20;
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -131,8 +131,8 @@ function Catchmind({
 
     ctx.lineWidth = 2;
     function onMouseMove(event) {
-      const x = (event.clientX - canvas.offsetLeft) / 2.5;
-      const y = (event.clientY - canvas.offsetTop) / 2;
+      const x = (event.clientX - canvas.offsetLeft) / 2.6;
+      const y = (event.clientY - canvas.offsetTop) / 2.8;
       if (!painting) {
         ctx.beginPath();
         ctx.moveTo(x, y);
