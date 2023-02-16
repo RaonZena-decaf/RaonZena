@@ -20,7 +20,7 @@ const FollowingListItem = (props) => {
         <p>{props.userName}</p>
       </div>
       <div className={styles.Online}>
-        {props.isOnline && (
+        {props.online && (
           <img className={styles.OnlineSize} src="Online.png" alt="Online" />
         )}
       </div>

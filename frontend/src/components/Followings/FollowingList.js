@@ -42,7 +42,7 @@ export default function FollowingList() {
               userName={followInfo.userName}
               level={followInfo.level}
               userImage={followInfo.userImageUrl}
-              isOnline={followInfo.isOnline}
+              online={followInfo.online}
               key={idx}
             />
           );
