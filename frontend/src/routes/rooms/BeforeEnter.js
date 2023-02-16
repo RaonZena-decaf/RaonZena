@@ -18,7 +18,6 @@ import Loading from "../../components/room/MainLoading";
 function BeforeEnter() {
   const { state } = useLocation();
   const params = useParams();
-  console.log(params);
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
   const [password, setPassword] = useState("");
@@ -62,15 +61,25 @@ function BeforeEnter() {
       })
         .then((res) => {
           if (res.data === "Success") {
-            navigate(`/room/${params.id}`, {
-              state: {
-                mic,
-                camera,
-                roomNo: params.id,
-                roomTitle: state.roomTitle,
-                host: false,
-              },
-            });
+            axios({
+              method: "get",
+              url: `${baseUrl}live/games/${params.id}/join`,
+              headers: { "Content-type": "application/json" },
+            }).then((res) => {
+              if (res.data < state.headcount) {
+                navigate(`/room/${params.id}`, {
+                  state: {
+                    mic,
+                    camera,
+                    roomNo: params.id,
+                    roomTitle: state.roomTitle,
+                    host: false,
+                  },
+                });
+              } else {
+                alert("지금 방이 가득 찼습니다. 나중에 시도해 주세요");
+              }
+            }).catch((err) => {console.log(err)})
           } else {
             alert("비밀번호가 잘못되었습니다");
           }
@@ -79,14 +88,24 @@ function BeforeEnter() {
           console.log(error);
         });
     } else {
-      navigate(`/room/${params.id}`, {
-        state: {
-          mic,
-          camera,
-          roomNo: params.id,
-          roomTitle: state.roomTitle,
-          host: false,
-        },
+      axios({
+        method: "get",
+        url: `${baseUrl}live/games/${params.id}/join`,
+        headers: { "Content-type": "application/json" },
+      }).then((res) => {
+        if (res.data < state.headcount) {
+          navigate(`/room/${params.id}`, {
+            state: {
+              mic,
+              camera,
+              roomNo: params.id,
+              roomTitle: state.roomTitle,
+              host: false,
+            },
+          });
+        } else {
+          alert("지금 방이 가득 찼습니다. 나중에 시도해 주세요");
+        }
       });
     }
   };
