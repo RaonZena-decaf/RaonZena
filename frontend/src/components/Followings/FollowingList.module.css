@@ -46,14 +46,13 @@
 
 .FollowingsInfo {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   margin-top: 2rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   gap: 1rem;
   transition: color .3s ease;
-  
 }
 
 .Online {
@@ -149,3 +148,11 @@
   gap: 3rem;
 }
 
+.OnlineWrapper {
+  position: absolute; /* add position absolute */
+  bottom: 0; /* position from the bottom */
+  margin-left: auto;
+  justify-content: center;
+  align-items: center;
+  align-items: flex-end;
+}

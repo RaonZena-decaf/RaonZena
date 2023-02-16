@@ -28,7 +28,7 @@
   font-size: 1.7rem;
   color: #ffffff;
   margin: 0;
-  align-self: center;
+  align-self: flex-end;
   text-align: end;
   margin-top: .5rem;
 }
