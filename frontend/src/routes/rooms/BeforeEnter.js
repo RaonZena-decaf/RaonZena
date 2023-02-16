@@ -149,7 +149,7 @@ function BeforeEnter() {
                     재접속하여 주세요.
                   </div>
                 </div>
-                {password ? (
+                {!disabled ? (
                   <label className={style.tag} htmlFor="password">
                     <input
                       placeholder="방 비밀번호를 입력해주세요(숫자)"
