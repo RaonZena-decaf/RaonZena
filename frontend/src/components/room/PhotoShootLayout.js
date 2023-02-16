@@ -36,11 +36,12 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
       }
     >
       <div className={styles.photoshootlayoutmaintextcontainer}>
-        {TotalUsers.map((user) => {
+        {TotalUsers.map((user, idx) => {
           return (
             <div
               id={`사진${user.videos[0].id}`}
               className={styles.photoshootlayoutbox}
+              key={idx}
             ></div>
           );
         })}
