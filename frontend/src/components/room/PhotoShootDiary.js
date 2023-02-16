@@ -28,6 +28,10 @@ function PhotoShootDiary({ setPhotoFrame, closeMenu, frames }) {
   async function save() {
     if (input.title === "") {
       title.current.focus();
+    } else if (input.title.length > 50) {
+      alert("제목은 50자를 초과할 수 없습니다.");
+    } else if (input.content.length > 300) {
+      alert("내용은 300자를 초과할 수 없습니다.");
     } else if (input.content === "") {
       content.current.focus();
     } else {

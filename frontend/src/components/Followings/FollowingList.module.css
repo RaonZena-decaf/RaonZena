@@ -59,7 +59,8 @@
   margin-left: auto;
   justify-content:center;
   align-items: center;
-  align-items: flex-end
+  align-items: flex-end;
+  margin-right: 1rem;
 }
 
 .OnlineSize {
@@ -148,11 +149,3 @@
   gap: 3rem;
 }
 
-.OnlineWrapper {
-  position: absolute; /* add position absolute */
-  bottom: 0; /* position from the bottom */
-  margin-left: auto;
-  justify-content: center;
-  align-items: center;
-  align-items: flex-end;
-}

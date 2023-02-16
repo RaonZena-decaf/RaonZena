@@ -12,7 +12,6 @@ export default function FollowingList() {
   const nowUserNo = useSelector((store) => store.userData.userNo);
   const user = useSelector((store) => store.userData);
 
-  const [followUserNo, setFollowUserNo] = useState(1);
   const getlist = () => {
     if (nowUserNo !== "") {
       axios({
@@ -21,7 +20,6 @@ export default function FollowingList() {
         data: { userNo: nowUserNo },
       })
         .then((res) => {
-          console.log(res.data);
           setlist(res.data);
         })
         .catch((error) => console.log("following List 에러: ", error, user));

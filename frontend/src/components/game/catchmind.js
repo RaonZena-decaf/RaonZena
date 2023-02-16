@@ -13,7 +13,7 @@ function Catchmind({
   setEnd,
   setStart,
 }) {
-  const timeLimit = 20;
+  const timeLimit = 50;
   const paletteRef = useRef(null);
   const canvasRef = useRef(null);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -194,7 +194,7 @@ function Catchmind({
   }, []);
 
   const [isAnswerShown, setIsAnswerShown] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(10);
+  const [timeRemaining, setTimeRemaining] = useState(50);
 
   const [step, setStep] = useState(0);
   useEffect(() => {

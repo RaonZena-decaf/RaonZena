@@ -20,14 +20,10 @@ function BeforeEnter() {
   const params = useParams();
   const [mic, setMic] = useState(true);
   const [camera, setCamera] = useState(true);
-  const [password, setPassword] = useState("");
-  const [disabled, setDisabled] = useState(() => {
-    if (state) {
-      return state.password === "True" ? false : true;
-    } else {
-      return false;
-    }
-  });
+  const [password, setPassword] = useState();
+  const [disabled, setDisabled] = useState(
+    state ? (state.password === "True" ? false : true) : true
+  );
   const [loading, setLoading] = useState(false);
   const baseUrl = useSelector((store) => store.baseUrl);
   const userNo = useSelector((store) => store.userData.userNo);
@@ -36,7 +32,7 @@ function BeforeEnter() {
     if (!state) {
       navigate("/live");
     }
-    setLoading(true)
+    setLoading(true);
   }, []);
   // 이전 페이지로 돌아가기
   const backOnClick = () => {
@@ -66,21 +62,25 @@ function BeforeEnter() {
               method: "get",
               url: `${baseUrl}games/${params.id}/join`,
               headers: { "Content-type": "application/json" },
-            }).then((res) => {
-              if (res.data < state.headcount) {
-                navigate(`/room/${params.id}`, {
-                  state: {
-                    mic,
-                    camera,
-                    roomNo: params.id,
-                    roomTitle: state.roomTitle,
-                    host: false,
-                  },
-                });
-              } else {
-                alert("지금 방이 가득 찼습니다. 나중에 시도해 주세요");
-              }
-            }).catch((err) => {console.log(err)})
+            })
+              .then((res) => {
+                if (res.data < state.headcount) {
+                  navigate(`/room/${params.id}`, {
+                    state: {
+                      mic,
+                      camera,
+                      roomNo: params.id,
+                      roomTitle: state.roomTitle,
+                      host: false,
+                    },
+                  });
+                } else {
+                  alert("지금 방이 가득 찼습니다. 나중에 시도해 주세요");
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           } else {
             alert("비밀번호가 잘못되었습니다");
           }
