@@ -60,11 +60,11 @@ function CharacterQuiz({
         dataAxios();
       });
     }
-    return () => {
-      openvidu.session.off("signal:TrueAnswer")
-      openvidu.session.off("signal:SeedNumber")
-      openvidu.session.off("signal:GameRestart")
-    }
+    // return () => {
+    //   openvidu.session.off("signal:TrueAnswer")
+    //   openvidu.session.off("signal:SeedNumber")
+    //   openvidu.session.off("signal:GameRestart")
+    // }
   }, []);
 
   useEffect(() => {
