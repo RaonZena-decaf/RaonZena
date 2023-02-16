@@ -1,5 +1,5 @@
 import styles from "./GameList.module.css";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useEffect } from "react";
 import axios from "axios";
 import GameListDisplay from "./GameListDisplay";
 import { Pagination } from "@mui/material";
@@ -28,7 +28,7 @@ export default function GameList({ searchWord }) {
   const [gameRoomList, setGameRoomList] = useState([]);
   const [curGameRoomList, setCurGameRoomList] = useState([]);
 
-  async function getList(Search) {
+  const getList = async (Search) =>  {
     if (Search === null || "") {
       await axios({
         method: "GET",
@@ -62,7 +62,9 @@ export default function GameList({ searchWord }) {
         .catch((error) => console.log(error));
     }
   }
-
+  useEffect(() => {
+    getList(searchWord)
+  },[])
   useLayoutEffect(() => {
     // 방들 리스트를 로딩
     getList(searchWord);
