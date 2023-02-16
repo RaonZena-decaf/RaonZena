@@ -29,10 +29,8 @@ function CharacterQuiz({
       })
         .then((res) => {
           setCharacterimg(res.data);
-          console.log(res.data);
           if (openvidu.session) {
             const data = JSON.stringify(res.data);
-            console.log("게임 데이터", data);
             openvidu.session.signal({
               data: data,
               type: "CharacterQuizSeedNumber",
@@ -80,7 +78,6 @@ function CharacterQuiz({
       }
       if (isAnswerShown) {
         if (step === characterimg.length - 1) {
-          console.log(start, "마지막", step);
           setTimeout(() => {
             setIsAnswerShown(false);
             setTimeRemaining(timeLimit);
@@ -102,7 +99,6 @@ function CharacterQuiz({
   useEffect(() => {
     if (result !== "" && step < characterimg.length) {
       if (result === characterimg[step].answer) {
-        console.log("정답");
         const data = {
           userNo: openvidu.userNo,
           score: 5,
@@ -113,7 +109,6 @@ function CharacterQuiz({
         });
         setResult("");
       } else {
-        console.log("오답");
         setResult("");
         document.getElementById("wrongMassage").style.display = "block";
         setTimeout(function () {

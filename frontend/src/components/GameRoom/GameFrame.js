@@ -18,7 +18,6 @@ function GameFrame({
 }) {
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
-  console.log("EndGame", end, start);
   const startHandler = () => {
     setStart(true);
     if (openvidu.session) {

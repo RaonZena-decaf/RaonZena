@@ -49,7 +49,6 @@ function BeforeEnter() {
         roomNo: params.id,
         inputPassword: password,
       };
-      console.log(data);
       axios({
         method: "post",
         url: `${baseUrl}live/passwordCheck`,

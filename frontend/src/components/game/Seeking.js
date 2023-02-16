@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const URL = "https://storage.googleapis.com/tm-model/zoWX1cbTi/";
 function Seeking({ start, openvidu, setEnd, setStart }) {
-  console.log("setend", setEnd);
   const [model, setModel] = useState(null);
   const [webcam, setWebcam] = useState(false);
   const [maxPredictions, setMaxPredictions] = useState(null);
@@ -37,7 +36,6 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
   }, []);
 
   useEffect(() => {
-    console.log(start);
     if (!model || !webcam || gamestop.current) {
       return;
     } else {
@@ -63,7 +61,6 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
   };
   const predict = async () => {
     if (!start) {
-      console.log("방지", start);
       return;
     }
     const prediction = await model.predict(webcam.canvas);
@@ -80,7 +77,6 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
       box.push(highlabel);
       if (box.length > 10) {
         gamestop.current = true;
-        console.log("멈춰", gamestop.current);
         const data = {
           userNo: openvidu.userNo,
           score: -5,
@@ -108,12 +104,10 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
-      console.log("끝");
       setIsAnswerShown(true);
       setfail(data.username);
       setEnd(true);
       setStart(false);
-      console.log("dho dksajacna", start);
     });
     const video = openvidu.publisher;
     video.addVideoElement(videoRef.current);

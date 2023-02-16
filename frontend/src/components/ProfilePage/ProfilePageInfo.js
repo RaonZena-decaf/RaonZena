@@ -102,7 +102,6 @@ function ProfilePageInfo({
           const filtered = myFollowings.filter(
             (eliment) => eliment !== user_no
           );
-          console.log(filtered);
           dispatch(modifyMyFollowingList(filtered));
         })
         .catch((error) => console.log(error));

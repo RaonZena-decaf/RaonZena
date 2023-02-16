@@ -64,7 +64,6 @@ const Navbar = () => {
       url: `${baseUrl}user/logout`,
     })
       .then((res) => {
-        console.log(res);
       })
       .catch((error) => console.log(error));
     setAnimation("wash");

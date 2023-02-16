@@ -22,7 +22,6 @@ function GameFrameRight({
   const answerOnclick = (e) => {
     e.preventDefault();
     if (answer !== "") {
-      // console.log(answer);
       setResult(answer);
     }
     setAnswer("");

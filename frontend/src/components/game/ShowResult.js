@@ -1,7 +1,6 @@
 import styles from "./ShowResult.module.css";
 
 export default function ShowResult(isWrong) {
-  console.log("ShowResult 모달의 결과", isWrong);
 
   if (isWrong) {
     return (

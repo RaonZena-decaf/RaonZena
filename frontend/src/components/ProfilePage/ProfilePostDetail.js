@@ -31,7 +31,6 @@ function ProfilePostDetail({ nowContent, handleClose }) {
         url: `${baseUrl}profile/feedDelete/${nowContent.boardNo}`,
       })
         .then((res) => {
-          console.log("삭제됨");
         })
         .catch((error) => console.error);
       alert("삭제하였습니다.");

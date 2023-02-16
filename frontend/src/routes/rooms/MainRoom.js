@@ -66,7 +66,6 @@ function MainRoom(props) {
     });
     after
       .then((mySession) => {
-        console.log(mySession);
         // --- 3) Specify the actions when events take place in the session ---
         // MainRoom 에서 발생해야 하는 signal들 정리
         mySession.on("streamCreated", (event) => {
@@ -203,14 +202,12 @@ function MainRoom(props) {
           gamseScores.push([user.userNo, user.gameScore])
         );
         gamseScores.push([user.userNo, 0]);
-        console.log(gamseScores);
         axios({
           method: "post",
           url: `${baseUrl}games/liveScore`,
           data: { roomNo: roomId, userData: gamseScores },
         })
-          .then((res) => {
-            console.log(res.data);
+          .then(() => {
           })
           .catch((error) => console.log(error));
       })
@@ -223,7 +220,6 @@ function MainRoom(props) {
   };
   const [headcount, setHeadCount] = useState(0);
   useEffect(() => {
-    console.log("길이", subscribes.length);
     const data = {
       headCount: subscribes.length + 1,
     };
@@ -233,7 +229,6 @@ function MainRoom(props) {
       data: data,
     })
       .then((res) => {
-        console.log("된건가?", res);
         setHeadCount(subscribes.length);
       })
       .catch((error) => console.log(error));
@@ -248,8 +243,7 @@ function MainRoom(props) {
           method: "delete",
           url: `${baseUrl}live/${params.roomId}`,
         })
-          .then((res) => {
-            console.log(res);
+          .then(() => {
           })
           .catch((error) => console.log(error));
       }
@@ -263,9 +257,6 @@ function MainRoom(props) {
       const myscore = userList.filter(
         (attend) => attend.userNo === user.userNo
       );
-      console.log("저장되는 경험치");
-      console.log(myscore);
-      console.log(myscore[0].gameScore);
       await axios({
         method: "PUT",
         url: `${baseUrl}profile/expToLevelModify`,

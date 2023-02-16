@@ -82,7 +82,6 @@ function Create() {
           headcount: peoplenum,
           password: password,
         };
-        console.log("방 만들때 데이터", data);
         axios({
           method: "post",
           url: `${baseUrl}live/room`,

@@ -49,15 +49,6 @@ function EntryDropUp({ show, setdrop, TotalUsers }) {
   }
 
   useEffect(() => {
-    // axios({
-    //   method: "Get",
-    //   url: `${baseUrl}games/${roomNo}`,
-    // })
-    //   .then((res) => {
-    //     setUserList(res.data);
-    //     console.log(res.data)
-    //   })
-    //   .catch((error) => console.log(error));
     //참가유저 리스트를 받아오는 axios 통신
     const group = []
     TotalUsers.map((user) => (group.push(user.videos[0].id)))

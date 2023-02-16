@@ -107,7 +107,6 @@ function ShoutInSilence({
       if (result !== "") {
         //정답 맞춘 로직
         if (result === answerList[step].answer) {
-          console.log("정답");
           setResult("");
           document.getElementById("correctMassage").style.display = "block";
           setTimeout(function () {
@@ -125,7 +124,6 @@ function ShoutInSilence({
         }
         //틀린 로직
         else {
-          console.log("오답");
           setResult("");
           document.getElementById("wrongMassage").style.display = "block";
           setTimeout(function () {

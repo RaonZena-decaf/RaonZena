@@ -60,10 +60,7 @@ function Create() {
     event.preventDefault();
     if (roomname === "") {
       alert("Please enter a room name");
-    } else {
-      console.log(roomname, password, peoplenum);
-      // navigate()
-    }
+    } 
   };
 
   return (

@@ -86,7 +86,6 @@ class App extends Component {
             },
             () => {
                 var mySession = this.state.session;
-                console.log(mySession)
                 // --- 3) Specify the actions when events take place in the session ---
 
                 // On every new Stream received...

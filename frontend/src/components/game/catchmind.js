@@ -237,7 +237,6 @@ function Catchmind({
   useEffect(() => {
     if (result !== "" && step < QuizList.length) {
       if (result === QuizList[step].answer) {
-        console.log("정답");
         const data = {
           userNo: openvidu.userNo,
           score: 15,
@@ -248,7 +247,6 @@ function Catchmind({
         });
         setResult("");
       } else {
-        console.log("오답");
         setResult("");
         document.getElementById("wrongMassage").style.display = "block";
         setTimeout(function () {
