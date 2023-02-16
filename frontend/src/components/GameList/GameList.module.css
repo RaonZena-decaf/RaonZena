@@ -31,6 +31,9 @@
   align-self: flex-end;
   text-align: end;
   margin-top: .5rem;
+  display: flex;
+  justify-content: end;
+  gap: 0.5rem;
 }
 
 .PaginationWhite {

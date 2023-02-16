@@ -297,7 +297,7 @@ function Catchmind({
           <FaFillDrip /> <div className={styles.textWithIcon}>채우기</div>
         </div>
         <div className={`${styles.buttonBlack} white`}>
-          <FaEraser></FaEraser>
+          <FaEraser></FaEraser> <div className={styles.textWithIcon}>지우개</div>
         </div>
       </div>
     </div>
