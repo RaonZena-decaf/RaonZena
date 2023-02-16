@@ -72,7 +72,11 @@ function ProfilePageInfo({
       })
       .catch((error) => console.log(error));
   }
-
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text)
+      .then()
+      .catch((error) => console.log(error));
+  };
   //팔로우버튼
   function toggleDone() {
     //팔로우 중이라면 팔로우 해제
@@ -123,7 +127,9 @@ function ProfilePageInfo({
           src={userInfo.userImage}
           className={styles.profileimg}
         />
-        <p className={styles.profileid}>친구코드 : {userInfo.userId}</p>
+        <Tooltip message={"클릭 시 복사"}>
+        <p className={styles.profileid} onClick={() => copyToClipboard(userInfo.userId)} >친구코드 : {userInfo.userId}</p>
+        </Tooltip>
       </div>
       <div className={styles.background3}>
         <div className={styles.background5}>

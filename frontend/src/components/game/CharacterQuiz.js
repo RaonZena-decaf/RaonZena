@@ -12,7 +12,7 @@ function CharacterQuiz({
   setEnd,
   setStart,
 }) {
-  const timeLimit = 3;
+  const timeLimit = 5;
 
   const [step, setStep] = useState(0);
   const baseUrl = useSelector((store) => store.baseUrl);
