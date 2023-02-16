@@ -92,6 +92,7 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
         });
         setStart(false);
         cancelAnimationFrame(animationRef.current);
+        box = []
       }
     } else {
       box = [];
