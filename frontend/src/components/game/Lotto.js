@@ -51,10 +51,10 @@ function Lotto({ start, result, openvidu, host }) {
       });
     }
 
-    return () => {
-      openvidu.session.off("signal:TrueAnswer")
-      openvidu.session.off("signal:SeedNumber")
-    }
+    // return () => {
+    //   openvidu.session.off("signal:TrueAnswer")
+    //   openvidu.session.off("signal:SeedNumber")
+    // }
   }, []);
 
   const handleclick = (e) => {

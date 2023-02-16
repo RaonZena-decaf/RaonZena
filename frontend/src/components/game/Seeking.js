@@ -121,10 +121,10 @@ function Seeking({ start, openvidu, setEnd, setStart }) {
       gamestop.current = false;
       setIsAnswerShown(false);
     });
-    return () => {
-      openvidu.session.off("signal:TrueAnswer");
-      openvidu.session.off("signal:GameRestart");
-    };
+    // return () => {
+    //   openvidu.session.off("signal:TrueAnswer");
+    //   openvidu.session.off("signal:GameRestart");
+    // };
   }, []);
 
   return (
