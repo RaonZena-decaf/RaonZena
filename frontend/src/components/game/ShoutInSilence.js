@@ -42,11 +42,9 @@ function ShoutInSilence({
         url: `${baseUrl}games/gameType/3`,
       })
         .then((res) => {
-          console.log("고요속의 외침 정답 가져온 전체 결과 =>", res.data);
           setAnswerList(res.data);
           if (openvidu.session) {
             const data = JSON.stringify(res.data);
-            console.log("게임 데이터", data);
             openvidu.session.signal({
               data: data,
               type: "ShouthSlienceSeedNumber",

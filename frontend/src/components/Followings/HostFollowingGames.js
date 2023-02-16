@@ -46,27 +46,7 @@ const HostFollowingGames = ({ HostFollowingsList, loading }) => {
   }
   useEffect(() => {
     getlist();
-    // 가로 스크롤링 이벤트
-    console.log("Hostfollowings 컴포넌트 getList 결과", list);
   }, []);
-
-  // --------------------스웨거에서 확인한 데이터------------------
-
-  // "roomNo": 1040,
-  //   "roomTitle": "dd",
-  //   "host": {
-  //     "userNo": 1,
-  //     "userId": "sdf",
-  //     "userName": "adf",
-  //     "exp": 0,
-  //     "level": 1,
-  //     "createDtm": 1675759213000,
-  //     "userImageUrl": "adf"
-  //   },
-  //   "headcount": 5,
-  //   "password": 48,
-  //   "createDate": null,
-  //   "imageName": "/GameThumbnail/24.png"
 
   return (
     <div className={styles.HostFollowingsList} id="scrollChange">
