@@ -84,7 +84,7 @@
 
 # Ⅲ. 개발 환경 🖥️
 
-## 🖱Backend
+## 🖥 Backend
 
     IntelliJ
     spring boot 2.7.7
@@ -96,27 +96,30 @@
     redis
     S3
 
-## 🖱Frontend
+## 🖥 Frontend
 
     Visual Studio Code
     React.js 18.2.0
     redux 4.2.1
     redux-persist: 6.0.0
 
-## 🖱Web RTC
+## 🖱 Web RTC
 
     openvidu-browser: 2.25.0
 
-## 🖱ImageGame
+## 🖱 ImageGame
 
     Teachable Machine 0.8.5
 
-## 🖱CI/CD
+## 🖱 CI/CD
 
     aws ec2
     docker
     nginx
     jenkins
+
+## 🎨 UI/UX
+    Figma
 
 ## 👨‍👩‍👧협업 툴
 
@@ -134,16 +137,16 @@
 
 1. git 브랜치를 만들 때 요구사항 정해진 기능에 맞는 번호를 찾는다.
 
-2. 브랜치를 만들 떄 feature/파트/기능번호/서비스 형태를 지킨다
+2. 브랜치를 만들 떄 feature/파트/기능번호/서비스 형태를 지킨다  
    ex) feture/fe/1/로그인
 
-3. commit을 작성할 때 정해진 틀을 지킨다.
+3. commit을 작성할 때 정해진 틀을 지킨다.  
    3.1) Feat: 새로운 기능 추가, Fix: 버그 수정 등  
-   3.2) 제목과 본문은 빈 행으로 분리
-   3.3) 제목 첫 글자는 대문자, 끝에는 . 금지
-   3.4) 제목은 한국어 기준 50자 이내
-   3.5) 한 commit message에 한가지 문제만 입력
-   ex) git commit -m "Feat:로그인 기능 추가"
+   3.2) 제목과 본문은 빈 행으로 분리  
+   3.3) 제목 첫 글자는 대문자, 끝에는 . 금지  
+   3.4) 제목은 한국어 기준 50자 이내  
+   3.5) 한 commit message에 한가지 문제만 입력  
+   ex) git commit -m "Feat:로그인 기능 추가"  
 
 4. PR 컨벤션 작성 시 틀에 맞게 작성한다
    ex)
@@ -191,7 +194,7 @@
 
 ## 💫서비스 아키텍처
 
-(README_assets/서비스아키텍처.PNG)
+![서비스아키텍처](/uploads/8ea7320094f2d7ada1d612699a867a5f/서비스아키텍처.png)
 
 ## 💭요구사항 정의서
 
