@@ -129,12 +129,13 @@ public class ProfileServiceImpl implements ProfileService {
 
         return follower(userNo).size();
     }
+
     //팔로잉 수
     @Override
     public int followingCnt(long userNo) {
+
         return following(userNo).size();
     }
-
 
     //exp ,level update
     @Override

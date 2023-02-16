@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface GameService {
 
+    //피드 저장
     boolean saveFeed(MultipartFile multipartFile, BoardReq boardReq);
 
     //게임데이터 1개 - 정답만

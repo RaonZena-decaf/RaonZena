@@ -84,7 +84,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public boolean saveFeed(MultipartFile multipartFile, BoardReq boardReq) {
-        //============================
+
         //1. 사진 s3에 저장
         // [Step 1] 파일이 저장될 경로를 지정
         String folderName = "board-image"; //버킷하위에 생성할 폴더 이름 . 이미지 업로드 후 해당이미지는 버킷네임/feed/디렉토리에 생성
@@ -106,7 +106,7 @@ public class GameServiceImpl implements GameService{
         //s3에 저장된 사진 url
         String s3Url = amazonS3.getUrl(bucket, fileName).toString();
         System.out.println(s3Url);
-        //===========================
+
 
         
         //2. s3에 저장된 url board에 저장
@@ -187,7 +187,6 @@ public class GameServiceImpl implements GameService{
                 .map(ChanceRes::new)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public List<ImageThemeRes> getFrame(long userNo) {
