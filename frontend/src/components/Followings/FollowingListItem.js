@@ -19,7 +19,12 @@ const FollowingListItem = (props) => {
       <div className={styles.FollowingInfoFont}>
         <p>{props.userName}</p>
       </div>
-      <div className={styles.Online}>
+      {/* <div className={styles.Online}>
+        {props.online && (
+          <img className={styles.OnlineSize} src="Online.png" alt="Online" />
+        )}
+      </div> */}
+      <div className={styles.OnlineWrapper}>
         {props.online && (
           <img className={styles.OnlineSize} src="Online.png" alt="Online" />
         )}
