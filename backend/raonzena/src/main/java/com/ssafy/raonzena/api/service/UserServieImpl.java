@@ -8,6 +8,7 @@ import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpEntity;
@@ -29,6 +30,9 @@ public class UserServieImpl implements UserService{
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    @Value("${kakao-admin-key}")
+    private String kakao_admin_key;
+
 
     //카카오 토큰 가져오기
     public String getKaKaoAccessToken(String authorizedCode){
@@ -39,7 +43,7 @@ public class UserServieImpl implements UserService{
         // HttpBody 오브젝트 생성
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "c271efde78c62f250965bf71db6657fb");//kakao rest-api 키
+        params.add("client_id", kakao_admin_key);//kakao rest-api 키
 //        params.add("redirect_uri", "http://localhost:3000/oauth/kakao/callback");
         params.add("redirect_uri", "https://i8a507.p.ssafy.io/oauth/kakao/callback");  //redirect-url 나중에 서버 주소 받음 바꾸기 //  https://i8a507.p.ssafy.io/oauth   http://localhost:3000/oauth/kakao/callback
         params.add("code", authorizedCode);
