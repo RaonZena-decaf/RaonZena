@@ -19,9 +19,9 @@ const FollowingListItem = (props) => {
       <div className={styles.FollowingInfoFont}>
         <p>{props.userName}</p>
       </div>
-      <div>
+      <div className={styles.Online}>
         {props.isOnline && (
-          <img className={styles.OnlineSize} src="Online.svg" alt="Online" />
+          <img className={styles.OnlineSize} src="Online.png" alt="Online" />
         )}
       </div>
     </div>
