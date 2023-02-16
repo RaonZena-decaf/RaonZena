@@ -14,7 +14,7 @@
 
 - 한줄 소개 : 무료한 일상에서 벗어나 즐거움을 느끼고 싶은 현대인을 위한 `웹 화상 게임` 서비스
 - 서비스 명 : 라온제나(Raonzena)
-  - 즐거운 우리, 기쁜 우리라는 뜻으로•기쁨을 나누고 또 얻어갈 수 있는 장소라는 의미
+  - 즐거운 우리, 기쁜 우리라는 뜻으로 기쁨을 나누고 또 얻어갈 수 있는 장소라는 의미
 
 ## 🎯 타겟
 
@@ -81,7 +81,7 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
     Java 11
     AWS EC2
     mysql 8.0.31
-    redis
+    redis 5.0.7
     S3
 
 ## 🖥 Frontend
@@ -102,7 +102,7 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 ## 🖱 CI/CD
 
     aws ec2
-    docker
+    docker 20.10.23
     nginx
     jenkins
 
@@ -178,18 +178,31 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 
 회의록에 매일 오전 회의를 하면서 각자 어제까지 진행한 사항 공유, 오늘 해야할 작업, 주요 안건을 작성했습니다.
 
+![notion](/uploads/6ee0bfa4f9ae223088e5a667aa4c2761/notion.gif)
+
 # V. 프로젝트 산출물
 
 ## 🏛 서비스 아키텍처
 
 ![서비스아키텍처](/uploads/8ea7320094f2d7ada1d612699a867a5f/서비스아키텍처.png)
 
-## 💭요구사항 정의서
-
-요구사항 정의서
-
 ## 🎨 화면 설계서
 
-화면설계서1
+![Figma](/uploads/8b1035ef4f1d2875987cedca65764fc2/Figma.png)(https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85)
+![Figma2](/uploads/662197ee2dcadbeead34fe09530d2640/Figma2.png)(https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85)
 
-화면설계서2
+
+## 💭 요구사항 정의서
+
+![요구사항정의서](/uploads/a0926bdc06bffe1e740c66ae57d55841/요구사항정의서.gif)(https://docs.google.com/spreadsheets/d/1Ac9yfeTaLYIwZHVQL3kA6sYhpkZBxXCPl4gdK_ueJYw/edit#gid=1911344897)
+
+## 🛢︎ ERD
+
+![ERD](/uploads/73627fc2318d74d1179a9a2a502fb475/ERD.png)
+
+## 📜 API 설계서
+
+![API설계서](/uploads/cf038881235238dccd92a55f575aa4b9/API설계서.png)(https://maze-baron-8ac.notion.site/d655b6e1f8b64068aeabe25e82783f46?v=2998a462e40f42c5a54a53122c664f5d)
+
+# VI. 개발 멤버 및 회고
+
