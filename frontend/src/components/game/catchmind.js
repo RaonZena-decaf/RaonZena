@@ -63,6 +63,7 @@ function Catchmind({
   useEffect(() => {
     const audio = new Audio();
     audio.src = "../music/The Trapezist.mp3";
+    audio.volume = 0.5
     audio.play();
     return () => {
       audio.pause();
