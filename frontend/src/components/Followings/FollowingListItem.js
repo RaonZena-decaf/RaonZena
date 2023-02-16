@@ -10,8 +10,6 @@ const FollowingListItem = (props) => {
     navigate(`/profile/${props.userNo}`);
   };
 
-  console.log("왜 프폽 온라인 안나옴?", props)
-
   return (
     <div className={styles.FollowingsInfo} onClick={navigateToProfile}>
       <img src={props.userImage} className={styles.ProfileImg} alt="프로필" />
