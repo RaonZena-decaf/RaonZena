@@ -36,7 +36,7 @@ function BeforeEnter() {
     if (!state) {
       navigate("/live");
     }
-    setLoading(false)
+    setLoading(true)
   }, []);
   // 이전 페이지로 돌아가기
   const backOnClick = () => {
