@@ -21,6 +21,7 @@ export default function FollowingList() {
         data: { userNo: nowUserNo },
       })
         .then((res) => {
+          console.log(res.data);
           setlist(res.data);
         })
         .catch((error) => console.log("following List 에러: ", error, user));
