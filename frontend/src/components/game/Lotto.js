@@ -31,7 +31,7 @@ function Lotto({ start, result, openvidu, host }) {
       });
     }
 
-    openvidu.session.on("signal:SeedNumber", (event) => {
+    openvidu.session.on("signal:LottoSeedNumber", (event) => {
       const encodedRandomNo = encodeURIComponent(event.data);
 
       axios({
@@ -47,7 +47,7 @@ function Lotto({ start, result, openvidu, host }) {
       const num = _.sampleSize(_.range(1, 40), 8);
       openvidu.session.signal({
         data: JSON.stringify(num),
-        type: "SeedNumber",
+        type: "LottoSeedNumber",
       });
     }
 

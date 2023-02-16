@@ -65,11 +65,20 @@ function GameFrameLeft({
   };
 
   useEffect(() => {
+    console.log("으아아아아아아아아악");
+    console.log("useeffect 시작한다?");
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
+      console.log("data들어간다!!!!");
+      console.log(data);
       if (data.gamename === "joker" && data.clicked === "1") {
+        console.log("게임 조커이고 data.clicked가 1일경우");
+        console.log("100점 들어온다!!!");
+        console.log(data.clicked);
         setUserList((prev) =>
           prev.map((user) => {
+            console.log("유저정보 받고있니?");
+            console.log(user);
             if (user.userNo === data.userNo) {
               return { ...user, gameScore: 100 };
             } else {

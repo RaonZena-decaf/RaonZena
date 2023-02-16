@@ -53,7 +53,20 @@
   white-space: nowrap;
   gap: 1rem;
   transition: color .3s ease;
+  
 }
+
+.Online {
+  margin-left: auto;
+  justify-content:center;
+  align-items: center;
+  align-items: flex-end
+}
+
+.OnlineSize {
+  width: 3.5rem;
+}
+
 .FollowingsInfo:hover{
   color: #f400b0;
   cursor: pointer;
@@ -135,3 +148,4 @@
   justify-content: space-between;
   gap: 3rem;
 }
+
