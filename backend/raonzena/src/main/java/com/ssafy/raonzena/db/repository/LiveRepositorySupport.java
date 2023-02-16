@@ -27,8 +27,8 @@ public class LiveRepositorySupport  {
     @Autowired
     private JPAQueryFactory query;
 
-    //패스워드 확인
     public String password(long roomNo){
+        //패스워드 확인
         return query.
                 select(roomInfo.password)
                 .from(roomInfo)

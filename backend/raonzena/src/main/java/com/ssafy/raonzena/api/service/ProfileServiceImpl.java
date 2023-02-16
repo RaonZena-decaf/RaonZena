@@ -158,8 +158,6 @@ public class ProfileServiceImpl implements ProfileService {
             userRepository.updateExp(exp,expReq.getUserNo());
         }
 
-
-
     }
     //피드 삭제
     @Override

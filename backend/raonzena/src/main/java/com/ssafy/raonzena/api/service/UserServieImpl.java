@@ -1,11 +1,14 @@
 package com.ssafy.raonzena.api.service;
 
 
+import com.ssafy.raonzena.api.controller.GameController;
 import com.ssafy.raonzena.api.dto.KaKaoDto;
 import com.ssafy.raonzena.api.request.UserLoginReq;
 import com.ssafy.raonzena.api.response.UserRes;
 import com.ssafy.raonzena.db.entity.User;
 import com.ssafy.raonzena.db.repository.UserRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +26,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class UserServieImpl implements UserService{
+
+    private final Logger logger = LogManager.getLogger(GameController.class);
 
     @Autowired
     UserRepository userRepository;
@@ -99,17 +104,14 @@ public class UserServieImpl implements UserService{
 
     // 카카오 로그인
     //내 디비에 있는지 확인 -> x -> 저장
-    //정보를 컨트롤러로 user 보내줘
     public UserRes KaKaoLogin(String authorizedCode){
 
-        System.out.println("token");
-        //System.out.println(authorizedCode);
         //토큰 가져오기
         String token = getKaKaoAccessToken(authorizedCode);
-        System.out.println(token);
+
         //프로필 정보 가져오기
         KaKaoDto userInfo = getKaKaoUser(token);
-        System.out.println("유저 정보 불러옴");
+        logger.info("유저 정보 불러옴");
 
         //DB에 중복된 kakao id가 있는지 확인
         boolean kakaoUser = userRepository.existsByUserId(userInfo.getUserId());
