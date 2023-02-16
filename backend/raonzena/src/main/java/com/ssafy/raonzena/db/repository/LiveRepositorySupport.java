@@ -49,6 +49,7 @@ public class LiveRepositorySupport  {
                         roomInfo.imageName)
                 ).from(roomInfo)
                 .where(containKeyword(conditions))
+                .orderBy(roomInfo.roomNo.desc())
                 .fetch();
     }
 
@@ -67,6 +68,7 @@ public class LiveRepositorySupport  {
                  .join(follow)
                  .on(roomInfo.host.userNo.eq(follow.followee))
                  .where(follow.follower.eq(userNo))
+                 .orderBy(roomInfo.roomNo.desc())
                  .fetch();
     }
 
