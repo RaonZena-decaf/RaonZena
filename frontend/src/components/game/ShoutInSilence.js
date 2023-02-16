@@ -22,7 +22,6 @@ function ShoutInSilence({
   setEnd,
   setStart,
 }) {
-  console.log("ShoutInSilence의 subscribes 잘 들아옴? =>", subscribes);
 
   const timeLimit = 10; // 게임 제한 시간
 

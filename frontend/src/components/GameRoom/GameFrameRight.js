@@ -36,8 +36,10 @@ function GameFrameRight({
   // subscribe는 나 이외의 참가자라 0은 나 혼자만을 의미
   const videoFrame = () => {
     if (subscribes.length === 0) {
+      // 나 혼자 방
       return "videoFrame";
     } else if (subscribes.length === 1) {
+      //나 + 게스트 1
       return "videoFrame2";
     } else if (subscribes.length <= 3) {
       return "videoFrame3";
@@ -46,11 +48,11 @@ function GameFrameRight({
     }
   };
 
-  // subscribe는 나 이외의 참가자라 0은 나 혼자만을 의미
+  // 고요속의 외침 전용 videoFrame
   const videoFrameNotHost = () => {
-    if (subscribes.length === 1) { 
+    if (subscribes.length === 1) { // 나 1명, 방장 1
       return "videoFrame";
-    } else if (subscribes.length === 2) { 
+    } else if (subscribes.length === 2) { // 나, 방장, 게스트1
       return "videoFrame2";
     } else if (subscribes.length <= 4) {
       return "videoFrame3";
@@ -71,26 +73,27 @@ function GameFrameRight({
 
   return (
     <div className={styles.background}>
-      {gamename === "talkingsilence" ? (
-        <div className={styles.container}>
-          {!host ? (
-            <div className={styles[videoFrameNotHost()]}>
-              <UserVideoComponent streamManager={openvidu.publisher} />
-            </div>
-          ) : null}
-          {subscribes.map((sub, idx) => {
-            let subData = JSON.parse(sub.stream.connection.data);
-            if (!subData.host) {
-              return (
-                <div className={styles[videoFrame()]}>
-                  <UserVideoComponent key={idx} streamManager={sub} />
-                </div>
-              );
-            }
-          })}
-        </div>
+    {gamename === "talkingsilence" ? (
+      <div className={styles.container}>
+        {!host ? (
+          <div className={styles[videoFrameNotHost()]}>
+            <UserVideoComponent streamManager={openvidu.publisher} />
+          </div>
+        ) : null}
+        {subscribes.map((sub, idx) => {
+          let subData = JSON.parse(sub.stream.connection.data);
+          if (!subData.host) {
+            return (
+              <div className={styles[videoFrameNotHost()]}>
+                <UserVideoComponent key={idx} streamManager={sub} />
+              </div>
+            );
+          }
+        })}
+      </div>
+
       ) : (
-        // 고요속의 외침 아닌 경우
+        // 고요속의 외침이 아니거나 고요속의 외침에서 방장인 경우
         <div className={styles.container}>
           <div className={styles[videoFrame()]}>
             <UserVideoComponent streamManager={openvidu.publisher} />
@@ -126,11 +129,19 @@ function GameFrameRight({
         </button>
         {!start ? (
           end ? (
-            <button className={styles.button} onClick={restart} disabled={!host}>
+            <button
+              className={styles.button}
+              onClick={restart}
+              disabled={!host}
+            >
               다시하기
             </button>
           ) : (
-            <button className={styles.button} onClick={startHandler} disabled={!host}>
+            <button
+              className={styles.button}
+              onClick={startHandler}
+              disabled={!host}
+            >
               시작
             </button>
           )
