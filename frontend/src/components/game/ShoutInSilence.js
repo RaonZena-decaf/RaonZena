@@ -22,7 +22,6 @@ function ShoutInSilence({
   setEnd,
   setStart,
 }) {
-
   const timeLimit = 10; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
@@ -50,7 +49,7 @@ function ShoutInSilence({
             console.log("게임 데이터", data);
             openvidu.session.signal({
               data: data,
-              type: "SeedNumber",
+              type: "ShouthSlienceSeedNumber",
             });
           }
         })
@@ -153,7 +152,7 @@ function ShoutInSilence({
         const data = JSON.parse(event.data);
         setIsAnswerShown(true);
       });
-      openvidu.session.on("signal:SeedNumber", (event) => {
+      openvidu.session.on("signal:ShouthSlienceSeedNumber", (event) => {
         const data = JSON.parse(event.data);
         setAnswerList(data);
       });
@@ -168,7 +167,6 @@ function ShoutInSilence({
     //   openvidu.session.off("signal:GameRestart")
     // }
   }, []);
-
 
   return (
     <div>
