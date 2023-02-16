@@ -35,7 +35,7 @@ function CharacterQuiz({
             console.log("게임 데이터", data);
             openvidu.session.signal({
               data: data,
-              type: "SeedNumber",
+              type: "CharacterQuizSeedNumber",
             });
           }
         })
@@ -51,7 +51,7 @@ function CharacterQuiz({
         const data = JSON.parse(event.data);
         setIsAnswerShown(true);
       });
-      openvidu.session.on("signal:SeedNumber", (event) => {
+      openvidu.session.on("signal:CharacterQuizSeedNumber", (event) => {
         const data = JSON.parse(event.data);
         setCharacterimg(data);
       });

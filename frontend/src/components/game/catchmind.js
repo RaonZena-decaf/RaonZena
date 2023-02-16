@@ -30,7 +30,7 @@ function Catchmind({
             const data = JSON.stringify(res.data);
             openvidu.session.signal({
               data: data,
-              type: "SeedNumber",
+              type: "CatchmindSeedNumber",
             });
           }
         })
@@ -44,7 +44,7 @@ function Catchmind({
         const data = JSON.parse(event.data);
         setIsAnswerShown(true);
       });
-      openvidu.session.on("signal:SeedNumber", (event) => {
+      openvidu.session.on("signal:CatchmindSeedNumber", (event) => {
         const data = JSON.parse(event.data);
         setQuizList(data);
       });
