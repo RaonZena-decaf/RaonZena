@@ -18,7 +18,8 @@
 
 .center {
   align-self: center;
-  font-size: 6rem;
+  font-size: 4rem;
+  margin: 4rem 3rem 1rem 3rem;
   background: linear-gradient(90deg, #8f00ff, #ff00a8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
