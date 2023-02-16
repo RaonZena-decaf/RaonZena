@@ -188,7 +188,9 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 
 ## 🎨 화면 설계서
 
-![Figma](/uploads/8b1035ef4f1d2875987cedca65764fc2/Figma.png)(https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85)
+<a href="https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85">
+    <img src="/uploads/8b1035ef4f1d2875987cedca65764fc2/Figma.png"/>
+</a>
 ![Figma2](/uploads/662197ee2dcadbeead34fe09530d2640/Figma2.png)(https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85)
 
 
