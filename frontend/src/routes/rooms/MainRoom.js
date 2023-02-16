@@ -242,6 +242,7 @@ function MainRoom(props) {
   useEffect(() => {
     window.addEventListener("beforeunload", onbeforeunload);
     return () => {
+      window.removeEventListener("beforeunload", onbeforeunload);
       if (host) {
         axios({
           method: "delete",
