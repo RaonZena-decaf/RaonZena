@@ -25,7 +25,5 @@ public class UserRes {
         this.level = user.getLevel();
         this.userImage = user.getUserImageUrl();
 
-        //위에 코드 아래로 변경 -> null 뜸
-        //BeanUtils.copyProperties(user, this);
     }
 }

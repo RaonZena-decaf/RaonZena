@@ -90,7 +90,6 @@ public class GameServiceImpl implements GameService{
         String folderName = "board-image"; //버킷하위에 생성할 폴더 이름 . 이미지 업로드 후 해당이미지는 버킷네임/feed/디렉토리에 생성
         String fileName = folderName + "/"+multipartFile.getOriginalFilename();
 
-
         // [Step 2] 업로드할 파일의 메타 데이저 등록
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(multipartFile.getSize());
@@ -105,13 +104,10 @@ public class GameServiceImpl implements GameService{
         }
         //s3에 저장된 사진 url
         String s3Url = amazonS3.getUrl(bucket, fileName).toString();
-        System.out.println(s3Url);
-
 
         
         //2. s3에 저장된 url board에 저장
         boardReq.setBoarImageUrl(s3Url);
-        System.out.println(boardReq.toString());
         Board check = boardRepository.save(boardReq.toEntity());
 
         return check != null ? true : false;
@@ -168,7 +164,6 @@ public class GameServiceImpl implements GameService{
         }
 
         Integer[] randomNumbers = set.toArray(new Integer[0]);
-        System.out.println(Arrays.toString(randomNumbers));
         List<GameAnswerAndImageRes> answerList = new ArrayList<>(cnt);
 
         for(int i=0; i< cnt; i++){

@@ -28,8 +28,7 @@ public class RoomServiceImpl implements RoomService{
         int max = 30;
         int randomNo = (int) ((Math.random() * (max - min)) + min);
         String imageName = "/GameThumbnail/"+randomNo + ".png";
-        System.out.println("============이미지 이름");
-        System.out.println(imageName);
+
         return roomRepositorySupport.insertRoom(roomReq,sessionUser,imageName);
     }
 

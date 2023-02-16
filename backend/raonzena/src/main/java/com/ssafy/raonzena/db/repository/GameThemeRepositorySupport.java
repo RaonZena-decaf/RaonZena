@@ -19,7 +19,7 @@ public class GameThemeRepositorySupport {
     private JPAQueryFactory query;
 
     public List<ImageThemeRes> getThemes(int level){
-
+        //레벨별로 다른 테마 제시
         return query
                 .select(Projections.fields(ImageThemeRes.class,
                         imageTheme.themeNo,imageTheme.imageUrl,imageTheme.level,imageTheme.imageName))

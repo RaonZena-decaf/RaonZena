@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GameChanceRepository extends JpaRepository<Chance,Long> {
-
+    //인생역전 내용
     Chance findByChanceNo(long chanceNo);
 }

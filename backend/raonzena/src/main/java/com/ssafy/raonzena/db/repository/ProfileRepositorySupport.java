@@ -31,8 +31,8 @@ public class ProfileRepositorySupport {
     @Autowired
     private JPAQueryFactory query;
 
-    //userNo를 팔로우 하는 사람들
     public List<FollowFollowingtRes> findFollowerByUserNo (long userNo){
+        //userNo를 팔로우 하는 사람들
         return query
                 .select(Projections.fields(FollowFollowingtRes.class,
                         user.userNo, user.userName, user.userImageUrl, user.level))
@@ -44,8 +44,9 @@ public class ProfileRepositorySupport {
                                 .where(follow.followee.eq(userNo))
                 )).fetch();
     }
-    //userNo가 팔로우 하는 사람들
+
     public List<FollowFollowingtRes> findFolloweeByUserNo (long userNo){
+        //userNo가 팔로우 하는 사람들
         return query
                 .select(Projections.fields(FollowFollowingtRes.class,
                         user.userNo, user.userName, user.userImageUrl, user.level))
