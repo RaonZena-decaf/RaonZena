@@ -4,7 +4,6 @@ import _ from "lodash";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-
 function Lotto({ start, result, openvidu, host }) {
   const baseUrl = useSelector((store) => store.baseUrl);
   const userName = useSelector((store) => store.userData.userName);

@@ -25,7 +25,6 @@ public class RoomRepositorySupport {
 
     public LiveRoomInfoRes insertRoom(RoomReq roomReq, User user, String imageName) {
         // 게임방 생성
-        System.out.println(roomReq);
         RoomInfo roomInfo = new RoomInfo();
         roomInfo.setRoomTitle(roomReq.getRoomTitle());
         roomInfo.setHeadcount(roomReq.getHeadcount());
