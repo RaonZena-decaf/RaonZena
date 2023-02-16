@@ -7,22 +7,6 @@ import axios from "axios";
 
 export default function FollowingsInGameListItem(props) {
 
-  // "roomNo": 1040,
-  //   "roomTitle": "dd",
-  //   "host": {
-  //     "userNo": 1,
-  //     "userId": "sdf",
-  //     "userName": "adf",
-  //     "exp": 0,
-  //     "level": 1,
-  //     "createDtm": 1675759213000,
-  //     "userImageUrl": "adf"
-  //   },
-  //   "headcount": 5,
-  //   "password": True,
-  //   "createDate": null,
-  //   "imageName": "/GameThumbnail/24.png"
-
   const navigate = useNavigate();
   const [users, setUsers] = useState(0);
   const baseUrl = useSelector((store) => store.baseUrl);
@@ -80,7 +64,7 @@ export default function FollowingsInGameListItem(props) {
           <p>{props.roomTitle}</p>
         </div>
         <div className={styles.UserCount}>
-          <p>
+          <p onClick={navigateToGameRoom}>
             {users} / {props.headcount}
           </p>
         </div>

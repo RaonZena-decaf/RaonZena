@@ -22,7 +22,7 @@ function ShoutInSilence({
   setEnd,
   setStart,
 }) {
-  const timeLimit = 10; // 게임 제한 시간
+  const timeLimit = 30; // 게임 제한 시간
 
   const [step, setStep] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -32,7 +32,6 @@ function ShoutInSilence({
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [answerList, setAnswerList] = useState([]);
   const [open, setOpen] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(mic);
 
   //axios로 정답 리스트 가져오는 부분
   function getAnswerList() {
@@ -157,11 +156,6 @@ function ShoutInSilence({
         getAnswerList();
       });
     }
-    // return () => {
-    //   openvidu.session.off("signal:TrueAnswer")
-    //   openvidu.session.off("signal:SeedNumber")
-    //   openvidu.session.off("signal:GameRestart")
-    // }
   }, []);
 
   return (

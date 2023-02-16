@@ -26,7 +26,7 @@ function Landing() {
 
   const redirectUrl = useSelector((store) => store.redirectUrl);
   const Login = () => {
-    const REST_API_KEY = "c271efde78c62f250965bf71db6657fb";
+    const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
     const REDIRECT_URI = `${redirectUrl}/oauth/kakao/callback`;
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
     if (typeof window !== "undefined") {
