@@ -248,14 +248,17 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 ## 🎨 화면 설계서
 
 <a href="https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85">
-    <img src="/uploads/8b1035ef4f1d2875987cedca65764fc2/Figma.png"/>
+    <img src="/uploads/8b1035ef4f1d2875987cedca65764fc2/Figma.png" alt="화면설계서로 이동"/>
 </a>
-![Figma2](/uploads/662197ee2dcadbeead34fe09530d2640/Figma2.png)(https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85)
-
+<a href="https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85">
+    <img src="/uploads/662197ee2dcadbeead34fe09530d2640/Figma2.png" alt="화면설계서로 이동"/>
+</a>
 
 ## 💭 요구사항 정의서
 
-![요구사항정의서](/uploads/a0926bdc06bffe1e740c66ae57d55841/요구사항정의서.gif)(https://docs.google.com/spreadsheets/d/1Ac9yfeTaLYIwZHVQL3kA6sYhpkZBxXCPl4gdK_ueJYw/edit#gid=1911344897)
+<a href="https://docs.google.com/spreadsheets/d/1Ac9yfeTaLYIwZHVQL3kA6sYhpkZBxXCPl4gdK_ueJYw/edit#gid=1911344897">
+    <img src="/uploads/a0926bdc06bffe1e740c66ae57d55841/요구사항정의서.gif" alt="요구사항 정의서로 이동"/>
+</a>
 
 ## 🛢︎ ERD
 
@@ -263,7 +266,9 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 
 ## 📜 API 설계서
 
-![API설계서](/uploads/cf038881235238dccd92a55f575aa4b9/API설계서.png)(https://maze-baron-8ac.notion.site/d655b6e1f8b64068aeabe25e82783f46?v=2998a462e40f42c5a54a53122c664f5d)
+<a href="https://maze-baron-8ac.notion.site/d655b6e1f8b64068aeabe25e82783f46?v=2998a462e40f42c5a54a53122c664f5d">
+    <img src="/uploads/cf038881235238dccd92a55f575aa4b9/API설계서.png" alt="API 설계서로 이동"/>
+</a>
 
 # VI. 개발 멤버 및 회고
 
