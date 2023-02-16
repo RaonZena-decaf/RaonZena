@@ -2,10 +2,7 @@ package com.ssafy.raonzena.api.service;
 
 
 import com.ssafy.raonzena.api.request.ExpReq;
-import com.ssafy.raonzena.api.response.BoardRes;
-import com.ssafy.raonzena.api.response.FollowFollowingtRes;
-import com.ssafy.raonzena.api.response.UserProfileRes;
-import com.ssafy.raonzena.api.response.UserRes;
+import com.ssafy.raonzena.api.response.*;
 import com.ssafy.raonzena.db.entity.Follow;
 
 import java.util.List;
@@ -24,7 +21,7 @@ public interface ProfileService {
     List<FollowFollowingtRes> follower(long userNo);
 
     //팔로잉 리스트
-    List<FollowFollowingtRes> following(long userNo);
+    List<FollowingWithIsOnlieRes> following(long userNo);
 
     //프로필 1개 조회
     UserRes userInfo(long userNo);
