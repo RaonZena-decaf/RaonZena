@@ -2,10 +2,7 @@ package com.ssafy.raonzena.api.service;
 
 
 import com.ssafy.raonzena.api.request.ExpReq;
-import com.ssafy.raonzena.api.response.BoardRes;
-import com.ssafy.raonzena.api.response.FollowFollowingtRes;
-import com.ssafy.raonzena.api.response.UserProfileRes;
-import com.ssafy.raonzena.api.response.UserRes;
+import com.ssafy.raonzena.api.response.*;
 import com.ssafy.raonzena.db.entity.Board;
 import com.ssafy.raonzena.db.entity.Follow;
 import com.ssafy.raonzena.db.entity.User;
@@ -18,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,6 +35,9 @@ public class ProfileServiceImpl implements ProfileService {
     private UserRepository userRepository;
     @Autowired
     FollowRepository followRepository;
+
+    @Autowired
+    LiveService liveService;
 
     @Autowired
     UserService userService;
@@ -59,8 +60,19 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public List<FollowFollowingtRes> following(long userNo) { //userNo가 팔로우 한사람
-        return profileRepositorySupport.findFolloweeByUserNo(userNo);
+    public List<FollowingWithIsOnlieRes> following(long userNo) { //userNo가 팔로우 한사람
+
+        List<FollowingWithIsOnlieRes> followingWithIsOnlieList = new ArrayList<>();
+
+        // followingList 받고 온라인 상태 넣기
+        List<FollowFollowingtRes> followingList = profileRepositorySupport.findFolloweeByUserNo(userNo);
+        for (FollowFollowingtRes following : followingList) {
+
+            // 유저 온라인 상태
+            boolean isOnline = liveService.onoff(following.getUserNo());
+            followingWithIsOnlieList.add(new FollowingWithIsOnlieRes(following.getUserNo(), following.getUserName(), following.getUserImageUrl(), following.getLevel(),isOnline));
+        }
+        return followingWithIsOnlieList;
     }
 
     @Override

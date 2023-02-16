@@ -4,10 +4,7 @@ package com.ssafy.raonzena.api.controller;
 import com.ssafy.raonzena.api.request.ExpReq;
 import com.ssafy.raonzena.api.request.FollowReq;
 import com.ssafy.raonzena.api.request.RoomReq;
-import com.ssafy.raonzena.api.response.BoardRes;
-import com.ssafy.raonzena.api.response.FollowFollowingtRes;
-import com.ssafy.raonzena.api.response.UserProfileRes;
-import com.ssafy.raonzena.api.response.UserRes;
+import com.ssafy.raonzena.api.response.*;
 import com.ssafy.raonzena.api.service.ProfileService;
 import com.ssafy.raonzena.api.service.UserService;
 import com.ssafy.raonzena.db.entity.Board;
@@ -61,7 +58,7 @@ public class ProfileController {
     }
 
     @GetMapping("{userNo}/following")
-    public ResponseEntity<List<FollowFollowingtRes>> following(@PathVariable long userNo){
+    public ResponseEntity<List<FollowingWithIsOnlieRes>> following(@PathVariable long userNo){
         logger.info("userNo가 팔로우 하는 사람들");
 
         return ResponseEntity.ok(profileService.following(userNo));
