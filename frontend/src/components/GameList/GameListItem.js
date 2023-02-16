@@ -44,7 +44,7 @@ const Item = (props) => {
       <p className={styles.RoomTitle} onClick={navigateToGameRoom}>
         {props.title}
       </p>
-      <p className={styles.UserCount}>
+      <p className={styles.UserCount} onClick={navigateToGameRoom}>
         <FaUser/> {users} / {props.headcount}
       </p>
     </div>
