@@ -17,7 +17,7 @@ function Lotto({ start, result, openvidu, host }) {
   useEffect(() => {
     const audio = new Audio();
     audio.src = "../music/Little Fish.mp3";
-    audio.volume = 0.5
+    audio.volume = 0.25
     audio.play();
     return () => {
       audio.pause();
