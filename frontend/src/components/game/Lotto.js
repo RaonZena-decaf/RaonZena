@@ -1,11 +1,8 @@
-import { LottoList } from "./LottoList";
 import React, { useState, useEffect } from "react";
 import styles from "./Lotto.module.css";
-import _, { lastIndexOf } from "lodash";
+import _ from "lodash";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { data, string } from "@tensorflow/tfjs";
-import { store } from "../../app/store";
 
 function Lotto({ start, result, openvidu, host }) {
   const baseUrl = useSelector((store) => store.baseUrl);
