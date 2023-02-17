@@ -129,6 +129,8 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 유저 online, offline 상태정보와 게임점수는 실시간으로 업데이트 되는 정보이고, DB에 정보를 저장하여 사용하면 유저가 많아짐에 따라 과부하가 걸릴 것입니다. 이러한 데이터의 특성으로 캐싱을 적용하기에 적절하다고 생각을 했습니다. 따라서 Redis에 유저 online, offline 상태 정보와 실시간 게임 점수를 저장하여 DB를 거치지 않고 정보를 가져와 트래픽이 많아질 때 백엔드 부하를 줄이고, 정보 조회 속도를 높였습니다.
 # 5. S3
 
+<br>
+
 # Ⅲ. 개발 환경 🖥️
 
 ## 🖥 Backend
@@ -175,6 +177,8 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
     Notion
     Mattermost
     Webex
+
+<br>
 
 # Ⅳ. 프로젝트 진행
 
@@ -239,6 +243,8 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 
 ![notion](/uploads/6ee0bfa4f9ae223088e5a667aa4c2761/notion.gif)
 
+<br>
+
 # V. 프로젝트 산출물
 
 ## 🏛 서비스 아키텍처
@@ -248,16 +254,16 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 ## 🎨 화면 설계서
 
 <a href="https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85">
-    <img src="/uploads/8b1035ef4f1d2875987cedca65764fc2/Figma.png" alt="화면설계서로 이동"/>
+    <img src="/uploads/8b1035ef4f1d2875987cedca65764fc2/Figma.png" title="화면설계서로 이동"/>
 </a>
 <a href="https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85">
-    <img src="/uploads/662197ee2dcadbeead34fe09530d2640/Figma2.png" alt="화면설계서로 이동"/>
+    <img src="/uploads/662197ee2dcadbeead34fe09530d2640/Figma2.png" title="화면설계서로 이동"/>
 </a>
 
 ## 💭 요구사항 정의서
 
 <a href="https://docs.google.com/spreadsheets/d/1Ac9yfeTaLYIwZHVQL3kA6sYhpkZBxXCPl4gdK_ueJYw/edit#gid=1911344897">
-    <img src="/uploads/a0926bdc06bffe1e740c66ae57d55841/요구사항정의서.gif" alt="요구사항 정의서로 이동"/>
+    <img src="/uploads/a0926bdc06bffe1e740c66ae57d55841/요구사항정의서.gif" title="요구사항 정의서로 이동"/>
 </a>
 
 ## 🛢︎ ERD
@@ -267,16 +273,18 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 ## 📜 API 설계서
 
 <a href="https://maze-baron-8ac.notion.site/d655b6e1f8b64068aeabe25e82783f46?v=2998a462e40f42c5a54a53122c664f5d">
-    <img src="/uploads/cf038881235238dccd92a55f575aa4b9/API설계서.png" alt="API 설계서로 이동"/>
+    <img src="/uploads/cf038881235238dccd92a55f575aa4b9/API설계서.png" title="API 설계서로 이동"/>
 </a>
+
+<br>
 
 # VI. 개발 멤버 및 회고
 
 ![member](/uploads/871b4da664feea8285745472361e5144/member.png)
 
-- 홍영민
-- 김찬빈
-- 임길현
-- 김민소 : 고요속의 외침 게임을 제작하면서 openVidu의 publish 와 subscribes를 구분하여 방장화면과 게스트화면을 다르게 구성하는 것이 가장 어려웠습니다. 위 문제를 해결하기 위해 openVidu에 객체에 host key값을 추가하여 고요속의 게임 컴포넌트에서 문제를 해결할 수 있었습니다. 컴포넌트 모듈화를 통해 여러가지 기능들을 제 컴포넌트에 바로 적용 준 프론트엔드 팀원들이 있어 짧은 기간이지만 제가 원하는 기능을 모두 완성시킬 수 있었습니다. 또한 프론트의 무리한 요구임에도 불구하고 Redis, Jenkins, AWS, 모두 완성시켜준 백엔드 팀원들 덕분에 빠르게 저희 웹 서비스를 배포할 수 있었습니다. 모두 각자의 자리에서 최선을 다해준 우리 `라온제나` 팀에게 감사하다는 말씀 전하고 싶습니다.💕
-- 최지연 : 처음 해보는 ci/cd가 너무 어려웠지만 팀원들의 응원으로 해낼 수 있었습니다. 또한 이번 프로젝트로 깃과 지라를 사용하여 효율적으로 협업하는 방법을 배웠습니다. 팀원 모두가 각자의 역할을 1200% 해주어서 프로젝트를 성공적으로 마무리할 수 있었습니다. 매일매일 즐겁게 코딩할 수 있게 도와준 우리 팀원들 모두 고마워용💕
-- 윤수희
+- **홍영민**
+- **김찬빈**
+- **임길현**
+- **김민소** : 고요속의 외침 게임을 제작하면서 openVidu의 publish 와 subscribes를 구분하여 방장화면과 게스트화면을 다르게 구성하는 것이 가장 어려웠습니다. 위 문제를 해결하기 위해 openVidu에 객체에 host key값을 추가하여 고요속의 게임 컴포넌트에서 문제를 해결할 수 있었습니다. 컴포넌트 모듈화를 통해 여러가지 기능들을 제 컴포넌트에 바로 적용 준 프론트엔드 팀원들이 있어 짧은 기간이지만 제가 원하는 기능을 모두 완성시킬 수 있었습니다. 또한 프론트의 무리한 요구임에도 불구하고 Redis, Jenkins, AWS, 모두 완성시켜준 백엔드 팀원들 덕분에 빠르게 저희 웹 서비스를 배포할 수 있었습니다. 모두 각자의 자리에서 최선을 다해준 우리 `라온제나` 팀에게 감사하다는 말씀 전하고 싶습니다.💕
+- **최지연** : 처음 해보는 ci/cd가 너무 어려웠지만 팀원들의 응원으로 해낼 수 있었습니다. 또한 이번 프로젝트로 깃과 지라를 사용하여 효율적으로 협업하는 방법을 배웠습니다. 팀원 모두가 각자의 역할을 1200% 해주어서 프로젝트를 성공적으로 마무리할 수 있었습니다. 매일매일 즐겁게 코딩할 수 있게 도와준 우리 팀원들 모두 고마워용💕
+- **윤수희**
