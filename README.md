@@ -124,7 +124,7 @@
 
 ![메인룸_사진촬영](https://user-images.githubusercontent.com/97869193/219525437-e1e3bdf5-e73e-4d01-8d62-594785934b20.gif)
 
-
+![메인룸_채팅](/uploads/f3eee994edf6b4b723ae2e97d98cb294/메인룸_채팅.gif)
 
 > - 채팅의 경우 오른쪽 구역에서 채팅들을 확인 및 전송 가능
 
