@@ -124,9 +124,11 @@
 
 ![메인룸_사진촬영](https://user-images.githubusercontent.com/97869193/219525437-e1e3bdf5-e73e-4d01-8d62-594785934b20.gif)
 
+
+
 > - 채팅의 경우 오른쪽 구역에서 채팅들을 확인 및 전송 가능
 
-![메인룸_사진촬영](https://user-images.githubusercontent.com/97869193/219525437-e1e3bdf5-e73e-4d01-8d62-594785934b20.gif)
+![메인룸_자유주제](https://user-images.githubusercontent.com/97869193/219534287-3227139d-fd36-409d-bbb3-24ee5a51adbe.gif)
 
 > - 잡담 주제 아이콘을 선택해서 게인별로 원하는 잡담 주제 랜덤으로 확인 가능
 
