@@ -263,7 +263,6 @@ function MainRoom(props) {
         data: { exp: myscore[0].gameScore, userNo: user.userNo },
       })
         .then((res) => {
-          console.log(res);
           const lev = parseInt(myscore[0].gameScore / 100);
           const leftExp = myscore[0].gameScore % 100;
           dispatch(

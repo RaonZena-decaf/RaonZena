@@ -22,7 +22,6 @@ function PhotoShootLayout({ photoFrame, TotalUsers }) {
     }
   }, []);
 
-  console.log(photoFrame);
   return (
     <div
       className={styles.photoFrame}

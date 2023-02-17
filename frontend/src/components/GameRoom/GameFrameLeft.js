@@ -66,7 +66,6 @@ function GameFrameLeft({
   useEffect(() => {
     openvidu.session.on("signal:TrueAnswer", (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
       if (data.gamename === "joker" && data.clicked === "1") {
         setUserList((prev) =>
           prev.map((user) => {
