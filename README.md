@@ -273,7 +273,7 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 ## 📜 API 설계서
 
 <a href="https://maze-baron-8ac.notion.site/d655b6e1f8b64068aeabe25e82783f46?v=2998a462e40f42c5a54a53122c664f5d">
-    <img src="/uploads/cf038881235238dccd92a55f575aa4b9/API설계서.png" alt="API 설계서로 이동"/>
+    <img src="/uploads/cf038881235238dccd92a55f575aa4b9/API설계서.png" title="API 설계서로 이동"/>
 </a>
 
 <br>
