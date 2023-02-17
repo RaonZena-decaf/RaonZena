@@ -66,7 +66,7 @@
 
 ## 로그아웃
 
-![로그아웃](https://user-images.githubusercontent.com/97869193/219521894-7067db4e-4225-455c-9bb5-049272ca46fc.gif)
+![로그아웃](https://user-images.githubusercontent.com/97869193/219535139-3d4539a3-5fb4-4f2a-997b-484a0e09d382.gif)
 
 
 ## 라이브페이지
