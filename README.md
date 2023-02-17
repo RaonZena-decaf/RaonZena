@@ -74,7 +74,7 @@
 > - 하단에는 팔로우한 유저들의 상태와 해당 유저들의 참가중인 방 리스트 확인 가능
 > - 현재 로그인한 유저 정보 확인 가능 (online/offline)
 
-![라이브 페이지](https://user-images.githubusercontent.com/97869193/219521864-213919ea-9304-45cf-963c-ef2216cb2d6c.gif)
+![라이브페이지](https://user-images.githubusercontent.com/97869193/219535527-b23a358b-8023-4a5a-badd-a223c699a888.gif)
 
 > - 검색 가능
 
