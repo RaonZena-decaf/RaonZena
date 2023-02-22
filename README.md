@@ -3,7 +3,8 @@
 👇라온제나 소개 및 시연 영상👇
 
 <a href="https://www.youtube.com/watch?v=Llnnix7DsNo">
-    <img src="/uploads/807bb901d093f378b537954d1803d28c/라온제나.png" title="시연영상으로 이동"/>
+    <img src="/uploads/807bb901d093f378b537954d1803d28c/라온제나.png" title="시연영상으로 이동" width="70%" height="70%"/>
+
 </a>
 
 라온제나 시나리오는 👉<a href = "./exec/시연_시나리오.pdf">여기</a>👈에서 더 자세히 보실 수 있습니다.
@@ -56,17 +57,18 @@
 > - 라이브 페이지로 이동할 수 있는 버튼 
 > - 서비스 소개, 이용 가이드, 게임 가이드를 확인 가능
 
-![랜딩페이지](https://user-images.githubusercontent.com/97869193/219518756-637886b7-4ee9-4560-9843-4defad431653.gif)
+<img src="https://user-images.githubusercontent.com/97869193/220546730-64d96dc7-a34f-43f9-9e9d-4b93a40c9c8d.gif" title="랜딩페이지" width="70%" height="70%"/>
 
 ## 로그인
 > - 별도 회원가입 없이 카카오 로그인으로 전환
 > - 이후 라이브 페이지로 이동
 
-![로그인](https://user-images.githubusercontent.com/97869193/219522570-23d19255-1970-4e5e-bf1a-4af7c6ea6ede.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219522570-23d19255-1970-4e5e-bf1a-4af7c6ea6ede.gif" title="로그인" width="70%" height="70%"/>
 
 ## 로그아웃
 
-![로그아웃](https://user-images.githubusercontent.com/97869193/219535139-3d4539a3-5fb4-4f2a-997b-484a0e09d382.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219535139-3d4539a3-5fb4-4f2a-997b-484a0e09d382.gif" title="로그아웃" width="70%" height="70%"/>
+
 
 
 ## 라이브페이지
@@ -74,29 +76,29 @@
 > - 하단에는 팔로우한 유저들의 상태와 해당 유저들의 참가중인 방 리스트 확인 가능
 > - 현재 로그인한 유저 정보 확인 가능 (online/offline)
 
-![라이브페이지](https://user-images.githubusercontent.com/97869193/219535527-b23a358b-8023-4a5a-badd-a223c699a888.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219535527-b23a358b-8023-4a5a-badd-a223c699a888.gif" title="라이브페이지" width="70%" height="70%"/>
 
 > - 검색 가능
 
-![라이브 페이지 검색](https://user-images.githubusercontent.com/97869193/219523337-ecccfa84-55c8-4377-b344-ebafe677ccca.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219523337-ecccfa84-55c8-4377-b344-ebafe677ccca.gif" title="라이브 페이지 검색" width="70%" height="70%"/>
 
 ## 프로필페이지
 > - 해당 유저의 정보와 레벨, 그리고 작성한 피드들을 확인 가능
 > - 작성한 피드는 모달창을 통해 확인 가능
 
-![프로필 페이지](https://user-images.githubusercontent.com/97869193/219518307-b0f99820-355b-45b0-8584-ec9782da7ff2.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219518307-b0f99820-355b-45b0-8584-ec9782da7ff2.gif" title="프로필 페이지" width="70%" height="70%"/>
 
 > - 유저들의 팔로잉/팔로워 리스트 확인 가능
 
-![팔로잉 팔로우 목록](https://user-images.githubusercontent.com/97869193/219520037-66403b24-9d16-4cd8-b522-eb51b0ffcbde.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219520037-66403b24-9d16-4cd8-b522-eb51b0ffcbde.gif" title="팔로잉 팔로우 목록" width="70%" height="70%"/>
 
 > - 친구 맺기 가능 (팔로우/팔로잉)
 
-![팔로우 팔로잉](https://user-images.githubusercontent.com/97869193/219520341-ea30e19e-68c0-4f95-9ac7-92da58e7bc17.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219520341-ea30e19e-68c0-4f95-9ac7-92da58e7bc17.gif" title="팔로우 팔로잉" width="70%" height="70%"/>
 
 > - 돋보기 아이콘을 통해 친구코드를 기반으로 유저 검색 가능
 
-![친구 검색](https://user-images.githubusercontent.com/97869193/219520920-9629f81b-d74c-4657-962d-92d0f54f4c75.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219520920-9629f81b-d74c-4657-962d-92d0f54f4c75.gif" title="친구 검색" width="70%" height="70%"/>
 
 
 ## 방 생성 페이지
@@ -104,17 +106,17 @@
 > - 현재 내 마이크와 카메라 상태을 확인 가능
 > - 비밀번호의 경우, 필요에 따라 활성화 가능
 
-![방만들기 페이지](https://user-images.githubusercontent.com/97869193/219523781-c15e5a4b-e38a-44bd-9c9f-70feb29b7054.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219523781-c15e5a4b-e38a-44bd-9c9f-70feb29b7054.gif" title="방만들기 페이지" width="70%" height="70%"/>
 
 ## 방 입장 전 페이지
 > - 방 입장 전 현재 내 마이크와 카메라 상태를 확인 가능
 > - 방 생성 과정에서 비밀번호를 입력 시 해당 방에 입장하기 위해선 비밀번호 입력이 필수
 
-![입장전 페이지](https://user-images.githubusercontent.com/97869193/219524616-580626aa-cbde-4f7a-8644-227820ff2da4.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219524616-580626aa-cbde-4f7a-8644-227820ff2da4.gif" title="입장전 페이지" width="70%" height="70%"/>
 
 > - 방에 참가하고 있는 유저 숫자를 표시하여 초과된 유저들의 입장을 방지
 
-![입장전 페이지 제한](https://user-images.githubusercontent.com/97869193/219524640-061364c9-5ae2-4724-963b-0f81c2a0659d.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219524640-061364c9-5ae2-4724-963b-0f81c2a0659d.gif" title="입장전 페이지 제한" width="70%" height="70%"/>
 
 ## MainRoom
 > - 화상의 경우 참여한 사람의 숫자에 따라 사이즈가 변동 됨
@@ -122,17 +124,17 @@
 > - 즐거운 순간을 사진으로 찍어서 간직할 수 있음
 > - 레벨에 따라 다른 프레임 제공 됨
 
-![메인룸_사진촬영](https://user-images.githubusercontent.com/97869193/219525437-e1e3bdf5-e73e-4d01-8d62-594785934b20.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219525437-e1e3bdf5-e73e-4d01-8d62-594785934b20.gif" title="메인룸_사진촬영" width="70%" height="70%"/>
 
 
 > - 채팅의 경우 오른쪽 구역에서 채팅들을 확인 및 전송 가능
 
-![메인룸_채팅](/uploads/f3eee994edf6b4b723ae2e97d98cb294/메인룸_채팅.gif)
+<img src="/uploads/f3eee994edf6b4b723ae2e97d98cb294/메인룸_채팅.gif" title="메인룸_채팅" width="70%" height="70%"/>
 
 
 > - 잡담 주제 아이콘을 선택해서 게인별로 원하는 잡담 주제 랜덤으로 확인 가능
 
-![메인룸_자유주제](https://user-images.githubusercontent.com/97869193/219534287-3227139d-fd36-409d-bbb3-24ee5a51adbe.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219534287-3227139d-fd36-409d-bbb3-24ee5a51adbe.gif" title="메인룸_자유주제" width="70%" height="70%"/>
 
 
 ### 게임
@@ -141,7 +143,7 @@
 - 순서대로 돌아가며 키워드를 제시하며 제시어에 해당하는 유저는 손가락을 하나씩 접게 됩니다
 - 모든 손가락이 접히게 되면 주먹을 인식하여, 탈락자로 채점되게 됩니다
 
-![이미지게임](https://user-images.githubusercontent.com/97869193/219530631-154292a7-bf1e-4f66-ba24-876f08958333.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219530631-154292a7-bf1e-4f66-ba24-876f08958333.gif" title="이미지게임" width="70%" height="70%"/>
 
 #### 캐치마인드
 - 방장은 주어진 키워드를 설명할 수 있는 그림을 그리게 됩니다
@@ -153,7 +155,7 @@
 
 <참가자 화면>
 
-![캐치마인드_참가자](https://user-images.githubusercontent.com/97869193/219533490-009b4759-6651-4948-a03e-b6c19850014f.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219533490-009b4759-6651-4948-a03e-b6c19850014f.gif" title="캐치마인드_참가자" width="70%" height="70%"/>
 
 - 정답을 맞추면 정답이 상단에 보입니다
 
@@ -165,11 +167,11 @@
 
 <출제자 화면>
 
-![고요속외침_출제자](https://user-images.githubusercontent.com/97869193/219527788-7f7e4e92-b21a-43d5-b1f2-0f99b637f0f9.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219527788-7f7e4e92-b21a-43d5-b1f2-0f99b637f0f9.gif" title="고요속외침_출제자" width="70%" height="70%"/>
 
 <참가자 화면>
 
-![고요속외침_참가자](https://user-images.githubusercontent.com/97869193/219528157-a3a31c3d-90d7-4684-b019-158065edabd8.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219528157-a3a31c3d-90d7-4684-b019-158065edabd8.gif" title="고요속외침_참가자" width="70%" height="70%"/>
 
 - 참가자가 정답을 맞추면 점수바에 점수가 올라간다.
 
@@ -178,14 +180,14 @@
 - 모든 참가자는 이름을 정답란에 제출하게 됩니다
 - 시간안에 맞춘 모든 사람들은 점수를 받게 됩니다
 
-![인물퀴즈](https://user-images.githubusercontent.com/97869193/219528590-c010c447-9670-4111-a27c-56bfc87ed168.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219528590-c010c447-9670-4111-a27c-56bfc87ed168.gif" title="인물퀴즈" width="70%" height="70%"/>
 
 #### 역전의 한방
 - 모든 참가자들은 8개의 카드를 받게 됩니다
 - 한 사람은 하나의 카드만을 선택할 수 있습니다
 - 해당 카드에 적힌 효과로 점수의 변동이 발생합니다
 
-![역전의 한방](https://user-images.githubusercontent.com/97869193/219527966-dbafea69-1d87-4c98-a417-b9d1e7996fcb.gif)
+<img src="https://user-images.githubusercontent.com/97869193/219527966-dbafea69-1d87-4c98-a417-b9d1e7996fcb.gif" title="역전의 한방" width="70%" height="70%"/>
 
 
 - 추가적 전달 사항
