@@ -94,7 +94,8 @@
 > - 하단에는 팔로우한 유저들의 상태와 해당 유저들의 참가중인 방 리스트 확인 가능
 > - 현재 로그인한 유저 정보 확인 가능 (online/offline)
 
-<img src="https://user-images.githubusercontent.com/97869193/219535527-b23a358b-8023-4a5a-badd-a223c699a888.gif" title="라이브페이지" width="70%" height="70%"/>
+<img src="https://user-images.githubusercontent.com/97869193/220799104-f4239b2c-28e9-4daf-8d68-17d5a05e1cea.gif" title="라이브페이지" width="70%" height="70%"/>
+
 
 > - 검색 가능
 
@@ -104,7 +105,7 @@
 > - 해당 유저의 정보와 레벨, 그리고 작성한 피드들을 확인 가능
 > - 작성한 피드는 모달창을 통해 확인 가능
 
-<img src="https://user-images.githubusercontent.com/97869193/219518307-b0f99820-355b-45b0-8584-ec9782da7ff2.gif" title="프로필 페이지" width="70%" height="70%"/>
+<img src="https://user-images.githubusercontent.com/97869193/220800072-1ce5d0d5-272d-4698-b83f-df47393904c5.gif" title="프로필 페이지" width="70%" height="70%"/>
 
 > - 유저들의 팔로잉/팔로워 리스트 확인 가능
 
