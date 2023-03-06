@@ -210,7 +210,7 @@
 <img src="https://user-images.githubusercontent.com/97869193/219527966-dbafea69-1d87-4c98-a417-b9d1e7996fcb.gif" title="역전의 한방" width="70%" height="70%"/>
 
 
-- 추가적 전달 사항
+
   <br>
   <br>
 
