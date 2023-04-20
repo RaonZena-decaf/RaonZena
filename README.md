@@ -1,15 +1,17 @@
 # **🎮 Raonzena ( 우리 모두 즐거운 화상 게임 )**
+<div align=center>
 
 👇라온제나 소개 및 시연 영상👇
 
 <a href="https://www.youtube.com/watch?v=Llnnix7DsNo">
-    <img src="/uploads/807bb901d093f378b537954d1803d28c/라온제나.png" title="시연영상으로 이동" width="70%" height="70%"/>
+    <img src="https://user-images.githubusercontent.com/97869193/233234530-0f1471f1-fe75-4a44-bd92-343d49fe987f.png" title="시연영상으로 이동" width="90%" height="90%"/>
 
 </a>
-
+<br><br>
 라온제나 시나리오는 👉<a href = "./exec/시연_시나리오.pdf">여기</a>👈에서 더 자세히 보실 수 있습니다.
 
 <br>
+</div>
 
 # 목차
 
@@ -33,7 +35,7 @@
 
 ## 1. 서비스 설명
 
-### 개요
+### 🎈 개요
 
 - 한줄 소개 : 무료한 일상에서 벗어나 즐거움을 느끼고 싶은 현대인을 위한 `웹 화상 게임` 서비스
 - 서비스 명 : 라온제나(Raonzena)
@@ -43,13 +45,13 @@
 
 - 시간적 / 공간적 제약으로 인해 오프라인으로 지인들과 시간을 보낼 수 없는 사람들
 - 처음 보는 사람들과 무엇을 해야 할 지 머리가 하얘지는 사람들
-- 👉 오프라인으로 재미있게 소통하고 싶은 모든 사람들
+- 오프라인으로 재미있게 소통하고 싶은 모든 사람들
 
 <br>
 
 ## 2. 기획 배경
 
-### 배경
+### 🚩 배경
 
 우리 프로젝트는 지인과 온라인에서 즐거운 시간을 보내고 싶은 사람, 프로젝트나 단체 활동에서 모르는 사람들과 빠르게 친해지고 싶은 사람들이 유량민처럼 게임, 잡담, 사진촬영, SNS를 찾아 돌아다니는 것을 보고 이 문제에 집중했습니다.
 
@@ -61,7 +63,7 @@
 
 온라인에서 지인들과 게임, 잡담, 사진촬영, SNS를 하기 위해 이곳 저곳 돌아다니는 사람들의 불편함을 해소해주기 위해 모든 기능이 들어 있는 레온제나를 만들었습니다.
 
-### 의의
+### ✏ 의의
 
 - 비대면 상황에서 직접 만나지 않고도 즐길 수 있는 온라인 웹 화상 게임
 - 간단한 게임과 잡담을 통해 서로를 더 잘 알아가고, 아이스브레이킹의 효과
@@ -371,16 +373,16 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 ## 🎨 화면 설계서
 
 <a href="https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85">
-    <img src="/uploads/8b1035ef4f1d2875987cedca65764fc2/Figma.png" title="화면설계서로 이동"/>
+    <img src="https://user-images.githubusercontent.com/97869193/233233711-c95fc0a3-acbc-46f1-9b59-4b0b4161ff8a.png" title="화면설계서로 이동"/>
 </a>
 <a href="https://www.figma.com/file/FEp8Ev7nt6T3gcwrF5oCdW/%EA%B3%B5%ED%86%B5-pjt-%EB%AA%A9%EC%97%85">
-    <img src="/uploads/662197ee2dcadbeead34fe09530d2640/Figma2.png" title="화면설계서로 이동"/>
+    <img src="https://user-images.githubusercontent.com/97869193/233233721-c835e348-9346-4998-8cd7-299559b69a9e.png" title="화면설계서로 이동"/>
 </a>
 
 ## 💭 요구사항 정의서
 
 <a href="https://docs.google.com/spreadsheets/d/1Ac9yfeTaLYIwZHVQL3kA6sYhpkZBxXCPl4gdK_ueJYw/edit#gid=1911344897">
-    <img src="/uploads/a0926bdc06bffe1e740c66ae57d55841/요구사항정의서.gif" title="요구사항 정의서로 이동"/>
+    <img src="https://user-images.githubusercontent.com/97869193/233233534-93b23f49-8ef3-4bae-9f53-542cfa8f09ac.gif" title="요구사항 정의서로 이동" width="80%" height="80%"/>
 </a>
 
 ## 🛢︎ ERD
@@ -390,9 +392,8 @@ webRTC로는 부족한 부분은 바로 게임 진행입니다. 같은 화면을
 ## 📜 API 설계서
 
 <a href="https://maze-baron-8ac.notion.site/d655b6e1f8b64068aeabe25e82783f46?v=2998a462e40f42c5a54a53122c664f5d">
-    <img src="/uploads/cf038881235238dccd92a55f575aa4b9/API설계서.png" title="API 설계서로 이동"/>
+    <img src="https://user-images.githubusercontent.com/97869193/233233592-bfd8f096-8ed4-4393-a5c1-fdebbc4318ec.png" title="API 설계서로 이동"/>
 </a>
-
 
 <br>
 
